@@ -1,0 +1,12 @@
+{
+  "metric": "Word Error Rate",
+  "metric_name": "WER",
+  "evaluation_type": "sample_level",
+  "reference_file": "outputs/evaluations/reference_transcript.txt",
+  "hypothesis_file": "outputs/transcripts/meeting.json",
+  "reference_segments": 17,
+  "hypothesis_segments": 17,
+  "wer": 0.0070921985815602835,
+  "wer_percentage": 0.7092198581560284,
+  "approximate_word_accuracy_percentage": 99.29078014184397
+}

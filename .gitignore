@@ -1,0 +1,15 @@
+# Python environments
+.venv/
+.venv_broken/
+__pycache__/
+*.pyc
+
+# Secrets
+.env
+
+# OS
+.DS_Store
+
+# Editor / tool-local (not project content)
+.vscode/
+.claude/

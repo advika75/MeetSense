@@ -1,0 +1,5779 @@
+{
+  "source_file": "outputs/nlp/nlp_processed_transcript.json",
+  "document_count": 393,
+  "vocabulary_size": 228,
+  "number_of_topics": 5,
+  "topics": [
+    {
+      "topic_id": 1,
+      "top_words": [
+        {
+          "word": "yeah",
+          "weight": 12.023001594545182
+        },
+        {
+          "word": "one",
+          "weight": 11.930161694395053
+        },
+        {
+          "word": "sort",
+          "weight": 10.032496295611763
+        },
+        {
+          "word": "make",
+          "weight": 9.195779641364076
+        },
+        {
+          "word": "quite",
+          "weight": 7.29387573419538
+        },
+        {
+          "word": "ca",
+          "weight": 5.981573924612807
+        },
+        {
+          "word": "people",
+          "weight": 5.374577219457411
+        },
+        {
+          "word": "east",
+          "weight": 5.198294245131134
+        },
+        {
+          "word": "see",
+          "weight": 5.14328281305735
+        },
+        {
+          "word": "thing",
+          "weight": 4.216971508175085
+        }
+      ]
+    },
+    {
+      "topic_id": 2,
+      "top_words": [
+        {
+          "word": "room",
+          "weight": 46.374725766942504
+        },
+        {
+          "word": "people",
+          "weight": 34.55686625045913
+        },
+        {
+          "word": "well",
+          "weight": 16.967015807555512
+        },
+        {
+          "word": "two",
+          "weight": 14.638299447620643
+        },
+        {
+          "word": "yeah",
+          "weight": 13.344009339840154
+        },
+        {
+          "word": "three",
+          "weight": 12.643646829919945
+        },
+        {
+          "word": "office",
+          "weight": 11.950084351529284
+        },
+        {
+          "word": "one",
+          "weight": 11.62606151684496
+        },
+        {
+          "word": "person",
+          "weight": 11.313710062081116
+        },
+        {
+          "word": "come",
+          "weight": 10.201837602051762
+        }
+      ]
+    },
+    {
+      "topic_id": 3,
+      "top_words": [
+        {
+          "word": "yeah",
+          "weight": 97.22964554015152
+        },
+        {
+          "word": "like",
+          "weight": 12.48779656890285
+        },
+        {
+          "word": "put",
+          "weight": 10.64775615107559
+        },
+        {
+          "word": "go",
+          "weight": 8.353860832089401
+        },
+        {
+          "word": "project",
+          "weight": 8.196664739024952
+        },
+        {
+          "word": "mean",
+          "weight": 8.027490706340163
+        },
+        {
+          "word": "know",
+          "weight": 7.617819141484966
+        },
+        {
+          "word": "really",
+          "weight": 7.298136347805572
+        },
+        {
+          "word": "stuff",
+          "weight": 7.198567741958638
+        },
+        {
+          "word": "space",
+          "weight": 6.891206763154692
+        }
+      ]
+    },
+    {
+      "topic_id": 4,
+      "top_words": [
+        {
+          "word": "okay",
+          "weight": 28.19609058753446
+        },
+        {
+          "word": "go",
+          "weight": 10.9955522693782
+        },
+        {
+          "word": "good",
+          "weight": 9.93979323200423
+        },
+        {
+          "word": "office",
+          "weight": 9.399442306858017
+        },
+        {
+          "word": "work",
+          "weight": 8.867335260247199
+        },
+        {
+          "word": "think",
+          "weight": 8.187969170394094
+        },
+        {
+          "word": "question",
+          "weight": 7.217484714073524
+        },
+        {
+          "word": "idea",
+          "weight": 6.9789994816067535
+        },
+        {
+          "word": "even",
+          "weight": 5.211110515034637
+        },
+        {
+          "word": "place",
+          "weight": 5.2090951805055745
+        }
+      ]
+    },
+    {
+      "topic_id": 5,
+      "top_words": [
+        {
+          "word": "know",
+          "weight": 15.052447953554234
+        },
+        {
+          "word": "one",
+          "weight": 15.039795330817736
+        },
+        {
+          "word": "get",
+          "weight": 13.839199609368713
+        },
+        {
+          "word": "room",
+          "weight": 12.021784977534587
+        },
+        {
+          "word": "two",
+          "weight": 10.7610250642546
+        },
+        {
+          "word": "like",
+          "weight": 10.754202112991432
+        },
+        {
+          "word": "person",
+          "weight": 10.083642900991437
+        },
+        {
+          "word": "office",
+          "weight": 9.439478679611106
+        },
+        {
+          "word": "think",
+          "weight": 9.07994903261327
+        },
+        {
+          "word": "printer",
+          "weight": 8.812881892512966
+        }
+      ]
+    }
+  ],
+  "topic_counts": {
+    "2": 83,
+    "4": 71,
+    "5": 72,
+    "3": 114,
+    "1": 53
+  },
+  "speaker_topic_distribution": {
+    "SPEAKER_02": {
+      "2": 43,
+      "4": 35,
+      "5": 35,
+      "3": 48,
+      "1": 25
+    },
+    "SPEAKER_01": {
+      "5": 23,
+      "3": 40,
+      "2": 27,
+      "4": 21,
+      "1": 22
+    },
+    "SPEAKER_00": {
+      "1": 4,
+      "2": 8,
+      "3": 12,
+      "5": 12,
+      "4": 11
+    },
+    "SPEAKER_03": {
+      "3": 11,
+      "1": 1,
+      "5": 2,
+      "2": 5,
+      "4": 3
+    },
+    "UNKNOWN": {
+      "3": 3,
+      "4": 1,
+      "1": 1
+    }
+  },
+  "segment_topic_assignments": [
+    {
+      "start": 0.0,
+      "end": 14.0,
+      "speaker": "SPEAKER_02",
+      "text": "Okay. So as you guys know, ISCO is too small. Well, the building is too small for our",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.02857424810261302,
+        0.456949663646588,
+        0.028912918492106813,
+        0.4559661240307335,
+        0.029597045727958564
+      ]
+    },
+    {
+      "start": 14.0,
+      "end": 18.8,
+      "speaker": "SPEAKER_02",
+      "text": "group. So we're moving to a new building. It's going to be the building across the street",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.02222430147135697,
+        0.022247779428373513,
+        0.022264806662291532,
+        0.9106037517443488,
+        0.022659360693629206
+      ]
+    },
+    {
+      "start": 18.8,
+      "end": 24.8,
+      "speaker": "SPEAKER_02",
+      "text": "and we're actually moving in three weeks. But the problem is that the administration wants",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.025002860761960136,
+        0.02522254578426821,
+        0.025077844105420473,
+        0.02564225365485653,
+        0.8990544956934946
+      ]
+    },
+    {
+      "start": 24.8,
+      "end": 29.48,
+      "speaker": "SPEAKER_02",
+      "text": "to know who's going to be in what office in the new building and where we're going to",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.028587670311424524,
+        0.028774135177522635,
+        0.028926288130473345,
+        0.8842195847086418,
+        0.029492321671937688
+      ]
+    },
+    {
+      "start": 29.48,
+      "end": 34.6,
+      "speaker": "SPEAKER_02",
+      "text": "put things like the printer, the fax machine, all the big equipment. And the catch is",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.022958277510588997,
+        0.022378208236716296,
+        0.02257139935936752,
+        0.022527021792516873,
+        0.9095650931008104
+      ]
+    },
+    {
+      "start": 34.6,
+      "end": 39.56,
+      "speaker": "SPEAKER_02",
+      "text": "that they have the final approval of where we put people and equipment. And they want",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.04092423933325402,
+        0.3936833104204374,
+        0.04061186073344051,
+        0.040554789609712615,
+        0.4842257999031553
+      ]
+    },
+    {
+      "start": 39.56,
+      "end": 45.96,
+      "speaker": "SPEAKER_02",
+      "text": "to know where we're going to do all of this by November 2nd. So that means basically",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.050340578627156025,
+        0.050758798902617294,
+        0.795941147741131,
+        0.051399148476190634,
+        0.051560326252905
+      ]
+    },
+    {
+      "start": 45.96,
+      "end": 50.68,
+      "speaker": "SPEAKER_02",
+      "text": "next Tuesday. And since we don't really have any other time, we have to make these decisions",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.8357485370049518,
+        0.04018702192321832,
+        0.04216985687426559,
+        0.04000342197286349,
+        0.04189116222470071
+      ]
+    },
+    {
+      "start": 50.68,
+      "end": 57.2,
+      "speaker": "SPEAKER_02",
+      "text": "today. What we're getting is nine rooms for a maximum of 18 people, which is okay because",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.033749926787286354,
+        0.5329796547798561,
+        0.03371851879938111,
+        0.3647009406682988,
+        0.03485095896517768
+      ]
+    },
+    {
+      "start": 57.2,
+      "end": 61.56,
+      "speaker": "SPEAKER_02",
+      "text": "there's only 15 of us. And all the rooms have windows locally. So there's no fights",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.39974810026888485,
+        0.3995574805591871,
+        0.06666928542431987,
+        0.06667013934543085,
+        0.06735499440217742
+      ]
+    },
+    {
+      "start": 61.56,
+      "end": 66.32,
+      "speaker": "SPEAKER_02",
+      "text": "about who gets a window and who doesn't. There's two views either of the old town or the",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.028636650031970464,
+        0.02873029505054168,
+        0.028917966639801028,
+        0.029553342497426326,
+        0.8841617457802605
+      ]
+    },
+    {
+      "start": 66.32,
+      "end": 70.92,
+      "speaker": "SPEAKER_02",
+      "text": "mountains. And the rooms are various sizes. There's two, three people rooms, five, two",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.02001869553029693,
+        0.919351035830651,
+        0.020001163509146155,
+        0.020451484644295605,
+        0.020177620485610163
+      ]
+    },
+    {
+      "start": 70.92,
+      "end": 74.12,
+      "speaker": "SPEAKER_02",
+      "text": "person rooms, which are on the corners of the building. So you actually get windows on",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.02504655907627715,
+        0.02547832342259734,
+        0.025032912534237638,
+        0.025346268782489485,
+        0.8990959361843984
+      ]
+    },
+    {
+      "start": 74.12,
+      "end": 81.56,
+      "speaker": "SPEAKER_02",
+      "text": "two walls. And two, one person rooms. That's pretty much what the building looks like.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.01701075053493942,
+        0.017079122255090572,
+        0.01675181963034295,
+        0.016688109773123197,
+        0.932470197806504
+      ]
+    },
+    {
+      "start": 81.56,
+      "end": 86.08,
+      "speaker": "SPEAKER_02",
+      "text": "And then you have the number of people per room. The courtyard, because we're on the sixth",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.04114196742339139,
+        0.44164731124586415,
+        0.041229582911527826,
+        0.43575798778330005,
+        0.04022315063591664
+      ]
+    },
+    {
+      "start": 86.08,
+      "end": 89.96,
+      "speaker": "SPEAKER_02",
+      "text": "floor, you can actually go out to it. But just means that the windows look out onto open",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.022799472574707737,
+        0.022580198618144566,
+        0.5406387616191853,
+        0.02238443054641681,
+        0.3915971366415455
+      ]
+    },
+    {
+      "start": 89.96,
+      "end": 97.72,
+      "speaker": "SPEAKER_02",
+      "text": "space. You can see the bathrooms, the elevators are sort of further down the hall. The purple",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.4785457227409977,
+        0.04000252328784805,
+        0.40107675726304404,
+        0.04020147011732497,
+        0.04017352659078533
+      ]
+    },
+    {
+      "start": 97.72,
+      "end": 104.88,
+      "speaker": "SPEAKER_02",
+      "text": "bar at the bottom, sort of on the right, is the mailboxes. All of the windows open, you",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.8840903534061324,
+        0.029275912751682613,
+        0.028768163877942926,
+        0.028745944963102645,
+        0.029119625001139356
+      ]
+    },
+    {
+      "start": 104.88,
+      "end": 111.36,
+      "speaker": "SPEAKER_02",
+      "text": "can get out onto the terrace just like we can in our normal building. And the equipment",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.03373734923703115,
+        0.033412695291059634,
+        0.259223765946252,
+        0.03357854308557587,
+        0.6400476464400814
+      ]
+    },
+    {
+      "start": 111.36,
+      "end": 116.24,
+      "speaker": "SPEAKER_02",
+      "text": "that we have to put somewhere are like I said, the photocopier, which is really big, the",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.02604876864933552,
+        0.02614196255409892,
+        0.8961784704675133,
+        0.025030260077822882,
+        0.026600538251229378
+      ]
+    },
+    {
+      "start": 116.24,
+      "end": 122.84,
+      "speaker": "SPEAKER_02",
+      "text": "fax machine, which is not so big, and the printer, which is relatively big. Each office",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.02507883857154023,
+        0.025199280389199167,
+        0.02505552809458187,
+        0.02512533807993829,
+        0.8995410148647405
+      ]
+    },
+    {
+      "start": 122.84,
+      "end": 128.04,
+      "speaker": "SPEAKER_02",
+      "text": "has a white board, a bulletin board, and a coat rack. No cupboards like we have in the",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.04000531555416268,
+        0.040103331911636377,
+        0.8393102585617882,
+        0.040003937542158155,
+        0.04057715643025467
+      ]
+    },
+    {
+      "start": 128.04,
+      "end": 133.6,
+      "speaker": "SPEAKER_02",
+      "text": "current offices. And each person gets their own chair, their own corner desk, so like",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.028627705284804468,
+        0.028916452478231984,
+        0.028816104206072828,
+        0.028800134984285467,
+        0.8848396030466052
+      ]
+    },
+    {
+      "start": 133.6,
+      "end": 138.76,
+      "speaker": "SPEAKER_02",
+      "text": "the ones that we have now. A small filing cabinet with three drawers, and by small I mean",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.02895726641179923,
+        0.884905496183346,
+        0.02871441885996137,
+        0.028572708430285042,
+        0.028850110114608293
+      ]
+    },
+    {
+      "start": 138.84,
+      "end": 144.0,
+      "speaker": "SPEAKER_02",
+      "text": "there about that tall. And one sort of hanging shelf. So we don't get the bookcases like",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.5088825021093597,
+        0.03382430749677075,
+        0.034122407364633775,
+        0.0336031280578932,
+        0.38956765497134266
+      ]
+    },
+    {
+      "start": 144.0,
+      "end": 150.0,
+      "speaker": "SPEAKER_02",
+      "text": "we have now, but just one shelf that's attached to the wall. And the people that we have to",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.8654031251580935,
+        0.03427692839751164,
+        0.033421435317014005,
+        0.033334707925407756,
+        0.03356380320197321
+      ]
+    },
+    {
+      "start": 150.0,
+      "end": 156.68,
+      "speaker": "SPEAKER_02",
+      "text": "place, you can see the list there along with their position and the project that they work",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.02677693527602056,
+        0.025808893701178216,
+        0.8952314930077155,
+        0.027045818580518643,
+        0.025136859434567043
+      ]
+    },
+    {
+      "start": 156.68,
+      "end": 163.48,
+      "speaker": "SPEAKER_02",
+      "text": "on. And I guess the question, the first question is how we want to organize people, whether",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.022819173580716817,
+        0.17052558760042244,
+        0.32959131176959366,
+        0.4541630162947346,
+        0.022900910754532385
+      ]
+    },
+    {
+      "start": 163.48,
+      "end": 172.84,
+      "speaker": "SPEAKER_02",
+      "text": "we want to do it by rank or by project or I don't know, put all the PhD students together,",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.025003202367235747,
+        0.025223390336698848,
+        0.5127981749926854,
+        0.02540859198353155,
+        0.41156664031984846
+      ]
+    },
+    {
+      "start": 172.84,
+      "end": 180.84,
+      "speaker": "SPEAKER_02",
+      "text": "all the professors together, that sort of thing. So the idea is that we come up with a plan.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.02555759935588721,
+        0.025174221475516262,
+        0.02534510508073387,
+        0.8988507829442396,
+        0.025072291143623027
+      ]
+    },
+    {
+      "start": 180.84,
+      "end": 185.72,
+      "speaker": "SPEAKER_02",
+      "text": "There's another group who's going to be working on the same plan later this week. And",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.02503935015588778,
+        0.025163181235221162,
+        0.025064326946090818,
+        0.8996194014272986,
+        0.02511374023550158
+      ]
+    },
+    {
+      "start": 185.72,
+      "end": 192.72,
+      "speaker": "SPEAKER_02",
+      "text": "then Andre and I have to do presentations for the University administrators on the second.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.06667801502344536,
+        0.06667237093421181,
+        0.06747417801024454,
+        0.7325022284136233,
+        0.066673207618475
+      ]
+    },
+    {
+      "start": 193.56,
+      "end": 197.64,
+      "speaker": "SPEAKER_02",
+      "text": "So I have to come up with a plan, possibly if we have time or presentation,",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.04041029074014344,
+        0.040726891257728055,
+        0.23789258899767335,
+        0.6398556693321944,
+        0.04111455967226067
+      ]
+    },
+    {
+      "start": 197.64,
+      "end": 201.52,
+      "speaker": "SPEAKER_02",
+      "text": "a quick presentation with arguments for why we think our plan works best.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.03369652589351677,
+        0.03347597672101731,
+        0.033352080875658545,
+        0.8659816557685879,
+        0.03349376074121955
+      ]
+    },
+    {
+      "start": 203.04,
+      "end": 213.32,
+      "speaker": "SPEAKER_02",
+      "text": "Okay. So anyone have any ideas or I guess.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.296702607970547,
+        0.050479916821764226,
+        0.05137778484634657,
+        0.5514362786943114,
+        0.05000341166703079
+      ]
+    },
+    {
+      "start": 214.32,
+      "end": 222.08,
+      "speaker": "SPEAKER_01",
+      "text": "Do we know if there will be a lot of people coming across the whole in terms of security",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.022514018911053132,
+        0.39005447491447925,
+        0.022456402759511444,
+        0.022463342097365446,
+        0.5425117613175906
+      ]
+    },
+    {
+      "start": 222.08,
+      "end": 226.64,
+      "speaker": "SPEAKER_01",
+      "text": "stuff, if we can, I mean, my idea is to put the photography on the facts in the whole.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.02506925285016876,
+        0.02562601309742359,
+        0.8990181728331954,
+        0.02524676881422735,
+        0.025039792404985065
+      ]
+    },
+    {
+      "start": 226.64,
+      "end": 232.64,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah. I think it's the security is sort of the same as it is in the current building.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.03098237843286804,
+        0.02871790970925843,
+        0.17113807126549546,
+        0.029433607987280893,
+        0.7397280326050972
+      ]
+    },
+    {
+      "start": 232.64,
+      "end": 236.48,
+      "speaker": "SPEAKER_02",
+      "text": "So as long as the things are physically attached to the wall so they can't be removed,",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.7103904195882035,
+        0.18931713315922874,
+        0.03341636338152834,
+        0.03344873401606535,
+        0.03342734985497397
+      ]
+    },
+    {
+      "start": 236.48,
+      "end": 238.64,
+      "speaker": "SPEAKER_02",
+      "text": "then it should be okay to leave them in the hall.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.05000693461840828,
+        0.050003060068568764,
+        0.5494195926935957,
+        0.3005668971821813,
+        0.05000351543724581
+      ]
+    },
+    {
+      "start": 243.12,
+      "end": 247.12,
+      "speaker": "SPEAKER_02",
+      "text": "I just a question or whether you're printing the sensitive documents or whatever.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.05001031691002135,
+        0.05000524699385055,
+        0.05117715963409419,
+        0.053359194178615024,
+        0.7954480822834189
+      ]
+    },
+    {
+      "start": 247.12,
+      "end": 251.6,
+      "speaker": "SPEAKER_00",
+      "text": "Yeah. So we only get one printer for 15 people?",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.8627922985835221,
+        0.034275403477246995,
+        0.03460949856988892,
+        0.03363473447804575,
+        0.03468806489129625
+      ]
+    },
+    {
+      "start": 253.36,
+      "end": 259.52,
+      "speaker": "SPEAKER_02",
+      "text": "Well, we get one sort of network printer and then I think some of us have personal printers.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.02089564500045616,
+        0.0203648133998454,
+        0.02002040618944878,
+        0.020299806841054896,
+        0.9184193285691947
+      ]
+    },
+    {
+      "start": 260.48,
+      "end": 264.56,
+      "speaker": "SPEAKER_02",
+      "text": "Nothing Susan has a personal printer, Jisela has one maybe.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.033722676377071555,
+        0.03345650745414562,
+        0.03340474122133714,
+        0.033573415249922745,
+        0.8658426596975228
+      ]
+    },
+    {
+      "start": 265.76,
+      "end": 270.16,
+      "speaker": "SPEAKER_02",
+      "text": "I can't remember who else. Yeah, but no one else gets their own printer.",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.898388045582177,
+        0.02510998017136636,
+        0.025705046814689256,
+        0.025156846853966422,
+        0.025640080577800938
+      ]
+    },
+    {
+      "start": 270.16,
+      "end": 272.96,
+      "speaker": "SPEAKER_02",
+      "text": "In terms of equipment, it's sort of the same thing as we have now.",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.8392348925317957,
+        0.040001611830131845,
+        0.040031740713098445,
+        0.04024206087415985,
+        0.04048969405081417
+      ]
+    },
+    {
+      "start": 277.84,
+      "end": 288.32,
+      "speaker": "SPEAKER_02",
+      "text": "So what I'd propose is that we sort of discuss various concepts without getting into specifics",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.034004620609627466,
+        0.03358602692661976,
+        0.03347187597505126,
+        0.8649619908456239,
+        0.03397548564307769
+      ]
+    },
+    {
+      "start": 288.32,
+      "end": 293.68,
+      "speaker": "SPEAKER_02",
+      "text": "and then go off and think about it over lunch and then come back later in the day with sort of more",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.028972971485587397,
+        0.02887677828316558,
+        0.028644535845942766,
+        0.8847270448534816,
+        0.028778669531822686
+      ]
+    },
+    {
+      "start": 293.68,
+      "end": 300.32,
+      "speaker": "SPEAKER_02",
+      "text": "specific proposals as to exactly where to put people. Does that work?",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.04013615444604216,
+        0.8380206601135723,
+        0.040481679983875044,
+        0.04116887751970517,
+        0.04019262793680536
+      ]
+    },
+    {
+      "start": 301.2,
+      "end": 306.08,
+      "speaker": "SPEAKER_02",
+      "text": "Oh and on the map the little half circular quarter circles or doors.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.03333714093751927,
+        0.0333352477709496,
+        0.03341017885005987,
+        0.03357183399228022,
+        0.866345598449191
+      ]
+    },
+    {
+      "start": 307.04,
+      "end": 309.28,
+      "speaker": "SPEAKER_02",
+      "text": "Which I'm assuming you figured out, but just in case.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.1000094566890695,
+        0.598912811245873,
+        0.10000550569463189,
+        0.10106695792321144,
+        0.10000526844721422
+      ]
+    },
+    {
+      "start": 310.08,
+      "end": 313.04,
+      "speaker": "SPEAKER_02",
+      "text": "And there's just the one room that actually has two doors going into it.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.02875039597333339,
+        0.029515839492755623,
+        0.028759982381729977,
+        0.028914999014889486,
+        0.8840587831372916
+      ]
+    },
+    {
+      "start": 313.76,
+      "end": 316.16,
+      "speaker": "SPEAKER_02",
+      "text": "The three person room on the right.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.04011697641186709,
+        0.8392147922378329,
+        0.04010983707657161,
+        0.04000065211705718,
+        0.040557742156671246
+      ]
+    },
+    {
+      "start": 316.16,
+      "end": 319.6,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah. And do we need a room like a reading room?",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.028718489287436824,
+        0.783504477828072,
+        0.13024822504862385,
+        0.028572151927244792,
+        0.028956655908622644
+      ]
+    },
+    {
+      "start": 319.6,
+      "end": 324.0,
+      "speaker": "SPEAKER_02",
+      "text": "Yes. Yeah. A lot of people were saying that they wanted to have a reading room.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.023433607090638842,
+        0.9086025707598607,
+        0.023139645985096175,
+        0.022355592618111188,
+        0.022468583546293174
+      ]
+    },
+    {
+      "start": 325.6,
+      "end": 328.16,
+      "speaker": "SPEAKER_02",
+      "text": "So we should leave a space for that.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.06695105627650359,
+        0.06666861931444366,
+        0.7329172193724698,
+        0.06666951288160325,
+        0.06679359215497989
+      ]
+    },
+    {
+      "start": 329.12,
+      "end": 333.52,
+      "speaker": "SPEAKER_02",
+      "text": "And we can't because like I said, maximum 18 people in those rooms and there's only 15 of us.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.030926424509059042,
+        0.8825914593929045,
+        0.02896027404575541,
+        0.028573160023172565,
+        0.028948682029108486
+      ]
+    },
+    {
+      "start": 334.24,
+      "end": 339.76,
+      "speaker": "SPEAKER_02",
+      "text": "And I don't know if you noticed, but two of us are only here half the time.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.04008561226251873,
+        0.04034299401910022,
+        0.040584211022525754,
+        0.04010933020185847,
+        0.8388778524939968
+      ]
+    },
+    {
+      "start": 340.48,
+      "end": 345.04,
+      "speaker": "SPEAKER_02",
+      "text": "So Martin, David, are half the time at the EPF all and half the time in Geneva.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.03344813267416224,
+        0.03349281340890574,
+        0.033910947405316506,
+        0.03333613376226702,
+        0.8658119727493485
+      ]
+    },
+    {
+      "start": 345.92,
+      "end": 354.16,
+      "speaker": "SPEAKER_02",
+      "text": "So sort of keep that in mind, I guess when you're doing the actual planning.",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.8387683974479206,
+        0.04077729503170913,
+        0.04031577864991726,
+        0.04010459462656861,
+        0.04003393424388433
+      ]
+    },
+    {
+      "start": 354.8,
+      "end": 367.36,
+      "speaker": "SPEAKER_01",
+      "text": "The first split we can do is between administration and researcher.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.06667215596510469,
+        0.06666950848147714,
+        0.06747737945335783,
+        0.7314425763709137,
+        0.06773837972914666
+      ]
+    },
+    {
+      "start": 368.16,
+      "end": 374.8,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah. It's completely different work. So we can deal with administration and decide something",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.02227311560176337,
+        0.022372256948132056,
+        0.538378227058373,
+        0.39444727600347085,
+        0.022529124388260623
+      ]
+    },
+    {
+      "start": 374.8,
+      "end": 381.68,
+      "speaker": "SPEAKER_02",
+      "text": "for administration and then for the other. Yeah. But just I was really the only",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.050456629137799705,
+        0.05028670654710296,
+        0.7976757096121362,
+        0.05064590492336918,
+        0.0509350497795921
+      ]
+    },
+    {
+      "start": 382.48,
+      "end": 386.48,
+      "speaker": "SPEAKER_01",
+      "text": "administration. But at least deal with that particular situation.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.040008634356094794,
+        0.04000435170795862,
+        0.04051867922223582,
+        0.040703884194483,
+        0.8387644505192277
+      ]
+    },
+    {
+      "start": 386.48,
+      "end": 392.96,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah. And then see with the other. Because I was thinking, Gisela is quite, I mean, Gisela's work",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.9075080554181066,
+        0.02301069749266508,
+        0.022879910554473235,
+        0.023884437866401778,
+        0.02271689866835333
+      ]
+    },
+    {
+      "start": 392.96,
+      "end": 397.6,
+      "speaker": "SPEAKER_01",
+      "text": "is quite noisy because it's secretory. So yeah, a lot of fun, cool and stuff like that.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.026197951872101458,
+        0.5145094156931326,
+        0.40822219375041124,
+        0.025268597025980357,
+        0.025801841658374406
+      ]
+    },
+    {
+      "start": 397.6,
+      "end": 401.52,
+      "speaker": "SPEAKER_01",
+      "text": "And she's always moving around. Yeah. So you want share and office with Gisela.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.022720502897229076,
+        0.022783166881164538,
+        0.1580893166387897,
+        0.7738325007962177,
+        0.022574512786599114
+      ]
+    },
+    {
+      "start": 401.52,
+      "end": 407.76,
+      "speaker": "SPEAKER_01",
+      "text": "Unless you are 50% and not the 50% Gisela is working. Yeah. Which is another condition.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.029180564703109958,
+        0.8824752717178004,
+        0.030228091652781668,
+        0.029314895459204595,
+        0.028801176467103336
+      ]
+    },
+    {
+      "start": 407.76,
+      "end": 412.08,
+      "speaker": "SPEAKER_02",
+      "text": "Which I don't know if we can assume that there isn't going to be any overlap between them.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.04000423109610337,
+        0.041188066198064206,
+        0.040517939677955396,
+        0.8373889931471293,
+        0.040900769880747714
+      ]
+    },
+    {
+      "start": 421.36,
+      "end": 427.12,
+      "speaker": "SPEAKER_01",
+      "text": "So I don't know. Maybe we can decide that Gisela is having one of the one person room.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.02278188848772673,
+        0.022866107249589592,
+        0.022585234201994434,
+        0.022326477417251817,
+        0.9094402926434374
+      ]
+    },
+    {
+      "start": 427.12,
+      "end": 434.72,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah. I would suggest that too. Yeah. Maybe it can be. Yeah. Either that or maybe put her in a two-person",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.022271156136605665,
+        0.022460512897600527,
+        0.9102029501954245,
+        0.022244509585956657,
+        0.022820871184412644
+      ]
+    },
+    {
+      "start": 434.72,
+      "end": 442.88,
+      "speaker": "SPEAKER_02",
+      "text": "room with the equipment or like we said the photocopier or maybe not the photocopier but the printer.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.45781641859428784,
+        0.023410187078971637,
+        0.022588500422333145,
+        0.022223758215726225,
+        0.47396113568868115
+      ]
+    },
+    {
+      "start": 446.08,
+      "end": 450.4,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah. But at least the thing we know that Gisela is going to be alone. Yeah. Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.023444582144306156,
+        0.02238254597779263,
+        0.9086054128751226,
+        0.02286808946321661,
+        0.022699369539561906
+      ]
+    },
+    {
+      "start": 450.4,
+      "end": 455.68,
+      "speaker": "SPEAKER_02",
+      "text": "Always equipment. But not with a 100% staff worker.",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.7971921694152518,
+        0.05000522254936719,
+        0.050204608478093216,
+        0.052203940987347264,
+        0.05039405856994042
+      ]
+    },
+    {
+      "start": 456.88,
+      "end": 463.12,
+      "speaker": "SPEAKER_00",
+      "text": "Okay. So it's a one person room but we don't know how big they are. It's hard to tell. I mean,",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.022513211712036255,
+        0.4470563695461151,
+        0.02252141932355323,
+        0.14531723665036206,
+        0.36259176276793326
+      ]
+    },
+    {
+      "start": 463.12,
+      "end": 472.64,
+      "speaker": "SPEAKER_02",
+      "text": "Gisela has this funny typing. Yeah. The rooms aren't tiny if you look at these. Yeah.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.029300048657767867,
+        0.6312730658304071,
+        0.2818363887483713,
+        0.028653409365516972,
+        0.028937087397936805
+      ]
+    },
+    {
+      "start": 473.92,
+      "end": 479.92,
+      "speaker": "SPEAKER_00",
+      "text": "So probably she should get the facts, right? Yeah. Yeah. That makes sense.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.20511466435979614,
+        0.025289127546874117,
+        0.7189884566900795,
+        0.02514089240034364,
+        0.02546685900290652
+      ]
+    },
+    {
+      "start": 479.92,
+      "end": 482.24,
+      "speaker": "SPEAKER_03",
+      "text": "To put the facts in there.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.06666995396349935,
+        0.06735852253412629,
+        0.7319413477362763,
+        0.06695384922019468,
+        0.06707632654590337
+      ]
+    },
+    {
+      "start": 510.56,
+      "end": 519.2,
+      "speaker": "SPEAKER_01",
+      "text": "And then I think the main discussion we should have is if we want to make group of",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.20526268231058112,
+        0.03350139785962586,
+        0.03333471324844908,
+        0.6940988234094111,
+        0.03380238317193279
+      ]
+    },
+    {
+      "start": 520.16,
+      "end": 525.6,
+      "speaker": "SPEAKER_01",
+      "text": "amongst the same project or amongst the same title. Yeah. Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.050207125693044974,
+        0.05011299274257074,
+        0.7996790271722451,
+        0.05000048269648072,
+        0.05000037169565838
+      ]
+    },
+    {
+      "start": 525.6,
+      "end": 532.4,
+      "speaker": "SPEAKER_01",
+      "text": "Your professor asked this to? Yeah. Oh. Yeah. A couple of professors and assistants. Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.025089666802445548,
+        0.025049745297784295,
+        0.649790388699591,
+        0.2746109250982614,
+        0.02545927410191773
+      ]
+    },
+    {
+      "start": 532.56,
+      "end": 534.08,
+      "speaker": "SPEAKER_03",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 536.8,
+      "end": 541.12,
+      "speaker": "SPEAKER_01",
+      "text": "That's more conceptual question than a practical question.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.06666870149877228,
+        0.06666767021060965,
+        0.06666779586822799,
+        0.7329118332995826,
+        0.06708399912280756
+      ]
+    },
+    {
+      "start": 542.72,
+      "end": 548.32,
+      "speaker": "SPEAKER_02",
+      "text": "Well, the third option is just completely mix everyone up. Which some people say is better",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.025144998514295837,
+        0.6729784640164834,
+        0.0250170678535398,
+        0.25178121899485356,
+        0.025078250620827414
+      ]
+    },
+    {
+      "start": 548.32,
+      "end": 551.84,
+      "speaker": "SPEAKER_02",
+      "text": "sort of for group environment so that you're not stuck only with the people who are working on",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.041877735132340624,
+        0.2767543332608683,
+        0.040032441653881666,
+        0.6011247086144325,
+        0.0402107813384769
+      ]
+    },
+    {
+      "start": 551.84,
+      "end": 555.6,
+      "speaker": "SPEAKER_02",
+      "text": "your project. Yeah. Right. So if you share an office with someone who's on a completely",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.02531356138473804,
+        0.025975540188128105,
+        0.4232197806958845,
+        0.5003038680942453,
+        0.025187249637004135
+      ]
+    },
+    {
+      "start": 555.6,
+      "end": 559.84,
+      "speaker": "SPEAKER_02",
+      "text": "different project. Yeah. You find out about that project but you also sort of interact with other",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.32932017639892236,
+        0.022235710900376297,
+        0.6037058782427029,
+        0.022488659049030732,
+        0.022249575408967767
+      ]
+    },
+    {
+      "start": 559.84,
+      "end": 567.28,
+      "speaker": "SPEAKER_03",
+      "text": "people on a more regular basis. Yeah. But still I find it's quite easy if you are with people",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.8983799924238179,
+        0.025903280184303882,
+        0.02548767385171295,
+        0.025144028586718558,
+        0.02508502495344669
+      ]
+    },
+    {
+      "start": 567.28,
+      "end": 572.08,
+      "speaker": "SPEAKER_03",
+      "text": "who work in the same project in the same way because you have the meetings or people come and ask",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.025261898882779993,
+        0.37608837611391877,
+        0.5472633165664316,
+        0.02584792047668592,
+        0.0255384879601838
+      ]
+    },
+    {
+      "start": 572.08,
+      "end": 579.36,
+      "speaker": "SPEAKER_03",
+      "text": "you discuss things. Maybe I don't know if it's for other people who's not working in the same",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.0294882496434132,
+        0.17021777994962695,
+        0.028902273087511934,
+        0.36807805304046,
+        0.40331364427898797
+      ]
+    },
+    {
+      "start": 579.36,
+      "end": 584.16,
+      "speaker": "SPEAKER_00",
+      "text": "project. Yeah. But we will have this reading room. Yeah. That's true. Yeah. That's true.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.02227818603240723,
+        0.15725767428186033,
+        0.7758125742535839,
+        0.022253241562526595,
+        0.022398323869621983
+      ]
+    },
+    {
+      "start": 584.16,
+      "end": 588.72,
+      "speaker": "SPEAKER_00",
+      "text": "Will it be dedicated for reading and for studying or can we have meetings that can reserve it for",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.05040897837945562,
+        0.05159270264222609,
+        0.797764894651416,
+        0.050003520198928286,
+        0.05022990412797405
+      ]
+    },
+    {
+      "start": 588.72,
+      "end": 593.76,
+      "speaker": "SPEAKER_02",
+      "text": "meetings? I think it's not a question of reserving it because there's other rooms at the",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.04056676592193364,
+        0.0411515106458509,
+        0.04061793464983091,
+        0.04230614222125913,
+        0.8353576465611254
+      ]
+    },
+    {
+      "start": 593.76,
+      "end": 598.32,
+      "speaker": "SPEAKER_02",
+      "text": "university that you can reserve for a meeting. Yeah. But if it's empty then sure you can use it for",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.029527079003729216,
+        0.028767521749418,
+        0.8840843327140493,
+        0.028745788986344594,
+        0.028875277546458897
+      ]
+    },
+    {
+      "start": 598.32,
+      "end": 601.92,
+      "speaker": "SPEAKER_02",
+      "text": "meeting. There's nothing wrong with that. But I think if someone's already reading in there it's",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.028595645601462265,
+        0.029075748139453083,
+        0.029009783347243773,
+        0.8845287641755105,
+        0.028790058736330316
+      ]
+    },
+    {
+      "start": 601.92,
+      "end": 605.6,
+      "speaker": "SPEAKER_02",
+      "text": "not fair. Yeah. To go and kick them out just because you want to have a meeting. Because",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.03374471031299321,
+        0.44118275890938774,
+        0.4557864511580334,
+        0.034694649436601145,
+        0.034591430182984564
+      ]
+    },
+    {
+      "start": 606.08,
+      "end": 611.36,
+      "speaker": "SPEAKER_00",
+      "text": "well the problem is you have to go across the building and it adds some overhead every time you",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.028612680661370765,
+        0.029413862511875354,
+        0.0289650746734395,
+        0.02928272725628728,
+        0.8837256548970271
+      ]
+    },
+    {
+      "start": 611.36,
+      "end": 618.88,
+      "speaker": "SPEAKER_00",
+      "text": "want to have some short meeting and discuss some issues. Maybe we shouldn't call it.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.034044489422699345,
+        0.03343612221596176,
+        0.03381162249662369,
+        0.03379795139624101,
+        0.8649098144684743
+      ]
+    },
+    {
+      "start": 618.88,
+      "end": 624.64,
+      "speaker": "SPEAKER_02",
+      "text": "But if you're having a short meeting you don't really make an appointment for it. You just kind of",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.865475203948754,
+        0.03349507669987579,
+        0.03385861128517825,
+        0.033469391185199635,
+        0.03370171688099241
+      ]
+    },
+    {
+      "start": 625.52,
+      "end": 628.56,
+      "speaker": "SPEAKER_02",
+      "text": "go to someone's office and go down for a coffee or whatever.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.033362136736860615,
+        0.03373452138197645,
+        0.033666936949544424,
+        0.6224275614893098,
+        0.27680884344230855
+      ]
+    },
+    {
+      "start": 631.12,
+      "end": 636.88,
+      "speaker": "SPEAKER_02",
+      "text": "Because there's still the cafeterias that you can use for informal. Yeah. The other thing we should",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.8376519171381214,
+        0.04020989294233082,
+        0.04175425118980307,
+        0.04013679200848832,
+        0.04024714672125636
+      ]
+    },
+    {
+      "start": 636.88,
+      "end": 646.0,
+      "speaker": "SPEAKER_01",
+      "text": "take into account is if you receive student or not because Marien and I interact a lot with",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.033336781349372915,
+        0.033572014253173854,
+        0.8662075621539598,
+        0.03333583709971805,
+        0.03354780514377536
+      ]
+    },
+    {
+      "start": 646.0,
+      "end": 651.84,
+      "speaker": "SPEAKER_01",
+      "text": "students and we have reception hours and stuff like that. So it means you get time where a lot of",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.02235405230872948,
+        0.02237409877018897,
+        0.9102005351351713,
+        0.022383815550662337,
+        0.022687498235247926
+      ]
+    },
+    {
+      "start": 651.84,
+      "end": 656.96,
+      "speaker": "SPEAKER_01",
+      "text": "people come along and talk and so it's different. And the other Marien does too. Yeah. So maybe it's",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.022308940010972535,
+        0.3625115399850214,
+        0.5702490703435772,
+        0.02234139043463951,
+        0.022589059225789316
+      ]
+    },
+    {
+      "start": 656.96,
+      "end": 663.6,
+      "speaker": "SPEAKER_01",
+      "text": "very nice to have to share on a face with somebody like us. I think a lot of social life and",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.028597881002281663,
+        0.02890867260709056,
+        0.028907025585731237,
+        0.029333418562692212,
+        0.8842530022422043
+      ]
+    },
+    {
+      "start": 664.16,
+      "end": 669.44,
+      "speaker": "SPEAKER_02",
+      "text": "well but then you either share offices with each other. Yeah. Which doesn't really solve the problem",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.022414030437712153,
+        0.20052237758480612,
+        0.34326673037014216,
+        0.41092236517034547,
+        0.02287449643699411
+      ]
+    },
+    {
+      "start": 669.44,
+      "end": 672.8,
+      "speaker": "SPEAKER_02",
+      "text": "because chances are you're not going to have office hours at the exact same time.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.04017352063059842,
+        0.04110902675748892,
+        0.8352818334400962,
+        0.04214663754599245,
+        0.04128898162582406
+      ]
+    },
+    {
+      "start": 673.84,
+      "end": 682.64,
+      "speaker": "SPEAKER_02",
+      "text": "So you're still going to have like unless you get individual offices. I don't know if there's",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.025319289919922983,
+        0.025328694416968243,
+        0.025385355345586984,
+        0.025498859066576736,
+        0.898467801250945
+      ]
+    },
+    {
+      "start": 682.64,
+      "end": 685.68,
+      "speaker": "SPEAKER_02",
+      "text": "an easy way to find a solution for that.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.04084727235831796,
+        0.040079602979997034,
+        0.040211494651940384,
+        0.838337790356532,
+        0.0405238396532125
+      ]
+    },
+    {
+      "start": 685.76,
+      "end": 694.64,
+      "speaker": "SPEAKER_02",
+      "text": "Because even if each of you share with a professor then it's the same thing for the professor.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.03374220373509814,
+        0.033415418902269685,
+        0.033374667409795306,
+        0.8659630783993548,
+        0.03350463155348202
+      ]
+    },
+    {
+      "start": 698.72,
+      "end": 704.24,
+      "speaker": "SPEAKER_02",
+      "text": "But it is something to keep in mind. Unless you end up sharing an office with someone",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.025273954258143962,
+        0.8982084655395037,
+        0.025575069979063714,
+        0.02573920117183299,
+        0.025203309051455684
+      ]
+    },
+    {
+      "start": 704.88,
+      "end": 709.04,
+      "speaker": "SPEAKER_02",
+      "text": "where your schedule is completely don't overlap and then you do schedule office hours when",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.04003574912327248,
+        0.04024623097432028,
+        0.04045119691176702,
+        0.8390467733253801,
+        0.04022004966525999
+      ]
+    },
+    {
+      "start": 709.04,
+      "end": 713.6,
+      "speaker": "SPEAKER_02",
+      "text": "the other person isn't there. Some people come in around alive and some people come in around",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.025055656931511253,
+        0.8995870952148577,
+        0.025000822088051492,
+        0.025243628545583364,
+        0.02511279721999617
+      ]
+    },
+    {
+      "start": 713.6,
+      "end": 718.88,
+      "speaker": "SPEAKER_01",
+      "text": "eight. Yeah. But that's something we can't reasonably assume like that. No.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.1877578747255241,
+        0.26984819508407737,
+        0.4752219326028228,
+        0.033558565186057716,
+        0.03361343240151816
+      ]
+    },
+    {
+      "start": 719.52,
+      "end": 723.76,
+      "speaker": "SPEAKER_02",
+      "text": "Make plans with that because. No, but you sort of see people's patterns. I mean",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.8841720059192802,
+        0.02928406536030844,
+        0.028771214530026987,
+        0.029141273022028662,
+        0.02863144116835556
+      ]
+    },
+    {
+      "start": 724.4,
+      "end": 729.68,
+      "speaker": "SPEAKER_02",
+      "text": "yeah. Even if it's not always like that. I mean if it's like that you know 80% of the time",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.022425102790751633,
+        0.02244418155255614,
+        0.6634480612550195,
+        0.26898141872779885,
+        0.022701235673873905
+      ]
+    },
+    {
+      "start": 733.6,
+      "end": 736.4,
+      "speaker": "SPEAKER_02",
+      "text": "but you're right we can't make assumptions too much.",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.8388128537875702,
+        0.040760447334100454,
+        0.0402648317785635,
+        0.04000126592056302,
+        0.040160601179202664
+      ]
+    },
+    {
+      "start": 744.4,
+      "end": 752.16,
+      "speaker": "SPEAKER_00",
+      "text": "So people would like to see the office organized by by rank like professors and students and",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.01908186703800827,
+        0.019383981623577667,
+        0.018613092509227828,
+        0.018697893636860932,
+        0.9242231651923253
+      ]
+    },
+    {
+      "start": 752.88,
+      "end": 755.52,
+      "speaker": "SPEAKER_00",
+      "text": "I don't know. I think",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.06684714993113253,
+        0.0668374968846969,
+        0.06714887081825215,
+        0.06840765481592394,
+        0.7307588275499944
+      ]
+    },
+    {
+      "start": 757.6,
+      "end": 763.92,
+      "speaker": "SPEAKER_02",
+      "text": "well it's up to us how we do it. I can see benefits of both. Yeah.",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.4749786532527753,
+        0.3695823093267642,
+        0.05508964742266259,
+        0.05000151898387189,
+        0.050347871013926036
+      ]
+    },
+    {
+      "start": 766.56,
+      "end": 772.16,
+      "speaker": "SPEAKER_01",
+      "text": "One point I can say by experience it's really hard to share an office with three people",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.02031925658182016,
+        0.9189370975676302,
+        0.020154718781341556,
+        0.02025065049868487,
+        0.02033827657052306
+      ]
+    },
+    {
+      "start": 772.24,
+      "end": 778.88,
+      "speaker": "SPEAKER_01",
+      "text": "because it makes much more noise that only being two in an office. Yeah plus the computers.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.345384491627903,
+        0.5781342398994832,
+        0.025857116758656738,
+        0.02516920486902964,
+        0.02545494684492737
+      ]
+    },
+    {
+      "start": 778.88,
+      "end": 783.6,
+      "speaker": "SPEAKER_02",
+      "text": "Plus the computers. So we all know what it's like to have five computers in your office. Yeah.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.022281371114270962,
+        0.6424684029909548,
+        0.28951330049600976,
+        0.022574016424100306,
+        0.02316290897466402
+      ]
+    },
+    {
+      "start": 785.04,
+      "end": 792.72,
+      "speaker": "SPEAKER_01",
+      "text": "So we might be it might be a good idea to first exclude one of the three person room to be the",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.018792920586031606,
+        0.38555801175870047,
+        0.018274765775392554,
+        0.5587055428668517,
+        0.018668759013023725
+      ]
+    },
+    {
+      "start": 792.72,
+      "end": 800.8,
+      "speaker": "SPEAKER_01",
+      "text": "reading room and not to be necessary a room with three people. A working room. Yeah but if there",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.0223928095254243,
+        0.9099189461499269,
+        0.0230090578160155,
+        0.022342374427148447,
+        0.022336812081484955
+      ]
+    },
+    {
+      "start": 800.8,
+      "end": 808.08,
+      "speaker": "SPEAKER_03",
+      "text": "are people coming in I mean we have these people working for two months who come in the summertime",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.022337394516749938,
+        0.9106181628443444,
+        0.022315648300553173,
+        0.02243361117932529,
+        0.022295183159027187
+      ]
+    },
+    {
+      "start": 808.08,
+      "end": 816.08,
+      "speaker": "SPEAKER_03",
+      "text": "or something. I think we should reserve a little bit space for them to. So yeah that's a good",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.025152877738856817,
+        0.025186732330522155,
+        0.5255458646847875,
+        0.39865973074856426,
+        0.025454794497269204
+      ]
+    },
+    {
+      "start": 816.08,
+      "end": 821.2,
+      "speaker": "SPEAKER_02",
+      "text": "point because if we take the three person room out as a reading room it's quite good. Then",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.020469439929007658,
+        0.9181592881663974,
+        0.020137558684761053,
+        0.02110164387973712,
+        0.020132069340096825
+      ]
+    },
+    {
+      "start": 822.0,
+      "end": 828.72,
+      "speaker": "SPEAKER_02",
+      "text": "everyone has an office right because it's maximum 18. So take away three spaces and you're down",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.02522234548877776,
+        0.7189974211552923,
+        0.20535366881646402,
+        0.02513289509434891,
+        0.025293669445116955
+      ]
+    },
+    {
+      "start": 828.72,
+      "end": 833.92,
+      "speaker": "SPEAKER_02",
+      "text": "to your 15 and you're right if we do have a stagia or whoever comes in then we have nowhere",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.0670941903127593,
+        0.7319203599468231,
+        0.06706781190079437,
+        0.0672497155660088,
+        0.06666792227361451
+      ]
+    },
+    {
+      "start": 834.72,
+      "end": 837.44,
+      "speaker": "SPEAKER_02",
+      "text": "well we can put them in the reading room but that kind of defeats the purpose.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.0343120697388122,
+        0.8641762399918653,
+        0.033765411965958406,
+        0.03420762280844739,
+        0.033538655494916574
+      ]
+    },
+    {
+      "start": 839.44,
+      "end": 844.64,
+      "speaker": "SPEAKER_01",
+      "text": "So the other solution is to say okay we use this three person room but only with two person each",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.020440693739777433,
+        0.7841992747712636,
+        0.02008204868543756,
+        0.1548377936673085,
+        0.02044018913621313
+      ]
+    },
+    {
+      "start": 844.64,
+      "end": 858.48,
+      "speaker": "SPEAKER_01",
+      "text": "time and leave a spare space for the training center. But avoiding having three person full time",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.022288922027995685,
+        0.02304068354898094,
+        0.6328666535185676,
+        0.02222396435060915,
+        0.29957977655384666
+      ]
+    },
+    {
+      "start": 858.56,
+      "end": 866.24,
+      "speaker": "SPEAKER_02",
+      "text": "in the same room could be a good idea. Or again find people who don't work in the same hours. Yeah",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.020349693920632603,
+        0.25881631969158697,
+        0.280513132660787,
+        0.420112573057015,
+        0.020208280669978214
+      ]
+    },
+    {
+      "start": 867.12,
+      "end": 869.28,
+      "speaker": "SPEAKER_02",
+      "text": "I doesn't completely solve the problem but",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.050004351386520755,
+        0.05000225097035001,
+        0.05000255265254358,
+        0.799610870316861,
+        0.05037997467372468
+      ]
+    },
+    {
+      "start": 874.08,
+      "end": 880.16,
+      "speaker": "SPEAKER_01",
+      "text": "So for the reading room we will have a two person room. Yeah I think so. Everybody agrees on that?",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.025281678242372863,
+        0.896929838434906,
+        0.02606060763500861,
+        0.02576340494620119,
+        0.025964470741511352
+      ]
+    },
+    {
+      "start": 880.16,
+      "end": 886.16,
+      "speaker": "SPEAKER_00",
+      "text": "One person will be too small anyways. How about this room? The one on the bottom? Yeah the bottom",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.020502869663794998,
+        0.9183627589939445,
+        0.020797794455403803,
+        0.020001343787569657,
+        0.020335233099287215
+      ]
+    },
+    {
+      "start": 886.16,
+      "end": 890.88,
+      "speaker": "SPEAKER_00",
+      "text": "in the middle. Yeah it's a room. Use the mountains. Yeah it has three windows so I think it's",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.022668800309631743,
+        0.023031342586279566,
+        0.26191189578896207,
+        0.02234296083981049,
+        0.6700450004753161
+      ]
+    },
+    {
+      "start": 890.88,
+      "end": 899.04,
+      "speaker": "SPEAKER_02",
+      "text": "two. Two? Well which there's three two person rooms. The the middle one. That has two windows. Yeah",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.015572296138597352,
+        0.554811568858188,
+        0.01596493711463207,
+        0.01538505370612371,
+        0.39826614418245865
+      ]
+    },
+    {
+      "start": 899.76,
+      "end": 905.6,
+      "speaker": "SPEAKER_01",
+      "text": "it's which is fine and still a big room. Big black stripe is the windows. Oh that's",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.0252977816691221,
+        0.02535904493961334,
+        0.025058884469199516,
+        0.025124551978996348,
+        0.8991597369430687
+      ]
+    },
+    {
+      "start": 905.6,
+      "end": 911.52,
+      "speaker": "SPEAKER_01",
+      "text": "the same one between the big. Oh okay. Yeah sorry I should have explained that. But",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.029199315938432904,
+        0.028871653463929215,
+        0.19416964834290554,
+        0.31379551404419814,
+        0.4339638682105342
+      ]
+    },
+    {
+      "start": 911.6,
+      "end": 916.8,
+      "speaker": "SPEAKER_01",
+      "text": "what about the the other one which has only one windows but in the courtyard it may be more quiet.",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.8390916697907268,
+        0.04027751428211621,
+        0.0400014467991149,
+        0.04020451911911974,
+        0.040424850008922354
+      ]
+    },
+    {
+      "start": 917.92,
+      "end": 926.16,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah but then you don't get a lot of light for reading. We have electricity so I hope. Really?",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.033665998539555445,
+        0.03385154413811262,
+        0.864591438604694,
+        0.03366417339132851,
+        0.03422684532630941
+      ]
+    },
+    {
+      "start": 928.4,
+      "end": 932.4,
+      "speaker": "SPEAKER_01",
+      "text": "It's a question I mean it's quite noisy outside with the streets and",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.45827682378219803,
+        0.029226762073651446,
+        0.02897807958811714,
+        0.45435052048349833,
+        0.02916781407253516
+      ]
+    },
+    {
+      "start": 934.56,
+      "end": 939.84,
+      "speaker": "SPEAKER_03",
+      "text": "that's on the sixth floor I don't know. Yeah we are on the sixth floor. I know I like the idea of",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.020013644496118053,
+        0.020028961403464367,
+        0.9193200324432604,
+        0.020314785143219674,
+        0.020322576513937478
+      ]
+    },
+    {
+      "start": 939.84,
+      "end": 948.08,
+      "speaker": "SPEAKER_01",
+      "text": "looking out over yeah me too. It's a relaxing room. Well that's the whole point right it's just",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.02536678359066892,
+        0.898387239455631,
+        0.026084840691205816,
+        0.0250011253599139,
+        0.025160010902580316
+      ]
+    },
+    {
+      "start": 948.08,
+      "end": 952.64,
+      "speaker": "SPEAKER_02",
+      "text": "somewhere to get out of your office and go and do something else for a while whether you're reading or",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.022656267554944005,
+        0.022632187588977445,
+        0.9091191117571832,
+        0.022804532128143123,
+        0.022787900970752468
+      ]
+    },
+    {
+      "start": 952.64,
+      "end": 958.48,
+      "speaker": "SPEAKER_00",
+      "text": "just kind of staring off into space. Yeah you can look outside of the window if you have a quick meeting.",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.9093677491732058,
+        0.022368397428893745,
+        0.023073976990433762,
+        0.022334026953408102,
+        0.022855849454058486
+      ]
+    },
+    {
+      "start": 959.68,
+      "end": 965.36,
+      "speaker": "SPEAKER_01",
+      "text": "So what about one of the rooms in the corner? So you have three windows it's even better. Yeah we",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.022643975450774352,
+        0.5794457412351242,
+        0.023540475991467077,
+        0.023823498371727342,
+        0.35054630895090705
+      ]
+    },
+    {
+      "start": 965.36,
+      "end": 974.08,
+      "speaker": "SPEAKER_01",
+      "text": "could do that. But you have less wall to put shelves and stuff like that. If you intend the reading",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.02072166073135424,
+        0.020355239257154698,
+        0.9187312210588903,
+        0.020018898520367465,
+        0.020172980432233333
+      ]
+    },
+    {
+      "start": 974.08,
+      "end": 983.76,
+      "speaker": "SPEAKER_02",
+      "text": "room being more a library or. We have some shelves like cabinet type shelves for the reading room",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.020247699801645105,
+        0.9192075521645923,
+        0.020278141664685265,
+        0.020083777455201984,
+        0.0201828289138754
+      ]
+    },
+    {
+      "start": 983.76,
+      "end": 989.2,
+      "speaker": "SPEAKER_02",
+      "text": "but it's not really intended to be a library. I mean we have yeah and a tea library.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.028861409822174115,
+        0.4331797593476966,
+        0.48002150916427744,
+        0.02926344886542769,
+        0.0286738728004242
+      ]
+    },
+    {
+      "start": 989.28,
+      "end": 998.56,
+      "speaker": "SPEAKER_02",
+      "text": "But the other idea is to take because right now we all have bookshelves so one idea might be to take",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.026294239585238507,
+        0.23101593830815742,
+        0.6907104139663771,
+        0.02618584055928951,
+        0.025793567580937506
+      ]
+    },
+    {
+      "start": 998.56,
+      "end": 1003.92,
+      "speaker": "SPEAKER_02",
+      "text": "sort of the books that aren't frequently used by people but them all into that room. Yeah.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.3854654834130497,
+        0.5273997124533149,
+        0.029652688528029596,
+        0.028694449785643214,
+        0.028787665819962727
+      ]
+    },
+    {
+      "start": 1003.92,
+      "end": 1008.56,
+      "speaker": "SPEAKER_02",
+      "text": "So it becomes sort of. Kind of yeah. It's full library. Mini library but not like a library system",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.022837360010767343,
+        0.022753725392654182,
+        0.35466575647756954,
+        0.5772876014750682,
+        0.022455556643940857
+      ]
+    },
+    {
+      "start": 1008.56,
+      "end": 1012.0,
+      "speaker": "SPEAKER_02",
+      "text": "library just. No no no. Go and borrow your colleagues books.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.050005222483431304,
+        0.7961167434404012,
+        0.050851104965281634,
+        0.05245238858621906,
+        0.05057454052466685
+      ]
+    },
+    {
+      "start": 1019.44,
+      "end": 1028.32,
+      "speaker": "SPEAKER_01",
+      "text": "So are we all agree about these two person rooms which one? I don't know or not corner.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.02513255186804326,
+        0.025720013599244102,
+        0.025045490912889684,
+        0.025037742033141627,
+        0.8990642015866813
+      ]
+    },
+    {
+      "start": 1029.28,
+      "end": 1035.68,
+      "speaker": "SPEAKER_02",
+      "text": "I think the middle one. The middle one. Yeah. It's also sort of central to the layout so everyone",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.4263744630556405,
+        0.02058661603810173,
+        0.020806210889844134,
+        0.020160279351936154,
+        0.5120724306644776
+      ]
+    },
+    {
+      "start": 1035.68,
+      "end": 1041.28,
+      "speaker": "SPEAKER_02",
+      "text": "sort of has more or less the same distance to it's not that it makes that much of a difference but",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.8395466855822823,
+        0.04000134201718713,
+        0.04015546348700835,
+        0.04010264951307926,
+        0.040193859400442886
+      ]
+    },
+    {
+      "start": 1041.52,
+      "end": 1049.68,
+      "speaker": "SPEAKER_01",
+      "text": "why not? So we can exclude this one to make an office. Yeah.",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.8594011995613251,
+        0.0352757359444339,
+        0.03500329277064324,
+        0.03537540450700192,
+        0.03494436721659596
+      ]
+    },
+    {
+      "start": 1051.6,
+      "end": 1057.2,
+      "speaker": "SPEAKER_01",
+      "text": "Actually what I can do is. Oh maybe right on the board I don't know.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.028895027228658738,
+        0.029408045991721435,
+        0.42647264151572545,
+        0.02864311880742632,
+        0.486581166456468
+      ]
+    },
+    {
+      "start": 1058.16,
+      "end": 1063.12,
+      "speaker": "SPEAKER_02",
+      "text": "Actually it's a good idea. Just put it up. So we have the map and.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.033378279235751464,
+        0.03374968865582114,
+        0.03418925998895014,
+        0.43127444386358654,
+        0.46740832825589085
+      ]
+    },
+    {
+      "start": 1063.12,
+      "end": 1078.96,
+      "speaker": "SPEAKER_02",
+      "text": "So this really isn't too scale but oh well.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.04036768480285875,
+        0.04206833764836043,
+        0.04065008288290902,
+        0.040002516087282725,
+        0.8369113785785892
+      ]
+    },
+    {
+      "start": 1087.28,
+      "end": 1088.56,
+      "speaker": "SPEAKER_02",
+      "text": "That's really not to scale.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.06805876623067549,
+        0.06755320329338534,
+        0.06873365815269934,
+        0.06667212538733489,
+        0.728982246935905
+      ]
+    },
+    {
+      "start": 1088.56,
+      "end": 1096.88,
+      "speaker": "SPEAKER_02",
+      "text": "That's alright. Good enough. So we've got an office there.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.05041012169750571,
+        0.05046119675273928,
+        0.05050899242277609,
+        0.7969534983275967,
+        0.05166619079938234
+      ]
+    },
+    {
+      "start": 1104.64,
+      "end": 1114.32,
+      "speaker": "SPEAKER_01",
+      "text": "There's two and one. Yeah. Oh. So.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.04087396555929998,
+        0.04103142999850235,
+        0.2637655755835211,
+        0.040000960393494475,
+        0.6143280684651821
+      ]
+    },
+    {
+      "start": 1114.64,
+      "end": 1122.0,
+      "speaker": "SPEAKER_02",
+      "text": "I guess this is. That and this becomes the reading room right? Okay.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.03447426653871202,
+        0.6867424474151747,
+        0.034088195685849844,
+        0.21129224264034382,
+        0.03340284771991968
+      ]
+    },
+    {
+      "start": 1134.64,
+      "end": 1140.8,
+      "speaker": "SPEAKER_01",
+      "text": "Is that a mountain? Yes. Okay. And the. And the.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.2995046404843733,
+        0.050325109403415155,
+        0.05000240480035866,
+        0.5501653620701127,
+        0.05000248324174016
+      ]
+    },
+    {
+      "start": 1141.6,
+      "end": 1146.24,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah. We decided also the administration stuff and. Sure.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.029244536028016264,
+        0.028587928337576254,
+        0.8846288442936268,
+        0.028742502475946254,
+        0.028796188864834524
+      ]
+    },
+    {
+      "start": 1147.76,
+      "end": 1152.0,
+      "speaker": "SPEAKER_01",
+      "text": "So we exclude the the thing we are quite sure and then we discuss there.",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.8654937063203251,
+        0.033369494132193145,
+        0.034291734959297375,
+        0.033482898630193506,
+        0.03336216595799103
+      ]
+    },
+    {
+      "start": 1152.0,
+      "end": 1159.28,
+      "speaker": "SPEAKER_00",
+      "text": "I was thinking of maybe we should assign Gisella into this three person office because we will",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.028614965269659155,
+        0.029373956796876245,
+        0.02866979195332391,
+        0.02908843221986155,
+        0.8842528537602792
+      ]
+    },
+    {
+      "start": 1159.28,
+      "end": 1165.92,
+      "speaker": "SPEAKER_00",
+      "text": "probably place the printer next to the mailboxes and we could have Gisella and the two 50% people",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.020657123005253044,
+        0.02141227544694128,
+        0.020324422720500734,
+        0.020667629366458024,
+        0.916938549460847
+      ]
+    },
+    {
+      "start": 1165.92,
+      "end": 1171.68,
+      "speaker": "SPEAKER_01",
+      "text": "sharing the three person. That's really noisy to be in the same office.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.028760737661763333,
+        0.029463823404846403,
+        0.02885955276422896,
+        0.029212810670622643,
+        0.8837030754985387
+      ]
+    },
+    {
+      "start": 1171.68,
+      "end": 1175.84,
+      "speaker": "SPEAKER_01",
+      "text": "Well the administration. But if Gisella works 50% and they work 50%.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.033388363645960525,
+        0.36275199822054255,
+        0.03362532787418271,
+        0.5363151282874009,
+        0.03391918197191321
+      ]
+    },
+    {
+      "start": 1175.84,
+      "end": 1179.52,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah. That just imply you expect people to come when Gisella is not working.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.03376216718325334,
+        0.8633351389533899,
+        0.03550272908409734,
+        0.033929755493431336,
+        0.0334702092858281
+      ]
+    },
+    {
+      "start": 1179.52,
+      "end": 1182.08,
+      "speaker": "SPEAKER_01",
+      "text": "That's sure. And that's not really fair if you. Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.04045220765545701,
+        0.27483681294739754,
+        0.6045061020827257,
+        0.04000557789829255,
+        0.040199299416127245
+      ]
+    },
+    {
+      "start": 1182.56,
+      "end": 1188.96,
+      "speaker": "SPEAKER_01",
+      "text": "Well I mean we can put Gisella into two people room which is near the mailbox.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.020107970040398066,
+        0.9192889046168257,
+        0.0201572530406121,
+        0.02012106820993923,
+        0.020324804092224764
+      ]
+    },
+    {
+      "start": 1188.96,
+      "end": 1202.96,
+      "speaker": "SPEAKER_00",
+      "text": "Yeah. We could. I don't know. We could. I mean I don't know how noisy she is.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.025141653974965768,
+        0.02527633740630952,
+        0.5962202192752227,
+        0.025296677309285434,
+        0.32806511203421657
+      ]
+    },
+    {
+      "start": 1202.96,
+      "end": 1207.76,
+      "speaker": "SPEAKER_00",
+      "text": "It's just a question you always have the phone ringing even if they have even when she's not working.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.028622234929545628,
+        0.028684075011932136,
+        0.028584370685403156,
+        0.8855121329942769,
+        0.02859718637884208
+      ]
+    },
+    {
+      "start": 1207.76,
+      "end": 1214.4,
+      "speaker": "SPEAKER_02",
+      "text": "Does she not have her own printer? Yes. Yes. It does. Yeah but that's a good point from Niko's to say",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.8976441938852179,
+        0.025552553590514972,
+        0.025516277159289398,
+        0.02613529080853444,
+        0.02515168455644343
+      ]
+    },
+    {
+      "start": 1214.4,
+      "end": 1218.48,
+      "speaker": "SPEAKER_01",
+      "text": "that she needs to be near the mailbox and the printer and.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.04069066783497273,
+        0.5185967385953999,
+        0.040093549820131795,
+        0.04014055496298464,
+        0.36047848878651084
+      ]
+    },
+    {
+      "start": 1219.44,
+      "end": 1221.44,
+      "speaker": "SPEAKER_01",
+      "text": "Well if you put her in the photography and stuff.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.040002637228993165,
+        0.3702695132292261,
+        0.5093292707632594,
+        0.0400997311662702,
+        0.04029884761225131
+      ]
+    },
+    {
+      "start": 1221.44,
+      "end": 1225.84,
+      "speaker": "SPEAKER_02",
+      "text": "In this room here it's relatively close.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.06668003363967798,
+        0.7316857741027842,
+        0.06667412979659047,
+        0.06667657393959765,
+        0.06828348852134969
+      ]
+    },
+    {
+      "start": 1225.84,
+      "end": 1230.16,
+      "speaker": "SPEAKER_01",
+      "text": "Except the door is not really convenient for her. Convenient.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.050637435717518324,
+        0.05041209222660338,
+        0.0509141106620783,
+        0.050003705897298065,
+        0.7980326554965019
+      ]
+    },
+    {
+      "start": 1230.8,
+      "end": 1231.12,
+      "speaker": "SPEAKER_02",
+      "text": "Sure.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10086068260615999,
+        0.1000027102239354,
+        0.5991295562132408,
+        0.10000396673868933,
+        0.10000308421797435
+      ]
+    },
+    {
+      "start": 1231.12,
+      "end": 1231.68,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1235.04,
+      "end": 1236.64,
+      "speaker": "SPEAKER_01",
+      "text": "But I think if the main.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.06682498624769934,
+        0.06681559033095193,
+        0.06666853382881278,
+        0.732072219785244,
+        0.06761866980729203
+      ]
+    },
+    {
+      "start": 1239.04,
+      "end": 1239.92,
+      "speaker": "SPEAKER_01",
+      "text": "How can I put that?",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10000301356018639,
+        0.10263814168983275,
+        0.5948550811907773,
+        0.10102162384144622,
+        0.10148213971775732
+      ]
+    },
+    {
+      "start": 1248.32,
+      "end": 1254.72,
+      "speaker": "SPEAKER_01",
+      "text": "If the main reason to put to choose Gisella's place is the proximity of the mailbox.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.028774016593445622,
+        0.02926739509942771,
+        0.029093420345137032,
+        0.8834431688244642,
+        0.02942199913752551
+      ]
+    },
+    {
+      "start": 1255.52,
+      "end": 1258.72,
+      "speaker": "SPEAKER_01",
+      "text": "It should be a two people room and not three people room.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.02864467585427732,
+        0.885349051999833,
+        0.028571615543577004,
+        0.028571676946128898,
+        0.02886297965618377
+      ]
+    },
+    {
+      "start": 1259.68,
+      "end": 1263.04,
+      "speaker": "SPEAKER_01",
+      "text": "Okay. It's fine with me.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.06667580397615952,
+        0.06667126692880847,
+        0.0666717702036906,
+        0.7324764197991777,
+        0.06750473909216367
+      ]
+    },
+    {
+      "start": 1263.04,
+      "end": 1264.8,
+      "speaker": "SPEAKER_01",
+      "text": "Otherwise we have one people room.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.05126318013517738,
+        0.7977801013188793,
+        0.05000038682757325,
+        0.05000051009059119,
+        0.050955821627778945
+      ]
+    },
+    {
+      "start": 1264.8,
+      "end": 1270.88,
+      "speaker": "SPEAKER_02",
+      "text": "I don't know how much the proximity to the mailbox matters because usually when she's here and she picks up the mail",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.04092697825893182,
+        0.04015591422843096,
+        0.04017466503013351,
+        0.2861839433603094,
+        0.5925584991221944
+      ]
+    },
+    {
+      "start": 1270.88,
+      "end": 1272.48,
+      "speaker": "SPEAKER_02",
+      "text": "she actually brings it to your office.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.06681960634711251,
+        0.06786551810311788,
+        0.06704458993047484,
+        0.06807547813041384,
+        0.7301948074888809
+      ]
+    },
+    {
+      "start": 1272.48,
+      "end": 1273.2,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah. It's not that.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1273.2,
+      "end": 1276.16,
+      "speaker": "SPEAKER_02",
+      "text": "It's more the administrative administration that uses our mailboxes.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.05176198750198478,
+        0.050461272728896944,
+        0.050675868944349944,
+        0.050668645509881254,
+        0.796432225314887
+      ]
+    },
+    {
+      "start": 1276.16,
+      "end": 1277.52,
+      "speaker": "SPEAKER_01",
+      "text": "This is the place of the photography.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.06874287694737248,
+        0.06749925447380233,
+        0.7243413516930498,
+        0.07229463841188609,
+        0.06712187847388923
+      ]
+    },
+    {
+      "start": 1277.52,
+      "end": 1278.0,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1278.0,
+      "end": 1280.4,
+      "speaker": "SPEAKER_03",
+      "text": "And the place where we all pass kind of.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.0688890982775701,
+        0.06695945599250618,
+        0.06694087064268402,
+        0.7304203695507159,
+        0.06679020553652386
+      ]
+    },
+    {
+      "start": 1280.4,
+      "end": 1281.36,
+      "speaker": "SPEAKER_03",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1282.88,
+      "end": 1283.52,
+      "speaker": "SPEAKER_03",
+      "text": "That's true.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10000820802062024,
+        0.10000416655062885,
+        0.5999768070148989,
+        0.10000608607072373,
+        0.10000473234312827
+      ]
+    },
+    {
+      "start": 1288.32,
+      "end": 1294.24,
+      "speaker": "SPEAKER_01",
+      "text": "Because if we put the photography near the mailbox and it seems to be the only place where there is room.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.02909986575799311,
+        0.7115179606259704,
+        0.029292866593616577,
+        0.20088216826004585,
+        0.029207138762374168
+      ]
+    },
+    {
+      "start": 1294.24,
+      "end": 1294.56,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1295.6,
+      "end": 1295.76,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1295.76,
+      "end": 1299.12,
+      "speaker": "SPEAKER_02",
+      "text": "Unless you put it into an office which is just annoying I think.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.04009459430130397,
+        0.041257731583662735,
+        0.04086331222671165,
+        0.040968386314159035,
+        0.8368159755741627
+      ]
+    },
+    {
+      "start": 1299.12,
+      "end": 1299.6,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1299.6,
+      "end": 1302.0,
+      "speaker": "SPEAKER_02",
+      "text": "Even if you put it into Gisella's office it's going to be.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.03335622880169329,
+        0.03434834900216233,
+        0.03422124310011161,
+        0.8640762912488669,
+        0.03399788784716591
+      ]
+    },
+    {
+      "start": 1302.0,
+      "end": 1302.64,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1302.64,
+      "end": 1303.52,
+      "speaker": "SPEAKER_01",
+      "text": "And it's too big and.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.10000384248258462,
+        0.10000196987722715,
+        0.10033438743633245,
+        0.1000029112064746,
+        0.5996568889973811
+      ]
+    },
+    {
+      "start": 1304.24,
+      "end": 1304.4,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1305.12,
+      "end": 1305.92,
+      "speaker": "UNKNOWN",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1310.16,
+      "end": 1311.44,
+      "speaker": "SPEAKER_00",
+      "text": "Okay. Maybe we should write this down.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.06666994696851004,
+        0.06666833121246539,
+        0.06762215058314407,
+        0.40025542516540413,
+        0.39878414607047646
+      ]
+    },
+    {
+      "start": 1311.44,
+      "end": 1316.32,
+      "speaker": "SPEAKER_00",
+      "text": "Do we agree that the photo copier and the network printer goes next to the mailbox?",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.028798134075405837,
+        0.028737095481883423,
+        0.02876056739267305,
+        0.02896171480667817,
+        0.8847424882433595
+      ]
+    },
+    {
+      "start": 1316.32,
+      "end": 1316.56,
+      "speaker": "SPEAKER_00",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1316.56,
+      "end": 1317.28,
+      "speaker": "SPEAKER_00",
+      "text": "Yeah. That's good.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.06743517871325674,
+        0.06711264552871891,
+        0.39932302710199824,
+        0.39946140872521313,
+        0.06666773993081308
+      ]
+    },
+    {
+      "start": 1317.28,
+      "end": 1317.44,
+      "speaker": "SPEAKER_00",
+      "text": "Okay.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.10000083919015729,
+        0.1000004449711929,
+        0.10000046964567934,
+        0.5999977557558931,
+        0.10000049043707734
+      ]
+    },
+    {
+      "start": 1317.6,
+      "end": 1319.6,
+      "speaker": "SPEAKER_02",
+      "text": "Okay.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.10000083919015729,
+        0.1000004449711929,
+        0.10000046964567934,
+        0.5999977557558931,
+        0.10000049043707734
+      ]
+    },
+    {
+      "start": 1333.04,
+      "end": 1336.4,
+      "speaker": "SPEAKER_01",
+      "text": "For the moment put Gisella in this corner room if you agree.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.033335196816056616,
+        0.034888733884950576,
+        0.03380744480981654,
+        0.03371290081189793,
+        0.8642557236772784
+      ]
+    },
+    {
+      "start": 1337.04,
+      "end": 1337.52,
+      "speaker": "SPEAKER_01",
+      "text": "I don't know.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.10000203203716311,
+        0.10000111063996876,
+        0.1017687436370691,
+        0.10142834354996735,
+        0.5967997701358316
+      ]
+    },
+    {
+      "start": 1338.32,
+      "end": 1338.56,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1339.12,
+      "end": 1343.52,
+      "speaker": "SPEAKER_02",
+      "text": "But at the beginning we said that we were going to give her one of the one person rooms.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.029224318657941402,
+        0.8836038913919717,
+        0.02880933669919686,
+        0.028976628556718634,
+        0.02938582469417153
+      ]
+    },
+    {
+      "start": 1343.52,
+      "end": 1343.76,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1344.4,
+      "end": 1344.56,
+      "speaker": "UNKNOWN",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1345.36,
+      "end": 1348.32,
+      "speaker": "SPEAKER_01",
+      "text": "But there were this option of putting the line near the photography.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.04000401239845752,
+        0.838810978961277,
+        0.040892425010646216,
+        0.04012139589557472,
+        0.040171187734044544
+      ]
+    },
+    {
+      "start": 1350.16,
+      "end": 1350.4,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1357.6,
+      "end": 1359.52,
+      "speaker": "SPEAKER_00",
+      "text": "I mean she's sharing an office right now and",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.04038237418662215,
+        0.8371924985240053,
+        0.040535344383938625,
+        0.041312326433473066,
+        0.04057745647196087
+      ]
+    },
+    {
+      "start": 1361.2,
+      "end": 1364.08,
+      "speaker": "SPEAKER_00",
+      "text": "has anybody heard of any complaints that she's loud or.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.10001714224152294,
+        0.1000086147439855,
+        0.10000957098784426,
+        0.10001270704033179,
+        0.5999519649863155
+      ]
+    },
+    {
+      "start": 1365.2,
+      "end": 1368.4,
+      "speaker": "SPEAKER_01",
+      "text": "I mean she's not sharing an office.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.050445045763959,
+        0.7978228554235836,
+        0.05072762987151575,
+        0.050567543854241614,
+        0.05043692508670026
+      ]
+    },
+    {
+      "start": 1368.4,
+      "end": 1370.24,
+      "speaker": "SPEAKER_01",
+      "text": "I mean we put some.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.06739472824001763,
+        0.06852556478876905,
+        0.7300486583383714,
+        0.06695405034678616,
+        0.06707699828605558
+      ]
+    },
+    {
+      "start": 1370.8,
+      "end": 1371.84,
+      "speaker": "SPEAKER_01",
+      "text": "Stagiers in there.",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2
+      ]
+    },
+    {
+      "start": 1372.64,
+      "end": 1375.52,
+      "speaker": "SPEAKER_01",
+      "text": "In Gisella's office because there is a spare room.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.04005300392234072,
+        0.6204588250037002,
+        0.25791570229400335,
+        0.040818620935691795,
+        0.0407538478442639
+      ]
+    },
+    {
+      "start": 1375.52,
+      "end": 1377.28,
+      "speaker": "SPEAKER_01",
+      "text": "And they're not really in a position to complain.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.06742247596372489,
+        0.06715241778691537,
+        0.7315102251641236,
+        0.06667146197065356,
+        0.06724341911458262
+      ]
+    },
+    {
+      "start": 1377.28,
+      "end": 1377.68,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1378.4,
+      "end": 1379.04,
+      "speaker": "SPEAKER_01",
+      "text": "That's quite a.",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.599305390998316,
+        0.10068979109345035,
+        0.10000148817424809,
+        0.10000188510478018,
+        0.10000144462920532
+      ]
+    },
+    {
+      "start": 1380.56,
+      "end": 1386.96,
+      "speaker": "SPEAKER_01",
+      "text": "I mean that's quite important to keep a spare room in Gisella's office if we need more staff.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.15347862438510185,
+        0.6101596261876521,
+        0.19601257560116783,
+        0.020181521284953593,
+        0.020167652541124823
+      ]
+    },
+    {
+      "start": 1389.6,
+      "end": 1391.52,
+      "speaker": "SPEAKER_01",
+      "text": "I wouldn't work in Gisella's office.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.040092675783703124,
+        0.8378672625289513,
+        0.04027536897047834,
+        0.04115599300669886,
+        0.04060869971016857
+      ]
+    },
+    {
+      "start": 1394.72,
+      "end": 1394.96,
+      "speaker": "SPEAKER_01",
+      "text": "Okay.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.10000083919015729,
+        0.1000004449711929,
+        0.10000046964567934,
+        0.5999977557558931,
+        0.10000049043707734
+      ]
+    },
+    {
+      "start": 1395.68,
+      "end": 1397.44,
+      "speaker": "SPEAKER_02",
+      "text": "I think it's just a question of work conditions.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.040078918258153746,
+        0.040420546767372,
+        0.040028053176725906,
+        0.8391693909201389,
+        0.04030309087760954
+      ]
+    },
+    {
+      "start": 1397.44,
+      "end": 1401.92,
+      "speaker": "SPEAKER_02",
+      "text": "Like if you're a stagier and you're only coming in for two months then you can put up with it.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.03333531880916437,
+        0.864812791104523,
+        0.034211017036668075,
+        0.033517209100910134,
+        0.0341236639487345
+      ]
+    },
+    {
+      "start": 1401.92,
+      "end": 1404.08,
+      "speaker": "SPEAKER_02",
+      "text": "But if you're there, you know, for example,",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.10000203203716311,
+        0.10000111063996876,
+        0.1017687436370691,
+        0.10142834354996735,
+        0.5967997701358316
+      ]
+    },
+    {
+      "start": 1404.08,
+      "end": 1404.72,
+      "speaker": "SPEAKER_02",
+      "text": "for the whole year.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.10001249751249433,
+        0.5988667635309228,
+        0.10110361957350283,
+        0.10000926519004978,
+        0.10000785419303013
+      ]
+    },
+    {
+      "start": 1404.72,
+      "end": 1410.0,
+      "speaker": "SPEAKER_01",
+      "text": "So like the ball and there is no room in the cupboard for any people except Gisella",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.02867381850801351,
+        0.3342958980811256,
+        0.028986242711632734,
+        0.02872557153822093,
+        0.5793184691610072
+      ]
+    },
+    {
+      "start": 1410.0,
+      "end": 1413.84,
+      "speaker": "SPEAKER_01",
+      "text": "because she got lots of paper, like knives and knives and stuff like that.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.04023281833307337,
+        0.04020479337555431,
+        0.8375340617319272,
+        0.04038187107869067,
+        0.04164645548075451
+      ]
+    },
+    {
+      "start": 1413.84,
+      "end": 1415.44,
+      "speaker": "SPEAKER_00",
+      "text": "So it's really she needs.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.06833245639883861,
+        0.7276117587215929,
+        0.0694580181741896,
+        0.06667030154188441,
+        0.06792746516349463
+      ]
+    },
+    {
+      "start": 1416.08,
+      "end": 1417.44,
+      "speaker": "SPEAKER_00",
+      "text": "She needs space space.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.05027478064836974,
+        0.05365867776929268,
+        0.7959379958279635,
+        0.05000487792712007,
+        0.0501236678272539
+      ]
+    },
+    {
+      "start": 1417.44,
+      "end": 1417.92,
+      "speaker": "SPEAKER_00",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1418.88,
+      "end": 1421.12,
+      "speaker": "SPEAKER_03",
+      "text": "But we can reserve.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10000822244731293,
+        0.10158333201188878,
+        0.5983973905496128,
+        0.10000631558948093,
+        0.10000473940170446
+      ]
+    },
+    {
+      "start": 1421.12,
+      "end": 1426.8,
+      "speaker": "SPEAKER_03",
+      "text": "So if you reserve two people room we can put the trainees.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.03338620755596209,
+        0.8653734573677168,
+        0.034154661394264846,
+        0.033411962242039406,
+        0.03367371144001696
+      ]
+    },
+    {
+      "start": 1428.24,
+      "end": 1428.72,
+      "speaker": "SPEAKER_00",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1429.2,
+      "end": 1430.88,
+      "speaker": "SPEAKER_03",
+      "text": "No, they need to go in the same room.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.05000200760331786,
+        0.7966295124427363,
+        0.050956740989387274,
+        0.0516848101431179,
+        0.05072692882144065
+      ]
+    },
+    {
+      "start": 1431.52,
+      "end": 1431.92,
+      "speaker": "SPEAKER_03",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1431.92,
+      "end": 1432.24,
+      "speaker": "SPEAKER_00",
+      "text": "Okay.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.10000083919015729,
+        0.1000004449711929,
+        0.10000046964567934,
+        0.5999977557558931,
+        0.10000049043707734
+      ]
+    },
+    {
+      "start": 1432.24,
+      "end": 1434.48,
+      "speaker": "SPEAKER_00",
+      "text": "So Gisella at the southwest office.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.05073063939432395,
+        0.05154024950702048,
+        0.05050796207712713,
+        0.7964335676973678,
+        0.05078758132416071
+      ]
+    },
+    {
+      "start": 1434.48,
+      "end": 1434.72,
+      "speaker": "SPEAKER_00",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1435.36,
+      "end": 1435.52,
+      "speaker": "SPEAKER_03",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1435.52,
+      "end": 1436.16,
+      "speaker": "SPEAKER_03",
+      "text": "The corner.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.1000051698279691,
+        0.10000269697224921,
+        0.10000288837909269,
+        0.10000383381640829,
+        0.5999854110042807
+      ]
+    },
+    {
+      "start": 1442.64,
+      "end": 1443.92,
+      "speaker": "SPEAKER_01",
+      "text": "Are you sure it's southwest?",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.06912599702698452,
+        0.06761479943842143,
+        0.7284468979957841,
+        0.06813791590624146,
+        0.06667438963256851
+      ]
+    },
+    {
+      "start": 1444.56,
+      "end": 1446.08,
+      "speaker": "SPEAKER_01",
+      "text": "I don't know if this if this map is.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.06666956171593715,
+        0.06666814808682353,
+        0.06714910103227488,
+        0.06706296534783894,
+        0.7324502238171255
+      ]
+    },
+    {
+      "start": 1446.08,
+      "end": 1449.36,
+      "speaker": "SPEAKER_02",
+      "text": "So well, southwest if that's north.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.05103839489219658,
+        0.7975720605377303,
+        0.050541186177824875,
+        0.05074721261053851,
+        0.05010114578170972
+      ]
+    },
+    {
+      "start": 1449.36,
+      "end": 1449.84,
+      "speaker": "SPEAKER_01",
+      "text": "Okay.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.10000083919015729,
+        0.1000004449711929,
+        0.10000046964567934,
+        0.5999977557558931,
+        0.10000049043707734
+      ]
+    },
+    {
+      "start": 1449.84,
+      "end": 1450.64,
+      "speaker": "SPEAKER_01",
+      "text": "The map is.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.100007956045552,
+        0.10000400026059589,
+        0.10000444410605243,
+        0.10000615957691267,
+        0.599977440010887
+      ]
+    },
+    {
+      "start": 1450.64,
+      "end": 1451.6,
+      "speaker": "SPEAKER_01",
+      "text": "Southwest for us.",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.5930025933482129,
+        0.10187690456811178,
+        0.10209648587821608,
+        0.10301081407243992,
+        0.10001320213301933
+      ]
+    },
+    {
+      "start": 1452.48,
+      "end": 1452.96,
+      "speaker": "SPEAKER_01",
+      "text": "Okay.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.10000083919015729,
+        0.1000004449711929,
+        0.10000046964567934,
+        0.5999977557558931,
+        0.10000049043707734
+      ]
+    },
+    {
+      "start": 1453.68,
+      "end": 1455.76,
+      "speaker": "SPEAKER_02",
+      "text": "Well, I'm assuming that's what you meant, right?",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.050204482480997625,
+        0.7993648557977926,
+        0.05019110464813589,
+        0.05014205695653493,
+        0.050097500116538865
+      ]
+    },
+    {
+      "start": 1455.76,
+      "end": 1456.16,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1456.64,
+      "end": 1457.68,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah, that one.",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.5141855905009615,
+        0.0678343858664929,
+        0.2833893839913188,
+        0.06666737847767219,
+        0.06792326116355467
+      ]
+    },
+    {
+      "start": 1457.68,
+      "end": 1457.92,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1457.92,
+      "end": 1458.4,
+      "speaker": "SPEAKER_02",
+      "text": "I don't know.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.10000203203716311,
+        0.10000111063996876,
+        0.1017687436370691,
+        0.10142834354996735,
+        0.5967997701358316
+      ]
+    },
+    {
+      "start": 1458.4,
+      "end": 1459.28,
+      "speaker": "SPEAKER_02",
+      "text": "That's how feast anyways.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.06667692407956953,
+        0.06707787116668582,
+        0.7328983546572118,
+        0.06667427111763007,
+        0.06667257897890289
+      ]
+    },
+    {
+      "start": 1460.24,
+      "end": 1460.96,
+      "speaker": "SPEAKER_02",
+      "text": "So that's yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1460.96,
+      "end": 1461.36,
+      "speaker": "SPEAKER_02",
+      "text": "All right.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.10154714507828953,
+        0.5969998673330751,
+        0.10144770978791672,
+        0.10000299850596311,
+        0.10000227929475557
+      ]
+    },
+    {
+      "start": 1461.36,
+      "end": 1462.56,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah, that's how feast.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.06688435414043263,
+        0.06678710869607281,
+        0.7329883248715098,
+        0.06667053604975441,
+        0.06666967624223027
+      ]
+    },
+    {
+      "start": 1462.56,
+      "end": 1463.44,
+      "speaker": "SPEAKER_01",
+      "text": "Anyways, yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.06688369303651116,
+        0.06718960676593427,
+        0.7325864878407283,
+        0.06667053612373286,
+        0.06666967623309324
+      ]
+    },
+    {
+      "start": 1463.44,
+      "end": 1464.72,
+      "speaker": "SPEAKER_02",
+      "text": "This office, right?",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.06724001839002815,
+        0.7297936020082822,
+        0.0674307221087051,
+        0.06792580931442538,
+        0.06760984817855915
+      ]
+    },
+    {
+      "start": 1464.72,
+      "end": 1465.68,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah, this office.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.06730380796977978,
+        0.07074075645546332,
+        0.7206823735151932,
+        0.07133706140612486,
+        0.06993600065343901
+      ]
+    },
+    {
+      "start": 1466.56,
+      "end": 1470.08,
+      "speaker": "SPEAKER_01",
+      "text": "You know, because with mountain mountains and the old town it's not no sorry.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.02857377405238461,
+        0.028619858489478654,
+        0.028729632159804477,
+        0.8850381907655196,
+        0.029038544532812745
+      ]
+    },
+    {
+      "start": 1470.08,
+      "end": 1474.88,
+      "speaker": "SPEAKER_02",
+      "text": "No, I'm very bad at orienting where it's north in Geneva.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.06668357845448028,
+        0.7320173307411961,
+        0.06667602705652627,
+        0.06667909464496129,
+        0.06794396910283615
+      ]
+    },
+    {
+      "start": 1474.88,
+      "end": 1476.24,
+      "speaker": "SPEAKER_02",
+      "text": "I always get it wrong.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.05043404887791402,
+        0.05000170516257785,
+        0.05036043291771008,
+        0.7979793343321672,
+        0.05122447870963095
+      ]
+    },
+    {
+      "start": 1476.24,
+      "end": 1480.0,
+      "speaker": "SPEAKER_02",
+      "text": "But I just assumed that because was talking about orientation here.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.06667511932676656,
+        0.7330088572990543,
+        0.06667201315296929,
+        0.0669725238505496,
+        0.06667148637066021
+      ]
+    },
+    {
+      "start": 1480.0,
+      "end": 1482.72,
+      "speaker": "SPEAKER_01",
+      "text": "Because sunrise and sunshine is quite,",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.7999030386437861,
+        0.050092119626008735,
+        0.050001448704874815,
+        0.05000191038232566,
+        0.05000148264300462
+      ]
+    },
+    {
+      "start": 1482.72,
+      "end": 1484.64,
+      "speaker": "SPEAKER_01",
+      "text": "sunshine sunrise and sunset is quite also.",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.8663849156345713,
+        0.03346274819260967,
+        0.03337941426047118,
+        0.03333523160306109,
+        0.033437690309286734
+      ]
+    },
+    {
+      "start": 1484.64,
+      "end": 1485.44,
+      "speaker": "SPEAKER_01",
+      "text": "Oh, that's true.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.06667302786768695,
+        0.06666987653934728,
+        0.7302449352928059,
+        0.06667153426096672,
+        0.06974062603919313
+      ]
+    },
+    {
+      "start": 1485.44,
+      "end": 1485.92,
+      "speaker": "SPEAKER_01",
+      "text": "A good.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.10036574947432249,
+        0.10024583193236142,
+        0.1000014023126286,
+        0.599385597712059,
+        0.10000141856862843
+      ]
+    },
+    {
+      "start": 1489.44,
+      "end": 1495.28,
+      "speaker": "SPEAKER_02",
+      "text": "So wait, we face the old town now and we're facing",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.05000790558635199,
+        0.05000397446534572,
+        0.05000441547541349,
+        0.7992050069428746,
+        0.05077869753001433
+      ]
+    },
+    {
+      "start": 1496.32,
+      "end": 1500.72,
+      "speaker": "SPEAKER_01",
+      "text": "no east or east sunrise.",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.7999955479857197,
+        0.050000955082338844,
+        0.05000104332289681,
+        0.05000138027938412,
+        0.05000107332966054
+      ]
+    },
+    {
+      "start": 1500.72,
+      "end": 1501.12,
+      "speaker": "SPEAKER_02",
+      "text": "Okay.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.10000083919015729,
+        0.1000004449711929,
+        0.10000046964567934,
+        0.5999977557558931,
+        0.10000049043707734
+      ]
+    },
+    {
+      "start": 1502.48,
+      "end": 1507.28,
+      "speaker": "SPEAKER_02",
+      "text": "So this is east.",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.599991316513548,
+        0.10000188667654183,
+        0.10000203183479184,
+        0.10000268056463897,
+        0.10000208441047946
+      ]
+    },
+    {
+      "start": 1507.28,
+      "end": 1508.48,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah, it's not east.",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.5174540049170414,
+        0.06698156355242449,
+        0.2822285781137515,
+        0.0666680829233378,
+        0.06666777049344477
+      ]
+    },
+    {
+      "start": 1510.64,
+      "end": 1512.88,
+      "speaker": "SPEAKER_01",
+      "text": "We have seen in the morning only.",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.5993455849733391,
+        0.10000185957469475,
+        0.10033350125797408,
+        0.10000271423953208,
+        0.10031633995446006
+      ]
+    },
+    {
+      "start": 1514.96,
+      "end": 1515.28,
+      "speaker": "SPEAKER_03",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1516.72,
+      "end": 1517.84,
+      "speaker": "SPEAKER_03",
+      "text": "When do we have suns?",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.10003099896956241,
+        0.1000155661387042,
+        0.1000172958242267,
+        0.5966506163524963,
+        0.1032855227150103
+      ]
+    },
+    {
+      "start": 1517.84,
+      "end": 1523.68,
+      "speaker": "SPEAKER_01",
+      "text": "So it does mean that the three-piece room which is in the opposite of the north east",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.2863070190829579,
+        0.593209753126118,
+        0.040360179993165005,
+        0.040002326928046436,
+        0.04012072086971257
+      ]
+    },
+    {
+      "start": 1524.4,
+      "end": 1525.84,
+      "speaker": "SPEAKER_01",
+      "text": "is the most sunny one.",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.5952624687574403,
+        0.10181963403211544,
+        0.10000088997318668,
+        0.10000114983422362,
+        0.10291585740303402
+      ]
+    },
+    {
+      "start": 1525.84,
+      "end": 1526.24,
+      "speaker": "SPEAKER_02",
+      "text": "This one.",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.5952624687574403,
+        0.10181963403211544,
+        0.10000088997318668,
+        0.10000114983422362,
+        0.10291585740303402
+      ]
+    },
+    {
+      "start": 1528.64,
+      "end": 1529.36,
+      "speaker": "SPEAKER_02",
+      "text": "Let's say that.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.06720351455031723,
+        0.7290988718289338,
+        0.06679555234822687,
+        0.0666775689519421,
+        0.07022449232057987
+      ]
+    },
+    {
+      "start": 1530.48,
+      "end": 1532.16,
+      "speaker": "SPEAKER_01",
+      "text": "It's the one you have.",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.5952624687574403,
+        0.10181963403211544,
+        0.10000088997318668,
+        0.10000114983422362,
+        0.10291585740303402
+      ]
+    },
+    {
+      "start": 1534.56,
+      "end": 1535.2,
+      "speaker": "SPEAKER_01",
+      "text": "It's the oven.",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2
+      ]
+    },
+    {
+      "start": 1536.72,
+      "end": 1538.4,
+      "speaker": "SPEAKER_03",
+      "text": "Well, there's a lot of sunsets.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.05104744777229175,
+        0.7969400634370888,
+        0.05068761741041147,
+        0.05000618722370613,
+        0.051318684156501725
+      ]
+    },
+    {
+      "start": 1538.4,
+      "end": 1540.64,
+      "speaker": "SPEAKER_01",
+      "text": "You get the sunset and no.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.06913243714415503,
+        0.06758335665552745,
+        0.06701322215979043,
+        0.06713533312413096,
+        0.7291356509163962
+      ]
+    },
+    {
+      "start": 1542.4,
+      "end": 1544.16,
+      "speaker": "SPEAKER_01",
+      "text": "And it's really warm and it's yeah,",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.05071522645450976,
+        0.39062057941798534,
+        0.4582676027981224,
+        0.05000387847799039,
+        0.05039271285139206
+      ]
+    },
+    {
+      "start": 1544.16,
+      "end": 1544.72,
+      "speaker": "SPEAKER_01",
+      "text": "it's really warm.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.0683395380813328,
+        0.7277643288846883,
+        0.06929467773966458,
+        0.06667143759016207,
+        0.06793001770415234
+      ]
+    },
+    {
+      "start": 1544.72,
+      "end": 1546.16,
+      "speaker": "SPEAKER_00",
+      "text": "You get lots of suns during summer.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.05013972172853621,
+        0.05048568136833602,
+        0.05086293586777054,
+        0.05088524575253122,
+        0.7976264152828261
+      ]
+    },
+    {
+      "start": 1546.16,
+      "end": 1546.96,
+      "speaker": "SPEAKER_00",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1546.96,
+      "end": 1547.44,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1547.44,
+      "end": 1551.68,
+      "speaker": "SPEAKER_01",
+      "text": "By the way, is it a six-floor building or is it more?",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.06667290006256182,
+        0.06667010048321677,
+        0.06708787842310358,
+        0.06782724295386024,
+        0.7317418780772575
+      ]
+    },
+    {
+      "start": 1551.68,
+      "end": 1553.04,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah, we're the top floor.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.32139555715461177,
+        0.05009016408601187,
+        0.5275310072673475,
+        0.0500090554622216,
+        0.050974216029807264
+      ]
+    },
+    {
+      "start": 1553.04,
+      "end": 1553.84,
+      "speaker": "SPEAKER_01",
+      "text": "Okay.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.10000083919015729,
+        0.1000004449711929,
+        0.10000046964567934,
+        0.5999977557558931,
+        0.10000049043707734
+      ]
+    },
+    {
+      "start": 1553.84,
+      "end": 1555.12,
+      "speaker": "SPEAKER_01",
+      "text": "So it's warm.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.1000124872700448,
+        0.5999635785160611,
+        0.10000748210215078,
+        0.10000925604351846,
+        0.10000719606822496
+      ]
+    },
+    {
+      "start": 1555.12,
+      "end": 1555.52,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1556.56,
+      "end": 1559.84,
+      "speaker": "SPEAKER_02",
+      "text": "The building design is pretty much the same as the one we have now.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.04099560549717605,
+        0.040187252673779116,
+        0.04000156229658001,
+        0.040146029906024824,
+        0.83866954962644
+      ]
+    },
+    {
+      "start": 1559.84,
+      "end": 1564.32,
+      "speaker": "SPEAKER_02",
+      "text": "We're just getting more space this way because we couldn't move in the other building",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.02890391874372432,
+        0.028573271851170316,
+        0.030445893242862034,
+        0.028955473696627675,
+        0.8831214424656156
+      ]
+    },
+    {
+      "start": 1564.32,
+      "end": 1566.0,
+      "speaker": "SPEAKER_02",
+      "text": "because it was occupied by the other departments.",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2
+      ]
+    },
+    {
+      "start": 1566.24,
+      "end": 1567.28,
+      "speaker": "UNKNOWN",
+      "text": "Okay.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.10000083919015729,
+        0.1000004449711929,
+        0.10000046964567934,
+        0.5999977557558931,
+        0.10000049043707734
+      ]
+    },
+    {
+      "start": 1573.28,
+      "end": 1574.4,
+      "speaker": "SPEAKER_03",
+      "text": "Okay, good.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.06677569515966242,
+        0.06673859317816157,
+        0.06666720882189899,
+        0.7331512833226023,
+        0.06666721951767487
+      ]
+    },
+    {
+      "start": 1579.68,
+      "end": 1581.76,
+      "speaker": "SPEAKER_01",
+      "text": "So how many rooms?",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.06668003324021733,
+        0.7313142075348109,
+        0.06667412791139281,
+        0.06836844536571199,
+        0.06696318594786692
+      ]
+    },
+    {
+      "start": 1583.52,
+      "end": 1585.84,
+      "speaker": "SPEAKER_01",
+      "text": "And how many places do we have?",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.06718322452308288,
+        0.06738438679219867,
+        0.06694329076214489,
+        0.7316961807301752,
+        0.06679291719239838
+      ]
+    },
+    {
+      "start": 1585.84,
+      "end": 1590.08,
+      "speaker": "SPEAKER_03",
+      "text": "So we have reserved out to change it on here as well.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.06667297869472817,
+        0.7300314331221596,
+        0.06974958757916297,
+        0.06667151900378353,
+        0.0668744816001658
+      ]
+    },
+    {
+      "start": 1593.44,
+      "end": 1595.36,
+      "speaker": "SPEAKER_02",
+      "text": "So that's Jazeela?",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10001122358367777,
+        0.10000564197791889,
+        0.5999683437218922,
+        0.10000832127028793,
+        0.10000646944622314
+      ]
+    },
+    {
+      "start": 1595.36,
+      "end": 1598.48,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah, plus one sprayer.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.05200579322812933,
+        0.6454523166370247,
+        0.2015524583713121,
+        0.05000150517861792,
+        0.05098792658491592
+      ]
+    },
+    {
+      "start": 1598.48,
+      "end": 1602.56,
+      "speaker": "SPEAKER_01",
+      "text": "A place but really the last place to be used.",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.8371033141296472,
+        0.04024090366266278,
+        0.0408116582635027,
+        0.04137114964629682,
+        0.040472974297890506
+      ]
+    },
+    {
+      "start": 1603.28,
+      "end": 1604.32,
+      "speaker": "SPEAKER_02",
+      "text": "Plus facts.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.06667715909584694,
+        0.39999267086897566,
+        0.39998331675540755,
+        0.06667427286727469,
+        0.06667258041249517
+      ]
+    },
+    {
+      "start": 1605.2,
+      "end": 1605.44,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1608.72,
+      "end": 1612.8,
+      "speaker": "SPEAKER_02",
+      "text": "And then this is the reading room.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.0666689695565829,
+        0.7326065165831435,
+        0.06709567259317524,
+        0.0666683731024695,
+        0.06696046816462885
+      ]
+    },
+    {
+      "start": 1612.8,
+      "end": 1613.12,
+      "speaker": "SPEAKER_01",
+      "text": "Okay.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.10000083919015729,
+        0.1000004449711929,
+        0.10000046964567934,
+        0.5999977557558931,
+        0.10000049043707734
+      ]
+    },
+    {
+      "start": 1618.8,
+      "end": 1623.04,
+      "speaker": "SPEAKER_02",
+      "text": "Um, so that leaves us with what?",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10000821161963312,
+        0.10000412857915932,
+        0.5999766328778103,
+        0.1000062172834329,
+        0.1000048096399643
+      ]
+    },
+    {
+      "start": 1623.04,
+      "end": 1624.4,
+      "speaker": "SPEAKER_01",
+      "text": "We get two, three, four.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.05013346153357796,
+        0.051658368357646096,
+        0.050160365600593435,
+        0.05021608103063497,
+        0.7978317234775476
+      ]
+    },
+    {
+      "start": 1625.84,
+      "end": 1630.72,
+      "speaker": "SPEAKER_02",
+      "text": "Fourteen places, which is 14 people.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.06885613357917468,
+        0.3992253001349123,
+        0.06731179391553592,
+        0.3974821176666253,
+        0.06712465470375191
+      ]
+    },
+    {
+      "start": 1632.32,
+      "end": 1633.12,
+      "speaker": "SPEAKER_00",
+      "text": "For 14 people.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.10101783457591888,
+        0.5987297145234918,
+        0.10000057177749214,
+        0.1000008032034376,
+        0.10025107591965957
+      ]
+    },
+    {
+      "start": 1633.12,
+      "end": 1633.28,
+      "speaker": "SPEAKER_00",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1633.28,
+      "end": 1634.24,
+      "speaker": "SPEAKER_00",
+      "text": "For 15 people.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.10101783457591888,
+        0.5987297145234918,
+        0.10000057177749214,
+        0.1000008032034376,
+        0.10025107591965957
+      ]
+    },
+    {
+      "start": 1634.24,
+      "end": 1636.4,
+      "speaker": "SPEAKER_02",
+      "text": "No, for 14 because Jazeela's already.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.06668176053675254,
+        0.06667425188409366,
+        0.7318238536936004,
+        0.06814476914581626,
+        0.06667536473973727
+      ]
+    },
+    {
+      "start": 1636.4,
+      "end": 1636.72,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1636.72,
+      "end": 1637.28,
+      "speaker": "SPEAKER_02",
+      "text": "Got a room.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.06694976551416384,
+        0.0717900107554297,
+        0.06700835033230317,
+        0.06712875254492118,
+        0.727123120853182
+      ]
+    },
+    {
+      "start": 1637.28,
+      "end": 1637.76,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1637.76,
+      "end": 1638.0,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1638.0,
+      "end": 1638.24,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1639.92,
+      "end": 1640.56,
+      "speaker": "SPEAKER_00",
+      "text": "So we are going.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.10000219639722172,
+        0.101209409792962,
+        0.10220875251227401,
+        0.5951490630543779,
+        0.10143057824316434
+      ]
+    },
+    {
+      "start": 1640.56,
+      "end": 1640.72,
+      "speaker": "SPEAKER_00",
+      "text": "Okay.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.10000083919015729,
+        0.1000004449711929,
+        0.10000046964567934,
+        0.5999977557558931,
+        0.10000049043707734
+      ]
+    },
+    {
+      "start": 1644.16,
+      "end": 1644.56,
+      "speaker": "SPEAKER_00",
+      "text": "Bless you.",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2
+      ]
+    },
+    {
+      "start": 1644.56,
+      "end": 1645.12,
+      "speaker": "SPEAKER_02",
+      "text": "Excuse me.",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2
+      ]
+    },
+    {
+      "start": 1645.12,
+      "end": 1645.36,
+      "speaker": "SPEAKER_02",
+      "text": "Yes.",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.5996456718586334,
+        0.10034550526999202,
+        0.10000255958616537,
+        0.10000362155153772,
+        0.10000264173367147
+      ]
+    },
+    {
+      "start": 1648.72,
+      "end": 1649.04,
+      "speaker": "SPEAKER_02",
+      "text": "Okay.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.10000083919015729,
+        0.1000004449711929,
+        0.10000046964567934,
+        0.5999977557558931,
+        0.10000049043707734
+      ]
+    },
+    {
+      "start": 1652.0,
+      "end": 1653.76,
+      "speaker": "SPEAKER_02",
+      "text": "So I'm going to take Jazeela off of",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.05000298854805485,
+        0.05055770471250815,
+        0.7981871896969199,
+        0.050917967795238724,
+        0.05033414924727838
+      ]
+    },
+    {
+      "start": 1656.24,
+      "end": 1660.32,
+      "speaker": "SPEAKER_02",
+      "text": "that list as well.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.06668042171017162,
+        0.731864572753591,
+        0.0678999470270118,
+        0.0666768829973689,
+        0.06687817551185685
+      ]
+    },
+    {
+      "start": 1660.32,
+      "end": 1662.24,
+      "speaker": "SPEAKER_02",
+      "text": "I'll put her in gray, I guess.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.06907580858823578,
+        0.067979338257823,
+        0.7289039680806211,
+        0.06696052652714662,
+        0.06708035854617356
+      ]
+    },
+    {
+      "start": 1668.16,
+      "end": 1670.56,
+      "speaker": "SPEAKER_01",
+      "text": "Can we group people by their name?",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.06734834042453362,
+        0.39932304249883155,
+        0.0666688624533667,
+        0.39982392848525344,
+        0.06683582613801456
+      ]
+    },
+    {
+      "start": 1670.56,
+      "end": 1672.16,
+      "speaker": "SPEAKER_01",
+      "text": "I'm not sure.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10086068260615999,
+        0.1000027102239354,
+        0.5991295562132408,
+        0.10000396673868933,
+        0.10000308421797435
+      ]
+    },
+    {
+      "start": 1672.16,
+      "end": 1673.6,
+      "speaker": "SPEAKER_01",
+      "text": "I still do my ring.",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.4001048597139074,
+        0.06667323540222701,
+        0.06667396437260864,
+        0.3989809431465554,
+        0.06756699736470144
+      ]
+    },
+    {
+      "start": 1673.6,
+      "end": 1674.4,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1674.4,
+      "end": 1676.88,
+      "speaker": "SPEAKER_01",
+      "text": "So it's going to be Marianne's office.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.06678589883704279,
+        0.06799221259151075,
+        0.06756779632933177,
+        0.7297085022401762,
+        0.06794559000193857
+      ]
+    },
+    {
+      "start": 1676.88,
+      "end": 1677.6,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1677.6,
+      "end": 1678.56,
+      "speaker": "SPEAKER_00",
+      "text": "That would be fun.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.06667806735390605,
+        0.7323075344573857,
+        0.0671612364246573,
+        0.06667511863629666,
+        0.06717804312775418
+      ]
+    },
+    {
+      "start": 1678.56,
+      "end": 1681.2,
+      "speaker": "SPEAKER_00",
+      "text": "Is there anybody who's not happy with the current situation?",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.05000622567692839,
+        0.050003129467433176,
+        0.050003483076330374,
+        0.050004615482855876,
+        0.7999825462964522
+      ]
+    },
+    {
+      "start": 1681.2,
+      "end": 1684.4,
+      "speaker": "SPEAKER_00",
+      "text": "So we could try to just keep the same",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.0684753228181211,
+        0.07029191158887219,
+        0.7273604109225638,
+        0.06667604730815437,
+        0.06719630736228856
+      ]
+    },
+    {
+      "start": 1685.12,
+      "end": 1686.88,
+      "speaker": "SPEAKER_00",
+      "text": "arrangement just on the new building.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.06667157434010244,
+        0.06666913470229713,
+        0.06666942122342506,
+        0.730996382532802,
+        0.0689934872013733
+      ]
+    },
+    {
+      "start": 1686.88,
+      "end": 1688.96,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah, that's going to be boring.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.05010337381968101,
+        0.050344094722609894,
+        0.7983013260914382,
+        0.05091710835229958,
+        0.05033409701397129
+      ]
+    },
+    {
+      "start": 1688.96,
+      "end": 1689.76,
+      "speaker": "SPEAKER_01",
+      "text": "That's boring.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10001769400041773,
+        0.10000889169178805,
+        0.5999501020799706,
+        0.10001311597684433,
+        0.10001019625097934
+      ]
+    },
+    {
+      "start": 1689.76,
+      "end": 1690.8,
+      "speaker": "SPEAKER_01",
+      "text": "That can be a good idea.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.06677233936957815,
+        0.06673787957920431,
+        0.06713020504774954,
+        0.7326918969212098,
+        0.06666767908225812
+      ]
+    },
+    {
+      "start": 1690.8,
+      "end": 1692.96,
+      "speaker": "SPEAKER_01",
+      "text": "But do we can we get?",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.10099820156250537,
+        0.10000114972119027,
+        0.10121516904674302,
+        0.101674276323147,
+        0.5961112033464144
+      ]
+    },
+    {
+      "start": 1694.0,
+      "end": 1696.72,
+      "speaker": "SPEAKER_01",
+      "text": "Because there is no we can't because",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.5996735155498042,
+        0.10032056539401474,
+        0.10000181917631398,
+        0.10000230643786316,
+        0.10000179344200404
+      ]
+    },
+    {
+      "start": 1697.36,
+      "end": 1698.56,
+      "speaker": "SPEAKER_01",
+      "text": "no, it we can't.",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.5996735155498042,
+        0.10032056539401474,
+        0.10000181917631398,
+        0.10000230643786316,
+        0.10000179344200404
+      ]
+    },
+    {
+      "start": 1698.56,
+      "end": 1700.72,
+      "speaker": "SPEAKER_02",
+      "text": "We have one extra one person office and",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.04087789742953825,
+        0.04110974970127757,
+        0.04010404627950978,
+        0.040365334843045275,
+        0.8375429717466291
+      ]
+    },
+    {
+      "start": 1701.44,
+      "end": 1703.2,
+      "speaker": "SPEAKER_01",
+      "text": "and two three person offices.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.04003832306197466,
+        0.838476739243557,
+        0.0400930464073906,
+        0.040325307712784926,
+        0.04106658357429264
+      ]
+    },
+    {
+      "start": 1704.16,
+      "end": 1705.52,
+      "speaker": "SPEAKER_02",
+      "text": "Plus we have the two people who",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.05013576656241592,
+        0.7994143383646117,
+        0.0500008473160045,
+        0.05000109164953776,
+        0.05044795610743012
+      ]
+    },
+    {
+      "start": 1708.16,
+      "end": 1708.88,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1708.88,
+      "end": 1709.76,
+      "speaker": "SPEAKER_01",
+      "text": "No, I have to put some more.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10000301356018639,
+        0.10263814168983275,
+        0.5948550811907773,
+        0.10102162384144622,
+        0.10148213971775732
+      ]
+    },
+    {
+      "start": 1710.72,
+      "end": 1713.92,
+      "speaker": "SPEAKER_02",
+      "text": "You can keep some of the people",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.0675835040591639,
+        0.7319783978707137,
+        0.06702730990406913,
+        0.06666969050875644,
+        0.06674109765729684
+      ]
+    },
+    {
+      "start": 1713.92,
+      "end": 1716.16,
+      "speaker": "SPEAKER_02",
+      "text": "together that are together now.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.06667318213132262,
+        0.06666994242816018,
+        0.7325154886159716,
+        0.06747080964166101,
+        0.06667057718288452
+      ]
+    },
+    {
+      "start": 1716.16,
+      "end": 1716.56,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1716.56,
+      "end": 1719.28,
+      "speaker": "SPEAKER_02",
+      "text": "But not everyone definitely.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.10001706783027771,
+        0.5988474862520003,
+        0.10000705951831618,
+        0.10000946982544252,
+        0.10111891657396321
+      ]
+    },
+    {
+      "start": 1720.88,
+      "end": 1721.36,
+      "speaker": "SPEAKER_00",
+      "text": "Okay.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.10000083919015729,
+        0.1000004449711929,
+        0.10000046964567934,
+        0.5999977557558931,
+        0.10000049043707734
+      ]
+    },
+    {
+      "start": 1724.0,
+      "end": 1726.4,
+      "speaker": "SPEAKER_00",
+      "text": "So let's start then top to bottom.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.0410938794191821,
+        0.040715149545719406,
+        0.04000557223263795,
+        0.040006774418735,
+        0.8381786243837256
+      ]
+    },
+    {
+      "start": 1726.4,
+      "end": 1726.72,
+      "speaker": "SPEAKER_00",
+      "text": "Maggie.",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2
+      ]
+    },
+    {
+      "start": 1728.32,
+      "end": 1731.6,
+      "speaker": "SPEAKER_02",
+      "text": "Well, why don't we take a break and go off and think about it.",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.033528632453232204,
+        0.8611594331418804,
+        0.034045890968531216,
+        0.03579550868675402,
+        0.03547053474960198
+      ]
+    },
+    {
+      "start": 1731.6,
+      "end": 1732.56,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1732.56,
+      "end": 1735.92,
+      "speaker": "SPEAKER_02",
+      "text": "And then I think we can get some more concrete ideas.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.050375648093244914,
+        0.05007076418396918,
+        0.05059436771965333,
+        0.7972353666522121,
+        0.051723853350920584
+      ]
+    },
+    {
+      "start": 1735.92,
+      "end": 1736.56,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1736.56,
+      "end": 1737.36,
+      "speaker": "SPEAKER_02",
+      "text": "Okay.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.10000083919015729,
+        0.1000004449711929,
+        0.10000046964567934,
+        0.5999977557558931,
+        0.10000049043707734
+      ]
+    },
+    {
+      "start": 1737.36,
+      "end": 1738.72,
+      "speaker": "SPEAKER_02",
+      "text": "We can come back and finish it.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.06667232880930261,
+        0.06872701487476672,
+        0.06666989003267189,
+        0.7312608108174037,
+        0.06666995546585498
+      ]
+    },
+    {
+      "start": 1738.72,
+      "end": 1741.04,
+      "speaker": "SPEAKER_02",
+      "text": "Because if we just sit here and discuss,",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.5999764975764899,
+        0.10000496645307848,
+        0.10000551745603652,
+        0.10000732386598922,
+        0.1000056946484059
+      ]
+    },
+    {
+      "start": 1741.04,
+      "end": 1742.64,
+      "speaker": "SPEAKER_02",
+      "text": "yeah, it's going to take a long time.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.03345254124415863,
+        0.255172593554084,
+        0.6439754255125537,
+        0.033730777172700566,
+        0.03366866251650312
+      ]
+    },
+    {
+      "start": 1742.64,
+      "end": 1744.72,
+      "speaker": "SPEAKER_02",
+      "text": "We're going to start arguing and get cranky and",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.05013570743579099,
+        0.05041458445040028,
+        0.05090575502987615,
+        0.05167067765360639,
+        0.7968732754303262
+      ]
+    },
+    {
+      "start": 1745.68,
+      "end": 1746.0,
+      "speaker": "SPEAKER_00",
+      "text": "okay.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.10000083919015729,
+        0.1000004449711929,
+        0.10000046964567934,
+        0.5999977557558931,
+        0.10000049043707734
+      ]
+    },
+    {
+      "start": 1747.2,
+      "end": 1748.56,
+      "speaker": "SPEAKER_01",
+      "text": "So let's have a break.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.06668307393808655,
+        0.06806769336334045,
+        0.06667582550518833,
+        0.06667882832442314,
+        0.7318945788689616
+      ]
+    },
+    {
+      "start": 1748.56,
+      "end": 1749.68,
+      "speaker": "SPEAKER_01",
+      "text": "Save your file.",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2
+      ]
+    },
+    {
+      "start": 1749.68,
+      "end": 1749.92,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1754.24,
+      "end": 1755.52,
+      "speaker": "SPEAKER_01",
+      "text": "You have an XP?",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2
+      ]
+    },
+    {
+      "start": 1755.52,
+      "end": 1755.68,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1757.52,
+      "end": 1758.16,
+      "speaker": "SPEAKER_01",
+      "text": "That's nice.",
+      "dominant_topic": 5,
+      "topic_probabilities": [
+        0.10001713988254805,
+        0.10000861414739248,
+        0.10000957025989228,
+        0.10001270588648291,
+        0.5999519698236843
+      ]
+    },
+    {
+      "start": 1761.12,
+      "end": 1761.36,
+      "speaker": "SPEAKER_02",
+      "text": "Okay.",
+      "dominant_topic": 4,
+      "topic_probabilities": [
+        0.10000083919015729,
+        0.1000004449711929,
+        0.10000046964567934,
+        0.5999977557558931,
+        0.10000049043707734
+      ]
+    },
+    {
+      "start": 1763.76,
+      "end": 1764.8,
+      "speaker": "SPEAKER_00",
+      "text": "So how long is going to be?",
+      "dominant_topic": 2,
+      "topic_probabilities": [
+        0.06668437814078021,
+        0.7261373236376589,
+        0.06855385166062362,
+        0.07071018991119042,
+        0.0679142566497468
+      ]
+    },
+    {
+      "start": 1768.88,
+      "end": 1769.28,
+      "speaker": "UNKNOWN",
+      "text": "Yeah.",
+      "dominant_topic": 3,
+      "topic_probabilities": [
+        0.10076872892623492,
+        0.10041399806965336,
+        0.5988168394255953,
+        0.10000024203026422,
+        0.10000019154825217
+      ]
+    },
+    {
+      "start": 1776.48,
+      "end": 1779.92,
+      "speaker": "UNKNOWN",
+      "text": "Ooh!",
+      "dominant_topic": 1,
+      "topic_probabilities": [
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2
+      ]
+    }
+  ]
+}

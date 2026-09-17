@@ -1,0 +1,26 @@
+[
+  {
+    "time": "11:19:57",
+    "start": 0.0,
+    "end": 2.0,
+    "language": "en",
+    "speaker": "SPEAKER_00",
+    "text": "You speak to the tool."
+  },
+  {
+    "time": "11:19:57",
+    "start": 2.0,
+    "end": 4.0,
+    "language": "en",
+    "speaker": "SPEAKER_00",
+    "text": "Like you have to speak."
+  },
+  {
+    "time": "11:19:57",
+    "start": 4.0,
+    "end": 8.0,
+    "language": "en",
+    "speaker": "SPEAKER_00",
+    "text": "Hello everyone. Today I am going to teach you about deep learning."
+  }
+]

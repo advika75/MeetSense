@@ -1,0 +1,21 @@
+{
+  "metric": "ROUGE",
+  "evaluation_type": "sample_level",
+  "reference_file": "outputs/evaluations/reference_summary.txt",
+  "generated_summary_file": "outputs/summaries/meeting_summary.json",
+  "rouge1": {
+    "precision": 0.5833333333333334,
+    "recall": 0.23529411764705882,
+    "fmeasure": 0.3353293413173653
+  },
+  "rouge2": {
+    "precision": 0.3617021276595745,
+    "recall": 0.1440677966101695,
+    "fmeasure": 0.20606060606060606
+  },
+  "rougeL": {
+    "precision": 0.4583333333333333,
+    "recall": 0.18487394957983194,
+    "fmeasure": 0.2634730538922156
+  }
+}

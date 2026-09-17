@@ -1,0 +1,13 @@
+{
+    "sample_rate": 16000,
+    "duration_seconds": 1780.65,
+    "duration_minutes": 29.68,
+    "rms_energy": 0.0816,
+    "peak_amplitude": 1.0,
+    "speech_percentage_estimate": 55.97,
+    "silence_percentage_estimate": 44.03,
+    "original_sample_rate": 16000,
+    "original_duration_seconds": 1780.65,
+    "target_sample_rate": 16000,
+    "channels": 1
+}

@@ -1,0 +1,8 @@
+{
+    "total_audio_duration_seconds": 1780.65,
+    "speech_duration_seconds": 1305.0,
+    "silence_duration_seconds": 475.65,
+    "speech_percentage": 73.29,
+    "silence_percentage": 26.71,
+    "number_of_speech_segments": 377
+}

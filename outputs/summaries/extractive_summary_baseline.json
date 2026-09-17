@@ -1,0 +1,29 @@
+{
+  "method": "TF-IDF extractive baseline (sentence-level, chronologically re-ordered after ranking)",
+  "source_file": "outputs/nlp/nlp_processed_transcript.json",
+  "total_sentences_considered": 424,
+  "sentences_selected": 3,
+  "target_word_count": 45,
+  "actual_word_count": 53,
+  "selected_sentences": [
+    {
+      "text": "Oh and on the map the little half circular quarter circles or doors.",
+      "speaker": "SPEAKER_02",
+      "start": 301.2,
+      "end": 306.08
+    },
+    {
+      "text": "I don't know how much the proximity to the mailbox matters because usually when she's here and she picks up the mail",
+      "speaker": "SPEAKER_02",
+      "start": 1264.8,
+      "end": 1270.88
+    },
+    {
+      "text": "I mean that's quite important to keep a spare room in Gisella's office if we need more staff.",
+      "speaker": "SPEAKER_01",
+      "start": 1380.56,
+      "end": 1386.96
+    }
+  ],
+  "summary": "Oh and on the map the little half circular quarter circles or doors. I don't know how much the proximity to the mailbox matters because usually when she's here and she picks up the mail I mean that's quite important to keep a spare room in Gisella's office if we need more staff."
+}

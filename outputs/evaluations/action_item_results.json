@@ -1,0 +1,30 @@
+{
+  "metric": "Action Item Extraction",
+  "evaluation_type": "sample_level_fuzzy_matching",
+  "evaluation_end_seconds": 75.0,
+  "similarity_method": "RapidFuzz token_set_ratio + ratio",
+  "similarity_threshold": 50,
+  "reference_file": "outputs/evaluations/reference_action_items.txt",
+  "prediction_file": "outputs/nlp/action_items_decisions.json",
+  "reference_count": 4,
+  "prediction_count": 1,
+  "true_positives": 1,
+  "false_positives": 0,
+  "false_negatives": 3,
+  "precision": 1.0,
+  "recall": 0.25,
+  "f1": 0.4,
+  "matches": [
+    {
+      "reference": "Make the required office and equipment allocation decisions today.",
+      "prediction": "next Tuesday. And since we don't really have any other time, we have to make these decisions",
+      "similarity": 57.48
+    }
+  ],
+  "false_positive_items": [],
+  "false_negative_items": [
+    "Determine who will be assigned to each office in the new building.",
+    "Decide where the printer, fax machine, and other large equipment will be placed.",
+    "Make the office and equipment allocation decisions by November 2nd."
+  ]
+}

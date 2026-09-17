@@ -1,0 +1,333 @@
+{
+    "method": "Rule-based Information Extraction",
+    "total_segments": 404,
+    "number_of_action_items": 35,
+    "number_of_decisions": 1,
+    "action_items": [
+        {
+            "id": 1,
+            "segment_id": 8,
+            "speaker": "SPEAKER_02",
+            "start_time": 45.96,
+            "action": "next Tuesday. And since we don't really have any other time, we have to make these decisions",
+            "deadline": null,
+            "extraction_method": "keyword_pattern"
+        },
+        {
+            "id": 2,
+            "segment_id": 20,
+            "speaker": "SPEAKER_02",
+            "start_time": 111.36,
+            "action": "that we have to put somewhere are like I said, the photocopier, which is really big, the",
+            "deadline": null,
+            "extraction_method": "keyword_pattern"
+        },
+        {
+            "id": 3,
+            "segment_id": 26,
+            "speaker": "SPEAKER_02",
+            "start_time": 144.0,
+            "action": "we have now, but just one shelf that's attached to the wall. And the people that we have to",
+            "deadline": null,
+            "extraction_method": "keyword_pattern"
+        },
+        {
+            "id": 4,
+            "segment_id": 32,
+            "speaker": "SPEAKER_02",
+            "start_time": 185.72,
+            "action": "then Andre and I have to do presentations for the University administrators on the second.",
+            "deadline": null,
+            "extraction_method": "keyword_pattern"
+        },
+        {
+            "id": 5,
+            "segment_id": 33,
+            "speaker": "SPEAKER_02",
+            "start_time": 193.56,
+            "action": "So I have to come up with a plan, possibly if we have time or presentation,",
+            "deadline": null,
+            "extraction_method": "keyword_pattern"
+        },
+        {
+            "id": 6,
+            "segment_id": 36,
+            "speaker": "SPEAKER_01",
+            "start_time": 214.32,
+            "action": "Do we know if there will be a lot of people coming across the whole in terms of security",
+            "deadline": null,
+            "extraction_method": "keyword_pattern"
+        },
+        {
+            "id": 7,
+            "segment_id": 40,
+            "speaker": "SPEAKER_02",
+            "start_time": 236.48,
+            "action": "then it should be okay to leave them in the hall.",
+            "deadline": null,
+            "extraction_method": "keyword_pattern"
+        },
+        {
+            "id": 8,
+            "segment_id": 47,
+            "speaker": "SPEAKER_02",
+            "start_time": 277.84,
+            "action": "So what I'd propose is that we sort of discuss various concepts without getting into specifics",
+            "deadline": null,
+            "extraction_method": "keyword_pattern"
+        },
+        {
+            "id": 9,
+            "segment_id": 54,
+            "speaker": "SPEAKER_01",
+            "start_time": 316.16,
+            "action": "Yeah. And do we need a room like a reading room?",
+            "deadline": null,
+            "extraction_method": "keyword_pattern"
+        },
+        {
+            "id": 10,
+            "segment_id": 56,
+            "speaker": "SPEAKER_02",
+            "start_time": 325.6,
+            "action": "So we should leave a space for that.",
+            "deadline": null,
+            "extraction_method": "keyword_pattern"
+        },
+        {
+            "id": 11,
+            "segment_id": 77,
+            "speaker": "SPEAKER_00",
+            "start_time": 473.92,
+            "action": "So probably she should get the facts, right? Yeah. Yeah. That makes sense.",
+            "deadline": null,
+            "extraction_method": "keyword_pattern"
+        },
+        {
+            "id": 12,
+            "segment_id": 79,
+            "speaker": "SPEAKER_01",
+            "start_time": 510.56,
+            "action": "And then I think the main discussion we should have is if we want to make group of",
+            "deadline": null,
+            "extraction_method": "keyword_pattern"
+        },
+        {
+            "id": 13,
+            "segment_id": 90,
+            "speaker": "SPEAKER_03",
+            "start_time": 572.08,
+            "action": "you discuss things. Maybe I don't know if it's for other people who's not working in the same",
+            "deadline": null,
+            "extraction_method": "keyword_pattern"
+        },
+        {
+            "id": 14,
+            "segment_id": 91,
+            "speaker": "SPEAKER_00",
+            "start_time": 579.36,
+            "action": "project. Yeah. But we will have this reading room. Yeah. That's true. Yeah. That's true.",
+            "deadline": null,
+            "extraction_method": "keyword_pattern"
+        },
+        {
+            "id": 15,
+            "segment_id": 92,
+            "speaker": "SPEAKER_00",
+            "start_time": 584.16,
+            "action": "Will it be dedicated for reading and for studying or can we have meetings that can reserve it for",
+            "deadline": null,
+            "extraction_method": "keyword_pattern"
+        },
+        {
+            "id": 16,
+            "segment_id": 97,
+            "speaker": "SPEAKER_00",
+            "start_time": 606.08,
+            "action": "well the problem is you have to go across the building and it adds some overhead every time you",
+            "deadline": null,
+            "extraction_method": "keyword_pattern"
+        },
+        {
+            "id": 17,
+            "segment_id": 98,
+            "speaker": "SPEAKER_00",
+            "start_time": 611.36,
+            "action": "want to have some short meeting and discuss some issues. Maybe we shouldn't call it.",
+            "deadline": null,
+            "extraction_method": "keyword_pattern"
+        },
+        {
+            "id": 18,
+            "segment_id": 101,
+            "speaker": "SPEAKER_02",
+            "start_time": 631.12,
+            "action": "Because there's still the cafeterias that you can use for informal. Yeah. The other thing we should",
+            "deadline": null,
+            "extraction_method": "keyword_pattern"
+        },
+        {
+            "id": 19,
+            "segment_id": 105,
+            "speaker": "SPEAKER_01",
+            "start_time": 656.96,
+            "action": "very nice to have to share on a face with somebody like us. I think a lot of social life and",
+            "deadline": null,
+            "extraction_method": "keyword_pattern"
+        },
+        {
+            "id": 20,
+            "segment_id": 112,
+            "speaker": "SPEAKER_02",
+            "start_time": 704.88,
+            "action": "where your schedule is completely don't overlap and then you do schedule office hours when",
+            "deadline": null,
+            "extraction_method": "keyword_pattern"
+        },
+        {
+            "id": 21,
+            "segment_id": 128,
+            "speaker": "SPEAKER_03",
+            "start_time": 808.08,
+            "action": "or something. I think we should reserve a little bit space for them to. So yeah that's a good",
+            "deadline": null,
+            "extraction_method": "keyword_pattern"
+        },
+        {
+            "id": 22,
+            "segment_id": 137,
+            "speaker": "SPEAKER_01",
+            "start_time": 874.08,
+            "action": "So for the reading room we will have a two person room. Yeah I think so. Everybody agrees on that?",
+            "deadline": null,
+            "extraction_method": "keyword_pattern"
+        },
+        {
+            "id": 23,
+            "segment_id": 138,
+            "speaker": "SPEAKER_00",
+            "start_time": 880.16,
+            "action": "One person will be too small anyways. How about this room? The one on the bottom? Yeah the bottom",
+            "deadline": null,
+            "extraction_method": "keyword_pattern"
+        },
+        {
+            "id": 24,
+            "segment_id": 142,
+            "speaker": "SPEAKER_01",
+            "start_time": 905.6,
+            "action": "the same one between the big. Oh okay. Yeah sorry I should have explained that. But",
+            "deadline": null,
+            "extraction_method": "keyword_pattern"
+        },
+        {
+            "id": 25,
+            "segment_id": 171,
+            "speaker": "SPEAKER_01",
+            "start_time": 1147.76,
+            "action": "So we exclude the the thing we are quite sure and then we discuss there.",
+            "deadline": null,
+            "extraction_method": "keyword_pattern"
+        },
+        {
+            "id": 26,
+            "segment_id": 172,
+            "speaker": "SPEAKER_00",
+            "start_time": 1152.0,
+            "action": "I was thinking of maybe we should assign Gisella into this three person office because we will",
+            "deadline": null,
+            "extraction_method": "keyword_pattern"
+        },
+        {
+            "id": 27,
+            "segment_id": 182,
+            "speaker": "SPEAKER_01",
+            "start_time": 1214.4,
+            "action": "that she needs to be near the mailbox and the printer and.",
+            "deadline": null,
+            "extraction_method": "keyword_pattern"
+        },
+        {
+            "id": 28,
+            "segment_id": 191,
+            "speaker": "SPEAKER_01",
+            "start_time": 1255.52,
+            "action": "It should be a two people room and not three people room.",
+            "deadline": null,
+            "extraction_method": "keyword_pattern"
+        },
+        {
+            "id": 29,
+            "segment_id": 214,
+            "speaker": "SPEAKER_00",
+            "start_time": 1310.16,
+            "action": "Okay. Maybe we should write this down.",
+            "deadline": null,
+            "extraction_method": "keyword_pattern"
+        },
+        {
+            "id": 30,
+            "segment_id": 238,
+            "speaker": "SPEAKER_01",
+            "start_time": 1380.56,
+            "action": "I mean that's quite important to keep a spare room in Gisella's office if we need more staff.",
+            "deadline": null,
+            "extraction_method": "keyword_pattern"
+        },
+        {
+            "id": 31,
+            "segment_id": 255,
+            "speaker": "SPEAKER_03",
+            "start_time": 1429.2,
+            "action": "No, they need to go in the same room.",
+            "deadline": null,
+            "extraction_method": "keyword_pattern"
+        },
+        {
+            "id": 32,
+            "segment_id": 355,
+            "speaker": "SPEAKER_02",
+            "start_time": 1660.32,
+            "action": "I'll put her in gray, I guess.",
+            "deadline": null,
+            "extraction_method": "keyword_pattern"
+        },
+        {
+            "id": 33,
+            "segment_id": 377,
+            "speaker": "SPEAKER_01",
+            "start_time": 1708.88,
+            "action": "No, I have to put some more.",
+            "deadline": null,
+            "extraction_method": "keyword_pattern"
+        },
+        {
+            "id": 34,
+            "segment_id": 390,
+            "speaker": "SPEAKER_02",
+            "start_time": 1737.36,
+            "action": "We can come back and finish it.",
+            "deadline": null,
+            "extraction_method": "keyword_pattern"
+        },
+        {
+            "id": 35,
+            "segment_id": 391,
+            "speaker": "SPEAKER_02",
+            "start_time": 1738.72,
+            "action": "Because if we just sit here and discuss,",
+            "deadline": null,
+            "extraction_method": "keyword_pattern"
+        }
+    ],
+    "decisions": [
+        {
+            "id": 1,
+            "segment_id": 170,
+            "speaker": "SPEAKER_01",
+            "start_time": 1141.6,
+            "decision": "Yeah. We decided also the administration stuff and. Sure.",
+            "extraction_method": "keyword_pattern"
+        }
+    ]
+}

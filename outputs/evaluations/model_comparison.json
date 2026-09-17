@@ -1,0 +1,104 @@
+{
+  "generated_at": "2026-09-17T05:14:39.962765+00:00",
+  "limitations": [
+    "All numbers below come from a single manually-verified development recording, not a benchmark dataset.",
+    "The ASR comparison transcribes the full recording with each model but scores WER only over the audio span (97.72s) matching the only manually-verified transcript reference available.",
+    "The summarization comparison covers the full transcript, but is scored against an extractive excerpt reference, not a human-written abstractive summary."
+  ],
+  "asr_comparison": {
+    "evaluation_window_seconds": 97.72,
+    "reference_file": "outputs/evaluations/reference_transcript.txt",
+    "models": {
+      "whisper_tiny": {
+        "model_size": "tiny",
+        "num_segments_total": 419,
+        "num_segments_in_window": 17,
+        "hypothesis_preview": "Okay. So as you guys know, isco is too small. Well, the building is too small for our group. So we're moving to a new building. It's going to be the building across the street and we're actually moving in three weeks. But the problem is that the administration wants to know who's going to be in what",
+        "transcribe_seconds": 42.91,
+        "wer": 0.06382978723404255,
+        "wer_percentage": 6.382978723404255
+      },
+      "whisper_base": {
+        "model_size": "base",
+        "num_segments_total": 404,
+        "num_segments_in_window": 17,
+        "hypothesis_preview": "Okay. So as you guys know, ISCO is too small. Well, the building is too small for our group. So we're moving to a new building. It's going to be the building across the street and we're actually moving in three weeks. But the problem is that the administration wants to know who's going to be in what",
+        "transcribe_seconds": 88.14,
+        "wer": 0.0070921985815602835,
+        "wer_percentage": 0.7092198581560284
+      },
+      "whisper_small": {
+        "model_size": "small",
+        "num_segments_total": 365,
+        "num_segments_in_window": 17,
+        "hypothesis_preview": "Okay. So as you guys know, ISCO is too small. Well, the building is too small for our group. So we're moving to a new building. It's going to be the building across the street, and we're actually moving in three weeks. But the problem is that the administration wants to know who's going to be in wha",
+        "transcribe_seconds": 235.84,
+        "wer": 0.01773049645390071,
+        "wer_percentage": 1.773049645390071
+      }
+    },
+    "wer_percentage_delta_base_minus_small": -1.0638,
+    "cross_check_against_wer_results_json": {
+      "available": true,
+      "stored_wer_percentage": 0.7092198581560284,
+      "fresh_base_wer_percentage": 0.7092198581560284,
+      "note": "Both values use full-context transcription of the same audio file, restricted to the same reference window. They should match closely; any gap reflects run-to-run decoding nondeterminism, not a windowing or methodology difference."
+    }
+  },
+  "summarization_comparison": {
+    "reference_file": "outputs/evaluations/reference_summary.txt",
+    "note": "reference_summary.txt is an extractive excerpt of the transcript, not a human-written abstractive reference. ROUGE here measures overlap with the source text, not summary quality in the fullest sense.",
+    "models": {
+      "t5_small": {
+        "model": "google-t5/t5-small",
+        "summary_word_count": 45,
+        "summary_preview": "the administration wants to know who's going to be in what office in the new building. there's no fights about who gets a window and who doesn't. the idea is that we come up with a plan that will be rolled out later this week.",
+        "rouge": {
+          "rouge1": {
+            "precision": 0.5833333333333334,
+            "recall": 0.23529411764705882,
+            "fmeasure": 0.3353293413173653
+          },
+          "rouge2": {
+            "precision": 0.3617021276595745,
+            "recall": 0.1440677966101695,
+            "fmeasure": 0.20606060606060606
+          },
+          "rougeL": {
+            "precision": 0.4583333333333333,
+            "recall": 0.18487394957983194,
+            "fmeasure": 0.2634730538922156
+          }
+        }
+      },
+      "tfidf_extractive_baseline": {
+        "method": "TF-IDF extractive baseline (sentence-level, chronologically re-ordered after ranking)",
+        "summary_word_count": 53,
+        "sentences_selected": 3,
+        "summary_preview": "Oh and on the map the little half circular quarter circles or doors. I don't know how much the proximity to the mailbox matters because usually when she's here and she picks up the mail I mean that's quite important to keep a spare room in Gisella's office if we need more staff.",
+        "rouge": {
+          "rouge1": {
+            "precision": 0.3157894736842105,
+            "recall": 0.15126050420168066,
+            "fmeasure": 0.2045454545454545
+          },
+          "rouge2": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "fmeasure": 0.0
+          },
+          "rougeL": {
+            "precision": 0.22807017543859648,
+            "recall": 0.1092436974789916,
+            "fmeasure": 0.14772727272727273
+          }
+        }
+      }
+    },
+    "rouge1_f1_delta_t5_minus_extractive": 0.1308
+  },
+  "diarization_comparison": {
+    "status": "not_available",
+    "reason": "Only one diarization pipeline is installed in this environment (pyannote/speaker-diarization-community-1). No second diarization model is available, so no honest model-vs-model comparison can be run. See outputs/evaluations/ablation_results.json for a with/without-diarization structural comparison instead."
+  }
+}

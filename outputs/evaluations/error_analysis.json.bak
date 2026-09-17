@@ -1,0 +1,551 @@
+{
+  "generated_at": "2026-09-16T19:49:53.970370+00:00",
+  "limitations": [
+    "All findings come from a single manually-verified development recording, not a benchmark dataset.",
+    "NER-false-positive, keyword-noise, and topic-noise checks use a small curated discourse-marker lexicon as a heuristic -- they approximate likely errors, they are not a human-reviewed annotation of every item.",
+    "The 'possible_unsupported_details' summarization check is a surface lexical grounding check (word/number presence), not a semantic fact-check -- a correct paraphrase can be flagged, and a genuine hallucination using only already-seen words would not be.",
+    "Action items outside the first-75-second reference window have never been checked against any ground truth; their correctness is reported as unknown, not assumed."
+  ],
+  "asr": {
+    "source": {
+      "reference_file": "outputs/evaluations/reference_transcript.txt",
+      "hypothesis_file": "outputs/transcripts/meeting.json",
+      "hypothesis_segments_used": 17
+    },
+    "word_error_rate": {
+      "normalized_wer_percentage": 0.7092,
+      "punctuation_inclusive_wer_percentage": 0.7092,
+      "punctuation_attributable_delta_points": 0.0,
+      "methodology": "normalized_wer strips punctuation before scoring (matches src/wer_evaluation.py); punctuation_inclusive_wer only lowercases, leaving punctuation attached to tokens. The delta approximates how much of the raw error rate comes from punctuation/formatting choices rather than word content."
+    },
+    "word_level_errors": {
+      "substitutions": 2,
+      "insertions": 0,
+      "deletions": 0,
+      "hits": 280,
+      "substitution_examples": [
+        {
+          "reference": "i",
+          "hypothesis": "is"
+        },
+        {
+          "reference": "of",
+          "hypothesis": "on"
+        }
+      ],
+      "insertion_examples": [],
+      "deletion_examples": []
+    },
+    "filler_word_usage": {
+      "counts": {
+        "like": {
+          "reference": 2,
+          "hypothesis": 2
+        },
+        "sort of": {
+          "reference": 1,
+          "hypothesis": 1
+        }
+      },
+      "methodology": "Simple word-boundary occurrence counts of a fixed filler lexicon, not a judgment about correctness of any single occurrence."
+    }
+  },
+  "diarization": {
+    "source": {
+      "der_results_file": "outputs/evaluations/der_results.json",
+      "diarization_file": "outputs/transcripts/diarization.json",
+      "speaker_transcript_file": "outputs/transcripts/speaker_transcript.json"
+    },
+    "speaker_confusion": {
+      "confusion_seconds": 1.5179999999999998,
+      "missed_detection_seconds": 0.0,
+      "false_alarm_seconds": 0.0,
+      "correct_seconds": 66.801,
+      "der_percentage": 2.2219294778904843,
+      "evaluation_window": "75.0s (manually-verified reference only)",
+      "methodology": "Reused directly from outputs/evaluations/der_results.json (pyannote.metrics DiarizationErrorRate components)."
+    },
+    "overlapping_speech": {
+      "overlapping_turn_pairs_found": 152,
+      "total_diarization_turns_checked": 637,
+      "examples": [
+        {
+          "speaker_a": "SPEAKER_02",
+          "speaker_a_end": 75.074,
+          "speaker_b": "SPEAKER_01",
+          "speaker_b_start": 50.42,
+          "overlap_seconds": 24.654
+        },
+        {
+          "speaker_a": "SPEAKER_03",
+          "speaker_a_end": 204.522,
+          "speaker_b": "SPEAKER_02",
+          "speaker_b_start": 204.252,
+          "overlap_seconds": 0.27
+        },
+        {
+          "speaker_a": "SPEAKER_02",
+          "speaker_a_end": 238.829,
+          "speaker_b": "SPEAKER_01",
+          "speaker_b_start": 227.827,
+          "overlap_seconds": 11.002
+        },
+        {
+          "speaker_a": "SPEAKER_02",
+          "speaker_a_end": 247.25,
+          "speaker_b": "SPEAKER_00",
+          "speaker_b_start": 246.473,
+          "overlap_seconds": 0.777
+        },
+        {
+          "speaker_a": "SPEAKER_02",
+          "speaker_a_end": 265.66,
+          "speaker_b": "SPEAKER_03",
+          "speaker_b_start": 261.543,
+          "overlap_seconds": 4.117
+        },
+        {
+          "speaker_a": "SPEAKER_02",
+          "speaker_a_end": 273.203,
+          "speaker_b": "SPEAKER_03",
+          "speaker_b_start": 265.846,
+          "overlap_seconds": 7.357
+        },
+        {
+          "speaker_a": "SPEAKER_02",
+          "speaker_a_end": 297.571,
+          "speaker_b": "SPEAKER_03",
+          "speaker_b_start": 288.205,
+          "overlap_seconds": 9.366
+        },
+        {
+          "speaker_a": "SPEAKER_02",
+          "speaker_a_end": 316.555,
+          "speaker_b": "SPEAKER_03",
+          "speaker_b_start": 306.43,
+          "overlap_seconds": 10.125
+        },
+        {
+          "speaker_a": "SPEAKER_01",
+          "speaker_a_end": 320.251,
+          "speaker_b": "SPEAKER_02",
+          "speaker_b_start": 319.728,
+          "overlap_seconds": 0.523
+        },
+        {
+          "speaker_a": "SPEAKER_02",
+          "speaker_a_end": 346.458,
+          "speaker_b": "SPEAKER_03",
+          "speaker_b_start": 325.178,
+          "overlap_seconds": 21.28
+        }
+      ],
+      "methodology": "Adjacent turns (sorted by start time) with different speakers whose time ranges intersect, checked across the full predicted diarization output (outputs/transcripts/diarization.json), not just the manually-verified window."
+    },
+    "boundary_confidence": {
+      "segments_checked": 404,
+      "segments_below_50pct_overlap": 46,
+      "segments_below_50pct_overlap_percentage": 11.39,
+      "lowest_confidence_examples": [
+        {
+          "start": 1305.12,
+          "end": 1305.92,
+          "speaker": "UNKNOWN",
+          "text_preview": "Yeah.",
+          "overlap_ratio": 0.0
+        },
+        {
+          "start": 1344.4,
+          "end": 1344.56,
+          "speaker": "UNKNOWN",
+          "text_preview": "Yeah.",
+          "overlap_ratio": 0.0
+        },
+        {
+          "start": 1566.24,
+          "end": 1567.28,
+          "speaker": "UNKNOWN",
+          "text_preview": "Okay.",
+          "overlap_ratio": 0.0
+        },
+        {
+          "start": 1768.88,
+          "end": 1769.28,
+          "speaker": "UNKNOWN",
+          "text_preview": "Yeah.",
+          "overlap_ratio": 0.0
+        },
+        {
+          "start": 1776.48,
+          "end": 1779.92,
+          "speaker": "UNKNOWN",
+          "text_preview": "Ooh!",
+          "overlap_ratio": 0.0
+        },
+        {
+          "start": 532.56,
+          "end": 534.08,
+          "speaker": "SPEAKER_03",
+          "text_preview": "Yeah.",
+          "overlap_ratio": 0.053
+        },
+        {
+          "start": 1283.6,
+          "end": 1284.32,
+          "speaker": "SPEAKER_03",
+          "text_preview": "But.",
+          "overlap_ratio": 0.108
+        },
+        {
+          "start": 1188.96,
+          "end": 1202.96,
+          "speaker": "SPEAKER_00",
+          "text_preview": "Yeah. We could. I don't know. We could. I mean I don't know how noisy she is.",
+          "overlap_ratio": 0.129
+        },
+        {
+          "start": 1063.12,
+          "end": 1078.96,
+          "speaker": "SPEAKER_02",
+          "text_preview": "So this really isn't too scale but oh well.",
+          "overlap_ratio": 0.168
+        },
+        {
+          "start": 1104.64,
+          "end": 1114.32,
+          "speaker": "SPEAKER_01",
+          "text_preview": "There's two and one. Yeah. Oh. So.",
+          "overlap_ratio": 0.223
+        }
+      ],
+      "methodology": "speaker_overlap (written by src/merge_transcript.py) is the number of seconds of a Whisper segment covered by its assigned diarization turn. overlap_ratio = speaker_overlap / segment_duration. A low ratio means the diarization turn only covered part of the ASR segment -- likely a speaker change or diarization boundary landing mid-segment, i.e. a plausible boundary error, not a confirmed one."
+    }
+  },
+  "nlp": {
+    "source": {
+      "nlp_processed_file": "outputs/nlp/nlp_processed_transcript.json",
+      "tfidf_keywords_file": "outputs/nlp/tfidf_keywords.json",
+      "topic_modeling_file": "outputs/nlp/topic_modeling.json"
+    },
+    "ner_false_positives": {
+      "total_entities": 25,
+      "flagged_as_likely_false_positive": 2,
+      "flagged_fraction": 0.08,
+      "examples": [
+        {
+          "entity": "Okay",
+          "type": "GPE"
+        },
+        {
+          "entity": "Okay",
+          "type": "PERSON"
+        }
+      ],
+      "methodology": "NER uses NLTK's maxent ne_chunk (src/nlp_preprocessing.py), a classical statistical chunker, not a neural NER model. Entities whose text matches a curated discourse-marker lexicon (e.g. 'Okay', 'Yeah') are flagged as likely false positives; this is a lexical heuristic, not a human review of every entity."
+    },
+    "keyword_noise": {
+      "top_keywords_checked": 30,
+      "flagged_as_discourse_noise": 7,
+      "flagged_fraction": 0.233,
+      "examples": [
+        {
+          "term": "yeah",
+          "score": 58.63070535955866
+        },
+        {
+          "term": "okay",
+          "score": 20.779735492601613
+        },
+        {
+          "term": "like",
+          "score": 7.655218926060672
+        },
+        {
+          "term": "well",
+          "score": 7.1505162734876295
+        },
+        {
+          "term": "right",
+          "score": 6.507492159609386
+        },
+        {
+          "term": "sort",
+          "score": 5.384216031306018
+        },
+        {
+          "term": "sure",
+          "score": 4.397149598209099
+        }
+      ],
+      "root_cause": "src/tfidf_keywords.py builds TfidfVectorizer(lowercase=True, ngram_range=(1,2), min_df=2, max_df=0.95) with no stop_words argument set -- no stopword or filler removal is configured, so high-frequency discourse words compete directly with content words on raw TF-IDF weight."
+    },
+    "topic_quality": {
+      "number_of_topics": 5,
+      "per_topic_discourse_noise": [
+        {
+          "topic_id": 1,
+          "top_words": [
+            "yeah",
+            "one",
+            "sort",
+            "make",
+            "quite",
+            "ca",
+            "people",
+            "east",
+            "see",
+            "thing"
+          ],
+          "flagged_discourse_words": [
+            "yeah",
+            "sort"
+          ],
+          "flagged_fraction": 0.2
+        },
+        {
+          "topic_id": 2,
+          "top_words": [
+            "room",
+            "people",
+            "well",
+            "two",
+            "yeah",
+            "three",
+            "office",
+            "one",
+            "person",
+            "come"
+          ],
+          "flagged_discourse_words": [
+            "well",
+            "yeah"
+          ],
+          "flagged_fraction": 0.2
+        },
+        {
+          "topic_id": 3,
+          "top_words": [
+            "yeah",
+            "like",
+            "put",
+            "go",
+            "project",
+            "mean",
+            "know",
+            "really",
+            "stuff",
+            "space"
+          ],
+          "flagged_discourse_words": [
+            "yeah",
+            "like"
+          ],
+          "flagged_fraction": 0.2
+        },
+        {
+          "topic_id": 4,
+          "top_words": [
+            "okay",
+            "go",
+            "good",
+            "office",
+            "work",
+            "think",
+            "question",
+            "idea",
+            "even",
+            "place"
+          ],
+          "flagged_discourse_words": [
+            "okay"
+          ],
+          "flagged_fraction": 0.1
+        },
+        {
+          "topic_id": 5,
+          "top_words": [
+            "know",
+            "one",
+            "get",
+            "room",
+            "two",
+            "like",
+            "person",
+            "office",
+            "think",
+            "printer"
+          ],
+          "flagged_discourse_words": [
+            "like"
+          ],
+          "flagged_fraction": 0.1
+        }
+      ],
+      "average_pairwise_jaccard_similarity": 0.1,
+      "pairwise_jaccard": [
+        {
+          "topic_a": 1,
+          "topic_b": 2,
+          "jaccard_similarity": 0.176
+        },
+        {
+          "topic_a": 1,
+          "topic_b": 3,
+          "jaccard_similarity": 0.053
+        },
+        {
+          "topic_a": 1,
+          "topic_b": 4,
+          "jaccard_similarity": 0.0
+        },
+        {
+          "topic_a": 1,
+          "topic_b": 5,
+          "jaccard_similarity": 0.053
+        },
+        {
+          "topic_a": 2,
+          "topic_b": 3,
+          "jaccard_similarity": 0.053
+        },
+        {
+          "topic_a": 2,
+          "topic_b": 4,
+          "jaccard_similarity": 0.053
+        },
+        {
+          "topic_a": 2,
+          "topic_b": 5,
+          "jaccard_similarity": 0.333
+        },
+        {
+          "topic_a": 3,
+          "topic_b": 4,
+          "jaccard_similarity": 0.053
+        },
+        {
+          "topic_a": 3,
+          "topic_b": 5,
+          "jaccard_similarity": 0.111
+        },
+        {
+          "topic_a": 4,
+          "topic_b": 5,
+          "jaccard_similarity": 0.111
+        }
+      ],
+      "root_cause": "src/topic_modeling.py builds CountVectorizer(lowercase=True, min_df=2, max_df=0.95) with no stop_words argument set -- same gap as the TF-IDF keyword extractor.",
+      "methodology": "average_pairwise_jaccard_similarity is the mean Jaccard overlap of each pair of topics' top-word sets; higher values indicate less distinct topics."
+    }
+  },
+  "action_items": {
+    "source": {
+      "action_item_results_file": "outputs/evaluations/action_item_results.json",
+      "action_items_decisions_file": "outputs/nlp/action_items_decisions.json"
+    },
+    "verified_window": {
+      "reference_count": 4,
+      "true_positives": 1,
+      "false_positives": 0,
+      "false_negatives": 3,
+      "precision": 1.0,
+      "recall": 0.25,
+      "f1": 0.4
+    },
+    "unverified_extractions": {
+      "total_extracted_full_meeting": 35,
+      "evaluated_against_reference": 1,
+      "unverified_count": 34,
+      "note": "These items were extracted by the same keyword-pattern rules across the full ~30-minute meeting, but no reference exists outside the first-75-second window. Their precision is genuinely unknown, not assumed correct or incorrect."
+    },
+    "missed_items_coverage_gap": {
+      "false_negative_examples": [
+        {
+          "missed_reference_item": "Determine who will be assigned to each office in the new building.",
+          "matches_action_pattern": true,
+          "matches_decision_pattern": false,
+          "likely_cause": "extracted_elsewhere_or_paraphrase_mismatch"
+        },
+        {
+          "missed_reference_item": "Decide where the printer, fax machine, and other large equipment will be placed.",
+          "matches_action_pattern": true,
+          "matches_decision_pattern": false,
+          "likely_cause": "extracted_elsewhere_or_paraphrase_mismatch"
+        },
+        {
+          "missed_reference_item": "Make the office and equipment allocation decisions by November 2nd.",
+          "matches_action_pattern": false,
+          "matches_decision_pattern": false,
+          "likely_cause": "pattern_coverage_gap"
+        }
+      ],
+      "methodology": "Each missed reference item is checked against the actual ACTION_PATTERNS and DECISION_PATTERNS regex lists from src/action_item_extraction.py (imported directly, not re-typed). If neither list matches the reference item's own wording, that item could never have been extracted by this rule set regardless of context -- a genuine pattern-coverage gap rather than an extraction mistake."
+    },
+    "extraction_verbosity": {
+      "avg_words_per_matched_reference_item": 9.0,
+      "avg_words_per_matched_prediction": 17.0,
+      "avg_words_per_all_extracted_items": 14.6,
+      "note": "The rule-based extractor keeps the full matching transcript segment as the 'action', rather than distilling a short imperative statement like the human-written reference items. This is visible directly in the one matched example, where prediction word count is much higher than the matched reference's."
+    }
+  },
+  "summarization": {
+    "source": {
+      "meeting_summary_file": "outputs/summaries/meeting_summary.json",
+      "reference_summary_file": "outputs/evaluations/reference_summary.txt",
+      "speaker_transcript_file": "outputs/transcripts/speaker_transcript.json"
+    },
+    "length": {
+      "source_word_count_full_meeting": 4004,
+      "summary_word_count": 45,
+      "compression_ratio": 89.0,
+      "note": "compression_ratio is source words per summary word, computed over the full ~30-minute meeting, since T5 summarizes the entire transcript."
+    },
+    "missing_info": {
+      "key_facts_checked": {
+        "moving_to_new_building": {
+          "phrases_checked": [
+            "new building",
+            "moving"
+          ],
+          "present_in_summary": true
+        },
+        "three_week_timeline": {
+          "phrases_checked": [
+            "three weeks"
+          ],
+          "present_in_summary": false
+        },
+        "november_2nd_deadline": {
+          "phrases_checked": [
+            "november"
+          ],
+          "present_in_summary": false
+        },
+        "printer_fax_equipment": {
+          "phrases_checked": [
+            "printer",
+            "fax"
+          ],
+          "present_in_summary": false
+        },
+        "final_administration_approval": {
+          "phrases_checked": [
+            "approval",
+            "administration"
+          ],
+          "present_in_summary": true
+        }
+      },
+      "missing_facts": [
+        "three_week_timeline",
+        "november_2nd_deadline",
+        "printer_fax_equipment"
+      ],
+      "methodology": "A small, fixed set of concrete facts drawn from reference_summary.txt (the manually-verified excerpt of the meeting's opening) is checked for presence as a substring in the generated summary. Absence means the phrase was not found verbatim/near-verbatim, not necessarily that the concept is entirely unaddressed."
+    },
+    "possible_unsupported_details": {
+      "candidate_tokens": [],
+      "methodology": "Capitalized (non-sentence-initial) words and standalone numbers in the generated summary that do not appear anywhere in the full source transcript text. This is a surface lexical grounding check, not a semantic fact check -- a paraphrase would not be flagged."
+    }
+  }
+}

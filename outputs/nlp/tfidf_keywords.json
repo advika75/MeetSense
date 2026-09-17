@@ -1,0 +1,391 @@
+{
+  "source_file": "outputs/nlp/nlp_processed_transcript.json",
+  "document_count": 393,
+  "vocabulary_size": 335,
+  "top_keywords": [
+    {
+      "term": "yeah",
+      "score": 58.63070535955866
+    },
+    {
+      "term": "okay",
+      "score": 20.779735492601613
+    },
+    {
+      "term": "room",
+      "score": 14.132558578923318
+    },
+    {
+      "term": "people",
+      "score": 12.945755124895294
+    },
+    {
+      "term": "one",
+      "score": 12.217705784592516
+    },
+    {
+      "term": "office",
+      "score": 10.945827678581672
+    },
+    {
+      "term": "go",
+      "score": 10.674381883863315
+    },
+    {
+      "term": "know",
+      "score": 10.37769886969125
+    },
+    {
+      "term": "get",
+      "score": 9.923745958308247
+    },
+    {
+      "term": "put",
+      "score": 9.51088062352223
+    },
+    {
+      "term": "like",
+      "score": 7.655218926060672
+    },
+    {
+      "term": "well",
+      "score": 7.1505162734876295
+    },
+    {
+      "term": "really",
+      "score": 6.992775504850403
+    },
+    {
+      "term": "think",
+      "score": 6.886086811598212
+    },
+    {
+      "term": "two",
+      "score": 6.660615146250312
+    },
+    {
+      "term": "right",
+      "score": 6.507492159609386
+    },
+    {
+      "term": "work",
+      "score": 5.974079175163222
+    },
+    {
+      "term": "mean",
+      "score": 5.950155144413747
+    },
+    {
+      "term": "person",
+      "score": 5.595732344361687
+    },
+    {
+      "term": "good",
+      "score": 5.408683495208399
+    },
+    {
+      "term": "sort",
+      "score": 5.384216031306018
+    },
+    {
+      "term": "three",
+      "score": 5.2679286806334
+    },
+    {
+      "term": "place",
+      "score": 4.911024570987694
+    },
+    {
+      "term": "come",
+      "score": 4.798176574025908
+    },
+    {
+      "term": "gisella",
+      "score": 4.6121200587234
+    },
+    {
+      "term": "sure",
+      "score": 4.397149598209099
+    },
+    {
+      "term": "time",
+      "score": 4.115842270694519
+    },
+    {
+      "term": "idea",
+      "score": 4.0950217584047595
+    },
+    {
+      "term": "maybe",
+      "score": 4.094711657236758
+    },
+    {
+      "term": "quite",
+      "score": 4.077757873977127
+    }
+  ],
+  "speaker_keywords": {
+    "SPEAKER_02": [
+      {
+        "term": "yeah",
+        "score": 23.282080479456113
+      },
+      {
+        "term": "okay",
+        "score": 6.272724459295438
+      },
+      {
+        "term": "room",
+        "score": 5.102933853426139
+      },
+      {
+        "term": "one",
+        "score": 4.571287905349398
+      },
+      {
+        "term": "go",
+        "score": 4.403216358451688
+      },
+      {
+        "term": "office",
+        "score": 3.931731551713924
+      },
+      {
+        "term": "people",
+        "score": 3.8756879224959233
+      },
+      {
+        "term": "right",
+        "score": 3.662002613192651
+      },
+      {
+        "term": "get",
+        "score": 3.6155573809550914
+      },
+      {
+        "term": "know",
+        "score": 3.535977386140129
+      },
+      {
+        "term": "sort",
+        "score": 3.086944216820964
+      },
+      {
+        "term": "well",
+        "score": 2.930645347527982
+      },
+      {
+        "term": "like",
+        "score": 2.838110509080594
+      },
+      {
+        "term": "two",
+        "score": 2.701292536845468
+      },
+      {
+        "term": "put",
+        "score": 2.6959968103933534
+      }
+    ],
+    "SPEAKER_01": [
+      {
+        "term": "yeah",
+        "score": 16.104859677796696
+      },
+      {
+        "term": "okay",
+        "score": 6.190474608859947
+      },
+      {
+        "term": "room",
+        "score": 4.483304616246853
+      },
+      {
+        "term": "put",
+        "score": 4.204955239765692
+      },
+      {
+        "term": "one",
+        "score": 4.167091933731824
+      },
+      {
+        "term": "office",
+        "score": 3.214399018464377
+      },
+      {
+        "term": "know",
+        "score": 2.73268651722711
+      },
+      {
+        "term": "quite",
+        "score": 2.6711547389830006
+      },
+      {
+        "term": "really",
+        "score": 2.5541265971920635
+      },
+      {
+        "term": "get",
+        "score": 2.4224012942083437
+      },
+      {
+        "term": "people",
+        "score": 2.41737545940803
+      },
+      {
+        "term": "sure",
+        "score": 2.3985774713295527
+      },
+      {
+        "term": "mean",
+        "score": 2.3244686718976637
+      },
+      {
+        "term": "ca",
+        "score": 2.258054820211507
+      },
+      {
+        "term": "two",
+        "score": 2.1918641486735666
+      }
+    ],
+    "SPEAKER_00": [
+      {
+        "term": "yeah",
+        "score": 7.852824974436819
+      },
+      {
+        "term": "okay",
+        "score": 5.5028644745698525
+      },
+      {
+        "term": "people",
+        "score": 2.636560308843919
+      },
+      {
+        "term": "go",
+        "score": 1.8864425207304636
+      },
+      {
+        "term": "know",
+        "score": 1.210790139212642
+      },
+      {
+        "term": "office",
+        "score": 1.0997191328628204
+      },
+      {
+        "term": "could",
+        "score": 1.0545906139865053
+      },
+      {
+        "term": "think",
+        "score": 1.0038251692721372
+      },
+      {
+        "term": "bless",
+        "score": 1.0
+      },
+      {
+        "term": "maggie",
+        "score": 1.0
+      },
+      {
+        "term": "space",
+        "score": 0.961250394350937
+      },
+      {
+        "term": "one",
+        "score": 0.9350042991178545
+      },
+      {
+        "term": "need",
+        "score": 0.9044449664964589
+      },
+      {
+        "term": "maybe",
+        "score": 0.8959264880685252
+      },
+      {
+        "term": "get",
+        "score": 0.8677845189186929
+      }
+    ],
+    "SPEAKER_03": [
+      {
+        "term": "yeah",
+        "score": 5.404168886493207
+      },
+      {
+        "term": "reserve",
+        "score": 1.7920788358877953
+      },
+      {
+        "term": "people",
+        "score": 1.3107745896884828
+      },
+      {
+        "term": "corner",
+        "score": 1.0
+      },
+      {
+        "term": "sun",
+        "score": 1.0
+      },
+      {
+        "term": "true",
+        "score": 1.0
+      },
+      {
+        "term": "well",
+        "score": 0.8281990836142892
+      },
+      {
+        "term": "put",
+        "score": 0.8179938563983242
+      },
+      {
+        "term": "good",
+        "score": 0.7682043829098517
+      },
+      {
+        "term": "room",
+        "score": 0.6923024217861399
+      },
+      {
+        "term": "come",
+        "score": 0.6870725545041542
+      },
+      {
+        "term": "work",
+        "score": 0.6849312166930851
+      },
+      {
+        "term": "know",
+        "score": 0.633763996783768
+      },
+      {
+        "term": "fact",
+        "score": 0.5999437082408442
+      },
+      {
+        "term": "okay",
+        "score": 0.5999437082408442
+      }
+    ],
+    "UNKNOWN": [
+      {
+        "term": "yeah",
+        "score": 3.0
+      },
+      {
+        "term": "okay",
+        "score": 1.0
+      },
+      {
+        "term": "ooh",
+        "score": 1.0
+      }
+    ]
+  }
+}

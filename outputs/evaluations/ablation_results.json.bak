@@ -1,0 +1,82 @@
+{
+  "generated_at": "2026-09-16T19:26:43.747664+00:00",
+  "limitations": [
+    "All numbers below come from a single manually-verified development recording, not a benchmark dataset.",
+    "WER is computed over a fixed-size word budget matched to the manually-verified reference transcript, not the full meeting.",
+    "'whisper_only' and 'whisper_vad_diarization' share the same underlying transcript in the current production pipeline, because VAD output is not currently wired into src/transcription.py or src/diarization.py. This ablation measures VAD's effect on ASR in isolation ('whisper_plus_vad'), not VAD's effect on the production pipeline as currently wired."
+  ],
+  "stages": [
+    {
+      "stage": "whisper_only",
+      "description": "Whisper base ASR on the original raw audio. No VAD filtering, no diarization, no downstream NLP.",
+      "source": "Reused from outputs/transcripts/meeting.json and outputs/evaluations/wer_results.json (already the production Whisper-only transcript and its WER; not re-run here).",
+      "metrics": {
+        "wer_percentage": 0.7092198581560284,
+        "der_percentage": null,
+        "action_item_f1": null,
+        "rouge1_f1": null
+      },
+      "not_applicable": {
+        "der_percentage": "No diarization has been applied yet.",
+        "action_item_f1": "Action-item extraction is evaluated once the speaker-aware transcript exists (see 'full_pipeline').",
+        "rouge1_f1": "Summarization has not run yet at this stage."
+      }
+    },
+    {
+      "stage": "whisper_plus_vad",
+      "description": "Whisper base ASR on VAD-filtered speech-only audio (Silero VAD, silence removed) instead of the raw file. Diarization and downstream NLP not yet applied.",
+      "source": "Fresh transcription of outputs/vad/speech_only.wav performed by this script; the VAD filtering itself is reused from the existing outputs/vad/ output (src/vad.py), not re-run.",
+      "vad_stats": {
+        "total_audio_duration_seconds": 1780.65,
+        "speech_duration_seconds": 1305.0,
+        "silence_duration_seconds": 475.65,
+        "speech_percentage": 73.29,
+        "silence_percentage": 26.71,
+        "number_of_speech_segments": 377
+      },
+      "transcribe_seconds": 84.01,
+      "hypothesis_word_count_used": 282,
+      "hypothesis_preview": "Okay, so as you guys know, ISCO is too small. Well, the building is too small for our group. So we're moving to a new building. It's going to be the building across the street and we're actually moving in three weeks. But the problem is that the administration wants to know who's going to be in what",
+      "metrics": {
+        "wer_percentage": 3.900709219858156,
+        "der_percentage": null,
+        "action_item_f1": null,
+        "rouge1_f1": null
+      },
+      "not_applicable": {
+        "der_percentage": "No diarization has been applied yet.",
+        "action_item_f1": "Action-item extraction is evaluated once the speaker-aware transcript exists (see 'full_pipeline').",
+        "rouge1_f1": "Summarization has not run yet at this stage."
+      },
+      "note": "WER is computed over a word-budget-matched prefix of the VAD-filtered hypothesis (not a timestamp window), because removing silence shifts the internal timeline of the VAD output relative to the original audio."
+    },
+    {
+      "stage": "whisper_vad_diarization",
+      "description": "Adds PyAnnote speaker diarization and speaker/transcript alignment on top of the Whisper-only transcript, producing a speaker-aware transcript.",
+      "source": "Reused from outputs/transcripts/diarization.json, outputs/transcripts/speaker_transcript.json and outputs/evaluations/der_results.json (already the production diarization output; not re-run here).",
+      "metrics": {
+        "wer_percentage": 0.7092198581560284,
+        "der_percentage": 2.2219294778904843,
+        "action_item_f1": null,
+        "rouge1_f1": null
+      },
+      "not_applicable": {
+        "action_item_f1": "Reserved for 'full_pipeline', where action-item extraction is evaluated as part of the complete downstream NLP stage.",
+        "rouge1_f1": "Summarization has not run yet at this stage."
+      },
+      "note": "wer_percentage is inherited from 'whisper_only': in the current production pipeline, diarization and merging operate on the same raw-audio Whisper transcript (src/transcription.py and src/diarization.py both read data/audio/meeting.wav directly; VAD output is not wired into either). Merging speaker labels onto the transcript does not change the transcribed words."
+    },
+    {
+      "stage": "full_pipeline",
+      "description": "Complete production pipeline: Whisper ASR, diarization, speaker-aware transcript, NLP preprocessing, TF-IDF keywords, LDA topics, rule-based action-item/decision extraction, and T5-small summarization.",
+      "source": "Reused from outputs/evaluations/action_item_results.json and outputs/evaluations/rouge_results.json (already the production evaluation outputs; not re-run here).",
+      "metrics": {
+        "wer_percentage": 0.7092198581560284,
+        "der_percentage": 2.2219294778904843,
+        "action_item_f1": 0.4,
+        "rouge1_f1": 0.3353293413173653
+      },
+      "note": "wer_percentage and der_percentage are inherited from earlier stages -- neither the transcribed words nor the speaker assignments change during NLP/summarization."
+    }
+  ]
+}
