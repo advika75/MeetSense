@@ -148,26 +148,24 @@ def render_markdown(all_results, labels_path):
         "",
     ]
 
-    for extractor_name, results in all_results.items():
+    extractors = list(all_results)
+    headers = ["Category"]
+    for name in extractors:
+        headers.extend([f"{name} Precision", f"{name} Recall", f"{name} F1"])
 
-        lines += [
-            f"## {extractor_name}",
-            "",
-            "| Category | TP | FP | FN | Precision | Recall | F1 |",
-            "|---|---|---|---|---|---|---|",
-        ]
+    lines.append("| " + " | ".join(headers) + " |")
+    lines.append("|" + "|".join(["---"] * len(headers)) + "|")
 
-        for category in CATEGORIES:
-
-            r = results[category]
-
-            lines.append(
-                f"| {category} | {r['true_positives']} | "
-                f"{r['false_positives']} | {r['false_negatives']} | "
-                f"{r['precision']} | {r['recall']} | {r['f1']} |"
-            )
-
-        lines.append("")
+    for category in CATEGORIES:
+        row = [category]
+        for name in extractors:
+            result = all_results[name][category]
+            row.extend([
+                str(result["precision"]),
+                str(result["recall"]),
+                str(result["f1"]),
+            ])
+        lines.append("| " + " | ".join(row) + " |")
 
     return "\n".join(lines)
 
