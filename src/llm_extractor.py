@@ -55,6 +55,7 @@ MAX_CHUNK_CHARS = 6000  # rough ~1500-token budget for the transcript excerpt
 
 FUZZY_QUOTE_THRESHOLD = 0.85  # fraction, per spec
 DEDUP_SIMILARITY_THRESHOLD = 90  # rapidfuzz score, 0-100
+EVIDENCE_TEXT_SIMILARITY_THRESHOLD = 70  # normalized score, 0-100
 
 REQUEST_TIMEOUT_SECONDS = 300
 MAX_OUTPUT_TOKENS = 1200
@@ -131,10 +132,13 @@ def check_ollama_available(model=None):
     )
 
 
-def call_ollama(prompt, model, keep_alive=OLLAMA_KEEP_ALIVE):
+def call_ollama(
+    prompt, model, keep_alive=OLLAMA_KEEP_ALIVE,
+    num_predict=MAX_OUTPUT_TOKENS,
+):
 
     estimated_prompt_tokens = (len(prompt) + 3) // 4
-    num_ctx = max(4096, estimated_prompt_tokens + MAX_OUTPUT_TOKENS + 256)
+    num_ctx = max(4096, estimated_prompt_tokens + num_predict + 256)
 
     payload = {
         "model": model,
@@ -144,7 +148,7 @@ def call_ollama(prompt, model, keep_alive=OLLAMA_KEEP_ALIVE):
         "options": {
             "temperature": 0,
             "num_ctx": num_ctx,
-            "num_predict": MAX_OUTPUT_TOKENS,
+            "num_predict": num_predict,
         },
         "keep_alive": keep_alive,
     }
@@ -364,7 +368,7 @@ def meaningful_tokens(text):
     }
 
 
-def raw_items_to_takeaways(raw_items, chunk_segments, drop_counter):
+def raw_items_to_takeaways(raw_items, chunk_segments, drop_counter, line_id_map=None):
 
     kept = []
 
@@ -397,8 +401,7 @@ def raw_items_to_takeaways(raw_items, chunk_segments, drop_counter):
             drop_counter["dropped_sanity"] += 1
             continue
 
-        kept.append(
-            TakeawayItem(
+        takeaway = TakeawayItem(
                 text=raw_item.text,
                 owner=raw_item.owner,
                 due_date_text=raw_item.due_date_text,
@@ -408,7 +411,16 @@ def raw_items_to_takeaways(raw_items, chunk_segments, drop_counter):
                     quote=quote,
                 ),
             )
-        )
+        kept.append(takeaway)
+        if line_id_map is not None:
+            line_id_map[id(takeaway)] = {
+                (
+                    round(float(segment.get("start", 0)), 3),
+                    str(segment.get("speaker", "UNKNOWN")),
+                    str(segment.get("text", "")).strip(),
+                )
+                for segment in cited_segments
+            }
         drop_counter["kept"] += 1
 
     return kept
@@ -443,7 +455,150 @@ def dedupe_items(items, threshold=DEDUP_SIMILARITY_THRESHOLD):
     return sorted(kept, key=lambda item: item.evidence.timestamp)
 
 
-def items_share_evidence(left, right):
+def normalize_item_text(text):
+
+    normalized = re.sub(r"\s+", " ", text.lower()).strip()
+    normalized = re.sub(
+        r"^(?:decide\s+on|decide\s+whether|consider|make\s+a\s+decision\s+on|"
+        r"make\s+a\s+decision\s+about|discuss)\s+",
+        "",
+        normalized,
+    )
+    return normalized
+
+
+def items_are_duplicates(left, right, line_id_map):
+
+    left_lines = line_id_map.get(id(left), set())
+    right_lines = line_id_map.get(id(right), set())
+    if left_lines and right_lines:
+        shared_fraction = len(left_lines & right_lines) / min(
+            len(left_lines), len(right_lines)
+        )
+        if shared_fraction >= 0.5:
+            return True
+
+    left_text = normalize_item_text(left.text)
+    right_text = normalize_item_text(right.text)
+    return fuzz.token_sort_ratio(left_text, right_text) >= EVIDENCE_TEXT_SIMILARITY_THRESHOLD
+
+
+def evidence_dedupe(decisions, action_items, open_questions, line_id_map):
+
+    entries = (
+        [("decision", item) for item in decisions]
+        + [("action_item", item) for item in action_items]
+        + [("open_question", item) for item in open_questions]
+    )
+    parents = list(range(len(entries)))
+
+    def find(index):
+        while parents[index] != index:
+            parents[index] = parents[parents[index]]
+            index = parents[index]
+        return index
+
+    def union(left, right):
+        parents[find(right)] = find(left)
+
+    for left in range(len(entries)):
+        for right in range(left + 1, len(entries)):
+            if items_are_duplicates(entries[left][1], entries[right][1], line_id_map):
+                union(left, right)
+
+    groups = {}
+    for index, entry in enumerate(entries):
+        groups.setdefault(find(index), []).append(entry)
+
+    priority = {"decision": 0, "action_item": 1, "open_question": 2}
+    output = {"decision": [], "action_item": [], "open_question": []}
+    for group in groups.values():
+        selected_type, selected = min(
+            group,
+            key=lambda entry: (
+                priority[entry[0]],
+                -len(meaningful_tokens(entry[1].text)),
+                -len(entry[1].text),
+            ),
+        )
+        merged_lines = set()
+        for _, item in group:
+            merged_lines.update(line_id_map.get(id(item), set()))
+            selected.due_date_text = selected.due_date_text or item.due_date_text
+            selected.due_date = selected.due_date or item.due_date
+        line_id_map[id(selected)] = merged_lines
+        output[selected_type].append(selected)
+
+    for items in output.values():
+        items.sort(key=lambda item: item.evidence.timestamp)
+    return output["decision"], output["action_item"], output["open_question"]
+
+
+VERIFICATION_PROMPT = """Check whether the candidate is supported by the cited transcript lines. Classify only what those lines establish. Return JSON only with exactly these fields: {{\"supported\": true or false, \"type\": \"decision\"|\"action_item\"|\"discussion\"|\"none\", \"reason\": \"at most 15 words\"}}.
+
+Cited transcript lines:
+{evidence}
+
+Candidate ({candidate_type}): {candidate}
+"""
+
+
+def verify_takeaway(item, candidate_type, model):
+
+    prompt = VERIFICATION_PROMPT.format(
+        evidence=item.evidence.quote,
+        candidate_type=candidate_type,
+        candidate=item.text,
+    )
+    try:
+        response = json.loads(call_ollama(prompt, model, num_predict=120))
+        supported = response.get("supported") is True
+        result_type = response.get("type", "none")
+        if result_type not in {"decision", "action_item", "discussion", "none"}:
+            result_type = "none"
+        return supported, result_type
+    except Exception:
+        return False, "none"
+
+
+def verify_items(decisions, action_items, open_questions, model, stats):
+
+    verified = {"decision": [], "action_item": [], "open_question": list(open_questions)}
+    for candidate_type, items in (("decision", decisions), ("action_item", action_items)):
+        for item in items:
+            stats["verification_total"] += 1
+            supported, verified_type = verify_takeaway(item, candidate_type, model)
+            if supported and verified_type == candidate_type:
+                verified[candidate_type].append(item)
+                stats["verification_kept"] += 1
+            elif supported and verified_type == "discussion":
+                verified["open_question"].append(item)
+                stats["verification_reclassified"] += 1
+            else:
+                stats["verification_dropped"] += 1
+    return verified["decision"], verified["action_item"], verified["open_question"]
+
+
+def cap_open_questions(items, line_id_map, limit=8):
+
+    ranked = sorted(
+        items,
+        key=lambda item: (
+            -len(line_id_map.get(id(item), set())),
+            item.evidence.timestamp,
+        ),
+    )
+    return ranked[:limit]
+
+
+def items_share_evidence(left, right, line_id_map=None):
+
+    if line_id_map is not None:
+        left_lines = line_id_map.get(id(left), set())
+        right_lines = line_id_map.get(id(right), set())
+        if left_lines and right_lines:
+            if len(left_lines & right_lines) / min(len(left_lines), len(right_lines)) >= 0.5:
+                return True
 
     if abs(left.evidence.timestamp - right.evidence.timestamp) < 0.01:
         return True
@@ -458,14 +613,18 @@ def items_share_evidence(left, right):
     ) >= 85
 
 
-def merge_attached_deadlines(action_items, deadlines):
+def merge_attached_deadlines(action_items, deadlines, line_id_map=None):
     """Attach deadlines with matching evidence to actions and return
     only deadlines that stand alone rather than describing an action."""
 
     standalone = []
     for deadline in deadlines:
         match = next(
-            (item for item in action_items if items_share_evidence(item, deadline)),
+            (
+                item for item in action_items
+                if items_share_evidence(item, deadline, line_id_map)
+                or normalize_item_text(item.text) == normalize_item_text(deadline.text)
+            ),
             None,
         )
         if match is None:
@@ -473,6 +632,10 @@ def merge_attached_deadlines(action_items, deadlines):
             continue
         match.due_date_text = deadline.due_date_text or match.due_date_text
         match.due_date = deadline.due_date or match.due_date
+        if line_id_map is not None:
+            line_id_map.setdefault(id(match), set()).update(
+                line_id_map.get(id(deadline), set())
+            )
     return standalone
 
 
@@ -601,6 +764,13 @@ class LLMExtractor(TakeawayExtractor):
 
         drop_counter = {"dropped": 0, "dropped_sanity": 0, "kept": 0}
         schema_drop_counter = {"dropped": 0}
+        line_id_map = {}
+        verification_stats = {
+            "verification_total": 0,
+            "verification_kept": 0,
+            "verification_reclassified": 0,
+            "verification_dropped": 0,
+        }
         raw_item_count = 0
 
         all_decisions = []
@@ -639,7 +809,7 @@ class LLMExtractor(TakeawayExtractor):
                 )
 
                 bucket += raw_items_to_takeaways(
-                    parsed_items, chunk_segments, drop_counter
+                    parsed_items, chunk_segments, drop_counter, line_id_map
                 )
 
         # Resolve due dates on action items and deadlines before dedup
@@ -652,15 +822,25 @@ class LLMExtractor(TakeawayExtractor):
                     item.due_date_text, meeting_date
                 )
 
-        decisions = dedupe_items(all_decisions)
-        action_items = dedupe_items(all_action_items)
-        deadlines = dedupe_items(all_deadlines)
-        deadlines = merge_attached_deadlines(action_items, deadlines)
-        open_questions = dedupe_items(all_open_questions)
+        decisions = all_decisions
+        action_items = all_action_items
+        deadlines = all_deadlines
+        deadlines = merge_attached_deadlines(action_items, deadlines, line_id_map)
+        deadlines = dedupe_items(deadlines, threshold=EVIDENCE_TEXT_SIMILARITY_THRESHOLD)
+        open_questions = all_open_questions
         decisions, action_items, open_questions = route_unresolved_items(
             decisions, action_items, open_questions
         )
-        open_questions = dedupe_items(open_questions)
+        decisions, action_items, open_questions = evidence_dedupe(
+            decisions, action_items, open_questions, line_id_map
+        )
+        decisions, action_items, open_questions = verify_items(
+            decisions, action_items, open_questions, model, verification_stats
+        )
+        decisions, action_items, open_questions = evidence_dedupe(
+            decisions, action_items, open_questions, line_id_map
+        )
+        open_questions = cap_open_questions(open_questions, line_id_map)
 
         summary = generate_overall_summary(chunk_summaries or [], model)
         if failed_chunks:
@@ -680,6 +860,7 @@ class LLMExtractor(TakeawayExtractor):
             "items_dropped_bad_schema": schema_drop_counter["dropped"],
             "chunk_errors": chunk_errors,
             "failed_chunks": failed_chunks,
+            **verification_stats,
         }
 
         return {
