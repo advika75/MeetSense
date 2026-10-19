@@ -30,28 +30,7 @@
       "share_pct": 0.2
     }
   ],
-  "summary": "The meeting discussed the relocation of offices to a new building across the street. The administration wants to know who will be in each office and how to organize people. The first question was how to organize the people, with a plan to be rolled out later. There was a discussion about creating a reading room and assigning specific spaces, such as a one-person room for Gisela and a photocopier. The meeting also addressed the need for a reading room and the importance of proximity to facilities like the mailbox. The final discussion focused on assigning offices, with SPEAKER_01 suggesting the reading room should be in the most sunny office, which SPEAKER_02 disagreed with, considering it the most uncomfortable. SPEAKER_01 suggested saving time for the meeting and avoiding arguments.",
-  "chunk_summaries": [
-    "we're moving to a new building across the street SPEAKER_02. the administration wants to know who's going to be in what office in the new building. there's no fights about who gets a window and who doesn't.",
-    "the first question is how we want to organize people, whether SPEAKER_02: place, you can see the list there along with their position and the project that they work on. the idea is that we come up with a plan that will be rolled out later this week.",
-    "SPEAKER_02: I have to come up with a plan, possibly if we have time or presentation. a quick presentation with arguments for why we think our plan works best. the security is sort of the same as it is in the current building.",
-    "a lot of people were saying that they wanted to have a reading room. SPEAKER_02: So we should leave a space for that.",
-    "SPEAKER_02: Maybe we can decide that Gisela is having one of the one person room with the equipment or like we said the photocopier. if we can assume that there isn't going to be any overlap between them, we should have a discussion.",
-    "if you share an office with someone who's on a completely SPEAKER_02: different project, you find out about that project. but you also sort of interact with other people who are working on the same project in the same way. I think it's not a question of reserving it because there's other rooms that you can reserve for a meeting.",
-    "SPEAKER_02: take into account if you receive student or not because we have reception hours and stuff like that. it means you get time where a lot of students come along and talk and so it's different. chances are you're not going to have office hours at the exact same time.",
-    "people would like to see the office organized by by rank like professors and students and SPEAKER_00: well it's up to us how we do it. I think we can see benefits of both.",
-    "avoiding having three person full time SPEAKER_02: time and leave a spare space for the training center could be a good idea. avoiding a three person room in the same room could be an alternative.",
-    "you can look outside of the window if you have a quick meeting. we have some shelves like cabinet type shelves for the reading room SPEAKER_02: but it's not really intended to be a library.",
-    "SPEAKER_02: I guess this is. that and this becomes the reading room right? if Gisella works 50% and they work 50%, it's a good idea.",
-    "SPEAKER_01: I think the main reason to put to choose Gisella's place is the proximity of the mailbox. if you put the photography near the mailbox and it seems to be the only place where there is room.",
-    "SPEAKER_01: Yeah. UNKNOWN: Okay. maybe we should write this down. SPEAKR_00: I mean she's not sharing an office right now. if you put it into Gisella's office it's going to be.",
-    "SPEAKER_01: I think it's just a question of work conditions. if you're a stagier, you can put up with it for the whole year.",
-    "sPEAKER_01: Okay. assuming that's what you meant, right?..",
-    "the three-piece room in the opposite of the north east is the most sunny one. SPEAKER_01: It's the oven.",
-    "sPEAKER_01: And then this is the reading room. SPEAKEr_02: For 14 people. i'm going to take Jazeela off of the list as well.",
-    "SPEAKER_01: Yeah, that's going to be boring. if we just sit here and discuss, we're going to start arguing and get cranky.",
-    "SPEAKER_01: Save your file."
-  ],
+  "summary": "the administration wants to know who's going to be in what office in the new building. there's no fights about who gets a window and who doesn't. the idea is that we come up with a plan that will be rolled out later this week.",
   "topics": [
     {
       "topic_id": 1,
@@ -317,6 +296,18 @@
       }
     },
     {
+      "text": "Put the photography near the mailbox",
+      "owner": null,
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_01",
+        "timestamp": 1288.32,
+        "quote": "Because if we put the photography near the mailbox and it seems to be the only place where there is room. Yeah."
+      }
+    },
+    {
       "text": "Agree that the photo copier and the network printer goes next to the mailbox",
       "owner": null,
       "due_date": null,
@@ -338,6 +329,32 @@
         "speaker": "SPEAKER_02",
         "timestamp": 1652.0,
         "quote": "So I'm going to take Jazeela off of that list as well. I'll put her in gray, I guess. Can we group people by their name?"
+      }
+    },
+    {
+      "text": "Keep the current arrangement for the new building.",
+      "owner": null,
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_01",
+        "timestamp": 1670.56,
+        "quote": "I'm not sure. I still do my ring. Yeah. So it's going to be Marianne's office. Yeah. That would be fun. Is there anybody who's not happy with the current situation? So we could try to just keep the same arrangement just on the new building. Yeah, that's going to be boring. That's boring. That can be a good idea. But do we can we get? Because there is no we can't because no, it we can't. We have one extra one person office and and two three person offices. Plus we have the two people who aren't there now. Yeah. No, I have to put some more. You can keep some of the people together that are together now. Yeah. But not everyone definitely. Okay."
+      }
+    }
+  ],
+  "action_items": [
+    {
+      "text": "Take a break and think about the arrangement.",
+      "owner": null,
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_02",
+        "timestamp": 1728.32,
+        "quote": "Well, why don't we take a break and go off and think about it. Yeah. And then I think we can get some more concrete ideas. Yeah. Okay. We can come back and finish it. Because if we just sit here and discuss, yeah, it's going to take a long time. We're going to start arguing and get cranky and"
       }
     }
   ],
@@ -412,18 +429,6 @@
         "speaker": "SPEAKER_01",
         "timestamp": 1404.72,
         "quote": "So like the ball and there is no room in the cupboard for any people except Gisella because she got lots of paper, like knives and knives and stuff like that."
-      }
-    },
-    {
-      "text": "Is there anybody who's not happy with the current situation?",
-      "owner": null,
-      "due_date": null,
-      "due_date_text": null,
-      "confidence": null,
-      "evidence": {
-        "speaker": "SPEAKER_00",
-        "timestamp": 1678.56,
-        "quote": "Is there anybody who's not happy with the current situation?"
       }
     }
   ],
@@ -3275,6 +3280,7 @@
   "extractor_stats": {
     "model": "qwen2.5:3b",
     "chunk_count": 4,
+    "verify_enabled": true,
     "raw_items": 39,
     "items_kept_before_dedup": 34,
     "items_dropped_ungrounded": 0,
@@ -3282,11 +3288,10 @@
     "items_dropped_bad_schema": 0,
     "chunk_errors": [],
     "failed_chunks": [],
-    "verify_enabled": true,
-    "verification_total": 6,
-    "verification_kept": 5,
+    "raw_cache_hits": 4,
+    "verification_total": 9,
+    "verification_kept": 8,
     "verification_reclassified": 0,
-    "verification_dropped": 1,
-    "reused_cached_extraction_report": true
+    "verification_dropped": 1
   }
 }

@@ -18,6 +18,7 @@ Map-reduce pipeline:
 """
 
 import json
+import hashlib
 import os
 import re
 from datetime import datetime
@@ -62,6 +63,9 @@ EVIDENCE_TEXT_SIMILARITY_THRESHOLD = 70  # normalized score, 0-100
 
 REQUEST_TIMEOUT_SECONDS = 300
 MAX_OUTPUT_TOKENS = 1200
+
+_RAW_CHUNK_CACHE = {}
+_RAW_CACHE_HITS = 0
 
 
 # ============================================================
@@ -259,7 +263,7 @@ Transcript excerpt:
 """
 
 
-def extract_chunk(chunk_segments, model, max_retries=1, allow_split=True):
+def _extract_chunk_uncached(chunk_segments, model, max_retries=1, allow_split=True):
     """Returns (RawChunkResult, chunk_text, error_or_None)."""
 
     chunk_text = format_chunk_for_prompt(chunk_segments)
@@ -346,6 +350,29 @@ def extract_chunk(chunk_segments, model, max_retries=1, allow_split=True):
             return RawChunkResult(), chunk_text, str(error)
 
     return RawChunkResult(), chunk_text, last_error
+
+
+def extract_chunk(chunk_segments, model, max_retries=1, allow_split=True):
+    """Extract a chunk once per process; later verification modes can
+    reuse the exact raw model output instead of repeating map calls."""
+
+    global _RAW_CACHE_HITS
+    key_source = json.dumps(
+        {"model": model, "segments": chunk_segments},
+        sort_keys=True,
+        ensure_ascii=False,
+    )
+    cache_key = hashlib.sha256(key_source.encode("utf-8")).hexdigest()
+    if cache_key in _RAW_CHUNK_CACHE:
+        _RAW_CACHE_HITS += 1
+        cached_result, chunk_text, error = _RAW_CHUNK_CACHE[cache_key]
+        return RawChunkResult.model_validate(cached_result), chunk_text, error
+
+    result, chunk_text, error = _extract_chunk_uncached(
+        chunk_segments, model, max_retries, allow_split
+    )
+    _RAW_CHUNK_CACHE[cache_key] = (result.model_dump(), chunk_text, error)
+    return result, chunk_text, error
 
 
 # ============================================================
@@ -761,6 +788,9 @@ class LLMExtractor(TakeawayExtractor):
 
     def extract(self, transcript_segments, meeting_date, chunk_summaries=None):
 
+        global _RAW_CACHE_HITS
+        _RAW_CACHE_HITS = 0
+
         ok, resolved_model_or_message = self.is_available()
 
         if not ok:
@@ -862,6 +892,7 @@ class LLMExtractor(TakeawayExtractor):
         self.last_run_stats = {
             "model": model,
             "chunk_count": len(chunks),
+            "verify_enabled": self.verify,
             "raw_items": raw_item_count,
             "items_kept_before_dedup": drop_counter["kept"],
             "items_dropped_ungrounded": drop_counter["dropped"],
@@ -869,6 +900,7 @@ class LLMExtractor(TakeawayExtractor):
             "items_dropped_bad_schema": schema_drop_counter["dropped"],
             "chunk_errors": chunk_errors,
             "failed_chunks": failed_chunks,
+            "raw_cache_hits": _RAW_CACHE_HITS,
             **verification_stats,
         }
 

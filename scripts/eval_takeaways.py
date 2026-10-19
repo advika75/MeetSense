@@ -35,7 +35,12 @@ from rapidfuzz import fuzz
 TIME_WINDOW_SECONDS = 30
 FUZZY_MATCH_THRESHOLD = 80  # rapidfuzz score, 0-100
 
-CATEGORIES = ["decisions", "action_items", "deadlines"]
+CATEGORIES = [
+    "decisions",
+    "action_items",
+    "deadlines_strict",
+    "deadlines_lenient",
+]
 
 
 def load_json(path):
@@ -118,6 +123,14 @@ def score_category(predicted_items, labelled_items):
         "precision": round(precision, 3),
         "recall": round(recall, 3),
         "f1": round(f1, 3),
+        "false_positive_items": [
+            item for index, item in enumerate(predicted_items)
+            if index not in matched_predicted_indices
+        ],
+        "missed_items": [
+            item for index, item in enumerate(labelled_items)
+            if index not in matched_labelled_indices
+        ],
     }
 
 
@@ -127,12 +140,37 @@ def evaluate_report(report_path, labels):
 
     results = {}
 
-    for category in CATEGORIES:
+    results["decisions"] = score_category(
+        report.get("decisions", []), labels.get("decisions", [])
+    )
+    results["action_items"] = score_category(
+        report.get("action_items", []), labels.get("action_items", [])
+    )
 
-        predicted_items = report.get(category, [])
-        labelled_items = labels.get(category, [])
+    strict_deadlines = report.get("deadlines", [])
+    lenient_deadlines = list(strict_deadlines)
+    for category in ("decisions", "action_items"):
+        for item in report.get(category, []):
+            if item.get("due_date") or item.get("due_date_text"):
+                duplicate = any(
+                    item_timestamp(item) is not None
+                    and item_timestamp(existing) is not None
+                    and abs(item_timestamp(item) - item_timestamp(existing)) < 0.01
+                    and fuzz.token_sort_ratio(
+                        item.get("text", ""), existing.get("text", "")
+                    ) >= FUZZY_MATCH_THRESHOLD
+                    for existing in lenient_deadlines
+                )
+                if not duplicate:
+                    lenient_deadlines.append(item)
 
-        results[category] = score_category(predicted_items, labelled_items)
+    labelled_deadlines = labels.get("deadlines", [])
+    results["deadlines_strict"] = score_category(
+        strict_deadlines, labelled_deadlines
+    )
+    results["deadlines_lenient"] = score_category(
+        lenient_deadlines, labelled_deadlines
+    )
 
     return results
 
@@ -156,8 +194,14 @@ def render_markdown(all_results, labels_path):
     lines.append("| " + " | ".join(headers) + " |")
     lines.append("|" + "|".join(["---"] * len(headers)) + "|")
 
+    category_labels = {
+        "decisions": "Decisions",
+        "action_items": "Action items",
+        "deadlines_strict": "Deadlines (strict)",
+        "deadlines_lenient": "Deadlines (lenient)",
+    }
     for category in CATEGORIES:
-        row = [category]
+        row = [category_labels[category]]
         for name in extractors:
             result = all_results[name][category]
             row.extend([
@@ -167,7 +211,28 @@ def render_markdown(all_results, labels_path):
             ])
         lines.append("| " + " | ".join(row) + " |")
 
+    for name, results in all_results.items():
+        lines.extend(["", f"## {name}", "", "### False positives"])
+        for category in CATEGORIES:
+            items = results[category]["false_positive_items"]
+            if items:
+                lines.append(f"- **{category_labels[category]}**")
+                lines.extend(f"  - {format_error_item(item)}" for item in items)
+        lines.extend(["", "### Missed items"])
+        for category in CATEGORIES:
+            items = results[category]["missed_items"]
+            if items:
+                lines.append(f"- **{category_labels[category]}**")
+                lines.extend(f"  - {format_error_item(item, labelled=True)}" for item in items)
+
     return "\n".join(lines)
+
+
+def format_error_item(item, labelled=False):
+
+    timestamp = item.get("time_sec") if labelled else item_timestamp(item)
+    when = f"{timestamp:.1f}s" if isinstance(timestamp, (int, float)) else "time unknown"
+    return f"{when} — {item.get('text', '')}"
 
 
 def main():
