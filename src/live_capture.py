@@ -298,12 +298,14 @@ class SimulatedFileCapture:
         sample_rate=SAMPLE_RATE,
         speed_factor=1.0,
         push_seconds=0.5,
+        max_duration_seconds=None,
     ):
         self._file_path = file_path
 
         self._sample_rate = sample_rate
 
         self._speed_factor = speed_factor
+        self._max_duration_seconds = max_duration_seconds
 
         self._push_samples = int(round(push_seconds * sample_rate))
 
@@ -337,6 +339,11 @@ class SimulatedFileCapture:
         audio = self._load_audio()
 
         total_samples = len(audio)
+        if self._max_duration_seconds is not None:
+            total_samples = min(
+                total_samples,
+                int(round(self._max_duration_seconds * self._sample_rate)),
+            )
 
         position = 0
 

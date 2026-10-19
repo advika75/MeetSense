@@ -39,6 +39,8 @@ import json
 import tempfile
 import threading
 import time
+import resource
+import subprocess
 
 import numpy as np
 import soundfile as sf
@@ -86,6 +88,23 @@ from action_item_extraction import (
 )
 
 from summarization import load_summarizer, create_chunks, summarize_text
+
+
+def current_process_rss_mb():
+
+    try:
+        output = subprocess.check_output(
+            ["ps", "-o", "rss=", "-p", str(os.getpid())],
+            text=True,
+            stderr=subprocess.DEVNULL,
+        ).strip()
+        if output:
+            return int(output) / 1024.0
+    except Exception:
+        pass
+
+    max_rss = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+    return max_rss / (1024 * 1024 if sys.platform == "darwin" else 1024)
 
 
 # ============================================================
@@ -215,6 +234,7 @@ class LiveMeetingSession:
         self.latency_log = []
 
         self.session_start_wall_time = time.time()
+        self.capture_start_wall_time = self.session_start_wall_time
 
     def reset_state(self):
         """Clear all growing meeting state (transcript, summaries,
@@ -799,10 +819,19 @@ class LiveMeetingSession:
             else 0.0
         )
 
+        result_wall_clock = time.time()
+        process_rss_mb = current_process_rss_mb()
+        chunk_end_time = chunk_start_time + chunk_duration_s
+        end_to_end_lag_seconds = max(
+            0.0,
+            result_wall_clock - self.capture_start_wall_time - chunk_end_time,
+        )
+
         log_entry = {
             "chunk_index": chunk_index,
             "chunk_start_time": round(chunk_start_time, 3),
             "chunk_duration_s": round(chunk_duration_s, 3),
+            "chunk_seconds": round(chunk_duration_s, 3),
             "wall_clock": time.time(),
             "had_speech": has_speech,
             "ran_diarization": ran_diarization,
@@ -811,6 +840,12 @@ class LiveMeetingSession:
             "new_segment_count": len(new_segments),
             "total_ms": round(total_ms, 2),
             "real_time_factor": round(real_time_factor, 3),
+            "alignment_nlp_ms": round(
+                timings.get("alignment_ms", 0.0) + timings.get("nlp_ms", 0.0),
+                2,
+            ),
+            "process_rss_mb": round(process_rss_mb, 2),
+            "end_to_end_lag_seconds": round(end_to_end_lag_seconds, 3),
         }
 
         for key, value in timings.items():

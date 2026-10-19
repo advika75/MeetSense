@@ -24,6 +24,7 @@ import json
 import os
 import queue
 import threading
+import time
 
 from live_capture import MicrophoneCapture, SimulatedFileCapture, SAMPLE_RATE
 from live_pipeline import LiveMeetingSession
@@ -144,7 +145,10 @@ class LiveSessionController:
     # LIFECYCLE
     # ------------------------------------------------------------
 
-    def start(self, mode, simulated_file_path=None, device=None):
+    def start(
+        self, mode, simulated_file_path=None, device=None,
+        simulated_max_duration_seconds=None,
+    ):
 
         if self.running:
             return
@@ -176,6 +180,7 @@ class LiveSessionController:
                     simulated_file_path,
                     self._on_chunk_captured,
                     speed_factor=1.0,
+                    max_duration_seconds=simulated_max_duration_seconds,
                 )
 
             else:
@@ -186,6 +191,7 @@ class LiveSessionController:
             )
             self._worker_thread.start()
 
+            self.session.capture_start_wall_time = time.time()
             self._capture.start()
 
             self.running = True

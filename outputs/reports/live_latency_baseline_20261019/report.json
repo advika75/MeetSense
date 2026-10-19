@@ -1,0 +1,737 @@
+{
+  "meeting_id": "live_latency_baseline_20261019",
+  "source": "live",
+  "date": "2026-10-19",
+  "duration_sec": 530.0,
+  "speakers": [
+    {
+      "name": "UNKNOWN",
+      "speaking_time_sec": 210.16,
+      "share_pct": 88.7
+    },
+    {
+      "name": "SPEAKER_01",
+      "speaking_time_sec": 19.76,
+      "share_pct": 8.3
+    },
+    {
+      "name": "SPEAKER_00",
+      "speaking_time_sec": 7.08,
+      "share_pct": 3.0
+    }
+  ],
+  "summary": "The meeting discussed the relocation of a group to a new building across the street. The administration is concerned about assigning offices, printers, and other equipment by November 2nd. Key points include the distribution of windows, the availability of photocopiers and fax machines, the absence of bookcases, and the need to organize people either by rank or project. There are also specific conditions regarding the use of shared resources like printers and the work environment, including noise levels and collaboration between certain individuals.",
+  "chunk_summaries": [
+    "isco is too small for our group. it's going to be the building across the street.",
+    "the administration wants to know who's going to be in what office in the new building UNKNOWN. they have the final approval of where we put people, like the printer, the fax machine, all the big equipment.",
+    "they want to know where we're going to do all of this by November 2nd. if we don't have any other time, we have to make these decisions today.",
+    "all the rooms have windows locally, so there's no fights about who gets a window and who doesn't.",
+    "you get windows on two walls and two one person rooms. the courtyard, because we're on the sixth floor, is pretty much the same.",
+    "the windows look out onto open space. you can see the bathrooms, the elevators are UNKNOWN.",
+    "photocopier, which is not so big, is a fax machine. printer is relatively small.",
+    "UNKNOWN: No cupboards like we have in the current offices. each person gets their own chair, their own corner desk.",
+    "SPEAKER_00: So we don't get the bookcases like we have now, but just one shelf that's attached to the wall. the people that we have to place, you can see the list along with their position.",
+    "the first question is how we want to organize people, UNKNOWN. if we want it by rank or by project, put all the PhD students together.",
+    "UNKNOWN: as long as the things are physically attached to the wall so they can't be removed, then it should be okay to leave them in the hall.",
+    "UNKNOWN: we only get one printer for 15 people. we get one kind of networked printer.",
+    "UNKNOWN: It's completely different work.",
+    "UNKNOWN: I mean, Jizela's work is quite noisy.",
+    "UNKNOWN: Shia and her face with Gisela, unless you are 50%, is working, which is another condition.",
+    "UNKNOWN: the professor asked us to do."
+  ],
+  "topics": [
+    {
+      "topic_id": 1,
+      "top_words": [
+        {
+          "word": "go",
+          "weight": 5.213294328505068
+        },
+        {
+          "word": "put",
+          "weight": 4.199937144179917
+        },
+        {
+          "word": "actually",
+          "weight": 3.1999667092744333
+        },
+        {
+          "word": "work",
+          "weight": 3.1855084040428476
+        },
+        {
+          "word": "know",
+          "weight": 2.9831819057239377
+        },
+        {
+          "word": "move",
+          "weight": 2.2028155022998828
+        },
+        {
+          "word": "two",
+          "weight": 2.2007198474554426
+        },
+        {
+          "word": "wall",
+          "weight": 2.199046664014501
+        },
+        {
+          "word": "person",
+          "weight": 1.2026483563324555
+        },
+        {
+          "word": "get",
+          "weight": 1.1995169728618575
+        }
+      ]
+    },
+    {
+      "topic_id": 2,
+      "top_words": [
+        {
+          "word": "want",
+          "weight": 5.198400169131029
+        },
+        {
+          "word": "yeah",
+          "weight": 3.202918250746127
+        },
+        {
+          "word": "see",
+          "weight": 3.199922945327355
+        },
+        {
+          "word": "people",
+          "weight": 2.2041534076813587
+        },
+        {
+          "word": "open",
+          "weight": 2.1999525677458123
+        },
+        {
+          "word": "problem",
+          "weight": 2.19991104402664
+        },
+        {
+          "word": "window",
+          "weight": 2.1997390726471293
+        },
+        {
+          "word": "know",
+          "weight": 1.4182809416125641
+        },
+        {
+          "word": "look",
+          "weight": 1.2017499553524038
+        },
+        {
+          "word": "thing",
+          "weight": 1.2008672610025066
+        }
+      ]
+    },
+    {
+      "topic_id": 3,
+      "top_words": [
+        {
+          "word": "small",
+          "weight": 4.199960368801954
+        },
+        {
+          "word": "jizela",
+          "weight": 3.199630636210288
+        },
+        {
+          "word": "mean",
+          "weight": 3.1996016627983903
+        },
+        {
+          "word": "really",
+          "weight": 2.200813457368428
+        },
+        {
+          "word": "quite",
+          "weight": 2.199430723116638
+        },
+        {
+          "word": "okay",
+          "weight": 1.2026464560777048
+        },
+        {
+          "word": "yeah",
+          "weight": 1.2010472507632373
+        },
+        {
+          "word": "well",
+          "weight": 1.199912706876707
+        },
+        {
+          "word": "think",
+          "weight": 1.1990252497217215
+        },
+        {
+          "word": "know",
+          "weight": 1.198479637333085
+        }
+      ]
+    },
+    {
+      "topic_id": 4,
+      "top_words": [
+        {
+          "word": "like",
+          "weight": 5.214021218736716
+        },
+        {
+          "word": "building",
+          "weight": 5.206458279914958
+        },
+        {
+          "word": "sort",
+          "weight": 5.199954110873051
+        },
+        {
+          "word": "one",
+          "weight": 5.19972332578639
+        },
+        {
+          "word": "get",
+          "weight": 3.608372730812997
+        },
+        {
+          "word": "office",
+          "weight": 3.199895807599223
+        },
+        {
+          "word": "think",
+          "weight": 2.2009256027356003
+        },
+        {
+          "word": "shelf",
+          "weight": 2.1999520468194373
+        },
+        {
+          "word": "current",
+          "weight": 2.199951048126074
+        },
+        {
+          "word": "new",
+          "weight": 2.1999439890426764
+        }
+      ]
+    },
+    {
+      "topic_id": 5,
+      "top_words": [
+        {
+          "word": "room",
+          "weight": 4.202217177027561
+        },
+        {
+          "word": "big",
+          "weight": 4.199940190256936
+        },
+        {
+          "word": "people",
+          "weight": 3.216460143632345
+        },
+        {
+          "word": "two",
+          "weight": 3.199234647919225
+        },
+        {
+          "word": "printer",
+          "weight": 3.049953393614106
+        },
+        {
+          "word": "get",
+          "weight": 2.7920193522566272
+        },
+        {
+          "word": "three",
+          "weight": 2.2038202027109466
+        },
+        {
+          "word": "administration",
+          "weight": 2.200748699987854
+        },
+        {
+          "word": "window",
+          "weight": 2.2001968625709116
+        },
+        {
+          "word": "fax",
+          "weight": 2.1999750726764526
+        }
+      ]
+    }
+  ],
+  "transcript": [
+    {
+      "start": 0.0,
+      "end": 12.24,
+      "speaker": "UNKNOWN",
+      "text": "Okay, so as you guys know, isco is too small.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 12.24,
+      "end": 14.48,
+      "speaker": "UNKNOWN",
+      "text": "Well, the building is too small for our group.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 14.48,
+      "end": 17.08,
+      "speaker": "UNKNOWN",
+      "text": "So we're moving to a new building.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 17.08,
+      "end": 20.0,
+      "speaker": "UNKNOWN",
+      "text": "It's going to be the building across the street and we're actually moving.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 21.72,
+      "end": 25.12,
+      "speaker": "UNKNOWN",
+      "text": "But the problem is that the administration wants to know",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 25.12,
+      "end": 27.92,
+      "speaker": "UNKNOWN",
+      "text": "who's going to be in what office in the new building",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 27.92,
+      "end": 29.96,
+      "speaker": "UNKNOWN",
+      "text": "and where we're going to put things",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 29.96,
+      "end": 33.88,
+      "speaker": "UNKNOWN",
+      "text": "like the printer, the fax machine, all the big equipment.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 33.88,
+      "end": 36.12,
+      "speaker": "UNKNOWN",
+      "text": "And the catch is that they have the final approval",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 36.12,
+      "end": 37.84,
+      "speaker": "UNKNOWN",
+      "text": "of where we put people.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 39.12,
+      "end": 43.08,
+      "speaker": "UNKNOWN",
+      "text": "And they want to know where we're going to do all of this by November 2nd.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 43.08,
+      "end": 47.84,
+      "speaker": "UNKNOWN",
+      "text": "So that means basically next Tuesday.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 47.84,
+      "end": 52.52,
+      "speaker": "UNKNOWN",
+      "text": "And since we don't really have any other time, we have to make these decisions today.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 52.52,
+      "end": 54.52,
+      "speaker": "UNKNOWN",
+      "text": "What we're getting is 9...",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 58.0,
+      "end": 63.0,
+      "speaker": "UNKNOWN",
+      "text": "And all the rooms have windows locally, so there's no fights about who gets a window and who doesn't.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 63.0,
+      "end": 68.0,
+      "speaker": "UNKNOWN",
+      "text": "There's two views, either of the old town or the mountains, and the rooms are various sizes.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 68.0,
+      "end": 72.0,
+      "speaker": "UNKNOWN",
+      "text": "There's two three people rooms, five, two, three.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 73.0,
+      "end": 78.0,
+      "speaker": "UNKNOWN",
+      "text": "You actually get windows on two walls and two one person rooms.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 78.0,
+      "end": 81.0,
+      "speaker": "UNKNOWN",
+      "text": "That's pretty much what the building looks like.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 81.0,
+      "end": 84.0,
+      "speaker": "UNKNOWN",
+      "text": "And then you have the number of people per room.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 84.0,
+      "end": 88.0,
+      "speaker": "UNKNOWN",
+      "text": "The courtyard, because we're on the sixth floor, you can't actually go out to it.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 88.68,
+      "end": 94.32,
+      "speaker": "UNKNOWN",
+      "text": "the windows look out onto open space. You can see the bathrooms, the elevators are",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 94.32,
+      "end": 100.08,
+      "speaker": "UNKNOWN",
+      "text": "sort of further down the hall. The purple bar at the bottom sort of on the right",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 100.08,
+      "end": 105.08,
+      "speaker": "UNKNOWN",
+      "text": "is the mailboxes. All of the windows open, you can",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 107.64,
+      "end": 110.84,
+      "speaker": "UNKNOWN",
+      "text": "building.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 110.84,
+      "end": 114.68,
+      "speaker": "UNKNOWN",
+      "text": "And the equipment that we have to put somewhere are like I said, the photocopier, which",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 114.68,
+      "end": 121.28,
+      "speaker": "UNKNOWN",
+      "text": "is really big, a fax machine which is not so big, and the printer which is relatively",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 121.28,
+      "end": 121.68,
+      "speaker": "UNKNOWN",
+      "text": "big.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 122.24,
+      "end": 126.12,
+      "speaker": "UNKNOWN",
+      "text": "Each office has a white board, a bulletin board, and a coat rack.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 126.12,
+      "end": 129.84,
+      "speaker": "UNKNOWN",
+      "text": "No cupboards like we have in the current offices.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 129.84,
+      "end": 133.36,
+      "speaker": "UNKNOWN",
+      "text": "And each person gets their own chair, their own corner desk,",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 133.36,
+      "end": 136.12,
+      "speaker": "UNKNOWN",
+      "text": "so like the ones that we have now.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 136.12,
+      "end": 137.96,
+      "speaker": "UNKNOWN",
+      "text": "A small filing cabinet with three drawers,",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 137.96,
+      "end": 139.96,
+      "speaker": "UNKNOWN",
+      "text": "and by small I mean they're about...",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 140.88,
+      "end": 142.88,
+      "speaker": "UNKNOWN",
+      "text": "And one sort of hanging shelf.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 142.88,
+      "end": 146.56,
+      "speaker": "UNKNOWN",
+      "text": "So we don't get the bookcases like we have now, but just one shelf that's attached to",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 146.56,
+      "end": 148.88,
+      "speaker": "UNKNOWN",
+      "text": "the wall.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 148.88,
+      "end": 155.58,
+      "speaker": "UNKNOWN",
+      "text": "And the people that we have to place, you can see the list there along with their position",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 155.58,
+      "end": 156.08,
+      "speaker": "UNKNOWN",
+      "text": "and the problem.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 157.0,
+      "end": 163.0,
+      "speaker": "UNKNOWN",
+      "text": "And I guess the question, the first question is how we want to organize people,",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 163.0,
+      "end": 168.0,
+      "speaker": "UNKNOWN",
+      "text": "whether we want to do it by rank or by project",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 168.0,
+      "end": 173.0,
+      "speaker": "UNKNOWN",
+      "text": "or I don't know, put all the PhD students together, all the",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 226.76,
+      "end": 232.68,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah, I think the security is sort of the same as it is in the current building.",
+      "speaker_overlap": 0.649
+    },
+    {
+      "start": 232.68,
+      "end": 237.0,
+      "speaker": "SPEAKER_01",
+      "text": "So as long as the things are physically attached to the wall so they can't be removed,",
+      "speaker_overlap": 4.32
+    },
+    {
+      "start": 237.0,
+      "end": 238.84,
+      "speaker": "SPEAKER_01",
+      "text": "then it should be okay to leave them in the hall.",
+      "speaker_overlap": 1.84
+    },
+    {
+      "start": 244.96,
+      "end": 252.64,
+      "speaker": "SPEAKER_01",
+      "text": "sensitive documents or whatever. So we only get one printer for 15 people?",
+      "speaker_overlap": 7.68
+    },
+    {
+      "start": 252.64,
+      "end": 259.72,
+      "speaker": "SPEAKER_00",
+      "text": "Well we get one sort of networked printer and then I think some of us...",
+      "speaker_overlap": 3.172
+    },
+    {
+      "start": 367.64,
+      "end": 368.64,
+      "speaker": "UNKNOWN",
+      "text": "Yeah.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 368.64,
+      "end": 371.36,
+      "speaker": "UNKNOWN",
+      "text": "It's completely different work.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 371.36,
+      "end": 376.2,
+      "speaker": "UNKNOWN",
+      "text": "So we can deal with administration and decide something for administration and then.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 378.0,
+      "end": 383.0,
+      "speaker": "UNKNOWN",
+      "text": "Yeah, but Jizela is really the only administrative.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 383.0,
+      "end": 386.0,
+      "speaker": "UNKNOWN",
+      "text": "But at least deal with that particular situation.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 386.0,
+      "end": 387.0,
+      "speaker": "UNKNOWN",
+      "text": "Yeah.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 387.0,
+      "end": 389.0,
+      "speaker": "UNKNOWN",
+      "text": "And then see with the other.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 389.0,
+      "end": 391.0,
+      "speaker": "UNKNOWN",
+      "text": "Because I was thinking, Jizela is quite,",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 391.0,
+      "end": 394.0,
+      "speaker": "UNKNOWN",
+      "text": "I mean, Jizela's work is quite noisy.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 396.64,
+      "end": 397.64,
+      "speaker": "UNKNOWN",
+      "text": "calling stuff like that.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 397.64,
+      "end": 399.12,
+      "speaker": "UNKNOWN",
+      "text": "And she's always moving around.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 399.12,
+      "end": 404.88,
+      "speaker": "UNKNOWN",
+      "text": "Yeah, so you want Shia and her face with Gisela, unless you are 50%, and not the 50% Gisela",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 404.88,
+      "end": 408.0,
+      "speaker": "UNKNOWN",
+      "text": "is working, which is another condition.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 408.0,
+      "end": 411.0,
+      "speaker": "UNKNOWN",
+      "text": "Which I don't know if we can assume that there isn't going to be any...",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 518.64,
+      "end": 525.0,
+      "speaker": "UNKNOWN",
+      "text": "group of amongst the same project or amongst the same title.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 525.0,
+      "end": 528.0,
+      "speaker": "UNKNOWN",
+      "text": "Yeah, the professor asked us to do.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 528.0,
+      "end": 530.0,
+      "speaker": "UNKNOWN",
+      "text": "Oh yeah, couple of...",
+      "speaker_overlap": 0.0
+    }
+  ],
+  "extractor_used": "llm",
+  "extractor_stats": {
+    "model": "qwen2.5:3b",
+    "chunk_count": 1,
+    "verify_enabled": false,
+    "raw_items": 11,
+    "items_kept_before_dedup": 0,
+    "items_dropped_ungrounded": 0,
+    "items_dropped_sanity": 0,
+    "items_dropped_bad_schema": 11,
+    "chunk_errors": [],
+    "failed_chunks": [],
+    "raw_cache_hits": 0,
+    "verification_total": 0,
+    "verification_kept": 0,
+    "verification_reclassified": 0,
+    "verification_dropped": 0
+  }
+}
