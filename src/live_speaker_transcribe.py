@@ -1,4 +1,38 @@
 import os
+import sys
+
+# --------------------------------------------------
+# Fix FFmpeg shared-library path on macOS
+# Must happen BEFORE importing torch / pyannote
+# --------------------------------------------------
+#
+# macOS's dynamic linker only honors DYLD_LIBRARY_PATH if it is
+# present in the process environment at exec() time -- setting it via
+# os.environ from inside an already-running interpreter has no effect
+# on later dlopen() calls. Re-exec this same script once with the
+# corrected environment instead (see src/diarization.py, where this
+# exact issue was diagnosed and fixed during final validation).
+
+ffmpeg_lib = "/opt/homebrew/opt/ffmpeg/lib"
+
+if (
+    os.path.exists(ffmpeg_lib)
+    and os.environ.get("_MEETSENSE_DYLD_FIXED") != "1"
+):
+    current_path = os.environ.get("DYLD_LIBRARY_PATH", "")
+
+    if current_path:
+        os.environ["DYLD_LIBRARY_PATH"] = (
+            ffmpeg_lib + ":" + current_path
+        )
+    else:
+        os.environ["DYLD_LIBRARY_PATH"] = ffmpeg_lib
+
+    os.environ["_MEETSENSE_DYLD_FIXED"] = "1"
+
+    os.execve(sys.executable, [sys.executable] + sys.argv, os.environ)
+
+
 import json
 import tempfile
 from datetime import datetime

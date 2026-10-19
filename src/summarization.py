@@ -14,97 +14,52 @@ MAX_INPUT_TOKENS = 450
 MAX_OUTPUT_TOKENS = 120
 
 
-print("=" * 60)
-print("TRANSFORMER MEETING SUMMARIZATION")
-print("=" * 60)
-
-print()
-print("Loading speaker-aware transcript...")
-
-with open(INPUT_FILE, "r", encoding="utf-8") as f:
-    transcript = json.load(f)
-
-if not isinstance(transcript, list):
-    raise ValueError(
-        "speaker_transcript.json must contain a list."
-    )
-
-print("Transcript segments:", len(transcript))
-
-
-# ---------------------------------------------------------
-# Build meeting text
-# ---------------------------------------------------------
-
-meeting_parts = []
-
-for segment in transcript:
-
-    speaker = segment.get("speaker", "UNKNOWN")
-    text = segment.get("text", "").strip()
-
-    if text:
-
-        meeting_parts.append(
-            f"{speaker}: {text}"
-        )
-
-
-meeting_text = " ".join(meeting_parts)
-
-print("Meeting text characters:", len(meeting_text))
-
-
 # ---------------------------------------------------------
 # Device selection
 # ---------------------------------------------------------
 
-if torch.backends.mps.is_available():
+def select_device():
 
-    device = torch.device("mps")
-    print("Using Apple Silicon GPU: MPS")
+    if torch.backends.mps.is_available():
+        return torch.device("mps")
 
-else:
-
-    device = torch.device("cpu")
-    print("MPS unavailable. Using CPU.")
+    return torch.device("cpu")
 
 
 # ---------------------------------------------------------
-# Load tokenizer and model
+# Load tokenizer + model (reused by both batch and live callers)
 # ---------------------------------------------------------
 
-print()
-print("Loading transformer model:")
-print(MODEL_NAME)
+def load_summarizer(model_name=MODEL_NAME, device=None):
 
-tokenizer = AutoTokenizer.from_pretrained(
-    MODEL_NAME
-)
+    if device is None:
+        device = select_device()
 
-model = AutoModelForSeq2SeqLM.from_pretrained(
-    MODEL_NAME
-)
+    tokenizer = AutoTokenizer.from_pretrained(
+        model_name
+    )
 
-model.to(device)
-model.eval()
+    model = AutoModelForSeq2SeqLM.from_pretrained(
+        model_name
+    )
 
-print("Transformer model loaded.")
+    model.to(device)
+    model.eval()
+
+    return tokenizer, model, device
 
 
 # ---------------------------------------------------------
-# Split meeting into manageable chunks
+# Split meeting text into manageable chunks
 # ---------------------------------------------------------
 
-def create_chunks(text):
+def create_chunks(text, tokenizer, max_input_tokens=MAX_INPUT_TOKENS):
 
     words = text.split()
 
     chunks = []
 
     current_chunk = []
-
-    current_tokens = 0
 
     for word in words:
 
@@ -121,7 +76,7 @@ def create_chunks(text):
         )
 
         if (
-            token_count > MAX_INPUT_TOKENS
+            token_count > max_input_tokens
             and current_chunk
         ):
 
@@ -135,8 +90,6 @@ def create_chunks(text):
 
             current_chunk = test_chunk
 
-        current_tokens = token_count
-
     if current_chunk:
 
         chunks.append(
@@ -146,19 +99,18 @@ def create_chunks(text):
     return chunks
 
 
-print()
-print("Splitting meeting into chunks...")
-
-chunks = create_chunks(meeting_text)
-
-print("Number of chunks:", len(chunks))
-
-
 # ---------------------------------------------------------
-# Summarization function
+# Summarize a single piece of text
 # ---------------------------------------------------------
 
-def summarize_text(text):
+def summarize_text(
+    text,
+    tokenizer,
+    model,
+    device,
+    max_input_tokens=MAX_INPUT_TOKENS,
+    max_output_tokens=MAX_OUTPUT_TOKENS
+):
 
     prompt = "summarize: " + text
 
@@ -166,7 +118,7 @@ def summarize_text(text):
         prompt,
         return_tensors="pt",
         truncation=True,
-        max_length=MAX_INPUT_TOKENS
+        max_length=max_input_tokens
     )
 
     inputs = {
@@ -178,7 +130,7 @@ def summarize_text(text):
 
         output_ids = model.generate(
             **inputs,
-            max_new_tokens=MAX_OUTPUT_TOKENS,
+            max_new_tokens=max_output_tokens,
             num_beams=4,
             early_stopping=True,
             no_repeat_ngram_size=3
@@ -193,92 +145,142 @@ def summarize_text(text):
 
 
 # ---------------------------------------------------------
-# Summarize each chunk
+# Batch CLI entry point (unchanged behavior)
 # ---------------------------------------------------------
 
-chunk_summaries = []
+def main():
 
-print()
-print("Generating chunk summaries...")
+    print("=" * 60)
+    print("TRANSFORMER MEETING SUMMARIZATION")
+    print("=" * 60)
 
-for index, chunk in enumerate(chunks, start=1):
+    print()
+    print("Loading speaker-aware transcript...")
 
-    print(
-        f"Summarizing chunk "
-        f"{index}/{len(chunks)}..."
+    with open(INPUT_FILE, "r", encoding="utf-8") as f:
+        transcript = json.load(f)
+
+    if not isinstance(transcript, list):
+        raise ValueError(
+            "speaker_transcript.json must contain a list."
+        )
+
+    print("Transcript segments:", len(transcript))
+
+    meeting_parts = []
+
+    for segment in transcript:
+
+        speaker = segment.get("speaker", "UNKNOWN")
+        text = segment.get("text", "").strip()
+
+        if text:
+
+            meeting_parts.append(
+                f"{speaker}: {text}"
+            )
+
+    meeting_text = " ".join(meeting_parts)
+
+    print("Meeting text characters:", len(meeting_text))
+
+    device = select_device()
+
+    if device.type == "mps":
+        print("Using Apple Silicon GPU: MPS")
+    else:
+        print("MPS unavailable. Using CPU.")
+
+    print()
+    print("Loading transformer model:")
+    print(MODEL_NAME)
+
+    tokenizer, model, device = load_summarizer(
+        MODEL_NAME, device
     )
 
-    summary = summarize_text(chunk)
+    print("Transformer model loaded.")
 
-    chunk_summaries.append(summary)
+    print()
+    print("Splitting meeting into chunks...")
 
+    chunks = create_chunks(meeting_text, tokenizer)
 
-# ---------------------------------------------------------
-# Generate final summary
-# ---------------------------------------------------------
+    print("Number of chunks:", len(chunks))
 
-print()
-print("Generating final meeting summary...")
+    chunk_summaries = []
 
-combined_summary = " ".join(
-    chunk_summaries
-)
+    print()
+    print("Generating chunk summaries...")
 
-final_summary = summarize_text(
-    combined_summary
-)
+    for index, chunk in enumerate(chunks, start=1):
 
+        print(
+            f"Summarizing chunk "
+            f"{index}/{len(chunks)}..."
+        )
 
-# ---------------------------------------------------------
-# Save output
-# ---------------------------------------------------------
+        summary = summarize_text(
+            chunk, tokenizer, model, device
+        )
 
-output = {
-    "model": MODEL_NAME,
-    "source_file": INPUT_FILE,
-    "transcript_segments": len(transcript),
-    "number_of_chunks": len(chunks),
-    "chunk_summaries": chunk_summaries,
-    "final_summary": final_summary
-}
+        chunk_summaries.append(summary)
 
+    print()
+    print("Generating final meeting summary...")
 
-os.makedirs(
-    "outputs/summaries",
-    exist_ok=True
-)
-
-with open(
-    OUTPUT_FILE,
-    "w",
-    encoding="utf-8"
-) as f:
-
-    json.dump(
-        output,
-        f,
-        indent=2,
-        ensure_ascii=False
+    combined_summary = " ".join(
+        chunk_summaries
     )
 
+    final_summary = summarize_text(
+        combined_summary, tokenizer, model, device
+    )
 
-# ---------------------------------------------------------
-# Display result
-# ---------------------------------------------------------
+    output = {
+        "model": MODEL_NAME,
+        "source_file": INPUT_FILE,
+        "transcript_segments": len(transcript),
+        "number_of_chunks": len(chunks),
+        "chunk_summaries": chunk_summaries,
+        "final_summary": final_summary
+    }
 
-print()
-print("=" * 60)
-print("FINAL MEETING SUMMARY")
-print("=" * 60)
+    os.makedirs(
+        "outputs/summaries",
+        exist_ok=True
+    )
 
-print()
-print(final_summary)
+    with open(
+        OUTPUT_FILE,
+        "w",
+        encoding="utf-8"
+    ) as f:
 
-print()
-print("=" * 60)
-print("SUMMARIZATION COMPLETE")
-print("=" * 60)
+        json.dump(
+            output,
+            f,
+            indent=2,
+            ensure_ascii=False
+        )
 
-print()
-print("Output saved to:")
-print(OUTPUT_FILE)
+    print()
+    print("=" * 60)
+    print("FINAL MEETING SUMMARY")
+    print("=" * 60)
+
+    print()
+    print(final_summary)
+
+    print()
+    print("=" * 60)
+    print("SUMMARIZATION COMPLETE")
+    print("=" * 60)
+
+    print()
+    print("Output saved to:")
+    print(OUTPUT_FILE)
+
+
+if __name__ == "__main__":
+    main()

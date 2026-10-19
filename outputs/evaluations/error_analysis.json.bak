@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-16T19:49:53.970370+00:00",
+  "generated_at": "2026-09-16T19:59:50.620973+00:00",
   "limitations": [
     "All findings come from a single manually-verified development recording, not a benchmark dataset.",
     "NER-false-positive, keyword-noise, and topic-noise checks use a small curated discourse-marker lexicon as a heuristic -- they approximate likely errors, they are not a human-reviewed annotation of every item.",

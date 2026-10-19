@@ -1,0 +1,22 @@
+{
+  "metric": "Diarization Error Rate",
+  "metric_name": "DER",
+  "method": "VBx (AHC+VB-HMM over x-vectors)",
+  "evaluation_type": "sample_level",
+  "reference_file": "outputs/evaluations/reference_diarization.json",
+  "prediction_file": "outputs/transcripts/diarization_vbx.json",
+  "evaluation_end_seconds": 75.0,
+  "der": 0.08414935815805248,
+  "der_percentage": 8.414935815805249,
+  "components": {
+    "false alarm": 0.5129999999999981,
+    "missed detection": 5.235999999999988,
+    "confusion": 0.0,
+    "correct": 63.08300000000001,
+    "total": 68.31899999999999
+  },
+  "notes": [
+    "Experimental diarization method, evaluated for research comparison against the production PyAnnote pipeline (see outputs/evaluations/der_results.json).",
+    "VBx requires externally supplied VAD; this run used MeetSense's existing Silero VAD segments (outputs/vad/speech_segments.json). PyAnnote's pipeline performs its own internal segmentation instead, so the two systems being compared do not receive identical segmentation input -- a genuine architectural difference, not an evaluation bias."
+  ]
+}

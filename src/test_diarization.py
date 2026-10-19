@@ -7,8 +7,10 @@ from pyannote.audio import Pipeline
 
 
 # Load .env
+_PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 load_dotenv(
-    dotenv_path="/Users/advikamishra/Desktop/NLP/.env"
+    dotenv_path=os.path.join(_PROJECT_ROOT, ".env")
 )
 
 HF_TOKEN = os.getenv("HF_TOKEN")

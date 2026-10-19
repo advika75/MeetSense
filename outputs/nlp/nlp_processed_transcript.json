@@ -1,6 +1,6 @@
 {
   "source_file": "outputs/transcripts/speaker_transcript.json",
-  "segment_count": 404,
+  "segment_count": 406,
   "processed_segments": [
     {
       "start": 0.0,
@@ -22332,7 +22332,32 @@
     },
     {
       "start": 1768.88,
-      "end": 1769.28,
+      "end": 1769.36,
+      "speaker": "UNKNOWN",
+      "original_text": "Okay.",
+      "sentences": [
+        "Okay."
+      ],
+      "tokens": [
+        "Okay",
+        "."
+      ],
+      "filtered_tokens": [
+        "okay"
+      ],
+      "pos_tags": [
+        [
+          "okay",
+          "NN"
+        ]
+      ],
+      "lemmatized_tokens": [
+        "okay"
+      ]
+    },
+    {
+      "start": 1773.84,
+      "end": 1774.16,
       "speaker": "UNKNOWN",
       "original_text": "Yeah.",
       "sentences": [
@@ -22356,28 +22381,60 @@
       ]
     },
     {
-      "start": 1776.48,
-      "end": 1779.92,
+      "start": 1774.16,
+      "end": 1774.32,
       "speaker": "UNKNOWN",
-      "original_text": "Ooh!",
+      "original_text": "Yeah.",
       "sentences": [
-        "Ooh!"
+        "Yeah."
       ],
       "tokens": [
-        "Ooh",
-        "!"
+        "Yeah",
+        "."
       ],
       "filtered_tokens": [
-        "ooh"
+        "yeah"
       ],
       "pos_tags": [
         [
-          "ooh",
+          "yeah",
           "NN"
         ]
       ],
       "lemmatized_tokens": [
-        "ooh"
+        "yeah"
+      ]
+    },
+    {
+      "start": 1774.32,
+      "end": 1774.8,
+      "speaker": "UNKNOWN",
+      "original_text": "Mm hm.",
+      "sentences": [
+        "Mm hm."
+      ],
+      "tokens": [
+        "Mm",
+        "hm",
+        "."
+      ],
+      "filtered_tokens": [
+        "mm",
+        "hm"
+      ],
+      "pos_tags": [
+        [
+          "mm",
+          "NN"
+        ],
+        [
+          "hm",
+          "NN"
+        ]
+      ],
+      "lemmatized_tokens": [
+        "mm",
+        "hm"
       ]
     }
   ],

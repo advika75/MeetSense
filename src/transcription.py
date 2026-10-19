@@ -4,17 +4,29 @@ import json
 import os
 
 
-def transcribe_audio(audio_path):
+def load_whisper_model(model_name="base", device=None):
 
-    # Select device
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+    if device is None:
+        device = "cuda" if torch.cuda.is_available() else "cpu"
 
-    print(f"Using device: {device}")
+    return whisper.load_model(model_name, device=device)
 
-    # Load Whisper model
-    print("Loading Whisper model...")
 
-    model = whisper.load_model("base", device=device)
+def transcribe_audio(audio_path, model=None):
+    """Transcribe a file path or a raw audio array/tensor. If model is
+    not given, loads a fresh "base" model each call (the original
+    per-call behavior); the live pipeline instead loads one model
+    once via load_whisper_model() and passes it in here on every
+    chunk, to avoid reloading Whisper per chunk."""
+
+    if model is None:
+
+        device = "cuda" if torch.cuda.is_available() else "cpu"
+
+        print(f"Using device: {device}")
+        print("Loading Whisper model...")
+
+        model = load_whisper_model("base", device=device)
 
     print("Transcribing audio...")
 

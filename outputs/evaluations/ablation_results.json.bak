@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-16T19:26:43.747664+00:00",
+  "generated_at": "2026-09-16T19:59:50.313359+00:00",
   "limitations": [
     "All numbers below come from a single manually-verified development recording, not a benchmark dataset.",
     "WER is computed over a fixed-size word budget matched to the manually-verified reference transcript, not the full meeting.",
@@ -34,7 +34,7 @@
         "silence_percentage": 26.71,
         "number_of_speech_segments": 377
       },
-      "transcribe_seconds": 84.01,
+      "transcribe_seconds": 76.04,
       "hypothesis_word_count_used": 282,
       "hypothesis_preview": "Okay, so as you guys know, ISCO is too small. Well, the building is too small for our group. So we're moving to a new building. It's going to be the building across the street and we're actually moving in three weeks. But the problem is that the administration wants to know who's going to be in what",
       "metrics": {

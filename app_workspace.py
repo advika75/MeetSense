@@ -1,3 +1,4 @@
+import contextlib
 import json
 import os
 import subprocess
@@ -8,77 +9,96 @@ from pathlib import Path
 
 import streamlit as st
 
-# Path B (browser microphone) support. streamlit_webrtc is a top-level
-# dependency (see requirements.txt); live_web.py lives in src/ next to
-# the existing Path A (sounddevice) live scripts, which this does not
-# modify or replace.
-from streamlit_webrtc import webrtc_streamer, WebRtcMode
-
 _SRC_DIR = Path(__file__).resolve().parent / "src"
 
 if str(_SRC_DIR) not in sys.path:
     sys.path.insert(0, str(_SRC_DIR))
 
-from live_web import (  # noqa: E402
-    LiveAudioReceiver,
-    LIVE_CHUNK_SECONDS,
-    load_live_whisper_model,
-)
+# Local sounddevice mic path (Stage 4), not the browser/webrtc path --
+# live_web.py and streamlit_webrtc remain unused here but untouched on
+# disk as prior art. live_controller.py owns a worker thread that
+# calls into live_pipeline.py's LiveMeetingSession; this script must
+# never call VAD/ASR/diarization itself, only read controller state.
+#
+# NOT imported here at module level, deliberately: live_controller
+# imports live_pipeline, which imports vad/transcription/diarization/
+# summarization, which import torch/whisper/pyannote/transformers at
+# THEIR module level. If this file imported live_controller here, every
+# page load -- Dashboard, batch results, anything -- would pay that
+# import cost (minutes, under memory pressure on this 8GB machine)
+# before rendering a single pixel. Imported lazily instead, inside the
+# Live Meeting page body, only once the user clicks Start.
 
 
 # ============================================================
 # THEME
 # ============================================================
+#
+# Single source of truth for the whole app: st.session_state.dark_mode
+# (a plain boolean, driven by exactly one st.toggle -- see "THEME
+# SWITCH" below). Every other former theme mechanism (a separate
+# unused "theme" string, an OS-prefers-color-scheme-only CSS block, a
+# second sidebar radio control that had no visual effect, and a
+# duplicated set of Python color constants) has been removed so
+# nothing can fall out of sync with this one flag.
 
-if "theme" not in st.session_state:
-    st.session_state.theme = "light"
+if "dark_mode" not in st.session_state:
+    st.session_state.dark_mode = False
 
 THEMES = {
     "light": {
         "bg": "#F4F6FA",
+        "bg_secondary": "#EDEFF6",
         "sidebar": "#FFFFFF",
         "card": "#FFFFFF",
         "text": "#172033",
-        "text_secondary": "#526078",
-        "muted": "#7B879B",
+        "text_secondary": "#4B5468",
+        "muted": "#6B7086",
         "border": "#E1E6EF",
-        "accent": "#6254E8",
-        "accent_hover": "#5145D5",
+        "accent": "#5B45E0",
+        "accent_hover": "#4A36C9",
         "accent_soft": "#EEEAFE",
-        "success": "#138A5B",
-        "success_bg": "#E8F7F0",
-        "warning": "#B7791F",
-        "warning_bg": "#FFF7E6",
-        "danger": "#C53030",
-        "danger_bg": "#FFF0F0",
+        "accent_solid": "#5B45E0",
+        "accent_solid_hover": "#4A36C9",
+        "success": "#0F7A5C",
+        "success_bg": "#E6F7F1",
+        "warning": "#92600A",
+        "warning_bg": "#FFF4E0",
+        "danger": "#B3261E",
+        "danger_bg": "#FDECEA",
         "input": "#FFFFFF",
         "sidebar_hover": "#F4F1FF",
         "code_bg": "#F3F4F7",
+        "shadow": "0 3px 15px rgba(25,25,60,0.06)",
     },
     "dark": {
-        "bg": "#0B1220",
-        "sidebar": "#111A2B",
-        "card": "#151F32",
-        "text": "#F4F7FB",
-        "text_secondary": "#AAB5C7",
-        "muted": "#718096",
-        "border": "#27344A",
-        "accent": "#7C6CF2",
-        "accent_hover": "#9183FF",
-        "accent_soft": "#272343",
+        "bg": "#0F1117",
+        "bg_secondary": "#171A23",
+        "sidebar": "#12141C",
+        "card": "#171A23",
+        "text": "#F3F4F8",
+        "text_secondary": "#C3C8D6",
+        "muted": "#9AA0B4",
+        "border": "#2C3140",
+        "accent": "#9F8FFF",
+        "accent_hover": "#B3A6FF",
+        "accent_soft": "#241F45",
+        "accent_solid": "#5B45E0",
+        "accent_solid_hover": "#4A36C9",
         "success": "#4FD1A1",
-        "success_bg": "#12352B",
+        "success_bg": "#123328",
         "warning": "#F6C453",
         "warning_bg": "#3A2E12",
-        "danger": "#FC8181",
+        "danger": "#F47777",
         "danger_bg": "#3A1919",
-        "input": "#111A2B",
+        "input": "#1B1F29",
         "sidebar_hover": "#1D2740",
         "code_bg": "#0F1726",
+        "shadow": "0 8px 28px rgba(0,0,0,0.35)",
     },
 }
 
-theme = THEMES[st.session_state.theme]
+theme = THEMES["dark" if st.session_state.dark_mode else "light"]
 
 
 # ============================================================
@@ -90,6 +110,49 @@ st.set_page_config(
     page_icon="🎙️",
     layout="wide",
     initial_sidebar_state="expanded",
+)
+
+
+# ============================================================
+# THEME VARIABLES (single CSS injection point)
+# ============================================================
+# Defines --bg-primary etc. as CSS custom properties from the THEMES
+# dict above. Every component rule below (and throughout the file)
+# reads these variables instead of hardcoding colors, so a single
+# dark_mode flip updates everything at once.
+
+st.markdown(
+    f"""
+<style>
+:root {{
+    --bg-primary: {theme['bg']};
+    --bg-secondary: {theme['bg_secondary']};
+    --bg-card: {theme['card']};
+    --bg-sidebar: {theme['sidebar']};
+    --sidebar-hover: {theme['sidebar_hover']};
+    --text-primary: {theme['text']};
+    --text-secondary: {theme['text_secondary']};
+    --text-muted: {theme['muted']};
+    --border: {theme['border']};
+    --accent: {theme['accent']};
+    --accent-hover: {theme['accent_hover']};
+    --accent-solid: {theme['accent_solid']};
+    --accent-solid-hover: {theme['accent_solid_hover']};
+    --accent-soft: {theme['accent_soft']};
+    --success: {theme['success']};
+    --success-bg: {theme['success_bg']};
+    --warning: {theme['warning']};
+    --warning-bg: {theme['warning_bg']};
+    --error: {theme['danger']};
+    --error-bg: {theme['danger_bg']};
+    --input-bg: {theme['input']};
+    --input-text: {theme['text']};
+    --code-bg: {theme['code_bg']};
+    --shadow: {theme['shadow']};
+}}
+</style>
+""",
+    unsafe_allow_html=True,
 )
 
 
@@ -119,6 +182,11 @@ SPEAKER_TRANSCRIPT = TRANSCRIPT_DIR / "speaker_transcript.json"
 MEETING_TRANSCRIPT = TRANSCRIPT_DIR / "meeting.json"
 DIARIZATION = TRANSCRIPT_DIR / "diarization.json"
 
+# Experimental diarization backend (see README "Experimental Diarization
+# Comparison" section) -- separate output files, never overwriting the
+# production PyAnnote files above.
+DIARIZATION_VBX = TRANSCRIPT_DIR / "diarization_vbx.json"
+
 NLP_PROCESSED = NLP_DIR / "nlp_processed_transcript.json"
 TFIDF = NLP_DIR / "tfidf_keywords.json"
 TOPICS = NLP_DIR / "topic_modeling.json"
@@ -128,6 +196,7 @@ SUMMARY = SUMMARY_DIR / "meeting_summary.json"
 
 WER = EVAL_DIR / "wer_results.json"
 DER = EVAL_DIR / "der_results.json"
+DER_VBX = EVAL_DIR / "der_vbx.json"
 ROUGE = EVAL_DIR / "rouge_results.json"
 ACTION_EVAL = EVAL_DIR / "action_item_results.json"
 
@@ -141,338 +210,16 @@ EVIDENCE_LINKED_ITEMS = EVAL_DIR / "evidence_linked_items.json"
 # ============================================================
 # CUSTOM CSS
 # ============================================================
-
-
+#
+# One static stylesheet. Every rule below reads the --bg-primary /
+# --text-primary / etc. custom properties defined above (from
+# THEMES + st.session_state.dark_mode) instead of hardcoding colors,
+# so flipping dark_mode updates every component at once with no
+# separate light/dark rule sets to keep in sync.
 
 st.markdown(
     """
 <style>
-
-/* ============================================================
-   MEETSENSE THEME SYSTEM
-   ============================================================ */
-
-:root {
-    --ms-bg: #f5f6f8;
-    --ms-surface: #ffffff;
-    --ms-surface-2: #f0f1f4;
-    --ms-text: #171923;
-    --ms-text-secondary: #626979;
-    --ms-border: #e1e3e8;
-    --ms-accent: #635bff;
-    --ms-accent-soft: #efedff;
-}
-
-.ms-dark {
-    --ms-bg: #17181c;
-    --ms-surface: #202228;
-    --ms-surface-2: #292c33;
-    --ms-text: #f5f6f8;
-    --ms-text-secondary: #aeb3bf;
-    --ms-border: #383b44;
-    --ms-accent: #8b7cff;
-    --ms-accent-soft: #302d4b;
-}
-
-/* ------------------------------------------------------------
-   LANDING PAGE
-   ------------------------------------------------------------ */
-
-.ms-landing {
-    min-height: 82vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 30px 10px 50px 10px;
-}
-
-.ms-landing-shell {
-    width: min(1250px, 96vw);
-    min-height: 680px;
-
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-
-    background: var(--ms-surface);
-    border: 1px solid var(--ms-border);
-    border-radius: 26px;
-
-    overflow: hidden;
-
-    box-shadow:
-        0 25px 80px rgba(0,0,0,0.08);
-}
-
-.ms-landing-visual {
-    background:
-        radial-gradient(
-            circle at 50% 45%,
-            rgba(99,91,255,0.13),
-            transparent 38%
-        ),
-        var(--ms-surface-2);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 50px;
-}
-
-.ms-visual-card {
-    width: min(450px, 90%);
-    aspect-ratio: 1 / 1;
-
-    border-radius: 26px;
-
-    background:
-        radial-gradient(
-            circle at 50% 45%,
-            rgba(99,91,255,0.10),
-            transparent 50%
-        ),
-        var(--ms-surface);
-
-    border: 1px solid var(--ms-border);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    position: relative;
-    overflow: hidden;
-}
-
-.ms-visual-circle {
-    width: 265px;
-    height: 265px;
-
-    border-radius: 50%;
-
-    background: var(--ms-accent-soft);
-
-    position: absolute;
-}
-
-.ms-visual-icon {
-    position: relative;
-    z-index: 2;
-
-    width: 150px;
-    height: 150px;
-
-    border-radius: 45px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: var(--ms-text);
-    color: var(--ms-surface);
-
-    font-size: 65px;
-
-    box-shadow:
-        0 20px 50px rgba(0,0,0,0.16);
-}
-
-.ms-wave {
-    position: absolute;
-
-    bottom: 75px;
-    left: 18%;
-    right: 18%;
-
-    height: 55px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    gap: 5px;
-
-    z-index: 3;
-}
-
-.ms-wave span {
-    width: 4px;
-    border-radius: 10px;
-    background: var(--ms-accent);
-    opacity: .8;
-}
-
-.ms-wave span:nth-child(1) { height: 14px; }
-.ms-wave span:nth-child(2) { height: 26px; }
-.ms-wave span:nth-child(3) { height: 40px; }
-.ms-wave span:nth-child(4) { height: 25px; }
-.ms-wave span:nth-child(5) { height: 53px; }
-.ms-wave span:nth-child(6) { height: 35px; }
-.ms-wave span:nth-child(7) { height: 45px; }
-.ms-wave span:nth-child(8) { height: 24px; }
-.ms-wave span:nth-child(9) { height: 36px; }
-.ms-wave span:nth-child(10) { height: 16px; }
-
-/* ------------------------------------------------------------
-   LANDING CONTENT
-   ------------------------------------------------------------ */
-
-.ms-landing-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
-    padding: 65px;
-
-    color: var(--ms-text);
-}
-
-.ms-brand {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-
-    margin-bottom: 65px;
-}
-
-.ms-brand-logo {
-    width: 44px;
-    height: 44px;
-
-    border-radius: 13px;
-
-    background: var(--ms-accent);
-    color: white;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-size: 23px;
-    font-weight: 800;
-}
-
-.ms-brand-name {
-    font-size: 21px;
-    font-weight: 800;
-    color: var(--ms-text);
-}
-
-.ms-eyebrow {
-    font-size: 12px;
-    font-weight: 700;
-
-    letter-spacing: .14em;
-
-    color: var(--ms-accent);
-
-    margin-bottom: 18px;
-}
-
-.ms-landing-title {
-    font-size: clamp(43px, 5vw, 68px);
-
-    line-height: 1.03;
-
-    letter-spacing: -0.045em;
-
-    font-weight: 800;
-
-    color: var(--ms-text);
-
-    margin-bottom: 24px;
-}
-
-.ms-landing-subtitle {
-    font-size: 17px;
-
-    line-height: 1.7;
-
-    color: var(--ms-text-secondary);
-
-    max-width: 510px;
-
-    margin-bottom: 32px;
-}
-
-.ms-feature-row {
-    display: flex;
-
-    gap: 9px;
-
-    flex-wrap: wrap;
-
-    margin-bottom: 35px;
-}
-
-.ms-feature {
-    border: 1px solid var(--ms-border);
-
-    background: var(--ms-surface-2);
-
-    border-radius: 999px;
-
-    padding: 8px 12px;
-
-    font-size: 12px;
-
-    color: var(--ms-text-secondary);
-}
-
-/* ------------------------------------------------------------
-   THEME CONTROLS
-   ------------------------------------------------------------ */
-
-.ms-theme-title {
-    font-size: 12px;
-    font-weight: 600;
-
-    color: var(--ms-text-secondary);
-
-    margin-bottom: 8px;
-}
-
-/* ------------------------------------------------------------
-   SIDEBAR READABILITY
-   ------------------------------------------------------------ */
-
-section[data-testid="stSidebar"] {
-    background: var(--ms-surface) !important;
-
-    border-right:
-        1px solid var(--ms-border) !important;
-}
-
-section[data-testid="stSidebar"] * {
-    color: var(--ms-text) !important;
-}
-
-section[data-testid="stSidebar"] p,
-section[data-testid="stSidebar"] span,
-section[data-testid="stSidebar"] label,
-section[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] {
-    color: var(--ms-text) !important;
-}
-
-@media (max-width: 900px) {
-
-    .ms-landing-shell {
-        grid-template-columns: 1fr;
-    }
-
-    .ms-landing-visual {
-        min-height: 390px;
-    }
-
-    .ms-landing-content {
-        padding: 45px;
-    }
-
-    .ms-brand {
-        margin-bottom: 40px;
-    }
-}
-
-
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
@@ -481,18 +228,13 @@ html, body, [class*="css"] {
 }
 
 .stApp {
-    background: #f6f7fb;
+    background: var(--bg-primary);
+    color: var(--text-primary);
 }
 
 /* Hide Streamlit default UI */
-#MainMenu {
-    visibility: hidden;
-}
-
-footer {
-    visibility: hidden;
-}
-
+#MainMenu { visibility: hidden; }
+footer { visibility: hidden; }
 header {
     visibility: visible !important;
     background: transparent !important;
@@ -505,17 +247,87 @@ header {
     max-width: 1500px;
 }
 
-/* Sidebar */
+/* ------------------------------------------------------------
+   Sidebar
+   ------------------------------------------------------------ */
+
 section[data-testid="stSidebar"] {
-    background: #ffffff;
-    border-right: 1px solid #e8eaf0;
+    background: var(--bg-sidebar) !important;
+    border-right: 1px solid var(--border) !important;
 }
 
 section[data-testid="stSidebar"] > div {
     padding-top: 1.5rem;
 }
 
-/* Brand */
+section[data-testid="stSidebar"] *,
+section[data-testid="stSidebar"] h1,
+section[data-testid="stSidebar"] h2,
+section[data-testid="stSidebar"] h3,
+section[data-testid="stSidebar"] h4,
+section[data-testid="stSidebar"] p,
+section[data-testid="stSidebar"] span,
+section[data-testid="stSidebar"] label,
+section[data-testid="stSidebar"] [data-testid="stMarkdownContainer"],
+section[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] *,
+section[data-testid="stSidebar"] [data-testid="stRadio"] label,
+section[data-testid="stSidebar"] [data-testid="stRadio"] label * {
+    color: var(--text-primary) !important;
+    opacity: 1 !important;
+}
+
+/* Nav rows get a hover affordance and a clearly-visible selected state */
+section[data-testid="stSidebar"] [role="radiogroup"] label {
+    border-radius: 8px;
+    padding: 2px 8px;
+    transition: background-color .12s ease;
+}
+
+section[data-testid="stSidebar"] [role="radiogroup"] label:hover {
+    background: var(--sidebar-hover) !important;
+}
+
+section[data-testid="stSidebar"] [role="radio"][aria-checked="true"],
+section[data-testid="stSidebar"] [role="radio"][aria-checked="true"] * {
+    color: var(--accent) !important;
+    font-weight: 700 !important;
+}
+
+section[data-testid="stSidebar"] [role="radio"][aria-checked="true"] {
+    background: var(--accent-soft) !important;
+    border-radius: 8px;
+}
+
+section[data-testid="stSidebar"] [data-testid="stCaptionContainer"],
+section[data-testid="stSidebar"] [data-testid="stCaptionContainer"] * {
+    color: var(--text-muted) !important;
+    opacity: 1 !important;
+}
+
+[data-testid="stSidebarCollapsedControl"] {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    z-index: 999999 !important;
+}
+
+[data-testid="stSidebarCollapsedControl"] button {
+    color: var(--text-primary) !important;
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 10px !important;
+    box-shadow: var(--shadow) !important;
+}
+
+[data-testid="stSidebarCollapsedControl"] svg {
+    color: var(--text-primary) !important;
+    fill: var(--text-primary) !important;
+}
+
+/* ------------------------------------------------------------
+   Brand / top bar / titles
+   ------------------------------------------------------------ */
+
 .brand {
     display: flex;
     align-items: center;
@@ -528,106 +340,126 @@ section[data-testid="stSidebar"] > div {
     height: 40px;
     border-radius: 12px;
     background: linear-gradient(135deg, #5b4bff, #7c3aed);
-    color: white;
+    color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 21px;
     box-shadow: 0 5px 15px rgba(91,75,255,0.25);
+    flex-shrink: 0;
 }
 
 .brand-name {
     font-size: 20px;
     font-weight: 800;
-    color: #171827;
+    color: var(--text-primary) !important;
 }
 
-/* Top bar */
 .topbar {
-    background: white;
-    border: 1px solid #e7e8ef;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
     border-radius: 16px;
     padding: 13px 18px;
     margin-bottom: 22px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    box-shadow: 0 2px 10px rgba(20,20,50,0.03);
+    flex-wrap: wrap;
+    gap: 10px;
+    box-shadow: var(--shadow);
 }
 
 .top-title {
     font-size: 14px;
     font-weight: 600;
-    color: #676b7c;
+    color: var(--text-secondary);
 }
 
-/* Page title */
 .page-title {
     font-size: 31px;
     font-weight: 800;
-    color: #171827;
+    color: var(--text-primary);
     margin-bottom: 4px;
 }
 
 .page-subtitle {
-    color: #747889;
+    color: var(--text-secondary);
     font-size: 14px;
     margin-bottom: 25px;
 }
 
-/* Cards */
-.card {
-    background: white;
-    border: 1px solid #e7e8ef;
-    border-radius: 18px;
-    padding: 20px;
-    margin-bottom: 18px;
-    box-shadow: 0 3px 15px rgba(25,25,60,0.035);
-}
-
-.card-title {
-    font-size: 16px;
-    font-weight: 700;
-    color: #202131;
+.section-heading {
+    font-size: 18px;
+    font-weight: 750;
+    color: var(--text-primary);
+    margin-top: 12px;
     margin-bottom: 12px;
 }
 
-.card-subtitle {
-    font-size: 12px;
-    color: #85899a;
+.soft-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 18px 0;
 }
 
-/* Stat cards */
+/* ------------------------------------------------------------
+   Cards
+   ------------------------------------------------------------ */
+
+.card,
+.meeting-header {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 20px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+}
+
+.card-title,
+.meeting-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+}
+
+.card-subtitle,
+.meeting-meta {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
 .stat-card {
-    background: white;
-    border: 1px solid #e7e8ef;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
     border-radius: 16px;
     padding: 19px;
     min-height: 120px;
-    box-shadow: 0 3px 15px rgba(25,25,60,0.035);
+    box-shadow: var(--shadow);
 }
 
-.stat-icon {
-    font-size: 20px;
-    margin-bottom: 10px;
-}
+.stat-icon { font-size: 20px; margin-bottom: 10px; }
 
 .stat-number {
     font-size: 27px;
     font-weight: 800;
-    color: #171827;
+    color: var(--text-primary);
 }
 
 .stat-label {
-    color: #777b8d;
+    color: var(--text-muted);
     font-size: 12px;
     margin-top: 3px;
 }
 
-/* Speaker */
+/* ------------------------------------------------------------
+   Speakers / transcript
+   ------------------------------------------------------------ */
+
 .speaker-row {
-    background: #fafaff;
-    border: 1px solid #ececf5;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
     border-radius: 13px;
     padding: 13px 15px;
     margin-bottom: 10px;
@@ -636,112 +468,90 @@ section[data-testid="stSidebar"] > div {
 .speaker-name {
     font-size: 14px;
     font-weight: 700;
-    color: #222332;
+    color: var(--text-primary);
 }
 
 .speaker-time {
     font-size: 12px;
-    color: #7b7f91;
+    color: var(--text-muted);
 }
 
-/* Transcript */
 .transcript-item {
-    background: #ffffff;
-    border: 1px solid #e9eaf0;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
     border-radius: 14px;
     padding: 15px 17px;
     margin-bottom: 10px;
-    transition: 0.2s;
+    transition: border-color .15s ease, box-shadow .15s ease;
 }
 
 .transcript-item:hover {
-    border-color: #cfcaff;
-    box-shadow: 0 5px 16px rgba(70,50,180,0.06);
+    border-color: var(--accent);
+    box-shadow: var(--shadow);
 }
 
 .transcript-header {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 6px;
     margin-bottom: 8px;
 }
 
 .transcript-speaker {
     font-size: 13px;
     font-weight: 700;
-    color: #5142d8;
+    color: var(--accent);
 }
 
 .transcript-time {
     font-size: 11px;
-    color: #8b8e9c;
+    color: var(--text-muted);
 }
 
 .transcript-text {
     font-size: 14px;
     line-height: 1.65;
-    color: #343746;
+    color: var(--text-primary);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
-/* Tags */
+/* ------------------------------------------------------------
+   Tags / status / evaluation metrics
+   ------------------------------------------------------------ */
+
 .tag {
     display: inline-block;
     padding: 7px 11px;
-    margin: 4px;
-    background: #f1efff;
-    color: #5949dc;
+    margin: 4px 4px 4px 0;
+    background: var(--accent-soft);
+    color: var(--accent);
     border-radius: 20px;
     font-size: 12px;
     font-weight: 600;
 }
 
-/* Action item */
-.action-item {
-    padding: 14px;
-    border: 1px solid #e7e8ef;
-    border-radius: 12px;
-    margin-bottom: 9px;
-    background: #fff;
+.status-pill {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 20px;
+    background: var(--success-bg);
+    color: var(--success);
+    font-size: 11px;
+    font-weight: 700;
 }
 
-.action-title {
-    font-weight: 600;
-    font-size: 13px;
-    color: #252735;
-}
-
-/* Decision */
-.decision {
-    background: #f7f5ff;
-    border-left: 4px solid #6b5cff;
-    padding: 14px 16px;
-    border-radius: 9px;
-    margin-bottom: 10px;
-    font-size: 13px;
-    line-height: 1.5;
-}
-
-/* Summary */
-.summary-box {
-    background: linear-gradient(135deg, #f7f5ff, #fbfaff);
-    border: 1px solid #e4e0ff;
-    border-radius: 14px;
-    padding: 18px;
-    font-size: 14px;
-    line-height: 1.7;
-    color: #343444;
-}
-
-/* Evaluation */
 .metric {
-    background: #fafaff;
-    border: 1px solid #e8e8f2;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
     border-radius: 13px;
     padding: 15px;
     text-align: center;
 }
 
 .metric-name {
-    color: #777b8d;
+    color: var(--text-muted);
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -750,491 +560,243 @@ section[data-testid="stSidebar"] > div {
 .metric-value {
     font-size: 25px;
     font-weight: 800;
-    color: #5142d8;
+    color: var(--accent);
     margin-top: 5px;
 }
 
-/* Meeting header */
-.meeting-header {
-    background: white;
-    border: 1px solid #e7e8ef;
-    border-radius: 18px;
-    padding: 22px;
-    margin-bottom: 18px;
+/* ------------------------------------------------------------
+   Action items / decisions / summary
+   ------------------------------------------------------------ */
+
+.action-item {
+    padding: 14px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 9px;
+    background: var(--bg-card);
 }
 
-.meeting-name {
-    font-size: 25px;
-    font-weight: 800;
-    color: #171827;
+.action-title {
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--text-primary);
 }
 
-.meeting-meta {
-    color: #777b8d;
-    font-size: 12px;
-    margin-top: 7px;
+.decision {
+    background: var(--accent-soft);
+    border-left: 4px solid var(--accent);
+    padding: 14px 16px;
+    border-radius: 9px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--text-primary);
 }
 
-/* Status */
-.status-pill {
-    display: inline-block;
-    padding: 6px 10px;
-    border-radius: 20px;
-    background: #e9faf0;
-    color: #18864b;
-    font-size: 11px;
-    font-weight: 700;
+.summary-box {
+    background: var(--accent-soft);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-primary);
 }
 
-/* Section headings */
-.section-heading {
-    font-size: 18px;
-    font-weight: 750;
-    color: #202131;
-    margin-top: 12px;
-    margin-bottom: 12px;
+/* ------------------------------------------------------------
+   Native Streamlit widgets
+   ------------------------------------------------------------ */
+
+h1, h2, h3, h4, h5, h6 { color: var(--text-primary) !important; }
+p, li, label { color: var(--text-secondary); }
+
+[data-testid="stMarkdownContainer"] p,
+[data-testid="stMarkdownContainer"] li,
+[data-testid="stMarkdownContainer"] span {
+    color: var(--text-primary);
 }
 
-/* Divider */
-.soft-divider {
-    height: 1px;
-    background: #ececf1;
-    margin: 18px 0;
-}
-
-
-/* MEETSENSE SIDEBAR VISIBILITY FIX */
-
-/* Sidebar base */
-section[data-testid="stSidebar"] {
-    background: #ffffff !important;
-    color: #202131 !important;
-}
-
-/* Force ALL sidebar text to a dark readable color */
-section[data-testid="stSidebar"] * {
-    color: #202131 !important;
-}
-
-/* Sidebar headings */
-section[data-testid="stSidebar"] h1,
-section[data-testid="stSidebar"] h2,
-section[data-testid="stSidebar"] h3,
-section[data-testid="stSidebar"] h4,
-section[data-testid="stSidebar"] p {
-    color: #202131 !important;
-    opacity: 1 !important;
-}
-
-/* Navigation radio groups */
-section[data-testid="stSidebar"] [role="radiogroup"] {
-    color: #202131 !important;
-}
-
-section[data-testid="stSidebar"] [role="radiogroup"] label {
-    color: #202131 !important;
-    opacity: 1 !important;
-    background: transparent !important;
-}
-
-section[data-testid="stSidebar"] [role="radiogroup"] label p {
-    color: #202131 !important;
-    opacity: 1 !important;
-    font-weight: 500 !important;
-}
-
-section[data-testid="stSidebar"] [role="radiogroup"] label div {
-    color: #202131 !important;
-    opacity: 1 !important;
-}
-
-/* Streamlit markdown containers inside sidebar */
-section[data-testid="stSidebar"] [data-testid="stMarkdownContainer"],
-section[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] *,
-section[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p {
-    color: #202131 !important;
-    opacity: 1 !important;
-}
-
-/* Radio option text */
-section[data-testid="stSidebar"] [data-testid="stRadio"] label,
-section[data-testid="stSidebar"] [data-testid="stRadio"] label *,
-section[data-testid="stSidebar"] [data-testid="stRadio"] label p {
-    color: #202131 !important;
-    opacity: 1 !important;
-}
-
-/* Selected option */
-section[data-testid="stSidebar"] [role="radio"][aria-checked="true"],
-section[data-testid="stSidebar"] [role="radio"][aria-checked="true"] * {
-    color: #5142d8 !important;
-    opacity: 1 !important;
-}
-
-/* Sidebar caption */
-section[data-testid="stSidebar"] [data-testid="stCaptionContainer"],
-section[data-testid="stSidebar"] [data-testid="stCaptionContainer"] * {
-    color: #777b8d !important;
-    opacity: 1 !important;
-}
-
-/* Keep the MeetSense brand readable */
-section[data-testid="stSidebar"] .brand,
-section[data-testid="stSidebar"] .brand * {
-    color: #171827 !important;
-}
-
-/* Keep the purple AI information card readable */
-section[data-testid="stSidebar"] .brand-name {
-    color: #171827 !important;
-}
-
-
-
-/* ============================================================
-   STREAMLIT SIDEBAR TOGGLE FIX
-   ============================================================ */
-
-[data-testid="stSidebarCollapsedControl"] {
-    display: flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    z-index: 999999 !important;
-}
-
-[data-testid="stSidebarCollapsedControl"] button {
-    display: flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    color: #202131 !important;
-    background: #ffffff !important;
-    border: 1px solid #e2e4ec !important;
+.stButton > button,
+.stDownloadButton > button {
+    background: var(--bg-card) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border) !important;
     border-radius: 10px !important;
-    box-shadow: 0 3px 12px rgba(20, 20, 50, 0.12) !important;
-}
-
-[data-testid="stSidebarCollapsedControl"] svg {
-    color: #202131 !important;
-    fill: #202131 !important;
-}
-
-
-
-/* ============================================================
-   MEETSENSE THEME SYSTEM — LIGHT / DARK
-   ============================================================ */
-
-:root {
-    --ms-bg: #f4f6fa;
-    --ms-surface: #ffffff;
-    --ms-surface-2: #f8f9fc;
-    --ms-border: #e2e6ef;
-    --ms-text: #171b2d;
-    --ms-text-2: #555d70;
-    --ms-muted: #7b8395;
-    --ms-primary: #5b4bdb;
-    --ms-primary-2: #7567e8;
-    --ms-accent: #3b82f6;
-    --ms-success: #159570;
-    --ms-danger: #dc5a5a;
-    --ms-shadow: 0 8px 28px rgba(25, 32, 55, 0.07);
-}
-
-/* Main application */
-.stApp {
-    background: var(--ms-bg) !important;
-    color: var(--ms-text) !important;
-}
-
-/* Main content */
-.main .block-container {
-    color: var(--ms-text) !important;
-}
-
-/* Sidebar */
-section[data-testid="stSidebar"] {
-    background: var(--ms-surface) !important;
-    border-right: 1px solid var(--ms-border) !important;
-}
-
-section[data-testid="stSidebar"] * {
-    color: var(--ms-text) !important;
-}
-
-section[data-testid="stSidebar"] .stMarkdown,
-section[data-testid="stSidebar"] p,
-section[data-testid="stSidebar"] span,
-section[data-testid="stSidebar"] label {
-    color: var(--ms-text) !important;
-    opacity: 1 !important;
-}
-
-section[data-testid="stSidebar"] [data-testid="stRadio"] label {
-    color: var(--ms-text) !important;
     font-weight: 600 !important;
-    opacity: 1 !important;
 }
 
-/* Sidebar headings */
-section[data-testid="stSidebar"] h1,
-section[data-testid="stSidebar"] h2,
-section[data-testid="stSidebar"] h3,
-section[data-testid="stSidebar"] h4 {
-    color: var(--ms-text) !important;
-    opacity: 1 !important;
+.stButton > button:hover,
+.stDownloadButton > button:hover {
+    border-color: var(--accent) !important;
+    color: var(--accent) !important;
 }
 
-/* General typography */
-h1, h2, h3, h4, h5, h6 {
-    color: var(--ms-text) !important;
-    opacity: 1 !important;
+.stButton > button[kind="primary"],
+.stDownloadButton > button[kind="primary"] {
+    /* accent-solid (not accent) -- verified >=4.5:1 with white text in
+       both themes. --accent itself is deliberately lighter in dark
+       mode (for readable text on dark backgrounds), which would fail
+       contrast as a button fill with white text on top. */
+    background: var(--accent-solid) !important;
+    color: #ffffff !important;
+    border-color: var(--accent-solid) !important;
 }
 
-p, li, label {
-    color: var(--ms-text-2) !important;
-    opacity: 1 !important;
+.stButton > button[kind="primary"]:hover,
+.stDownloadButton > button[kind="primary"]:hover {
+    background: var(--accent-solid-hover) !important;
+    color: #ffffff !important;
 }
 
-/* Cards */
-.card,
-.metric-card,
-.meeting-card,
-.panel,
-.section-card,
-.summary-card {
-    background: var(--ms-surface) !important;
-    border-color: var(--ms-border) !important;
-    box-shadow: var(--ms-shadow) !important;
-    color: var(--ms-text) !important;
+.stButton > button:disabled,
+.stDownloadButton > button:disabled {
+    opacity: 0.5 !important;
 }
 
-/* Card text */
-.card *,
-.metric-card *,
-.meeting-card *,
-.panel *,
-.section-card *,
-.summary-card * {
-    color: inherit;
-}
-
-/* Inputs */
-input,
-textarea,
+.stTextInput input,
+.stTextArea textarea,
+.stNumberInput input,
 [data-baseweb="select"] > div,
 [data-baseweb="input"] > div {
-    background: var(--ms-surface) !important;
-    color: var(--ms-text) !important;
-    border-color: var(--ms-border) !important;
+    background: var(--input-bg) !important;
+    color: var(--input-text) !important;
+    border-color: var(--border) !important;
+}
+
+.stTextInput label,
+.stTextArea label,
+.stSelectbox label,
+.stMultiSelect label,
+.stNumberInput label {
+    color: var(--text-primary) !important;
 }
 
 input::placeholder,
 textarea::placeholder {
-    color: var(--ms-muted) !important;
+    color: var(--text-muted) !important;
 }
 
-/* Buttons */
-.stButton > button {
-    background: var(--ms-surface) !important;
-    color: var(--ms-text) !important;
-    border: 1px solid var(--ms-border) !important;
-    border-radius: 10px !important;
-    font-weight: 600 !important;
+[data-baseweb="select"] * {
+    color: var(--input-text) !important;
 }
 
-.stButton > button:hover {
-    border-color: var(--ms-primary) !important;
-    color: var(--ms-primary) !important;
+[data-testid="stFileUploader"] {
+    background: transparent !important;
 }
 
-/* Primary buttons */
-.stButton > button[kind="primary"] {
-    background: var(--ms-primary) !important;
-    color: #ffffff !important;
-    border-color: var(--ms-primary) !important;
+[data-testid="stFileUploader"] * {
+    color: var(--text-primary) !important;
 }
 
-.stButton > button[kind="primary"]:hover {
-    background: var(--ms-primary-2) !important;
-    color: #ffffff !important;
+/* The actual visible drag-and-drop box is a separate inner element,
+   not just the outer stFileUploader wrapper above -- it needs its
+   own background/border or it keeps Streamlit's own default styling
+   regardless of the current theme. */
+[data-testid="stFileUploaderDropzone"] {
+    background: var(--bg-secondary) !important;
+    border: 1px dashed var(--border) !important;
+    border-radius: 12px !important;
 }
 
-/* Tabs */
+[data-testid="stFileUploaderDropzone"] * {
+    color: var(--text-primary) !important;
+}
+
+/* "200MB per file - WAV, MP3, ..." helper text: readable but
+   secondary, matching the rest of the app's metadata style. */
+[data-testid="stFileUploaderDropzoneInstructions"] span,
+[data-testid="stFileUploaderDropzoneInstructions"] small {
+    color: var(--text-secondary) !important;
+}
+
+/* "Browse files" button inside the dropzone. */
+[data-testid="stFileUploaderDropzone"] button {
+    background: var(--bg-card) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border) !important;
+}
+
+[data-testid="stFileUploaderDropzone"] button:hover {
+    border-color: var(--accent) !important;
+    color: var(--accent) !important;
+}
+
+/* Uploaded file row (filename, size, remove icon). */
+[data-testid="stFileUploaderFile"] {
+    background: var(--bg-card) !important;
+    color: var(--text-primary) !important;
+}
+
+[data-testid="stMetric"] {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    padding: 12px 15px;
+}
+
+[data-testid="stMetric"] label {
+    color: var(--text-secondary) !important;
+}
+
+[data-testid="stMetric"] [data-testid="stMetricValue"] {
+    color: var(--text-primary) !important;
+}
+
 button[data-baseweb="tab"] {
-    color: var(--ms-text-2) !important;
+    color: var(--text-secondary) !important;
     font-weight: 600 !important;
 }
 
 button[data-baseweb="tab"][aria-selected="true"] {
-    color: var(--ms-primary) !important;
+    color: var(--accent) !important;
 }
 
-/* Expanders */
 [data-testid="stExpander"] {
-    background: var(--ms-surface) !important;
-    border-color: var(--ms-border) !important;
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 12px !important;
 }
 
 [data-testid="stExpander"] * {
-    color: var(--ms-text) !important;
+    color: var(--text-primary) !important;
 }
 
-/* Alerts / info boxes */
 [data-testid="stAlert"] {
-    background: var(--ms-surface-2) !important;
-    color: var(--ms-text) !important;
+    background: var(--bg-secondary) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border) !important;
 }
 
-/* Code */
-pre,
-code {
-    background: #20232d !important;
-    color: #e8ecf5 !important;
+[data-testid="stAlert"] * {
+    color: var(--text-primary) !important;
 }
 
-/* ============================================================
-   DARK MODE
-   ============================================================ */
-
-@media (prefers-color-scheme: dark) {
-
-    :root {
-        --ms-bg: #11141b;
-        --ms-surface: #191d26;
-        --ms-surface-2: #202530;
-        --ms-border: #303746;
-        --ms-text: #f1f4fa;
-        --ms-text-2: #c0c7d5;
-        --ms-muted: #929bad;
-        --ms-primary: #8b7cf6;
-        --ms-primary-2: #a094ff;
-        --ms-accent: #60a5fa;
-        --ms-success: #45c89c;
-        --ms-danger: #f47777;
-        --ms-shadow: 0 10px 30px rgba(0,0,0,0.28);
-    }
-
-    .stApp {
-        background: var(--ms-bg) !important;
-        color: var(--ms-text) !important;
-    }
-
-    section[data-testid="stSidebar"] {
-        background: #151820 !important;
-        border-right: 1px solid #2c3240 !important;
-    }
-
-    section[data-testid="stSidebar"] * {
-        color: var(--ms-text) !important;
-        opacity: 1 !important;
-    }
-
-    section[data-testid="stSidebar"] p,
-    section[data-testid="stSidebar"] span,
-    section[data-testid="stSidebar"] label {
-        color: #d9deea !important;
-        opacity: 1 !important;
-    }
-
-    section[data-testid="stSidebar"] h1,
-    section[data-testid="stSidebar"] h2,
-    section[data-testid="stSidebar"] h3,
-    section[data-testid="stSidebar"] h4 {
-        color: #f5f7fb !important;
-    }
-
-    h1, h2, h3, h4, h5, h6 {
-        color: #f1f4fa !important;
-    }
-
-    p, li, label {
-        color: #c0c7d5 !important;
-    }
-
-    .card,
-    .metric-card,
-    .meeting-card,
-    .panel,
-    .section-card,
-    .summary-card {
-        background: #191d26 !important;
-        border-color: #303746 !important;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.25) !important;
-        color: #f1f4fa !important;
-    }
-
-    input,
-    textarea,
-    [data-baseweb="select"] > div,
-    [data-baseweb="input"] > div {
-        background: #1c212b !important;
-        color: #f1f4fa !important;
-        border-color: #343b4b !important;
-    }
-
-    input::placeholder,
-    textarea::placeholder {
-        color: #8992a5 !important;
-    }
-
-    .stButton > button {
-        background: #202530 !important;
-        color: #edf1f8 !important;
-        border-color: #384052 !important;
-    }
-
-    .stButton > button:hover {
-        background: #292f3d !important;
-        border-color: #8b7cf6 !important;
-        color: #a094ff !important;
-    }
-
-    .stButton > button[kind="primary"] {
-        background: #7567e8 !important;
-        color: #ffffff !important;
-        border-color: #7567e8 !important;
-    }
-
-    button[data-baseweb="tab"] {
-        color: #aeb6c7 !important;
-    }
-
-    button[data-baseweb="tab"][aria-selected="true"] {
-        color: #a094ff !important;
-    }
-
-    [data-testid="stExpander"] {
-        background: #191d26 !important;
-        border-color: #303746 !important;
-    }
-
-    [data-testid="stAlert"] {
-        background: #202530 !important;
-        color: #e8ecf5 !important;
-    }
+[data-testid="stDataFrame"] {
+    border: 1px solid var(--border) !important;
 }
 
-/* Streamlit collapse/expand control */
-button[data-testid="stSidebarCollapseButton"],
-button[data-testid="stSidebarNavCollapse"] {
-    color: var(--ms-text) !important;
+pre, code {
+    background: var(--code-bg) !important;
+    color: var(--text-primary) !important;
 }
 
-button[data-testid="stSidebarCollapseButton"] svg,
-button[data-testid="stSidebarNavCollapse"] svg {
-    fill: currentColor !important;
+/* Focus visibility (accessibility) */
+.stButton > button:focus-visible,
+[data-baseweb="select"] > div:focus-within,
+input:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--accent) !important;
+    outline-offset: 1px;
 }
 
-/* Prevent invisible text caused by previous CSS */
-.stMarkdown,
-.stCaption,
-.stText,
-.stMetric,
-.stRadio,
-.stSelectbox,
-.stCheckbox,
-.stFileUploader {
-    opacity: 1 !important;
+/* ------------------------------------------------------------
+   Responsive
+   ------------------------------------------------------------ */
+
+@media (max-width: 900px) {
+    .block-container { padding-left: 1rem; padding-right: 1rem; }
+    .page-title { font-size: 25px; }
+    .topbar { flex-direction: column; align-items: flex-start; }
 }
 
 </style>
@@ -1243,18 +805,34 @@ button[data-testid="stSidebarNavCollapse"] svg {
 )
 
 
+
 # ============================================================
 # HELPERS
 # ============================================================
 
+@st.cache_data(show_spinner=False)
+def _load_json_cached(path_str, _mtime):
+    # _mtime is only part of the cache key (so a re-processed file
+    # invalidates the cache automatically); it isn't used directly.
+    with open(path_str, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
 def load_json(path):
+    """Reads and parses a JSON file, cached per (path, modification
+    time) so repeated reruns -- e.g. every theme toggle click -- don't
+    re-read and re-parse every output file from disk each time. The
+    mtime key means a freshly re-processed meeting is picked up
+    immediately, not served stale."""
+
     try:
-        if path.exists():
-            with open(path, "r", encoding="utf-8") as f:
-                return json.load(f)
+        if not path.exists():
+            return None
+
+        return _load_json_cached(str(path), path.stat().st_mtime)
+
     except Exception:
         return None
-    return None
 
 
 def format_time(seconds):
@@ -1517,6 +1095,7 @@ with st.sidebar:
             "AI Summary",
             "Action Items",
             "Decisions",
+            "Meeting Report",
         ],
         label_visibility="collapsed",
         key="nav_intelligence",
@@ -1550,11 +1129,11 @@ with st.sidebar:
     st.markdown(
         """
         <div style="
-            background:#f6f4ff;
+            background:var(--accent-soft);
             padding:13px;
             border-radius:12px;
             font-size:11px;
-            color:#6258a8;
+            color:var(--accent);
         ">
         <b>MeetSense AI</b><br>
         Whisper + PyAnnote + NLP + Transformers
@@ -1565,369 +1144,19 @@ with st.sidebar:
 
 
 # ============================================================
-
+# THEME SWITCH
 # ============================================================
-# MEETSENSE THEME SWITCH
-# ============================================================
+# The one control that drives st.session_state.dark_mode, the single
+# source of truth for every themed element (see "CUSTOM CSS" above).
 
-if "dark_mode" not in st.session_state:
-    st.session_state.dark_mode = False
+_, theme_toggle_col = st.columns([8, 2])
 
-dark_mode = st.session_state.dark_mode
-
-# Theme-specific colors
-if dark_mode:
-    THEME_BG = "#0f1117"
-    THEME_SURFACE = "#171a23"
-    THEME_SURFACE_2 = "#1e222d"
-    THEME_BORDER = "#303543"
-    THEME_TEXT = "#f3f4f8"
-    THEME_TEXT_SECONDARY = "#b8bdca"
-    THEME_TEXT_MUTED = "#8d94a5"
-    THEME_INPUT = "#1b1f29"
-else:
-    THEME_BG = "#f6f7fb"
-    THEME_SURFACE = "#ffffff"
-    THEME_SURFACE_2 = "#f8f9fc"
-    THEME_BORDER = "#e7e8ef"
-    THEME_TEXT = "#171827"
-    THEME_TEXT_SECONDARY = "#5e6273"
-    THEME_TEXT_MUTED = "#747889"
-    THEME_INPUT = "#ffffff"
-
-# Theme switch in the main application
-theme_col_1, theme_col_2 = st.columns([8, 2])
-
-with theme_col_2:
+with theme_toggle_col:
     st.toggle(
         "🌙 Dark mode",
         key="dark_mode",
         help="Switch between light and dark appearance.",
     )
-
-# Re-read state after the toggle
-dark_mode = st.session_state.dark_mode
-
-if dark_mode:
-    THEME_BG = "#0f1117"
-    THEME_SURFACE = "#171a23"
-    THEME_SURFACE_2 = "#1e222d"
-    THEME_BORDER = "#303543"
-    THEME_TEXT = "#f3f4f8"
-    THEME_TEXT_SECONDARY = "#b8bdca"
-    THEME_TEXT_MUTED = "#8d94a5"
-    THEME_INPUT = "#1b1f29"
-else:
-    THEME_BG = "#f6f7fb"
-    THEME_SURFACE = "#ffffff"
-    THEME_SURFACE_2 = "#f8f9fc"
-    THEME_BORDER = "#e7e8ef"
-    THEME_TEXT = "#171827"
-    THEME_TEXT_SECONDARY = "#5e6273"
-    THEME_TEXT_MUTED = "#747889"
-    THEME_INPUT = "#ffffff"
-
-# Dynamic theme overrides
-st.markdown(
-    f"""
-    <style>
-
-    /* ========================================================
-       MEETSENSE DYNAMIC THEME
-       ======================================================== */
-
-    /* Main application */
-    .stApp {{
-        background: {THEME_BG} !important;
-        color: {THEME_TEXT} !important;
-    }}
-
-    .main {{
-        background: {THEME_BG} !important;
-    }}
-
-    .block-container {{
-        color: {THEME_TEXT} !important;
-    }}
-
-    /* --------------------------------------------------------
-       Sidebar
-       -------------------------------------------------------- */
-
-    section[data-testid="stSidebar"] {{
-        background: {THEME_SURFACE} !important;
-        border-right: 1px solid {THEME_BORDER} !important;
-        color: {THEME_TEXT} !important;
-    }}
-
-    section[data-testid="stSidebar"] * {{
-        color: {THEME_TEXT} !important;
-    }}
-
-    section[data-testid="stSidebar"] h1,
-    section[data-testid="stSidebar"] h2,
-    section[data-testid="stSidebar"] h3,
-    section[data-testid="stSidebar"] h4,
-    section[data-testid="stSidebar"] p,
-    section[data-testid="stSidebar"] span,
-    section[data-testid="stSidebar"] label {{
-        color: {THEME_TEXT} !important;
-        opacity: 1 !important;
-    }}
-
-    section[data-testid="stSidebar"] [role="radiogroup"] {{
-        color: {THEME_TEXT} !important;
-    }}
-
-    section[data-testid="stSidebar"] [role="radiogroup"] label {{
-        color: {THEME_TEXT} !important;
-        opacity: 1 !important;
-    }}
-
-    section[data-testid="stSidebar"] [role="radiogroup"] label * {{
-        color: {THEME_TEXT} !important;
-        opacity: 1 !important;
-    }}
-
-    section[data-testid="stSidebar"] [role="radio"][aria-checked="true"] {{
-        color: #5b4bff !important;
-    }}
-
-    section[data-testid="stSidebar"] [role="radio"][aria-checked="true"] * {{
-        color: #5b4bff !important;
-    }}
-
-    section[data-testid="stSidebar"] [data-testid="stMarkdownContainer"],
-    section[data-testid="stSidebar"] [data-testid="stMarkdownContainer"] * {{
-        color: {THEME_TEXT} !important;
-        opacity: 1 !important;
-    }}
-
-    section[data-testid="stSidebar"] [data-testid="stCaptionContainer"],
-    section[data-testid="stSidebar"] [data-testid="stCaptionContainer"] * {{
-        color: {THEME_TEXT_MUTED} !important;
-        opacity: 1 !important;
-    }}
-
-    /* --------------------------------------------------------
-       Existing MeetSense cards
-       -------------------------------------------------------- */
-
-    .card {{
-        background: {THEME_SURFACE} !important;
-        border-color: {THEME_BORDER} !important;
-        color: {THEME_TEXT} !important;
-    }}
-
-    .card * {{
-        color: {THEME_TEXT} !important;
-    }}
-
-    .card-title {{
-        color: {THEME_TEXT} !important;
-    }}
-
-    .page-title {{
-        color: {THEME_TEXT} !important;
-    }}
-
-    .page-subtitle {{
-        color: {THEME_TEXT_SECONDARY} !important;
-    }}
-
-    .section-heading {{
-        color: {THEME_TEXT} !important;
-    }}
-
-    .topbar {{
-        background: {THEME_SURFACE} !important;
-        border-color: {THEME_BORDER} !important;
-    }}
-
-    .top-title {{
-        color: {THEME_TEXT_SECONDARY} !important;
-    }}
-
-    /* --------------------------------------------------------
-       Transcript
-       -------------------------------------------------------- */
-
-    .transcript-item {{
-        background: {THEME_SURFACE} !important;
-        border-color: {THEME_BORDER} !important;
-    }}
-
-    .transcript-item * {{
-        color: {THEME_TEXT} !important;
-    }}
-
-    .transcript-text {{
-        color: {THEME_TEXT} !important;
-    }}
-
-    .transcript-time {{
-        color: {THEME_TEXT_MUTED} !important;
-    }}
-
-    .transcript-speaker {{
-        color: #5b4bff !important;
-    }}
-
-    /* --------------------------------------------------------
-       Streamlit widgets
-       -------------------------------------------------------- */
-
-    [data-testid="stExpander"] {{
-        background: {THEME_SURFACE} !important;
-        border-color: {THEME_BORDER} !important;
-    }}
-
-    [data-testid="stExpander"] * {{
-        color: {THEME_TEXT} !important;
-    }}
-
-    [data-testid="stAlert"] {{
-        background: {THEME_SURFACE_2} !important;
-        color: {THEME_TEXT} !important;
-        border-color: {THEME_BORDER} !important;
-    }}
-
-    [data-testid="stAlert"] * {{
-        color: {THEME_TEXT} !important;
-    }}
-
-    /* Text inputs */
-    .stTextInput input,
-    .stTextArea textarea {{
-        background: {THEME_INPUT} !important;
-        color: {THEME_TEXT} !important;
-        border-color: {THEME_BORDER} !important;
-    }}
-
-    .stTextInput label,
-    .stTextArea label {{
-        color: {THEME_TEXT} !important;
-    }}
-
-    /* Select boxes */
-    [data-baseweb="select"] > div {{
-        background: {THEME_INPUT} !important;
-        color: {THEME_TEXT} !important;
-        border-color: {THEME_BORDER} !important;
-    }}
-
-    [data-baseweb="select"] * {{
-        color: {THEME_TEXT} !important;
-    }}
-
-    /* File uploader */
-    [data-testid="stFileUploader"] {{
-        background: {THEME_SURFACE} !important;
-        border-color: {THEME_BORDER} !important;
-    }}
-
-    [data-testid="stFileUploader"] * {{
-        color: {THEME_TEXT} !important;
-    }}
-
-    /* Metrics */
-    [data-testid="stMetric"] {{
-        background: {THEME_SURFACE} !important;
-        border-color: {THEME_BORDER} !important;
-    }}
-
-    [data-testid="stMetric"] label {{
-        color: {THEME_TEXT_SECONDARY} !important;
-    }}
-
-    [data-testid="stMetric"] [data-testid="stMetricValue"] {{
-        color: {THEME_TEXT} !important;
-    }}
-
-    /* Tabs */
-    button[data-baseweb="tab"] {{
-        color: {THEME_TEXT_SECONDARY} !important;
-    }}
-
-    button[data-baseweb="tab"][aria-selected="true"] {{
-        color: #5b4bff !important;
-    }}
-
-    /* Buttons */
-    .stButton button {{
-        color: {THEME_TEXT} !important;
-        border-color: {THEME_BORDER} !important;
-    }}
-
-    /* Tables */
-    [data-testid="stDataFrame"] {{
-        border-color: {THEME_BORDER} !important;
-    }}
-
-    /* Markdown */
-    [data-testid="stMarkdownContainer"] {{
-        color: {THEME_TEXT} !important;
-    }}
-
-    [data-testid="stMarkdownContainer"] p,
-    [data-testid="stMarkdownContainer"] li,
-    [data-testid="stMarkdownContainer"] span {{
-        color: {THEME_TEXT} !important;
-    }}
-
-    /* --------------------------------------------------------
-       Header / collapsed sidebar control
-       -------------------------------------------------------- */
-
-    header {{
-        visibility: visible !important;
-        background: transparent !important;
-    }}
-
-    [data-testid="stSidebarCollapsedControl"] {{
-        display: flex !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        z-index: 999999 !important;
-    }}
-
-    [data-testid="stSidebarCollapsedControl"] button {{
-        background: {THEME_SURFACE} !important;
-        color: {THEME_TEXT} !important;
-        border: 1px solid {THEME_BORDER} !important;
-        opacity: 1 !important;
-    }}
-
-    [data-testid="stSidebarCollapsedControl"] svg {{
-        color: {THEME_TEXT} !important;
-        fill: {THEME_TEXT} !important;
-    }}
-
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
-# ============================================================
-# THEME SWITCH
-# ============================================================
-
-with st.sidebar:
-    st.markdown("<div style='height:8px'></div>", unsafe_allow_html=True)
-
-    theme_choice = st.radio(
-        "Appearance",
-        ["☀ Light", "◐ Dark"],
-        index=0 if st.session_state.theme == "light" else 1,
-        horizontal=True,
-        key="theme_selector",
-    )
-
-    new_theme = "dark" if theme_choice == "◐ Dark" else "light"
-
-    if new_theme != st.session_state.theme:
-        st.session_state.theme = new_theme
-        st.rerun()
 
 
 # TOP BAR
@@ -2043,6 +1272,7 @@ action_data = load_json(ACTION_ITEMS) or {}
 
 wer_data = load_json(WER) or {}
 der_data = load_json(DER) or {}
+der_vbx_data = load_json(DER_VBX) or {}
 rouge_data = load_json(ROUGE) or {}
 action_eval_data = load_json(ACTION_EVAL) or {}
 
@@ -2316,13 +1546,13 @@ if active_page == "Dashboard":
                         <div style="
                             margin-top:8px;
                             height:5px;
-                            background:#ececf5;
+                            background:var(--border);
                             border-radius:10px;
                         ">
                             <div style="
                                 width:{min(percentage,100):.1f}%;
                                 height:5px;
-                                background:#6658df;
+                                background:var(--accent);
                                 border-radius:10px;
                             "></div>
                         </div>
@@ -2445,7 +1675,7 @@ elif active_page == "Meeting":
             f"""
             <div class="card">
                 <div class="card-title">✨ Overview</div>
-                <p style="font-size:14px;line-height:1.7;color:#555969;">
+                <p style="font-size:14px;line-height:1.7;color:var(--text-secondary);">
                     {summary_text}
                 </p>
             </div>
@@ -2459,7 +1689,7 @@ elif active_page == "Meeting":
             """
             <div class="card">
                 <div class="card-title">🎯 AI Insights</div>
-                <p style="font-size:14px;line-height:1.7;color:#555969;">
+                <p style="font-size:14px;line-height:1.7;color:var(--text-secondary);">
                     The meeting has been processed using neural speech
                     recognition, speaker diarization and NLP analysis.
                     Explore the sections below for detailed insights.
@@ -2529,7 +1759,8 @@ elif active_page == "Live Meeting":
     )
 
     st.markdown(
-        '<div class="page-subtitle">Near-real-time meeting transcription.</div>',
+        '<div class="page-subtitle">Incremental transcription, diarization, '
+        "and summarization while the meeting is still running.</div>",
         unsafe_allow_html=True,
     )
 
@@ -2539,11 +1770,15 @@ elif active_page == "Live Meeting":
             <div class="card-title">
                 🔴 Live Meeting Mode
             </div>
-
-            <p style="font-size:14px;line-height:1.7;color:#5e6273;">
-                MeetSense can process microphone audio using Whisper.
-                Speaker-aware live processing is designed as a rolling-window
-                pipeline because speaker diarization is not truly instantaneous.
+            <p style="font-size:14px;line-height:1.7;color:var(--text-secondary);">
+                Audio is captured in rolling 20s windows (3s overlap) and run
+                through VAD → Whisper → diarization → alignment → NLP →
+                summarization as it arrives. Diarization re-clusters a capped,
+                rolling buffer rather than each tiny window in isolation, to
+                keep speaker labels consistent -- see PROJECT_REPORT for why.
+                Processing speed is <b>not guaranteed to be real-time</b> on
+                this hardware; the status strip below reports measured lag,
+                not an assumption.
             </p>
         </div>
         """,
@@ -2551,108 +1786,527 @@ elif active_page == "Live Meeting":
     )
 
     # ------------------------------------------------------------
-    # Browser microphone (Path B) -- Stage D: capture only.
-    #
-    # This does not replace the local sounddevice-based live scripts
-    # (Path A: src/live_transcribe.py, src/live_meeting.py,
-    # src/live_speaker_transcribe.py), which remain a separate,
-    # working local development/testing path. This is the browser-
-    # based path for the deployed MeetSense web app.
+    # Controller lifecycle: NOT constructed here. Constructing it
+    # imports live_controller -> live_pipeline -> vad/transcription/
+    # diarization/summarization -> torch/whisper/pyannote/
+    # transformers, and loads every model. That only happens inside
+    # the Start button handler below, the first time it's clicked --
+    # never just from opening this tab. Once constructed, it's
+    # cached in st.session_state, so later reruns (every widget
+    # interaction) never reconstruct it or reload any model.
     # ------------------------------------------------------------
 
-    st.markdown(
-        '<div class="section-heading">🎙️ Browser Microphone</div>',
-        unsafe_allow_html=True,
-    )
+    from live_capture import list_input_devices  # no torch import -- cheap
 
-    try:
+    controller = st.session_state.get("live_controller")
 
-        webrtc_ctx = webrtc_streamer(
-            key="meetsense-live-mic",
-            mode=WebRtcMode.SENDONLY,
-            audio_processor_factory=LiveAudioReceiver,
-            media_stream_constraints={"audio": True, "video": False},
-            rtc_configuration={
-                "iceServers": [
-                    {"urls": ["stun:stun.l.google.com:19302"]}
-                ]
-            },
-            async_processing=True,
+    if controller is None and st.session_state.get(
+        "live_controller_load_error"
+    ):
+
+        st.error(
+            "Live-mode models failed to load on the last attempt. "
+            "You can try Start again below."
         )
 
-        if webrtc_ctx.state.playing:
+        st.caption(
+            f"Details: {st.session_state['live_controller_load_error']}"
+        )
 
-            st.markdown(
-                '<span class="status-pill">● Receiving audio</span>',
-                unsafe_allow_html=True,
+    status = (
+        controller.get_status()
+        if controller is not None
+        else {"running": False, "chunk_count": 0}
+    )
+
+    # --------------------------------------------------------
+    # Controls: source selector + Start/Stop/Reset/Save. Always
+    # rendered (even before a controller exists) so the page itself
+    # never waits on model loading -- only clicking Start does.
+    # --------------------------------------------------------
+
+    source_col, device_col = st.columns([1, 2])
+
+    with source_col:
+
+        source_mode = st.radio(
+            "Audio source",
+            ["Simulated (replay file)", "Microphone"],
+            index=0,
+            disabled=status["running"],
+            help=(
+                "Simulated mode replays a saved recording at 1x "
+                "speed through the same live pipeline -- the "
+                "reliable fallback if microphone access fails "
+                "during a demo."
+            ),
+        )
+
+    simulated_file_path = None
+
+    with device_col:
+
+        if source_mode == "Simulated (replay file)":
+
+            candidate_files = sorted(
+                str(p)
+                for p in Path("data/audio").glob("*.wav")
+            ) + sorted(
+                str(p)
+                for p in Path("data/test_audio").glob("*.wav")
             )
+
+            if candidate_files:
+
+                simulated_file_path = st.selectbox(
+                    "File to replay",
+                    candidate_files,
+                    disabled=status["running"],
+                )
+
+            else:
+
+                st.warning("No .wav files found under data/.")
 
         else:
 
-            st.caption(
-                "Click Start above and allow microphone access in "
-                "your browser to begin."
-            )
+            try:
+                mic_devices = list_input_devices()
+            except Exception:
+                mic_devices = []
 
-        # Load once (st.cache_resource), then hand the same instance
-        # to the audio processor -- never reloaded per chunk, per
-        # rerun, or per connection.
-        if webrtc_ctx.audio_processor:
-
-            live_whisper_model = load_live_whisper_model()
-            webrtc_ctx.audio_processor.attach_model(live_whisper_model)
-
-        refresh_col, stats_col = st.columns([1, 3])
-
-        with refresh_col:
-
-            st.button("🔄 Refresh status")
-
-        with stats_col:
-
-            if webrtc_ctx.audio_processor:
-
-                stats = webrtc_ctx.audio_processor.snapshot()
-
+            if mic_devices:
                 st.caption(
-                    f"Frames received: {stats['frame_count']} · "
-                    f"Audio received: {stats['seconds_received']}s · "
-                    f"Sample rate: {stats['sample_rate'] or '—'} Hz · "
-                    f"Channels: {stats['channels'] or '—'}"
+                    "Input devices detected: "
+                    + ", ".join(d["name"] for d in mic_devices)
+                )
+            else:
+                st.warning(
+                    "No microphone input device was detected. "
+                    "Use Simulated mode instead."
                 )
 
-                if stats["last_error"]:
+    start_col, stop_col, reset_col, save_col = st.columns(4)
 
-                    st.caption(
-                        f"⚠️ {stats['last_error']}"
+    with start_col:
+
+        if st.button(
+            "▶ Start",
+            disabled=status["running"],
+            use_container_width=True,
+        ):
+
+            try:
+
+                if controller is None:
+
+                    with st.spinner(
+                        "Loading live-mode models (VAD, Whisper, "
+                        "diarization, summarizer) -- first time "
+                        "this session, can take a while under "
+                        "memory pressure..."
+                    ):
+
+                        from live_controller import LiveSessionController
+
+                        controller = LiveSessionController()
+
+                        st.session_state.live_controller = controller
+                        st.session_state.pop(
+                            "live_controller_load_error", None
+                        )
+
+                if source_mode == "Microphone":
+                    controller.start(mode="microphone")
+                else:
+                    controller.start(
+                        mode="simulated",
+                        simulated_file_path=simulated_file_path,
                     )
 
-            elif webrtc_ctx.state.playing:
+                st.rerun()
 
-                st.caption("Waiting for the first audio frame...")
+            except Exception as error:
 
-        if webrtc_ctx.audio_processor:
+                st.session_state["live_start_error"] = str(error)
 
-            live_segments = webrtc_ctx.audio_processor.snapshot()[
-                "transcript_segments"
-            ]
+                if "live_controller" not in st.session_state:
+                    st.session_state["live_controller_load_error"] = str(
+                        error
+                    )
 
-            if live_segments:
+    with stop_col:
+
+        if st.button(
+            "■ Stop",
+            disabled=not status["running"],
+            use_container_width=True,
+        ):
+
+            with st.spinner(
+                "Stopping... if a chunk is mid-processing this "
+                "waits for it to finish (seen up to ~160s during "
+                "testing) -- a running model call cannot be "
+                "safely interrupted."
+            ):
+                controller.stop()
+
+            # Stop finalizes the session into a Meeting Report
+            # (source="live"), reusing the session's own accumulated
+            # transcript/summaries/topics -- no re-reading batch files.
+            if controller.session.aligned_transcript:
+
+                from meeting_report import build_report
+                import time as _time
+
+                live_meeting_id = (
+                    "live_" + _time.strftime("%Y%m%d_%H%M%S")
+                )
+
+                _live_extractor_choice = st.session_state.get(
+                    "extractor_choice", "rule_based"
+                )
+
+                try:
+
+                    _spinner_ctx = (
+                        st.spinner("Generating takeaways...")
+                        if _live_extractor_choice == "llm"
+                        else contextlib.nullcontext()
+                    )
+
+                    with _spinner_ctx:
+
+                        live_report = build_report(
+                            live_meeting_id,
+                            transcript_segments=list(
+                                controller.session.aligned_transcript
+                            ),
+                            chunk_summaries=list(
+                                controller.session.chunk_summaries
+                            ),
+                            final_summary=controller.session.whole_summary,
+                            topics=controller.session.topics_result.get(
+                                "topics", []
+                            ),
+                            source="live",
+                            extractor_name=_live_extractor_choice,
+                            # Models are already loaded in this live
+                            # session; only unload before an LLM call.
+                            pre_extract_hook=controller.session.unload_models,
+                        )
+
+                    st.session_state["live_report_id"] = live_meeting_id
+
+                    if live_report.extractor_used != _live_extractor_choice:
+                        st.session_state["live_report_error"] = (
+                            live_report.extractor_stats.get(
+                                "fallback_notice",
+                                f"Fell back to "
+                                f"'{live_report.extractor_used}'.",
+                            )
+                        )
+
+                except Exception as error:
+                    st.session_state["live_report_error"] = str(error)
+
+            st.rerun()
+
+    with reset_col:
+
+        if st.button(
+            "⟲ Reset",
+            disabled=status["running"] or controller is None,
+            use_container_width=True,
+        ):
+
+            controller.reset()
+            st.rerun()
+
+    with save_col:
+
+        if st.button(
+            "💾 Save session",
+            disabled=(
+                controller is None
+                or status["running"]
+                or status["chunk_count"] == 0
+            ),
+            use_container_width=True,
+        ):
+
+            saved_paths = controller.save_session()
+            st.success(f"Saved to {saved_paths['transcript']} and siblings.")
+
+    if st.session_state.get("live_start_error"):
+
+        st.error(
+            "Could not start capture. If this is a microphone "
+            "permission or device error, switch to Simulated mode "
+            "above and try again."
+        )
+        st.caption(f"Details: {st.session_state['live_start_error']}")
+
+    if st.session_state.get("live_report_id"):
+
+        st.success(
+            f"Meeting Report ready: "
+            f"{st.session_state['live_report_id']} "
+            f"(see the Meeting Report page)."
+        )
+
+    if st.session_state.get("live_report_error"):
+
+        st.warning(
+            f"Could not build the live Meeting Report: "
+            f"{st.session_state['live_report_error']}"
+        )
+
+    st.divider()
+
+    if controller is not None:
+
+        # --------------------------------------------------------
+        # Live-updating display. This fragment ONLY reads
+        # controller.get_status() and renders -- it never calls
+        # VAD/ASR/diarization. Re-runs on its own every ~2s without
+        # re-running the whole page script.
+        # --------------------------------------------------------
+
+        @st.fragment(run_every="2s")
+        def render_live_status():
+
+            live_status = controller.get_status()
+
+            # ---- status strip ----
+
+            status_cols = st.columns(5)
+
+            status_cols[0].metric(
+                "Chunks processed", live_status["chunk_count"]
+            )
+
+            status_cols[1].metric(
+                "Audio captured",
+                format_time(live_status["captured_audio_seconds"]),
+            )
+
+            status_cols[2].metric(
+                "Audio processed",
+                format_time(live_status["processed_audio_seconds"]),
+            )
+
+            status_cols[3].metric(
+                "Dropped chunks", live_status["dropped_chunk_count"]
+            )
+
+            last_log = live_status.get("last_chunk_log") or {}
+
+            status_cols[4].metric(
+                "Last chunk total",
+                f"{last_log.get('total_ms', 0):.0f} ms",
+            )
+
+            if live_status["lag_seconds"] > 5:
+
+                st.warning(
+                    f"⚠️ LAGGING: processing is behind capture by "
+                    f"{live_status['lag_seconds']:.1f}s. This is "
+                    f"measured, not estimated."
+                )
+
+            elif live_status["running"]:
 
                 st.markdown(
-                    '<div class="section-heading">Live Transcript '
-                    '(browser microphone)</div>',
+                    '<span class="status-pill">● Live -- keeping up '
+                    "(lag "
+                    f'{live_status["lag_seconds"]:.1f}s)</span>',
                     unsafe_allow_html=True,
                 )
 
-                for segment in live_segments:
+            if live_status["stopping"]:
+                st.info("Stopping -- waiting for the current chunk to finish...")
+
+            if live_status["last_error"]:
+                st.error(f"Pipeline error on last chunk: {live_status['last_error']}")
+
+            if last_log:
+
+                with st.expander("Last chunk -- per-stage timing (ms)"):
+
+                    st.json(
+                        {
+                            key: value
+                            for key, value in last_log.items()
+                            if key.endswith("_ms") or key.endswith("_error")
+                        }
+                    )
+
+            # ---- rolling summary ----
+
+            st.markdown(
+                '<div class="section-heading">📝 Rolling Meeting Summary</div>',
+                unsafe_allow_html=True,
+            )
+
+            if live_status["whole_summary"]:
+
+                st.markdown(
+                    f"""
+                    <div class="summary-box">
+                        {live_status["whole_summary"]}
+                    </div>
+                    <div class="card-subtitle">
+                        As of chunk {live_status["chunk_count"]} /
+                        {format_time(live_status["processed_audio_seconds"])}
+                    </div>
+                    """,
+                    unsafe_allow_html=True,
+                )
+
+            else:
+
+                st.caption(
+                    "Whole-meeting summary regenerates every "
+                    f"{controller.session.recompute_every_n_chunks} chunks "
+                    "-- none yet."
+                )
+
+            if live_status["chunk_summaries"]:
+
+                with st.expander(
+                    f"Chunk summaries so far "
+                    f"({len(live_status['chunk_summaries'])})"
+                ):
+
+                    for index, chunk_summary in enumerate(
+                        live_status["chunk_summaries"], start=1
+                    ):
+                        st.markdown(f"**Chunk {index}:** {chunk_summary}")
+
+            # ---- decisions / action items ----
+
+            items_col, decisions_col = st.columns(2)
+
+            with items_col:
+
+                st.markdown(
+                    '<div class="section-heading">✅ Action Items</div>',
+                    unsafe_allow_html=True,
+                )
+
+                if live_status["action_items"]:
+
+                    for item in reversed(live_status["action_items"]):
+
+                        deadline_html = (
+                            f'<div class="card-subtitle">Deadline: {item["deadline"]}</div>'
+                            if item.get("deadline")
+                            else ""
+                        )
+
+                        st.markdown(
+                            f"""
+                            <div class="action-item">
+                                <div class="action-title">□ {item['action']}</div>
+                                <div class="card-subtitle">{item['speaker']}</div>
+                                {deadline_html}
+                            </div>
+                            """,
+                            unsafe_allow_html=True,
+                        )
+
+                else:
+                    st.caption("None detected yet.")
+
+            with decisions_col:
+
+                st.markdown(
+                    '<div class="section-heading">📌 Decisions</div>',
+                    unsafe_allow_html=True,
+                )
+
+                if live_status["decisions"]:
+
+                    for item in reversed(live_status["decisions"]):
+
+                        st.markdown(
+                            f"""
+                            <div class="action-item">
+                                <div class="action-title">{item['decision']}</div>
+                                <div class="card-subtitle">{item['speaker']}</div>
+                            </div>
+                            """,
+                            unsafe_allow_html=True,
+                        )
+
+                else:
+                    st.caption("None detected yet.")
+
+            # ---- keywords / topics ----
+
+            st.markdown(
+                '<div class="section-heading">🔑 Top Keywords & Topics</div>',
+                unsafe_allow_html=True,
+            )
+
+            keywords = live_status["keywords"].get("top_keywords", [])
+            topics = live_status["topics"].get("topics", [])
+
+            if keywords or topics:
+
+                keyword_col, topic_col = st.columns(2)
+
+                with keyword_col:
+
+                    if keywords:
+                        st.markdown(
+                            ", ".join(
+                                k["term"] for k in keywords[:15]
+                            )
+                        )
+                    else:
+                        st.caption("No keywords yet.")
+
+                with topic_col:
+
+                    if topics:
+                        for topic in topics:
+                            words = ", ".join(
+                                w["word"] for w in topic["top_words"][:6]
+                            )
+                            st.markdown(f"**Topic {topic['topic_id']}:** {words}")
+                    else:
+                        st.caption("No topics yet.")
+
+            else:
+
+                st.caption(
+                    "Keywords/topics refit every "
+                    f"{controller.session.recompute_every_n_chunks} chunks "
+                    "over the growing transcript -- none yet."
+                )
+
+            # ---- growing transcript, newest first ----
+
+            st.markdown(
+                '<div class="section-heading">🗣️ Live Transcript '
+                "(newest first)</div>",
+                unsafe_allow_html=True,
+            )
+
+            transcript = live_status["transcript"]
+
+            if transcript:
+
+                for segment in reversed(transcript[-50:]):
 
                     st.markdown(
                         f"""
                         <div class="transcript-item">
                             <div class="transcript-header">
                                 <span class="transcript-speaker">
-                                    🎙️ Live
+                                    🎙️ {segment["speaker"]}
                                 </span>
                                 <span class="transcript-time">
                                     {format_time(segment["start"])}
@@ -2666,74 +2320,11 @@ elif active_page == "Live Meeting":
                         unsafe_allow_html=True,
                     )
 
-            elif webrtc_ctx.state.playing:
+            else:
 
-                st.caption(
-                    f"Listening -- the first chunk transcribes after "
-                    f"~{LIVE_CHUNK_SECONDS}s of speech."
-                )
+                st.caption("No speech processed yet.")
 
-    except Exception as error:
-
-        st.error(
-            "The browser microphone connection could not be started. "
-            "This can happen if the browser denied microphone "
-            "permission, no microphone is available, or the WebRTC "
-            "connection failed to establish."
-        )
-
-        st.caption(f"Details: {error}")
-
-    st.markdown(
-        '<div class="section-heading">📄 Saved Live Transcript</div>',
-        unsafe_allow_html=True,
-    )
-
-    live_file = TRANSCRIPT_DIR / "live_meeting.json"
-
-    if live_file.exists():
-
-        live_data = load_json(live_file)
-
-        if isinstance(live_data, list):
-
-            st.markdown(
-                '<div class="section-heading">Live Transcript</div>',
-                unsafe_allow_html=True,
-            )
-
-            for item in live_data:
-
-                text = get_segment_text(item)
-
-                if not text:
-                    continue
-
-                st.markdown(
-                    f"""
-                    <div class="transcript-item">
-                        <div class="transcript-header">
-                            <span class="transcript-speaker">
-                                🎙️ Live
-                            </span>
-                            <span class="transcript-time">
-                                {format_time(item.get("start", 0))}
-                            </span>
-                        </div>
-                        <div class="transcript-text">
-                            {text}
-                        </div>
-                    </div>
-                    """,
-                    unsafe_allow_html=True,
-                )
-
-    else:
-
-        st.info(
-            "No live transcript is available yet. "
-            "The local microphone transcription module can be connected here next."
-        )
+        render_live_status()
 
 
 # ============================================================
@@ -2774,12 +2365,18 @@ elif active_page == "Transcript":
         f"{len(filtered)} transcript segments"
     )
 
+    # Built as one combined HTML string and rendered with a single
+    # st.markdown() call -- up to ~400 segments, so one call instead
+    # of one per segment avoids per-element Streamlit overhead on
+    # every rerun (including every theme toggle).
+    segment_blocks = []
+
     for item in filtered:
 
         speaker = get_speaker_name(item)
         text = get_segment_text(item)
 
-        st.markdown(
+        segment_blocks.append(
             f"""
             <div class="transcript-item">
                 <div class="transcript-header">
@@ -2797,7 +2394,13 @@ elif active_page == "Transcript":
                     {text}
                 </div>
             </div>
-            """,
+            """
+        )
+
+    if segment_blocks:
+
+        st.markdown(
+            "".join(segment_blocks),
             unsafe_allow_html=True,
         )
 
@@ -2893,10 +2496,10 @@ elif active_page == "Action Items":
                         Timestamp: {item['timestamp_formatted']}
                     </div>
                     {deadline_html}
-                    <div style="font-size:12px;color:#777b8d;margin-top:8px;">
+                    <div style="font-size:12px;color:var(--text-muted);margin-top:8px;">
                         <b>Evidence:</b> "{item['evidence_text']}"
                     </div>
-                    <div style="font-size:11px;color:#9a9ea9;margin-top:6px;">
+                    <div style="font-size:11px;color:var(--text-muted);margin-top:6px;">
                         Detection method: {item['detection_method_label']}
                     </div>
                 </div>
@@ -3002,10 +2605,10 @@ elif active_page == "Decisions":
                         Speaker: {item['speaker_display_name']} &nbsp;·&nbsp;
                         Timestamp: {item['timestamp_formatted']}
                     </div>
-                    <div style="font-size:12px;color:#777b8d;margin-top:8px;">
+                    <div style="font-size:12px;color:var(--text-muted);margin-top:8px;">
                         <b>Evidence:</b> "{item['evidence_text']}"
                     </div>
-                    <div style="font-size:11px;color:#9a9ea9;margin-top:6px;">
+                    <div style="font-size:11px;color:var(--text-muted);margin-top:6px;">
                         Detection method: {item['detection_method_label']}
                     </div>
                 </div>
@@ -3059,6 +2662,251 @@ elif active_page == "Decisions":
                     """,
                     unsafe_allow_html=True,
                 )
+
+
+# ============================================================
+# MEETING REPORT
+# ============================================================
+
+elif active_page == "Meeting Report":
+
+    st.markdown(
+        '<div class="page-title">Meeting Report</div>',
+        unsafe_allow_html=True,
+    )
+    st.markdown(
+        '<div class="page-subtitle">Speakers, takeaways, and '
+        "evidence-linked action items.</div>",
+        unsafe_allow_html=True,
+    )
+
+    from meeting_report import (
+        build_report,
+        load_report,
+        save_report,
+        list_report_ids,
+        apply_speaker_renaming,
+        render_markdown,
+        render_html,
+        available_extractors,
+    )
+
+    default_report_id = "meeting_001"
+
+    existing_report_ids = list_report_ids()
+
+    report_options = existing_report_ids or [default_report_id]
+
+    build_col, extractor_col = st.columns([2, 1])
+
+    with build_col:
+        report_id = st.selectbox("Report", report_options, index=0)
+
+    with extractor_col:
+        # key="extractor_choice" persists this selection in
+        # session_state so the Live Meeting Stop handler (a
+        # different page) can reuse the same preference for
+        # finalizing a live report with "the selected extractor".
+        extractor_choice = st.selectbox(
+            "Extractor",
+            available_extractors(),
+            index=0,
+            key="extractor_choice",
+        )
+
+    if st.button("🔄 Build / rebuild from current batch outputs"):
+
+        _live_controller = st.session_state.get("live_controller")
+
+        _unload_hook = (
+            _live_controller.session.unload_models
+            if _live_controller is not None
+            else None
+        )
+
+        try:
+
+            if extractor_choice == "llm":
+                with st.spinner("Generating takeaways..."):
+                    built_report = build_report(
+                        report_id,
+                        source="recorded",
+                        extractor_name=extractor_choice,
+                        pre_extract_hook=_unload_hook,
+                    )
+            else:
+                built_report = build_report(
+                    report_id,
+                    source="recorded",
+                    extractor_name=extractor_choice,
+                )
+
+            if built_report.extractor_used != extractor_choice:
+                st.warning(
+                    built_report.extractor_stats.get(
+                        "fallback_notice",
+                        f"Fell back to '{built_report.extractor_used}'.",
+                    )
+                )
+            else:
+                st.success(
+                    f"Built report '{report_id}' using '{extractor_choice}'."
+                )
+
+            st.rerun()
+
+        except Exception as error:
+            st.error(f"Could not build report: {error}")
+
+    try:
+        meeting_report = load_report(report_id)
+    except FileNotFoundError:
+        meeting_report = None
+
+    if meeting_report is None:
+
+        st.info(
+            "No report yet for this meeting. Click "
+            "'Build / rebuild' above."
+        )
+
+    else:
+
+        st.markdown(
+            f"**Date:** {meeting_report.date} &nbsp;&nbsp; "
+            f"**Duration:** {format_time(meeting_report.duration_sec)} "
+            f"&nbsp;&nbsp; **Source:** {meeting_report.source}"
+        )
+
+        if meeting_report.summary:
+
+            st.markdown(
+                '<div class="section-heading">📝 Summary</div>',
+                unsafe_allow_html=True,
+            )
+            st.markdown(
+                f'<div class="summary-box">{meeting_report.summary}</div>',
+                unsafe_allow_html=True,
+            )
+
+        if meeting_report.speakers:
+
+            st.markdown(
+                '<div class="section-heading">🗣️ Speakers & '
+                "Speaking Time</div>",
+                unsafe_allow_html=True,
+            )
+
+            import pandas as pd
+
+            chart_df = pd.DataFrame(
+                {
+                    "speaker": [s.name for s in meeting_report.speakers],
+                    "seconds": [
+                        s.speaking_time_sec
+                        for s in meeting_report.speakers
+                    ],
+                }
+            ).set_index("speaker")
+
+            st.bar_chart(chart_df)
+
+            with st.expander("Rename speakers"):
+
+                renaming = {}
+
+                for speaker in meeting_report.speakers:
+
+                    new_name = st.text_input(
+                        f"Rename {speaker.name}",
+                        value=speaker.name,
+                        key=f"rename_{report_id}_{speaker.name}",
+                    )
+
+                    if new_name != speaker.name:
+                        renaming[speaker.name] = new_name
+
+                if renaming and st.button("Apply renaming"):
+
+                    meeting_report = apply_speaker_renaming(
+                        meeting_report, renaming
+                    )
+                    save_report(meeting_report)
+
+                    st.success(
+                        "Renamed. Applied to speakers, transcript, "
+                        "and all evidence."
+                    )
+                    st.rerun()
+
+        for section_name, icon, section in [
+            ("Decisions", "📌", meeting_report.decisions),
+            ("Action Items", "✅", meeting_report.action_items),
+            ("Deadlines", "⏰", meeting_report.deadlines),
+            ("Open Questions", "❓", meeting_report.open_questions),
+        ]:
+
+            if section:
+
+                st.markdown(
+                    f'<div class="section-heading">{icon} '
+                    f"{section_name}</div>",
+                    unsafe_allow_html=True,
+                )
+
+                for item in section:
+
+                    due = (
+                        f" · due {item.due_date}"
+                        if item.due_date
+                        else ""
+                    )
+
+                    st.markdown(f"**{item.text}**{due}")
+
+                    with st.expander(
+                        f"Evidence — {item.evidence.speaker} @ "
+                        f"{format_time(item.evidence.timestamp)}"
+                    ):
+                        st.markdown(f"> {item.evidence.quote}")
+
+        st.markdown(
+            '<div class="section-heading">⬇️ Export</div>',
+            unsafe_allow_html=True,
+        )
+
+        export_col1, export_col2, export_col3 = st.columns(3)
+
+        with export_col1:
+
+            st.download_button(
+                "JSON",
+                data=json.dumps(
+                    meeting_report.to_rendered_dict(),
+                    indent=2,
+                    ensure_ascii=False,
+                ),
+                file_name=f"{report_id}_report.json",
+                mime="application/json",
+            )
+
+        with export_col2:
+
+            st.download_button(
+                "Markdown",
+                data=render_markdown(meeting_report),
+                file_name=f"{report_id}_report.md",
+                mime="text/markdown",
+            )
+
+        with export_col3:
+
+            st.download_button(
+                "HTML",
+                data=render_html(meeting_report),
+                file_name=f"{report_id}_report.html",
+                mime="text/html",
+            )
 
 
 # ============================================================
@@ -3284,7 +3132,7 @@ elif active_page == "Speaker Analysis":
                 <div class="card">
                     <div style="display:flex;justify-content:space-between;align-items:baseline;">
                         <div class="card-title">👤 {speaker['display_name']}</div>
-                        <div style="font-size:20px;font-weight:800;color:#5142d8;">
+                        <div style="font-size:20px;font-weight:800;color:var(--accent);">
                             {speaker['participation_percentage']:.1f}%
                         </div>
                     </div>
@@ -3292,13 +3140,13 @@ elif active_page == "Speaker Analysis":
                     <div style="
                         margin-top:10px;
                         height:8px;
-                        background:#ededf5;
+                        background:var(--border);
                         border-radius:10px;
                     ">
                         <div style="
                             width:{min(speaker['participation_percentage'], 100):.1f}%;
                             height:8px;
-                            background:#6658df;
+                            background:var(--accent);
                             border-radius:10px;
                         "></div>
                     </div>
@@ -3422,11 +3270,41 @@ elif active_page == "Evaluation":
         else 0
     )
 
-    der_value = safe_float(
-        der_data.get("der", 0)
-        if isinstance(der_data, dict)
-        else 0
-    )
+    # Diarization Method selector -- PyAnnote is the production backend
+    # and is always available; VBx (experimental) only appears once its
+    # own DER results exist (i.e. after running
+    # `python run_diarization_experiment.py --method vbx`), so the
+    # toggle never offers a method with nothing to show.
+    diarization_method = "PyAnnote (production)"
+
+    if der_vbx_data:
+
+        diarization_method = st.selectbox(
+            "Diarization Method",
+            ["PyAnnote (production)", "VBx (experimental)"],
+            key="diarization_method_selector",
+        )
+
+    if diarization_method.startswith("VBx"):
+
+        der_value = safe_float(der_vbx_data.get("der", 0))
+
+        st.caption(
+            "VBx is an experimental, research-comparison-only "
+            "diarization backend. It received different upstream "
+            "segmentation input than PyAnnote (externally supplied "
+            "VAD vs. PyAnnote's own internal segmentation), so this "
+            "DER is not a like-for-like clustering-quality comparison "
+            "-- see README.md for details."
+        )
+
+    else:
+
+        der_value = safe_float(
+            der_data.get("der", 0)
+            if isinstance(der_data, dict)
+            else 0
+        )
 
     c1, c2 = st.columns(2)
 
@@ -4253,7 +4131,7 @@ elif active_page == "Speakers":
                         <div style="
                             font-size:20px;
                             font-weight:800;
-                            color:#5142d8;
+                            color:var(--accent);
                         ">
                             {percentage:.1f}%
                         </div>
@@ -4262,13 +4140,13 @@ elif active_page == "Speakers":
                     <div style="
                         margin-top:15px;
                         height:8px;
-                        background:#ededf5;
+                        background:var(--border);
                         border-radius:10px;
                     ">
                         <div style="
                             width:{min(percentage,100):.1f}%;
                             height:8px;
-                            background:#6658df;
+                            background:var(--accent);
                             border-radius:10px;
                         "></div>
                     </div>
@@ -4276,7 +4154,7 @@ elif active_page == "Speakers":
                     <div style="
                         margin-top:8px;
                         font-size:12px;
-                        color:#777b8d;
+                        color:var(--text-muted);
                     ">
                         Speaking time: {format_time(seconds)}
                     </div>
@@ -4292,38 +4170,43 @@ elif active_page == "Speakers":
 
 st.markdown("---")
 
-with st.expander("📥 Export Meeting Results"):
+# Always-visible section -- not a collapsible st.expander, so the
+# four export actions never require a click to reveal.
+st.markdown(
+    '<div class="section-heading">📥 Export Meeting Results</div>',
+    unsafe_allow_html=True,
+)
 
-    download_columns = st.columns(4)
+download_columns = st.columns(4)
 
-    files_for_download = [
-        ("Speaker Transcript", SPEAKER_TRANSCRIPT),
-        ("Summary", SUMMARY),
-        ("NLP Analysis", NLP_PROCESSED),
-        ("Evaluation - WER", WER),
-    ]
+files_for_download = [
+    ("Speaker Transcript", SPEAKER_TRANSCRIPT),
+    ("Summary", SUMMARY),
+    ("NLP Analysis", NLP_PROCESSED),
+    ("Evaluation - WER", WER),
+]
 
-    for column, (label, path) in zip(
-        download_columns,
-        files_for_download,
-    ):
+for column, (label, path) in zip(
+    download_columns,
+    files_for_download,
+):
 
-        with column:
+    with column:
 
-            if path.exists():
+        if path.exists():
 
-                with open(
-                    path,
-                    "rb",
-                ) as f:
+            with open(
+                path,
+                "rb",
+            ) as f:
 
-                    st.download_button(
-                        label,
-                        data=f.read(),
-                        file_name=path.name,
-                        mime="application/json",
-                        use_container_width=True,
-                    )
+                st.download_button(
+                    label,
+                    data=f.read(),
+                    file_name=path.name,
+                    mime="application/json",
+                    use_container_width=True,
+                )
 
 
 # ============================================================
@@ -4334,7 +4217,7 @@ st.markdown(
     """
     <div style="
         text-align:center;
-        color:#9699a7;
+        color:var(--text-muted);
         font-size:11px;
         margin-top:30px;
         padding:15px;

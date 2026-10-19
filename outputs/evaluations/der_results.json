@@ -8,10 +8,10 @@
   "der": 0.022219294778904844,
   "der_percentage": 2.2219294778904843,
   "components": {
-    "false alarm": 0.0,
-    "confusion": 1.5179999999999998,
     "missed detection": 0.0,
-    "correct": 66.801,
-    "total": 68.31899999999999
+    "false alarm": 0.0,
+    "total": 68.31899999999999,
+    "confusion": 1.5179999999999998,
+    "correct": 66.801
   }
 }

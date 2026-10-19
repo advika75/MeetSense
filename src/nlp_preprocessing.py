@@ -22,18 +22,10 @@ OUTPUT_FILE = (
 
 
 # ============================================================
-# NLTK DATA
+# NLTK RESOURCES
 # ============================================================
 
-print("=" * 60)
-print("NLP PREPROCESSING")
-print("=" * 60)
-
-print()
-print("Checking NLTK resources...")
-
-
-nltk_resources = [
+NLTK_RESOURCES = [
     ("tokenizers/punkt", "punkt"),
     ("tokenizers/punkt_tab", "punkt_tab"),
     ("corpora/stopwords", "stopwords"),
@@ -45,113 +37,83 @@ nltk_resources = [
     ("corpora/words", "words"),
 ]
 
-
-for resource_path, resource_name in nltk_resources:
-
-    try:
-        nltk.data.find(resource_path)
-
-    except LookupError:
-
-        print(
-            f"Downloading NLTK resource: {resource_name}"
-        )
-
-        nltk.download(
-            resource_name,
-            quiet=True
-        )
+_resources_ready = False
 
 
-print("NLTK resources ready.")
+def ensure_nltk_resources():
+    """Download any missing NLTK resources. Cheap to call repeatedly
+    (checked once per process) -- both the batch script and the live
+    pipeline call this before any tokenization."""
 
+    global _resources_ready
 
-# ============================================================
-# LOAD SPEAKER TRANSCRIPT
-# ============================================================
+    if _resources_ready:
+        return
 
-print()
-print("Loading speaker-aware transcript...")
+    for resource_path, resource_name in NLTK_RESOURCES:
 
-with open(
-    INPUT_FILE,
-    "r",
-    encoding="utf-8"
-) as f:
+        try:
+            nltk.data.find(resource_path)
 
-    transcript = json.load(f)
+        except LookupError:
 
+            print(
+                f"Downloading NLTK resource: {resource_name}"
+            )
 
-if not isinstance(transcript, list):
+            nltk.download(
+                resource_name,
+                quiet=True
+            )
 
-    raise ValueError(
-        "speaker_transcript.json must contain a list."
-    )
-
-
-print(
-    "Transcript segments:",
-    len(transcript)
-)
+    _resources_ready = True
 
 
 # ============================================================
-# NLP OBJECTS
+# LAZY NLP OBJECTS
 # ============================================================
 
-stop_words = set(
-    stopwords.words("english")
-)
+_stop_words = None
+_lemmatizer = None
 
-lemmatizer = WordNetLemmatizer()
+
+def _get_stop_words():
+
+    global _stop_words
+
+    if _stop_words is None:
+        ensure_nltk_resources()
+        _stop_words = set(stopwords.words("english"))
+
+    return _stop_words
+
+
+def _get_lemmatizer():
+
+    global _lemmatizer
+
+    if _lemmatizer is None:
+        ensure_nltk_resources()
+        _lemmatizer = WordNetLemmatizer()
+
+    return _lemmatizer
 
 
 # ============================================================
-# PROCESS SEGMENTS
+# PROCESS A SINGLE SEGMENT'S TEXT
 # ============================================================
 
-processed_segments = []
+def process_segment_text(text):
+    """Tokenize/tag/lemmatize one piece of text. Reused per-segment
+    by both the batch script (over the whole transcript) and the live
+    pipeline (over only newly-arrived segments each chunk)."""
 
-all_text = []
-
-
-for index, segment in enumerate(
-    transcript,
-    start=1
-):
-
-    speaker = segment.get(
-        "speaker",
-        "UNKNOWN"
-    )
-
-    text = segment.get(
-        "text",
-        ""
-    ).strip()
-
-
-    if not text:
-        continue
-
-
-    # --------------------------------------------------------
-    # Sentence segmentation
-    # --------------------------------------------------------
+    stop_words = _get_stop_words()
+    lemmatizer = _get_lemmatizer()
 
     sentences = sent_tokenize(text)
 
-
-    # --------------------------------------------------------
-    # Tokenization
-    # --------------------------------------------------------
-
     tokens = word_tokenize(text)
-
-
-    # --------------------------------------------------------
-    # Stopword removal
-    # --------------------------------------------------------
 
     filtered_tokens = [
         token.lower()
@@ -160,19 +122,9 @@ for index, segment in enumerate(
         and token.lower() not in stop_words
     ]
 
-
-    # --------------------------------------------------------
-    # POS tagging
-    # --------------------------------------------------------
-
     tagged_tokens = pos_tag(
         filtered_tokens
     )
-
-
-    # --------------------------------------------------------
-    # Lemmatization
-    # --------------------------------------------------------
 
     lemmatized_tokens = []
 
@@ -193,7 +145,6 @@ for index, segment in enumerate(
         else:
             pos = "n"
 
-
         lemma = lemmatizer.lemmatize(
             token,
             pos=pos
@@ -203,167 +154,215 @@ for index, segment in enumerate(
             lemma
         )
 
+    return {
+        "sentences": sentences,
+        "tokens": tokens,
+        "filtered_tokens": filtered_tokens,
+        "pos_tags": tagged_tokens,
+        "lemmatized_tokens": lemmatized_tokens
+    }
 
-    # --------------------------------------------------------
-    # Save processed segment
-    # --------------------------------------------------------
 
-    processed_segments.append(
-        {
-            "start": segment.get("start"),
-            "end": segment.get("end"),
-            "speaker": speaker,
-            "original_text": text,
-            "sentences": sentences,
-            "tokens": tokens,
-            "filtered_tokens": filtered_tokens,
-            "pos_tags": tagged_tokens,
-            "lemmatized_tokens": lemmatized_tokens
-        }
+# ============================================================
+# NAMED ENTITY RECOGNITION
+# ============================================================
+
+def extract_entities(text):
+    """Run NER over a piece of text and return unique
+    {"entity", "type"} dicts. The batch script calls this once over
+    the whole concatenated transcript; the live pipeline calls it
+    per newly-arrived batch of segments only (a smaller context
+    window per call, since it never re-scans already-processed text
+    -- entities that only become recognizable with cross-segment
+    context spanning a chunk boundary may be missed live even though
+    the batch pass would catch them)."""
+
+    if not text.strip():
+        return []
+
+    tokens = word_tokenize(text)
+
+    tagged = pos_tag(tokens)
+
+    tree = ne_chunk(tagged)
+
+    entities = []
+
+    seen = set()
+
+    for subtree in tree:
+
+        if hasattr(subtree, "label"):
+
+            entity = " ".join(
+                word
+                for word, tag
+                in subtree.leaves()
+            )
+
+            key = (entity, subtree.label())
+
+            if key not in seen:
+
+                seen.add(key)
+
+                entities.append(
+                    {
+                        "entity": entity,
+                        "type": subtree.label()
+                    }
+                )
+
+    return entities
+
+
+# ============================================================
+# BATCH CLI ENTRY POINT (unchanged behavior)
+# ============================================================
+
+def main():
+
+    print("=" * 60)
+    print("NLP PREPROCESSING")
+    print("=" * 60)
+
+    print()
+    print("Checking NLTK resources...")
+
+    ensure_nltk_resources()
+
+    print("NLTK resources ready.")
+
+    print()
+    print("Loading speaker-aware transcript...")
+
+    with open(
+        INPUT_FILE,
+        "r",
+        encoding="utf-8"
+    ) as f:
+
+        transcript = json.load(f)
+
+    if not isinstance(transcript, list):
+
+        raise ValueError(
+            "speaker_transcript.json must contain a list."
+        )
+
+    print(
+        "Transcript segments:",
+        len(transcript)
     )
 
+    processed_segments = []
 
-    all_text.append(text)
+    all_text = []
 
-
-    # Progress
-    if index % 50 == 0:
-
-        print(
-            f"Processed {index} segments..."
-        )
-
-
-# ============================================================
-# GLOBAL NER
-# ============================================================
-
-print()
-print("Running Named Entity Recognition...")
-
-full_text = " ".join(all_text)
-
-global_tokens = word_tokenize(
-    full_text
-)
-
-global_tagged = pos_tag(
-    global_tokens
-)
-
-tree = ne_chunk(
-    global_tagged
-)
-
-
-entities = []
-
-for subtree in tree:
-
-    if hasattr(
-        subtree,
-        "label"
+    for index, segment in enumerate(
+        transcript,
+        start=1
     ):
 
-        entity = " ".join(
-            word
-            for word, tag
-            in subtree.leaves()
+        speaker = segment.get(
+            "speaker",
+            "UNKNOWN"
         )
 
-        entities.append(
+        text = segment.get(
+            "text",
+            ""
+        ).strip()
+
+        if not text:
+            continue
+
+        result = process_segment_text(text)
+
+        processed_segments.append(
             {
-                "entity": entity,
-                "type": subtree.label()
+                "start": segment.get("start"),
+                "end": segment.get("end"),
+                "speaker": speaker,
+                "original_text": text,
+                "sentences": result["sentences"],
+                "tokens": result["tokens"],
+                "filtered_tokens": result["filtered_tokens"],
+                "pos_tags": result["pos_tags"],
+                "lemmatized_tokens": result["lemmatized_tokens"]
             }
         )
 
+        all_text.append(text)
 
-# Remove duplicate entities
-unique_entities = []
+        if index % 50 == 0:
 
-seen = set()
+            print(
+                f"Processed {index} segments..."
+            )
 
-for entity in entities:
+    print()
+    print("Running Named Entity Recognition...")
 
-    key = (
-        entity["entity"],
-        entity["type"]
+    full_text = " ".join(all_text)
+
+    unique_entities = extract_entities(full_text)
+
+    output = {
+        "source_file": INPUT_FILE,
+        "segment_count": len(processed_segments),
+        "processed_segments": processed_segments,
+        "named_entities": unique_entities
+    }
+
+    os.makedirs(
+        "outputs/nlp",
+        exist_ok=True
     )
 
-    if key not in seen:
+    with open(
+        OUTPUT_FILE,
+        "w",
+        encoding="utf-8"
+    ) as f:
 
-        seen.add(key)
-        unique_entities.append(entity)
+        json.dump(
+            output,
+            f,
+            indent=2,
+            ensure_ascii=False
+        )
 
+    print()
+    print("=" * 60)
+    print("NLP PREPROCESSING COMPLETE")
+    print("=" * 60)
 
-# ============================================================
-# BUILD OUTPUT
-# ============================================================
-
-output = {
-    "source_file": INPUT_FILE,
-    "segment_count": len(processed_segments),
-    "processed_segments": processed_segments,
-    "named_entities": unique_entities
-}
-
-
-# ============================================================
-# SAVE
-# ============================================================
-
-os.makedirs(
-    "outputs/nlp",
-    exist_ok=True
-)
-
-
-with open(
-    OUTPUT_FILE,
-    "w",
-    encoding="utf-8"
-) as f:
-
-    json.dump(
-        output,
-        f,
-        indent=2,
-        ensure_ascii=False
+    print()
+    print(
+        "Processed segments:",
+        len(processed_segments)
     )
-
-
-# ============================================================
-# RESULTS
-# ============================================================
-
-print()
-print("=" * 60)
-print("NLP PREPROCESSING COMPLETE")
-print("=" * 60)
-
-print()
-print(
-    "Processed segments:",
-    len(processed_segments)
-)
-
-print(
-    "Named entities:",
-    len(unique_entities)
-)
-
-print()
-print("Top named entities:")
-
-for entity in unique_entities[:15]:
 
     print(
-        f"  {entity['entity']} "
-        f"({entity['type']})"
+        "Named entities:",
+        len(unique_entities)
     )
 
+    print()
+    print("Top named entities:")
 
-print()
-print("Output saved to:")
-print(OUTPUT_FILE)
+    for entity in unique_entities[:15]:
+
+        print(
+            f"  {entity['entity']} "
+            f"({entity['type']})"
+        )
+
+    print()
+    print("Output saved to:")
+    print(OUTPUT_FILE)
+
+
+if __name__ == "__main__":
+    main()

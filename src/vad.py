@@ -58,13 +58,20 @@ def load_audio(file_path):
 # RUN SILERO VAD
 # ============================================================
 
-def detect_speech(audio, sample_rate):
+def detect_speech(audio, sample_rate, model=None):
+    """Run Silero VAD over an audio array. If model is not given,
+    loads a fresh model each call (the original per-call behavior);
+    the live pipeline instead loads one model once (via
+    load_silero_vad()) and passes it in here on every chunk, to avoid
+    reloading the VAD model per chunk."""
 
-    print("\nLoading Silero VAD model...")
+    if model is None:
 
-    model = load_silero_vad()
+        print("\nLoading Silero VAD model...")
 
-    print("Silero VAD loaded.")
+        model = load_silero_vad()
+
+        print("Silero VAD loaded.")
 
     # Convert NumPy → PyTorch tensor
     audio_tensor = torch.tensor(

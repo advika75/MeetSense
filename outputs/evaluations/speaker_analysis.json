@@ -5,7 +5,7 @@
     "topic_modeling_file": "outputs/nlp/topic_modeling.json",
     "action_items_decisions_file": "outputs/nlp/action_items_decisions.json"
   },
-  "total_speaking_time_seconds": 1423.04,
+  "total_speaking_time_seconds": 1420.24,
   "total_segments": 404,
   "speaker_count": 4,
   "objective_measurement_only": "All figures below are objective counts/measurements (speaking time, participation percentage, utterance/question counts, topic and keyword association, and counts of decisions/action items associated with a speaker). None of this implies or should be read as a judgment of personality, competence, leadership, importance, or performance.",
@@ -24,7 +24,7 @@
       "display_name": "Speaker 1",
       "speaking_time_seconds": 746.96,
       "speaking_time_formatted": "12:27",
-      "participation_percentage": 52.49,
+      "participation_percentage": 52.59,
       "utterance_count": 189,
       "question_count": 8,
       "topics": [
@@ -35,7 +35,7 @@
             "like",
             "put"
           ],
-          "segment_count": 48
+          "segment_count": 49
         },
         {
           "topic_id": 2,
@@ -44,16 +44,16 @@
             "people",
             "well"
           ],
-          "segment_count": 43
+          "segment_count": 41
         },
         {
-          "topic_id": 4,
+          "topic_id": 5,
           "top_words": [
-            "okay",
-            "go",
-            "good"
+            "one",
+            "know",
+            "get"
           ],
-          "segment_count": 35
+          "segment_count": 36
         }
       ],
       "keywords": [
@@ -125,7 +125,7 @@
       "display_name": "Speaker 2",
       "speaking_time_seconds": 465.68,
       "speaking_time_formatted": "07:46",
-      "participation_percentage": 32.72,
+      "participation_percentage": 32.79,
       "utterance_count": 138,
       "question_count": 18,
       "topics": [
@@ -136,7 +136,7 @@
             "like",
             "put"
           ],
-          "segment_count": 40
+          "segment_count": 38
         },
         {
           "topic_id": 2,
@@ -145,16 +145,16 @@
             "people",
             "well"
           ],
-          "segment_count": 27
+          "segment_count": 29
         },
         {
           "topic_id": 5,
           "top_words": [
-            "know",
             "one",
+            "know",
             "get"
           ],
-          "segment_count": 23
+          "segment_count": 22
         }
       ],
       "keywords": [
@@ -226,10 +226,19 @@
       "display_name": "Speaker 3",
       "speaking_time_seconds": 135.84,
       "speaking_time_formatted": "02:16",
-      "participation_percentage": 9.55,
+      "participation_percentage": 9.56,
       "utterance_count": 47,
       "question_count": 5,
       "topics": [
+        {
+          "topic_id": 5,
+          "top_words": [
+            "one",
+            "know",
+            "get"
+          ],
+          "segment_count": 13
+        },
         {
           "topic_id": 3,
           "top_words": [
@@ -240,20 +249,11 @@
           "segment_count": 12
         },
         {
-          "topic_id": 5,
-          "top_words": [
-            "know",
-            "one",
-            "get"
-          ],
-          "segment_count": 12
-        },
-        {
           "topic_id": 4,
           "top_words": [
             "okay",
-            "go",
-            "good"
+            "work",
+            "go"
           ],
           "segment_count": 11
         }
@@ -327,7 +327,7 @@
       "display_name": "Speaker 4",
       "speaking_time_seconds": 68.72,
       "speaking_time_formatted": "01:09",
-      "participation_percentage": 4.83,
+      "participation_percentage": 4.84,
       "utterance_count": 25,
       "question_count": 3,
       "topics": [
@@ -353,8 +353,8 @@
           "topic_id": 4,
           "top_words": [
             "okay",
-            "go",
-            "good"
+            "work",
+            "go"
           ],
           "segment_count": 3
         }
@@ -416,9 +416,9 @@
     {
       "speaker_label": "UNKNOWN",
       "display_name": "Unknown / Unmatched",
-      "speaking_time_seconds": 5.84,
-      "speaking_time_formatted": "00:06",
-      "participation_percentage": 0.41,
+      "speaking_time_seconds": 3.04,
+      "speaking_time_formatted": "00:03",
+      "participation_percentage": 0.21,
       "utterance_count": 5,
       "question_count": 0,
       "topics": [
@@ -435,19 +435,10 @@
           "topic_id": 4,
           "top_words": [
             "okay",
-            "go",
-            "good"
+            "work",
+            "go"
           ],
-          "segment_count": 1
-        },
-        {
-          "topic_id": 1,
-          "top_words": [
-            "yeah",
-            "one",
-            "sort"
-          ],
-          "segment_count": 1
+          "segment_count": 2
         }
       ],
       "keywords": [
@@ -456,11 +447,11 @@
           "score": 3.0
         },
         {
-          "term": "okay",
+          "term": "good",
           "score": 1.0
         },
         {
-          "term": "ooh",
+          "term": "okay",
           "score": 1.0
         }
       ],

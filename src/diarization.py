@@ -1,13 +1,26 @@
 import os
+import sys
 
 # --------------------------------------------------
 # Fix FFmpeg shared-library path on macOS
 # Must happen BEFORE importing torch / pyannote
 # --------------------------------------------------
+#
+# macOS's dynamic linker only honors DYLD_LIBRARY_PATH if it is
+# present in the process environment at exec() time -- setting it via
+# os.environ from inside an already-running interpreter has no effect
+# on later dlopen() calls (confirmed during final validation: this
+# silently broke PyAnnote's torchcodec-based audio loader, which could
+# not resolve Homebrew FFmpeg's @rpath-referenced libavutil/libavcodec
+# libraries even though this block "set" DYLD_LIBRARY_PATH). Re-exec
+# this same script once with the corrected environment instead.
 
 ffmpeg_lib = "/opt/homebrew/opt/ffmpeg/lib"
 
-if os.path.exists(ffmpeg_lib):
+if (
+    os.path.exists(ffmpeg_lib)
+    and os.environ.get("_MEETSENSE_DYLD_FIXED") != "1"
+):
     current_path = os.environ.get("DYLD_LIBRARY_PATH", "")
 
     if current_path:
@@ -16,6 +29,10 @@ if os.path.exists(ffmpeg_lib):
         )
     else:
         os.environ["DYLD_LIBRARY_PATH"] = ffmpeg_lib
+
+    os.environ["_MEETSENSE_DYLD_FIXED"] = "1"
+
+    os.execve(sys.executable, [sys.executable] + sys.argv, os.environ)
 
 
 # --------------------------------------------------
@@ -30,22 +47,6 @@ from pyannote.audio import Pipeline
 
 
 # --------------------------------------------------
-# Load environment variables
-# --------------------------------------------------
-
-load_dotenv(
-    dotenv_path="/Users/advikamishra/Desktop/NLP/.env"
-)
-
-HF_TOKEN = os.getenv("HF_TOKEN")
-
-if not HF_TOKEN:
-    raise RuntimeError(
-        "HF_TOKEN was not found in .env"
-    )
-
-
-# --------------------------------------------------
 # Configuration
 # --------------------------------------------------
 
@@ -55,175 +56,196 @@ OUTPUT_FILE = (
     "outputs/transcripts/diarization.json"
 )
 
-
-# --------------------------------------------------
-# Device
-# --------------------------------------------------
-
-if torch.backends.mps.is_available():
-    device = torch.device("mps")
-else:
-    device = torch.device("cpu")
+DIARIZATION_MODEL = "pyannote/speaker-diarization-community-1"
 
 
 # --------------------------------------------------
-# Start
+# Device selection
 # --------------------------------------------------
 
-print("=" * 60)
-print("SPEAKER DIARIZATION")
-print("=" * 60)
+def select_device():
 
-print("PyTorch version:", torch.__version__)
-print("MPS available:", torch.backends.mps.is_available())
-print("Device:", device)
-print("Audio file:", AUDIO_FILE)
+    if torch.backends.mps.is_available():
+        return torch.device("mps")
+
+    return torch.device("cpu")
 
 
 # --------------------------------------------------
-# Load PyAnnote Community-1
+# Load pipeline (reused by both batch and live callers)
 # --------------------------------------------------
 
-print()
-print("Loading PyAnnote Community-1...")
+def load_diarization_pipeline(device=None):
 
-pipeline = Pipeline.from_pretrained(
-    "pyannote/speaker-diarization-community-1",
-    token=HF_TOKEN
-)
-
-pipeline.to(device)
-
-print("PyAnnote loaded successfully.")
-
-
-# --------------------------------------------------
-# Run diarization
-# --------------------------------------------------
-
-print()
-print("Running speaker diarization...")
-print("Please wait...")
-
-output = pipeline(AUDIO_FILE)
-
-diarization = output.speaker_diarization
-
-
-# --------------------------------------------------
-# Extract speaker segments
-# --------------------------------------------------
-
-segments = []
-
-for turn, speaker in diarization:
-
-    segments.append(
-        {
-            "start": round(float(turn.start), 3),
-            "end": round(float(turn.end), 3),
-            "speaker": str(speaker)
-        }
+    project_root = os.path.dirname(
+        os.path.dirname(os.path.abspath(__file__))
     )
 
-
-# --------------------------------------------------
-# Create output directory
-# --------------------------------------------------
-
-os.makedirs(
-    "outputs/transcripts",
-    exist_ok=True
-)
-
-
-# --------------------------------------------------
-# Save diarization
-# --------------------------------------------------
-
-with open(
-    OUTPUT_FILE,
-    "w",
-    encoding="utf-8"
-) as f:
-
-    json.dump(
-        segments,
-        f,
-        indent=2,
-        ensure_ascii=False
+    load_dotenv(
+        dotenv_path=os.path.join(project_root, ".env")
     )
 
+    hf_token = os.getenv("HF_TOKEN")
 
-# --------------------------------------------------
-# Statistics
-# --------------------------------------------------
+    if not hf_token:
+        raise RuntimeError(
+            "HF_TOKEN was not found in .env"
+        )
 
-speakers = sorted(
-    set(
-        segment["speaker"]
-        for segment in segments
-    )
-)
+    if device is None:
+        device = select_device()
 
-
-speaker_durations = {}
-
-for segment in segments:
-
-    speaker = segment["speaker"]
-
-    duration = (
-        segment["end"] -
-        segment["start"]
+    pipeline = Pipeline.from_pretrained(
+        DIARIZATION_MODEL,
+        token=hf_token
     )
 
-    speaker_durations[speaker] = (
-        speaker_durations.get(speaker, 0)
-        + duration
-    )
+    pipeline.to(device)
+
+    return pipeline
 
 
 # --------------------------------------------------
-# Display results
+# Run diarization on an audio file / array, return plain segments
 # --------------------------------------------------
 
-print()
-print("=" * 60)
-print("DIARIZATION COMPLETE")
-print("=" * 60)
+def diarize_audio(pipeline, audio_source):
+    """Run diarization and return a list of
+    {"start", "end", "speaker"} dicts with float, second-based
+    timestamps relative to the start of audio_source.
 
-print()
-print("Number of speaker segments:", len(segments))
+    audio_source may be a file path (str) accepted by the pyannote
+    pipeline, or any other input the pipeline itself supports.
+    """
 
-print()
-print("Number of speakers:", len(speakers))
+    output = pipeline(audio_source)
 
-print()
-print("Detected speakers:")
+    diarization = output.speaker_diarization
 
-for speaker in speakers:
+    segments = []
 
-    duration = speaker_durations[speaker]
+    for turn, speaker in diarization:
 
-    print(
-        f"  {speaker}: "
-        f"{duration:.2f} seconds"
+        segments.append(
+            {
+                "start": round(float(turn.start), 3),
+                "end": round(float(turn.end), 3),
+                "speaker": str(speaker)
+            }
+        )
+
+    return segments
+
+
+# --------------------------------------------------
+# Batch CLI entry point (unchanged behavior)
+# --------------------------------------------------
+
+def main():
+
+    device = select_device()
+
+    print("=" * 60)
+    print("SPEAKER DIARIZATION")
+    print("=" * 60)
+
+    print("PyTorch version:", torch.__version__)
+    print("MPS available:", torch.backends.mps.is_available())
+    print("Device:", device)
+    print("Audio file:", AUDIO_FILE)
+
+    print()
+    print("Loading PyAnnote Community-1...")
+
+    pipeline = load_diarization_pipeline(device)
+
+    print("PyAnnote loaded successfully.")
+
+    print()
+    print("Running speaker diarization...")
+    print("Please wait...")
+
+    segments = diarize_audio(pipeline, AUDIO_FILE)
+
+    os.makedirs(
+        "outputs/transcripts",
+        exist_ok=True
     )
 
+    with open(
+        OUTPUT_FILE,
+        "w",
+        encoding="utf-8"
+    ) as f:
 
-print()
-print("First 10 speaker segments:")
+        json.dump(
+            segments,
+            f,
+            indent=2,
+            ensure_ascii=False
+        )
 
-for segment in segments[:10]:
-
-    print(
-        f"{segment['start']:8.2f}s - "
-        f"{segment['end']:8.2f}s   "
-        f"{segment['speaker']}"
+    speakers = sorted(
+        set(
+            segment["speaker"]
+            for segment in segments
+        )
     )
 
+    speaker_durations = {}
 
-print()
-print("Output saved to:")
-print(OUTPUT_FILE)
+    for segment in segments:
+
+        speaker = segment["speaker"]
+
+        duration = (
+            segment["end"] -
+            segment["start"]
+        )
+
+        speaker_durations[speaker] = (
+            speaker_durations.get(speaker, 0)
+            + duration
+        )
+
+    print()
+    print("=" * 60)
+    print("DIARIZATION COMPLETE")
+    print("=" * 60)
+
+    print()
+    print("Number of speaker segments:", len(segments))
+
+    print()
+    print("Number of speakers:", len(speakers))
+
+    print()
+    print("Detected speakers:")
+
+    for speaker in speakers:
+
+        duration = speaker_durations[speaker]
+
+        print(
+            f"  {speaker}: "
+            f"{duration:.2f} seconds"
+        )
+
+    print()
+    print("First 10 speaker segments:")
+
+    for segment in segments[:10]:
+
+        print(
+            f"{segment['start']:8.2f}s - "
+            f"{segment['end']:8.2f}s   "
+            f"{segment['speaker']}"
+        )
+
+    print()
+    print("Output saved to:")
+    print(OUTPUT_FILE)
+
+
+if __name__ == "__main__":
+    main()

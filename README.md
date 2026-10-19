@@ -34,10 +34,11 @@ all served through an interactive Streamlit interface.
 21. [Model Comparison](#model-comparison)
 22. [Ablation Study](#ablation-study)
 23. [Error Analysis](#error-analysis)
-24. [Limitations](#limitations)
-25. [Future Work](#future-work)
-26. [Academic Contribution](#academic-contribution)
-27. [Conclusion](#conclusion)
+24. [Experimental Diarization Comparison: PyAnnote vs. VBx](#experimental-diarization-comparison-pyannote-vs-vbx)
+25. [Limitations](#limitations)
+26. [Future Work](#future-work)
+27. [Academic Contribution](#academic-contribution)
+28. [Conclusion](#conclusion)
 
 ---
 
@@ -100,10 +101,13 @@ than only demonstrating a working demo.
 - Ablation study across the pipeline's major stages.
 - Structured, code-grounded error analysis across five categories.
 - Interactive Streamlit workspace (MeetSense) presenting all of the above.
-- Standalone microphone-based live-transcription utilities
-  (`src/live_meeting.py`, `src/live_transcribe.py`,
-  `src/live_speaker_transcribe.py`) that write a JSON file the workspace's
-  Live Meeting page can display.
+- Two independent live-transcription paths: standalone local microphone
+  scripts (`src/live_transcribe.py`, `src/live_meeting.py`,
+  `src/live_speaker_transcribe.py`, using `sounddevice`) for local
+  development/testing, and a browser-based path built directly into the
+  workspace's Live Meeting page (`src/live_web.py`, using
+  `streamlit-webrtc`) that captures microphone audio via WebRTC and
+  transcribes it with Whisper in ~10-second rolling chunks.
 
 ## System Architecture
 
@@ -320,7 +324,7 @@ NLP/
 ## Installation
 
 ```bash
-cd /Users/advikamishra/Desktop/NLP
+cd /Users/advikamishra/Developer/NLP
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
@@ -333,7 +337,7 @@ The app must always be launched through the project's virtual environment,
 (e.g. Anaconda) Streamlit installation on this machine:
 
 ```bash
-cd /Users/advikamishra/Desktop/NLP
+cd /Users/advikamishra/Developer/NLP
 source .venv/bin/activate
 python -m streamlit run app.py
 ```
@@ -369,7 +373,7 @@ Homebrew's FFmpeg lib directory on macOS before importing `torch`/
 ## Running the Offline Pipeline
 
 ```bash
-cd /Users/advikamishra/Desktop/NLP
+cd /Users/advikamishra/Developer/NLP
 source .venv/bin/activate
 python src/run_pipeline.py
 ```
@@ -381,7 +385,7 @@ outputs under `outputs/`.
 ## Running MeetSense (the App)
 
 ```bash
-cd /Users/advikamishra/Desktop/NLP
+cd /Users/advikamishra/Developer/NLP
 source .venv/bin/activate
 python -m streamlit run app.py
 ```
@@ -395,7 +399,7 @@ Each evaluation script reads existing pipeline outputs and a
 manually-verified reference file, and writes one JSON result file:
 
 ```bash
-cd /Users/advikamishra/Desktop/NLP
+cd /Users/advikamishra/Developer/NLP
 source .venv/bin/activate
 python src/wer_evaluation.py
 python src/der_evaluation.py
@@ -411,7 +415,7 @@ dependency order. Any existing output JSON is backed up to `<file>.bak`
 before being overwritten:
 
 ```bash
-cd /Users/advikamishra/Desktop/NLP
+cd /Users/advikamishra/Developer/NLP
 source .venv/bin/activate
 python src/run_experiments.py
 ```
@@ -549,6 +553,150 @@ All heuristic checks above (discourse-marker lexicon, key-fact presence,
 unsupported-token grounding) are lexical approximations documented as
 such in the JSON — not a human-reviewed annotation of every item.
 
+## Experimental Diarization Comparison: PyAnnote vs. VBx
+
+The production pipeline (`src/diarization.py`) uses PyAnnote
+(`pyannote/speaker-diarization-community-1`), an end-to-end pipeline
+that performs its own internal speech segmentation. As an experimental
+addition for research comparison, this project also integrates
+**VBx** (Variational Bayes HMM clustering of x-vectors), a modular
+speaker-embedding-based diarization method: sliding-window x-vector
+extraction (pretrained ResNet101, 16kHz, ONNX) → agglomerative
+clustering (AHC) initialization → VB-HMM refinement.
+
+> F. Landini, J. Profant, M. Diez, L. Burget, "Bayesian HMM clustering
+> of x-vector sequences (VBx) in speaker diarization: theory,
+> implementation and analysis on standard tasks," *Computer Speech &
+> Language*, 2022. [arXiv:2012.14952](https://arxiv.org/abs/2012.14952)
+
+VBx was added purely as an additional, isolated backend for
+comparison — it never replaces PyAnnote, and none of PyAnnote's code
+or outputs are modified by its presence. Implementation source: the
+official [BUTSpeechFIT/VBx](https://github.com/BUTSpeechFIT/VBx)
+repository (Apache 2.0), vendored under `third_party/VBx/` at a
+pinned commit (inference files only, byte-unmodified — full
+provenance, license details, and exact vendored/excluded file list in
+[`third_party/VBx/PROVENANCE.md`](third_party/VBx/PROVENANCE.md)).
+
+### Why VBx was added
+
+To give the accompanying research write-up a genuine ablation-style
+comparison between an end-to-end diarization pipeline (PyAnnote) and a
+modular embedding-clustering pipeline (VBx) on the same recording,
+rather than relying on only one diarization approach.
+
+### Installation
+
+VBx's inference dependencies are additive entries in
+`requirements.txt` (already installed if you ran the normal
+`pip install -r requirements.txt` setup):
+
+```
+onnxruntime==1.30.0
+kaldi_io==0.9.8
+fastcluster==1.3.0
+h5py==3.16.0
+numexpr==2.14.2
+intervaltree==3.2.1
+tabulate==0.10.0
+```
+
+No isolated virtual environment or separate Python version was
+needed. VBx's code (originally written against older Python/numpy
+versions) was verified to import and run correctly as-is under this
+project's existing `.venv` (Python 3.11, numpy 2.4.6, PyTorch on
+Apple Silicon) — a compatibility risk that was flagged during planning
+but did not materialize in practice. VBx's pretrained checkpoints
+(`final.onnx`, `plda`, `transform.h5`, ~58MB total) are vendored
+directly in `third_party/VBx/VBx/models/ResNet101_16kHz/` since they
+are static inference artifacts, not something a user needs to
+download separately.
+
+**Apple Silicon note**: VBx's x-vector extraction runs via
+`onnxruntime.InferenceSession` on CPU only in this integration — no
+GPU/MPS execution provider was configured, since ONNX Runtime's
+CoreML/MPS providers were not part of the verified, working setup.
+
+### Running each method
+
+```bash
+# PyAnnote (production)
+python src/diarization.py
+python src/der_evaluation.py
+
+# VBx (experimental)
+python src/diarization_vbx.py
+python src/der_evaluation_vbx.py
+
+# Or, via the combined experiment runner:
+python run_diarization_experiment.py --method pyannote
+python run_diarization_experiment.py --method vbx
+python run_diarization_experiment.py --method both
+```
+
+VBx requires MeetSense's existing Silero VAD output
+(`outputs/vad/speech_segments.json`) to already exist, since — unlike
+PyAnnote — VBx does not perform its own voice activity detection and
+needs externally supplied speech segments (converted internally to
+VBx's `.lab` format).
+
+### Outputs (kept fully separate from PyAnnote's)
+
+| | PyAnnote (production) | VBx (experimental) |
+|---|---|---|
+| Diarization | `outputs/transcripts/diarization.json` | `outputs/transcripts/diarization_vbx.json` |
+| DER results | `outputs/evaluations/der_results.json` | `outputs/evaluations/der_vbx.json` |
+
+Neither method's script reads from or writes to the other's output
+files.
+
+### Results (same recording, same reference, same evaluation window: 6.393–75.0s)
+
+Both systems were scored with the same `pyannote.metrics.diarization.
+DiarizationErrorRate` implementation, which performs its own optimal
+reference-to-hypothesis speaker-label permutation matching internally
+— so VBx's independently assigned speaker labels do not need to match
+PyAnnote's or the reference's labeling scheme for the comparison to be
+valid.
+
+| Metric | PyAnnote | VBx (experimental) |
+|---|---|---|
+| DER | 2.22% | 8.41% |
+| Missed detection | 0.000s | 5.236s |
+| False alarm | 0.000s | 0.513s |
+| Confusion | 1.518s | 0.000s |
+
+On this evaluated meeting recording, PyAnnote achieved a lower DER
+than VBx in this configuration. This is a single-sample, single-run
+comparison and should not be read as a general claim about either
+method's performance beyond this recording and setup.
+
+**Important limitation, stated explicitly rather than hidden**: VBx
+and PyAnnote do **not** receive identical segmentation input. VBx was
+run against MeetSense's existing Silero VAD segments (external VAD is
+a hard requirement of VBx's design), while PyAnnote's pipeline
+performs its own internal segmentation as part of its end-to-end
+model. VBx's missed-detection component in particular is very likely
+attributable, at least in part, to this different upstream VAD input
+rather than to the VBx clustering method itself. Any fair
+interpretation of the DER gap above should account for this
+architectural difference between the two systems, not attribute it
+solely to clustering quality.
+
+### Frontend: Diarization Method toggle
+
+The Evaluation page includes a small "Diarization Method" selector
+that switches the displayed Diarization Error Rate between PyAnnote
+(production) and VBx (experimental). It only appears once
+`outputs/evaluations/der_vbx.json` exists (i.e. after running
+`python run_diarization_experiment.py --method vbx` at least once) —
+if VBx hasn't been run, the app behaves exactly as before, showing
+only PyAnnote's DER with no selector. Selecting VBx also surfaces a
+caption restating the segmentation-input caveat above, so the
+limitation stays visible wherever the comparison is shown, not just in
+this README. The selector only affects this one metric card; it does
+not change which backend the production pipeline runs.
+
 ## Limitations
 
 - **Single development sample, not a benchmark dataset**: every
@@ -572,17 +720,30 @@ such in the JSON — not a human-reviewed annotation of every item.
 - **VAD is not wired into ASR/diarization in production**: `vad.py`'s
   output is currently used only for statistics/experimentation, not fed
   into `transcription.py` or `diarization.py`.
-- **Live transcription is a separate, standalone path**: the workspace's
-  Live Meeting page only displays a pre-existing
-  `outputs/transcripts/live_meeting.json`; it does not itself capture
-  microphone audio from the browser — that requires running
-  `src/live_meeting.py` (or the other `live_*.py` scripts) separately.
+- **Live transcription is rolling-window, not instantaneous**: the
+  workspace's Live Meeting page captures browser microphone audio via
+  `streamlit-webrtc` and transcribes it with Whisper in ~10-second
+  chunks (`src/live_web.py`) — this is not true real-time/zero-latency
+  transcription. It does not yet run PyAnnote diarization on the live
+  stream, so live segments are not speaker-labeled. The separate local
+  scripts (`src/live_transcribe.py`, `src/live_meeting.py`,
+  `src/live_speaker_transcribe.py`, using `sounddevice`) remain an
+  independent local-development path and are unaffected by the browser
+  path.
 - **Computational requirements**: Whisper `small` took ~4 minutes to
   transcribe the ~30-minute recording on this machine's CPU (no CUDA
   GPU used); PyAnnote diarization and T5 summarization are also
   CPU/MPS-bound without a CUDA GPU.
 - **No domain-specific fine-tuning**: all models are general-purpose,
   pretrained checkpoints.
+- **VBx comparison is experimental and single-run**: see
+  [Experimental Diarization Comparison](#experimental-diarization-comparison-pyannote-vs-vbx).
+  VBx and PyAnnote were not given identical segmentation input (VBx
+  requires external VAD, PyAnnote does its own), so the DER gap
+  between them partly reflects that architectural difference, not
+  clustering quality alone. VBx's clustering hyperparameters are the
+  upstream authors' general-purpose defaults, not tuned for this
+  recording.
 
 ## Future Work
 

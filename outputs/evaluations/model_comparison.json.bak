@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-16T19:10:18.332250+00:00",
+  "generated_at": "2026-09-17T05:14:39.962765+00:00",
   "limitations": [
     "All numbers below come from a single manually-verified development recording, not a benchmark dataset.",
     "The ASR comparison transcribes the full recording with each model but scores WER only over the audio span (97.72s) matching the only manually-verified transcript reference available.",
@@ -9,21 +9,30 @@
     "evaluation_window_seconds": 97.72,
     "reference_file": "outputs/evaluations/reference_transcript.txt",
     "models": {
+      "whisper_tiny": {
+        "model_size": "tiny",
+        "num_segments_total": 419,
+        "num_segments_in_window": 17,
+        "hypothesis_preview": "Okay. So as you guys know, isco is too small. Well, the building is too small for our group. So we're moving to a new building. It's going to be the building across the street and we're actually moving in three weeks. But the problem is that the administration wants to know who's going to be in what",
+        "transcribe_seconds": 42.91,
+        "wer": 0.06382978723404255,
+        "wer_percentage": 6.382978723404255
+      },
       "whisper_base": {
         "model_size": "base",
-        "num_segments_total": 411,
+        "num_segments_total": 404,
         "num_segments_in_window": 17,
         "hypothesis_preview": "Okay. So as you guys know, ISCO is too small. Well, the building is too small for our group. So we're moving to a new building. It's going to be the building across the street and we're actually moving in three weeks. But the problem is that the administration wants to know who's going to be in what",
-        "transcribe_seconds": 90.58,
+        "transcribe_seconds": 88.14,
         "wer": 0.0070921985815602835,
         "wer_percentage": 0.7092198581560284
       },
       "whisper_small": {
         "model_size": "small",
-        "num_segments_total": 450,
+        "num_segments_total": 365,
         "num_segments_in_window": 17,
         "hypothesis_preview": "Okay. So as you guys know, ISCO is too small. Well, the building is too small for our group. So we're moving to a new building. It's going to be the building across the street, and we're actually moving in three weeks. But the problem is that the administration wants to know who's going to be in wha",
-        "transcribe_seconds": 263.76,
+        "transcribe_seconds": 235.84,
         "wer": 0.01773049645390071,
         "wer_percentage": 1.773049645390071
       }

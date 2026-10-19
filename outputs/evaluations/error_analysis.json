@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-16T19:59:50.620973+00:00",
+  "generated_at": "2026-09-17T09:39:03.084759+00:00",
   "limitations": [
     "All findings come from a single manually-verified development recording, not a benchmark dataset.",
     "NER-false-positive, keyword-noise, and topic-noise checks use a small curated discourse-marker lexicon as a heuristic -- they approximate likely errors, they are not a human-reviewed annotation of every item.",
@@ -169,17 +169,17 @@
           "overlap_ratio": 0.0
         },
         {
-          "start": 1768.88,
-          "end": 1769.28,
+          "start": 1769.44,
+          "end": 1769.92,
           "speaker": "UNKNOWN",
-          "text_preview": "Yeah.",
+          "text_preview": "Good.",
           "overlap_ratio": 0.0
         },
         {
-          "start": 1776.48,
-          "end": 1779.92,
+          "start": 1776.4,
+          "end": 1776.96,
           "speaker": "UNKNOWN",
-          "text_preview": "Ooh!",
+          "text_preview": "Yeah.",
           "overlap_ratio": 0.0
         },
         {
@@ -250,11 +250,11 @@
       "examples": [
         {
           "term": "yeah",
-          "score": 58.63070535955866
+          "score": 58.6331025340726
         },
         {
           "term": "okay",
-          "score": 20.779735492601613
+          "score": 20.78615044562111
         },
         {
           "term": "like",
@@ -262,7 +262,7 @@
         },
         {
           "term": "well",
-          "score": 7.1505162734876295
+          "score": 7.1509979562005155
         },
         {
           "term": "right",
@@ -285,15 +285,15 @@
         {
           "topic_id": 1,
           "top_words": [
-            "yeah",
             "one",
+            "yeah",
             "sort",
             "make",
             "quite",
             "ca",
-            "people",
             "east",
             "see",
+            "people",
             "thing"
           ],
           "flagged_discourse_words": [
@@ -309,11 +309,11 @@
             "people",
             "well",
             "two",
-            "yeah",
             "three",
-            "office",
-            "one",
             "person",
+            "office",
+            "yeah",
+            "one",
             "come"
           ],
           "flagged_discourse_words": [
@@ -332,7 +332,7 @@
             "project",
             "mean",
             "know",
-            "really",
+            "time",
             "stuff",
             "space"
           ],
@@ -346,15 +346,15 @@
           "topic_id": 4,
           "top_words": [
             "okay",
+            "work",
             "go",
             "good",
             "office",
-            "work",
             "think",
             "question",
+            "place",
             "idea",
-            "even",
-            "place"
+            "even"
           ],
           "flagged_discourse_words": [
             "okay"
@@ -364,16 +364,16 @@
         {
           "topic_id": 5,
           "top_words": [
-            "know",
             "one",
+            "know",
             "get",
             "room",
-            "two",
             "like",
-            "person",
-            "office",
+            "two",
+            "printer",
             "think",
-            "printer"
+            "office",
+            "big"
           ],
           "flagged_discourse_words": [
             "like"
@@ -381,7 +381,7 @@
           "flagged_fraction": 0.1
         }
       ],
-      "average_pairwise_jaccard_similarity": 0.1,
+      "average_pairwise_jaccard_similarity": 0.091,
       "pairwise_jaccard": [
         {
           "topic_a": 1,
@@ -416,7 +416,7 @@
         {
           "topic_a": 2,
           "topic_b": 5,
-          "jaccard_similarity": 0.333
+          "jaccard_similarity": 0.25
         },
         {
           "topic_a": 3,

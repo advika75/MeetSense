@@ -20,9 +20,14 @@ against a manually-verified reference; a controlled model comparison
 (ASR model size; neural vs. non-neural summarization) and an ablation
 study (Whisper only → +VAD → +diarization → full pipeline) are run; and a
 structured, code- and data-grounded error analysis is performed across
-five pipeline stages. All results in this report are drawn from a single
-manually-verified development recording and are reported as such, not
-generalized beyond it.
+five pipeline stages. As an additional experimental extension, a second,
+architecturally different diarization backend (VBx, Landini et al.,
+2022) is integrated and evaluated against PyAnnote under matched
+conditions, with the resulting comparison and its confounds explicitly
+documented rather than treated as a general verdict on either method.
+All results in this report are drawn from a single manually-verified
+development recording and are reported as such, not generalized beyond
+it.
 
 ## 2. Introduction
 
@@ -63,13 +68,37 @@ data collection.
 
 ## 5. Literature / Technology Background
 
-- **Whisper** (Radford et al., OpenAI) — a Transformer encoder-decoder
+- **Whisper** (Radford et al., 2023) — a Transformer encoder-decoder
   trained on large-scale weakly-supervised multilingual speech-text data
   for robust automatic speech recognition, used here via the
   `openai-whisper` package (`base` model).
-- **PyAnnote** — an open-source speaker diarization toolkit built on
-  pretrained neural speaker-embedding and segmentation models, used here
-  via the gated `pyannote/speaker-diarization-community-1` pipeline.
+- **PyAnnote** (Bredin, 2023) — an open-source speaker diarization
+  toolkit built on pretrained neural speaker-embedding and segmentation
+  models, used here via the gated
+  `pyannote/speaker-diarization-community-1` pipeline, an end-to-end
+  pipeline that performs its own internal speech segmentation.
+- **VBx** (Landini et al., 2022) — a modular, embedding-clustering
+  speaker diarization method: pretrained x-vector extraction followed by
+  agglomerative clustering (AHC) as an initialization for a Variational
+  Bayes HMM (VBx) that refines the speaker-cluster assignment over the
+  x-vector sequence. Unlike PyAnnote, VBx does not perform its own voice
+  activity detection and requires externally supplied speech segments.
+  Integrated in this project as an additional, experimental diarization
+  backend for comparison against PyAnnote (Section 12).
+- **The broader speaker diarization literature** situates PyAnnote and
+  VBx as two points along a spectrum of design choices. Park et al.
+  (2022) survey the field and distinguish modular, clustering-based
+  pipelines (the family VBx belongs to) from fully end-to-end neural
+  diarization systems. Fujita et al. (2019) introduced end-to-end
+  neural diarization with a permutation-free training objective,
+  directly modeling speaker overlap rather than clustering fixed-length
+  embeddings; Fujita et al. (2020) extended this approach with
+  self-attention to handle a flexible, unknown number of speakers. This
+  project does not implement an end-to-end neural diarization system of
+  that kind — it compares an end-to-end pretrained pipeline (PyAnnote)
+  against a modular clustering pipeline (VBx) — but this literature is
+  the relevant broader context for why diarization systems differ
+  architecturally in the way documented in Section 12.
 - **Silero VAD** — a lightweight pretrained neural voice-activity
   detector.
 - **T5** (Raffel et al., Google) — a text-to-text Transformer pretrained
@@ -82,6 +111,9 @@ data collection.
   and summarization respectively, each computed here with widely-used
   open-source libraries (`jiwer`, `pyannote.metrics`, `rouge_score`)
   rather than custom implementations.
+
+Full citation details for all works referenced above are collected in
+Section 28 (References).
 
 ## 6. Methodology
 
@@ -100,7 +132,12 @@ production pipeline (`src/wer_evaluation.py`,
 `src/ablation_study.py`, `src/error_analysis.py`, orchestrated by
 `src/run_experiments.py`), so that re-running evaluation never requires
 re-running the (comparatively expensive, HF-token-gated) production
-pipeline.
+pipeline. A separate, isolated experimental branch
+(`src/diarization_vbx.py`, `src/der_evaluation_vbx.py`,
+`run_diarization_experiment.py`) applies this same file-based,
+independently-evaluable design to compare the production PyAnnote
+diarization backend against VBx (Section 24), without altering the
+production pipeline or its outputs.
 
 ## 7. System Architecture
 
@@ -162,7 +199,15 @@ timestamps are what make downstream alignment with diarization possible.
 token (`HF_TOKEN`, loaded from `.env`) and runs it on the raw audio,
 producing a list of `(start, end, speaker_label)` turns
 (`outputs/transcripts/diarization.json`) — 637 turns across the
-recording in the current run.
+recording in the current run. This is the diarization backend used by
+the production pipeline throughout this report.
+
+As an additional, experimental point of comparison, this project also
+integrates VBx (Landini et al., 2022) as a second, independent
+diarization backend (`src/diarization_vbx.py`), evaluated under the
+same conditions as PyAnnote. VBx never replaces PyAnnote in the
+production pipeline; it is evaluated separately, with its own output
+files, purely for the backend comparison presented in Section 24.
 
 ## 12. Timestamp Alignment
 
@@ -296,10 +341,13 @@ scored against the same ROUGE reference):
 | T5-small | 0.3353 | 45 words |
 | TF-IDF extractive baseline | 0.2045 | 53 words |
 
-**Diarization**: not compared — only one diarization pipeline is
-installed in this environment, so no second model exists to compare
-against; this is stated explicitly in the output rather than omitted or
-fabricated.
+**Diarization**: not compared within `src/model_comparison.py` itself —
+that script only compares ASR and summarization variants. A separate
+diarization backend comparison (PyAnnote vs. VBx) is presented in
+Section 24, run as its own isolated experiment rather than folded into
+this script, since VBx has different environment requirements
+(external VAD input) than the ASR/summarization variants compared
+here.
 
 An unexpected but genuine finding: `small` produced a *higher* WER than
 `base` on this recording. This is reported as a single-sample
@@ -365,7 +413,74 @@ presence check, the unsupported-token grounding check) is explicitly
 documented in the JSON output as a lexical approximation, not a
 human-verified annotation.
 
-## 24. Limitations
+## 24. Diarization Backend Comparison: PyAnnote vs. VBx
+
+As described in Section 11, this project integrates VBx (Landini et
+al., 2022) as a second, experimental diarization backend, purely for
+research comparison against the production PyAnnote pipeline. This
+section reports that comparison under matched evaluation conditions:
+the same recording, the same manually-verified reference
+(`outputs/evaluations/reference_diarization.json`), the same
+evaluation window (6.393–75.0s), and the same metric implementation
+(`pyannote.metrics.diarization.DiarizationErrorRate`, which performs
+its own optimal reference-to-hypothesis speaker-label permutation
+matching internally, so VBx's independently assigned speaker labels
+need not correspond to PyAnnote's or the reference's labeling scheme
+for this comparison to be valid).
+
+**Architectural difference between the two systems.** PyAnnote is an
+end-to-end pipeline that performs its own internal speech segmentation.
+VBx is modular and requires externally supplied voice activity
+segments; this integration supplies VBx with MeetSense's existing
+Silero VAD output (`outputs/vad/speech_segments.json`), converted to
+VBx's `.lab` input format. Consequently, the two systems compared below
+do **not** receive identical segmentation input. This is a genuine,
+disclosed architectural difference between an end-to-end pipeline and a
+modular one — not a bug in the integration, and not an attempt to
+disadvantage either system.
+
+**Results:**
+
+| Metric | PyAnnote (production) | VBx (experimental) |
+|---|---|---|
+| DER | 2.22% | 8.41% |
+| Missed detection | 0.000s | 5.236s |
+| False alarm | 0.000s | 0.513s |
+| Confusion | 1.518s | 0.000s |
+
+On the evaluated meeting recording, under this specific configuration,
+PyAnnote achieved a lower DER than VBx. VBx's error is dominated by
+missed detection rather than speaker confusion, which is consistent
+with — though not proof of — the segmentation-input difference noted
+above rather than a weakness in VBx's clustering itself: PyAnnote's
+internal segmentation and MeetSense's externally supplied Silero VAD
+segments were not verified to cover identical speech regions. VBx's
+clustering hyperparameters (`--init AHC+VB --threshold -0.015
+--lda-dim 128 --Fa 0.3 --Fb 17 --loopP 0.99`) are the upstream authors'
+own general-purpose example recipe (see
+`third_party/VBx/PROVENANCE.md`), not independently tuned against this
+recording.
+
+**Interpretation.** This is a single-sample, single-run comparison on
+one ~30-minute recording, evaluated over a ~69-second verified window.
+It should be read as a demonstration that two architecturally different
+diarization approaches were integrated and evaluated under a
+best-effort matched protocol — not as a general claim that either
+PyAnnote or VBx is the better diarization method. In particular, this
+result should not be interpreted as evidence about VBx's clustering
+accuracy in isolation, since the segmentation-input mismatch is a
+plausible confound that this single experiment cannot rule out.
+Reproducing this comparison with identical segmentation supplied to
+both systems (e.g., running PyAnnote's own segmentation output through
+VBx's clustering stage, or vice versa) is noted as future work
+(Section 26) rather than attempted here, to avoid overstating what this
+single comparison actually establishes.
+
+Full experimental setup, environment/compatibility notes, and exact
+reproduction commands are documented in README.md under "Experimental
+Diarization Comparison: PyAnnote vs. VBx."
+
+## 25. Limitations
 
 - All quantitative results come from a single manually-verified
   development recording; ground truth covers only its first ~75–98
@@ -385,16 +500,25 @@ human-verified annotation.
 - VAD's output is not currently consumed by ASR or diarization in the
   production pipeline; its measured effect (a WER increase) applies to
   VAD used in isolation, not as currently deployed.
-- The workspace's Live Meeting page only displays a pre-existing JSON
-  file; live microphone capture requires running a separate standalone
-  script.
+- The workspace's Live Meeting page captures browser microphone audio
+  directly via `streamlit-webrtc` and transcribes it with Whisper in
+  ~10-second rolling chunks (`src/live_web.py`) -- this is rolling-window,
+  not zero-latency, transcription, and does not yet run PyAnnote
+  diarization on the live stream. The separate local `sounddevice`-based
+  scripts remain an independent local-development path.
 - No CUDA GPU is available in this environment. Whisper transcription
   explicitly runs on CPU regardless (`src/transcription.py` only checks
   for CUDA, not MPS), so larger Whisper variants are noticeably slower
   (Whisper `small` took roughly 2.6× longer than `base` on the full
   recording).
+- The PyAnnote-vs-VBx diarization comparison (Section 24) is a single
+  sample, single run, with unmatched segmentation input between the two
+  systems (PyAnnote's internal segmentation vs. externally supplied
+  Silero VAD for VBx). The observed DER gap should not be attributed to
+  clustering-method quality alone, and does not generalize beyond this
+  recording and configuration.
 
-## 25. Future Work
+## 26. Future Work
 
 Evaluate on a larger, fully ground-truth-annotated meeting dataset;
 domain-specific fine-tuning of ASR and summarization; improved,
@@ -403,9 +527,16 @@ persistent speaker identification; overlap-aware diarization; a learned
 stronger summarization model evaluated against a genuine human-written
 abstractive reference; multilingual evaluation; browser-native live
 audio capture integrated directly into the Streamlit workspace; scalable
-deployment; user authentication; and persistent multi-meeting history.
+deployment; user authentication; persistent multi-meeting history; and,
+for the diarization backend comparison specifically, re-running PyAnnote
+and VBx with matched segmentation input (rather than PyAnnote's internal
+segmentation vs. VBx's externally supplied VAD) to isolate the
+clustering-method contribution to the observed DER gap from the
+segmentation-input confound noted in Section 24, together with an
+end-to-end neural diarization baseline in the style of Fujita et al.
+(2019, 2020) for a third architectural point of comparison.
 
-## 26. Conclusion
+## 27. Conclusion
 
 MeetSense demonstrates that pretrained deep learning models for voice
 activity detection, speech recognition, speaker diarization, and
@@ -417,8 +548,42 @@ evaluated rather than only demonstrated: WER and DER are low on the
 verified window (0.71% and 2.22% respectively), while ROUGE and
 action-item recall are comparatively low, VAD unexpectedly increased WER
 in the ablation study, and TF-IDF/LDA noise and NER false positives were
-traced to specific, fixable configuration gaps in the code. Every result
-in this report is reproducible from the included recording via
-`src/run_pipeline.py` and `src/run_experiments.py`, and every limitation
-stated here reflects an actual, verified property of the implementation
-rather than a general disclaimer.
+traced to specific, fixable configuration gaps in the code. As an
+additional, isolated experimental extension, this project also
+evaluated two architecturally different diarization approaches —
+PyAnnote's end-to-end pipeline and VBx's modular embedding-clustering
+pipeline — under a best-effort matched protocol, finding a lower DER
+for PyAnnote on this recording while explicitly documenting the
+unmatched segmentation input between the two systems as a confound
+rather than treating the result as a general verdict on either method
+(Section 24). Every result in this report is reproducible from the
+included recording via `src/run_pipeline.py` and
+`src/run_experiments.py` (production pipeline and evaluation) or
+`run_diarization_experiment.py` (diarization backend comparison), and
+every limitation stated here reflects an actual, verified property of
+the implementation rather than a general disclaimer.
+
+## 28. References
+
+- Bredin, H. (2023). pyannote.audio 2.1 speaker diarization pipeline:
+  principle, benchmark, and recipe. *Interspeech 2023*.
+- Fujita, Y., Kanda, N., Horiguchi, S., Nagamatsu, K., & Watanabe, S.
+  (2019). End-to-End Neural Speaker Diarization with Permutation-Free
+  Objectives. *Interspeech 2019*.
+- Fujita, Y., Kanda, N., Horiguchi, S., Xue, Y., Nagamatsu, K., &
+  Watanabe, S. (2020). End-to-End Neural Speaker Diarization with
+  Self-Attention. *IEEE ASRU 2019 / arXiv:1909.06247*.
+- Landini, F., Profant, J., Diez, M., & Burget, L. (2022). Bayesian HMM
+  clustering of x-vector sequences (VBx) in speaker diarization: theory,
+  implementation and analysis on standard tasks. *Computer Speech &
+  Language*, 71. https://arxiv.org/abs/2012.14952
+- Park, T. J., Kanda, N., Dimitriadis, D., Han, K. J., Watanabe, S., &
+  Narayanan, S. (2022). A review of speaker diarization: Recent
+  advances with deep learning. *Computer Speech & Language*, 72.
+- Radford, A., Kim, J. W., Xu, T., Brockman, G., McLeavey, C., &
+  Sutskever, I. (2023). Robust Speech Recognition via Large-Scale Weak
+  Supervision. *Proceedings of the 40th International Conference on
+  Machine Learning (ICML)*.
+- Amorim, A. (2026). [Citation included per project requirements;
+  full bibliographic details to be confirmed before external
+  publication of this report.]
