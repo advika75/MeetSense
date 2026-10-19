@@ -48,6 +48,9 @@ OLLAMA_FALLBACK_MODEL = os.environ.get(
 # Release the model from Ollama's memory right after use -- this is
 # an 8GB machine and the model shouldn't sit resident between calls.
 OLLAMA_KEEP_ALIVE = os.environ.get("OLLAMA_KEEP_ALIVE", "0")
+VERIFY_ENABLED = os.environ.get("LLM_VERIFY", "0").strip().lower() in {
+    "1", "true", "yes", "on"
+}
 
 CHUNK_SECONDS = 9 * 60  # ~8-10 minutes
 CHUNK_OVERLAP_SECONDS = 30
@@ -555,10 +558,10 @@ def verify_takeaway(item, candidate_type, model):
         supported = response.get("supported") is True
         result_type = response.get("type", "none")
         if result_type not in {"decision", "action_item", "discussion", "none"}:
-            result_type = "none"
+            result_type = "unknown"
         return supported, result_type
     except Exception:
-        return False, "none"
+        return False, "unknown"
 
 
 def verify_items(decisions, action_items, open_questions, model, stats):
@@ -568,14 +571,18 @@ def verify_items(decisions, action_items, open_questions, model, stats):
         for item in items:
             stats["verification_total"] += 1
             supported, verified_type = verify_takeaway(item, candidate_type, model)
-            if supported and verified_type == candidate_type:
-                verified[candidate_type].append(item)
-                stats["verification_kept"] += 1
-            elif supported and verified_type == "discussion":
+            protected_deadline = bool(item.due_date or item.due_date_text)
+            if verified_type == "discussion":
                 verified["open_question"].append(item)
                 stats["verification_reclassified"] += 1
-            else:
+            elif verified_type == "none" and not protected_deadline:
                 stats["verification_dropped"] += 1
+            else:
+                # Verification is advisory: unsupported or mismatched
+                # labels never discard a candidate. Explicit deadlines
+                # are protected even when the verifier says "none".
+                verified[candidate_type].append(item)
+                stats["verification_kept"] += 1
     return verified["decision"], verified["action_item"], verified["open_question"]
 
 
@@ -745,8 +752,9 @@ class LLMExtractor(TakeawayExtractor):
 
     name = "llm"
 
-    def __init__(self):
+    def __init__(self, verify=None):
         self.last_run_stats = {}
+        self.verify = VERIFY_ENABLED if verify is None else bool(verify)
 
     def is_available(self):
         return check_ollama_available()
@@ -834,12 +842,13 @@ class LLMExtractor(TakeawayExtractor):
         decisions, action_items, open_questions = evidence_dedupe(
             decisions, action_items, open_questions, line_id_map
         )
-        decisions, action_items, open_questions = verify_items(
-            decisions, action_items, open_questions, model, verification_stats
-        )
-        decisions, action_items, open_questions = evidence_dedupe(
-            decisions, action_items, open_questions, line_id_map
-        )
+        if self.verify:
+            decisions, action_items, open_questions = verify_items(
+                decisions, action_items, open_questions, model, verification_stats
+            )
+            decisions, action_items, open_questions = evidence_dedupe(
+                decisions, action_items, open_questions, line_id_map
+            )
         open_questions = cap_open_questions(open_questions, line_id_map)
 
         summary = generate_overall_summary(chunk_summaries or [], model)
@@ -871,3 +880,10 @@ class LLMExtractor(TakeawayExtractor):
             "summary": summary,
             "stats": self.last_run_stats,
         }
+
+
+@register_extractor("llm_verify")
+class LLMVerifyExtractor(LLMExtractor):
+
+    def __init__(self):
+        super().__init__(verify=True)
