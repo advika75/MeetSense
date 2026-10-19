@@ -56,7 +56,8 @@ MAX_CHUNK_CHARS = 6000  # rough ~1500-token budget for the transcript excerpt
 FUZZY_QUOTE_THRESHOLD = 0.85  # fraction, per spec
 DEDUP_SIMILARITY_THRESHOLD = 90  # rapidfuzz score, 0-100
 
-REQUEST_TIMEOUT_SECONDS = 180
+REQUEST_TIMEOUT_SECONDS = 300
+MAX_OUTPUT_TOKENS = 1200
 
 
 # ============================================================
@@ -132,12 +133,19 @@ def check_ollama_available(model=None):
 
 def call_ollama(prompt, model, keep_alive=OLLAMA_KEEP_ALIVE):
 
+    estimated_prompt_tokens = (len(prompt) + 3) // 4
+    num_ctx = max(4096, estimated_prompt_tokens + MAX_OUTPUT_TOKENS + 256)
+
     payload = {
         "model": model,
         "prompt": prompt,
         "format": "json",
         "stream": False,
-        "options": {"temperature": 0},
+        "options": {
+            "temperature": 0,
+            "num_ctx": num_ctx,
+            "num_predict": MAX_OUTPUT_TOKENS,
+        },
         "keep_alive": keep_alive,
     }
 
@@ -231,11 +239,11 @@ Return a JSON object with exactly these keys: "decisions", "action_items", "dead
 - "due_date_text": the exact phrase used for timing (e.g. "by Friday"), ONLY if actually stated, else null
 - "line_ids": a list of integer IDs copied from the [L<id>] markers of lines that directly support this item
 
-Strict rules:
-- "decisions" = something the group explicitly agreed on or decided. Not a suggestion, not a maybe.
-- "action_items" = an explicit commitment that a specific person will do something.
-- "deadlines" = an action item or decision where a specific date/timeframe was actually stated.
-- "open_questions" = a question raised in this excerpt that was not answered in this excerpt.
+Classification rules:
+- "action_items" = a specific person or group commits or is assigned to do a concrete thing.
+- "decisions" = something the group explicitly agreed on.
+- "deadlines" = a concrete action item or decision with a specifically stated date or timeframe.
+- "open_questions" = an unresolved topic, suggestion, or proposal, including anything phrased as "we should discuss/consider", "maybe", or a question not answered here. These are not action items unless someone commits to a concrete task.
 - If nothing in this excerpt clearly qualifies for a category, return an empty list for it. Empty lists are expected and fine.
 - Cite only line IDs of transcript lines that directly support the item. Do not invent IDs.
 
@@ -244,7 +252,7 @@ Transcript excerpt:
 """
 
 
-def extract_chunk(chunk_segments, model, max_retries=1):
+def extract_chunk(chunk_segments, model, max_retries=1, allow_split=True):
     """Returns (RawChunkResult, chunk_text, error_or_None)."""
 
     chunk_text = format_chunk_for_prompt(chunk_segments)
@@ -296,8 +304,38 @@ def extract_chunk(chunk_segments, model, max_retries=1):
             last_error = str(error)
             continue
 
+        except requests.Timeout as error:
+            if allow_split and len(chunk_segments) > 1:
+                midpoint = len(chunk_segments) // 2
+                left, _, left_error = extract_chunk(
+                    chunk_segments[:midpoint], model, max_retries,
+                    allow_split=False,
+                )
+                right, _, right_error = extract_chunk(
+                    chunk_segments[midpoint:], model, max_retries,
+                    allow_split=False,
+                )
+                for category in (
+                    "decisions", "action_items", "deadlines", "open_questions"
+                ):
+                    for item in getattr(right, category):
+                        item["line_ids"] = [
+                            line_id + midpoint
+                            for line_id in item.get("line_ids", [])
+                            if isinstance(line_id, int)
+                        ]
+                errors = [message for message in (left_error, right_error) if message]
+                combined = RawChunkResult(
+                    **{
+                        category: getattr(left, category) + getattr(right, category)
+                        for category in (
+                            "decisions", "action_items", "deadlines", "open_questions"
+                        )
+                    }
+                )
+                return combined, chunk_text, "; ".join(errors) if errors else None
+            return RawChunkResult(), chunk_text, str(error)
         except Exception as error:
-            # Network/HTTP errors are not worth retrying per-chunk.
             return RawChunkResult(), chunk_text, str(error)
 
     return RawChunkResult(), chunk_text, last_error
@@ -403,6 +441,61 @@ def dedupe_items(items, threshold=DEDUP_SIMILARITY_THRESHOLD):
             kept[match_index] = item
 
     return sorted(kept, key=lambda item: item.evidence.timestamp)
+
+
+def items_share_evidence(left, right):
+
+    if abs(left.evidence.timestamp - right.evidence.timestamp) < 0.01:
+        return True
+
+    left_tokens = meaningful_tokens(left.evidence.quote)
+    right_tokens = meaningful_tokens(right.evidence.quote)
+    if not left_tokens or not right_tokens:
+        return False
+    overlap = len(left_tokens & right_tokens) / min(len(left_tokens), len(right_tokens))
+    return overlap >= 0.7 or fuzz.token_set_ratio(
+        left.evidence.quote, right.evidence.quote
+    ) >= 85
+
+
+def merge_attached_deadlines(action_items, deadlines):
+    """Attach deadlines with matching evidence to actions and return
+    only deadlines that stand alone rather than describing an action."""
+
+    standalone = []
+    for deadline in deadlines:
+        match = next(
+            (item for item in action_items if items_share_evidence(item, deadline)),
+            None,
+        )
+        if match is None:
+            standalone.append(deadline)
+            continue
+        match.due_date_text = deadline.due_date_text or match.due_date_text
+        match.due_date = deadline.due_date or match.due_date
+    return standalone
+
+
+UNRESOLVED_ITEM_PATTERN = re.compile(
+    r"\b(discuss\w*|consider\w*|maybe|whether|could|possibly|suggest(?:ion)?|"
+    r"option|proposal|should|decide whether|decide on|if agreed)\b",
+    re.IGNORECASE,
+)
+
+
+def route_unresolved_items(decisions, action_items, open_questions):
+    """Enforce the prompt's unresolved-topic categories when the model
+    labels a suggestion or discussion point as a decision/action."""
+
+    kept_decisions = []
+    kept_actions = []
+    for item in decisions:
+        (open_questions if UNRESOLVED_ITEM_PATTERN.search(item.text)
+         else kept_decisions).append(item)
+    for item in action_items:
+        (open_questions if UNRESOLVED_ITEM_PATTERN.search(item.text)
+         else kept_actions).append(item)
+    return kept_decisions, kept_actions, open_questions
 
 
 # ============================================================
@@ -516,8 +609,9 @@ class LLMExtractor(TakeawayExtractor):
         all_open_questions = []
 
         chunk_errors = []
+        failed_chunks = []
 
-        for chunk_segments in chunks:
+        for chunk_index, chunk_segments in enumerate(chunks):
 
             raw_result, _chunk_text, error = extract_chunk(
                 chunk_segments, model
@@ -525,6 +619,11 @@ class LLMExtractor(TakeawayExtractor):
 
             if error:
                 chunk_errors.append(error)
+                failed_chunks.append({
+                    "chunk_index": chunk_index,
+                    "line_count": len(chunk_segments),
+                    "error": error,
+                })
 
             for raw_dicts, bucket in (
                 (raw_result.decisions, all_decisions),
@@ -556,9 +655,20 @@ class LLMExtractor(TakeawayExtractor):
         decisions = dedupe_items(all_decisions)
         action_items = dedupe_items(all_action_items)
         deadlines = dedupe_items(all_deadlines)
+        deadlines = merge_attached_deadlines(action_items, deadlines)
         open_questions = dedupe_items(all_open_questions)
+        decisions, action_items, open_questions = route_unresolved_items(
+            decisions, action_items, open_questions
+        )
+        open_questions = dedupe_items(open_questions)
 
         summary = generate_overall_summary(chunk_summaries or [], model)
+        if failed_chunks:
+            warning = (
+                f"WARNING: {len(failed_chunks)} transcript chunk(s) failed; "
+                "this report may be incomplete. See extractor_stats.failed_chunks."
+            )
+            summary = f"{warning}\n\n{summary}".strip()
 
         self.last_run_stats = {
             "model": model,
@@ -569,6 +679,7 @@ class LLMExtractor(TakeawayExtractor):
             "items_dropped_sanity": drop_counter["dropped_sanity"],
             "items_dropped_bad_schema": schema_drop_counter["dropped"],
             "chunk_errors": chunk_errors,
+            "failed_chunks": failed_chunks,
         }
 
         return {
