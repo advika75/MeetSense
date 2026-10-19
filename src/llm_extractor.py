@@ -9,8 +9,7 @@ Map-reduce pipeline:
   1. chunk_transcript(): split into ~8-10 min windows with overlap.
   2. extract_chunk(): ask Ollama per chunk, JSON mode, temperature 0.
   3. validate + anti-hallucination: pydantic parse (retry once on
-     invalid JSON), then drop any item whose "quote" is not a fuzzy
-     (>=0.85) substring of that chunk's real transcript text.
+     invalid JSON), then ground items to numbered transcript lines.
   4. reduce_items(): merge across chunks, dedupe near-duplicates by
      fuzzy text similarity, keep the earliest evidence.
   5. resolve_due_dates(): dateparser, relative to the meeting date.
@@ -20,11 +19,12 @@ Map-reduce pipeline:
 
 import json
 import os
+import re
 from datetime import datetime
 from typing import Optional
 
 import requests
-from pydantic import BaseModel, ValidationError, field_validator
+from pydantic import BaseModel, ValidationError
 from rapidfuzz import fuzz
 
 try:
@@ -67,26 +67,7 @@ class RawTakeaway(BaseModel):
     text: str
     owner: Optional[str] = None
     due_date_text: Optional[str] = None
-    speaker: str = "UNKNOWN"
-    timestamp: float = 0.0
-    quote: str = ""
-
-    @field_validator("timestamp", mode="before")
-    @classmethod
-    def _coerce_timestamp(cls, value):
-        """The model sometimes returns "163s" instead of 163 --
-        pydantic's float coercion rejects that outright. Pull the
-        leading number out instead of hard-failing the whole item."""
-
-        if isinstance(value, str):
-
-            import re
-
-            match = re.search(r"-?[\d.]+", value)
-
-            return float(match.group()) if match else 0.0
-
-        return value
+    line_ids: list[int] = []
 
 
 class RawChunkResult(BaseModel):
@@ -218,11 +199,14 @@ def format_chunk_for_prompt(chunk_segments, max_chars=MAX_CHUNK_CHARS):
     lines = []
     char_count = 0
 
-    for segment in chunk_segments:
+    for line_id, segment in enumerate(chunk_segments):
+
+        timestamp = float(segment.get("start", 0))
+        minutes, seconds = divmod(int(timestamp), 60)
 
         line = (
-            f"[{float(segment.get('start', 0)):.0f}s] "
-            f"{segment.get('speaker', 'UNKNOWN')}: "
+            f"[L{line_id}] {segment.get('speaker', 'UNKNOWN')} "
+            f"({minutes:02d}:{seconds:02d}): "
             f"{segment.get('text', '').strip()}"
         )
 
@@ -245,9 +229,7 @@ Return a JSON object with exactly these keys: "decisions", "action_items", "dead
 - "text": a short, literal restatement of the item
 - "owner": the person responsible, ONLY if explicitly named, else null
 - "due_date_text": the exact phrase used for timing (e.g. "by Friday"), ONLY if actually stated, else null
-- "speaker": the speaker label immediately before the supporting line
-- "timestamp": the numeric second shown in brackets before that line
-- "quote": text copied EXACTLY (verbatim, character-for-character) from the transcript excerpt below that supports this item
+- "line_ids": a list of integer IDs copied from the [L<id>] markers of lines that directly support this item
 
 Strict rules:
 - "decisions" = something the group explicitly agreed on or decided. Not a suggestion, not a maybe.
@@ -255,7 +237,7 @@ Strict rules:
 - "deadlines" = an action item or decision where a specific date/timeframe was actually stated.
 - "open_questions" = a question raised in this excerpt that was not answered in this excerpt.
 - If nothing in this excerpt clearly qualifies for a category, return an empty list for it. Empty lists are expected and fine.
-- NEVER invent a "quote" that is not literally present in the transcript below.
+- Cite only line IDs of transcript lines that directly support the item. Do not invent IDs.
 
 Transcript excerpt:
 {chunk_text}
@@ -335,14 +317,46 @@ def quote_is_grounded(quote, source_text, threshold=FUZZY_QUOTE_THRESHOLD):
     return score >= threshold
 
 
-def raw_items_to_takeaways(raw_items, chunk_text, drop_counter):
+def meaningful_tokens(text):
+
+    return {
+        token.lower()
+        for token in re.findall(r"[a-z0-9]+", text.lower())
+        if len(token) > 2
+    }
+
+
+def raw_items_to_takeaways(raw_items, chunk_segments, drop_counter):
 
     kept = []
 
     for raw_item in raw_items:
 
-        if not quote_is_grounded(raw_item.quote, chunk_text):
+        valid_line_ids = sorted({
+            line_id for line_id in raw_item.line_ids
+            if isinstance(line_id, int) and 0 <= line_id < len(chunk_segments)
+        })
+
+        if not valid_line_ids:
             drop_counter["dropped"] += 1
+            continue
+
+        cited_segments = [chunk_segments[line_id] for line_id in valid_line_ids]
+        quote = " ".join(
+            str(segment.get("text", "")).strip()
+            for segment in cited_segments
+            if str(segment.get("text", "")).strip()
+        )
+        item_tokens = meaningful_tokens(raw_item.text)
+        cited_tokens = meaningful_tokens(quote)
+        overlap = (
+            len(item_tokens & cited_tokens) / len(item_tokens)
+            if item_tokens else 0.0
+        )
+        fuzzy_score = fuzz.partial_ratio(raw_item.text, quote) / 100.0 if quote else 0.0
+
+        if overlap < 0.3 and fuzzy_score < 0.5:
+            drop_counter["dropped_sanity"] += 1
             continue
 
         kept.append(
@@ -351,12 +365,13 @@ def raw_items_to_takeaways(raw_items, chunk_text, drop_counter):
                 owner=raw_item.owner,
                 due_date_text=raw_item.due_date_text,
                 evidence=Evidence(
-                    speaker=raw_item.speaker,
-                    timestamp=raw_item.timestamp,
-                    quote=raw_item.quote,
+                    speaker=str(cited_segments[0].get("speaker", "UNKNOWN")),
+                    timestamp=float(cited_segments[0].get("start", 0)),
+                    quote=quote,
                 ),
             )
         )
+        drop_counter["kept"] += 1
 
     return kept
 
@@ -491,8 +506,9 @@ class LLMExtractor(TakeawayExtractor):
 
         chunks = chunk_transcript(transcript_segments)
 
-        drop_counter = {"dropped": 0}
+        drop_counter = {"dropped": 0, "dropped_sanity": 0, "kept": 0}
         schema_drop_counter = {"dropped": 0}
+        raw_item_count = 0
 
         all_decisions = []
         all_action_items = []
@@ -503,7 +519,7 @@ class LLMExtractor(TakeawayExtractor):
 
         for chunk_segments in chunks:
 
-            raw_result, chunk_text, error = extract_chunk(
+            raw_result, _chunk_text, error = extract_chunk(
                 chunk_segments, model
             )
 
@@ -517,12 +533,14 @@ class LLMExtractor(TakeawayExtractor):
                 (raw_result.open_questions, all_open_questions),
             ):
 
+                raw_item_count += len(raw_dicts)
+
                 parsed_items = parse_chunk_items(
                     raw_dicts, schema_drop_counter
                 )
 
                 bucket += raw_items_to_takeaways(
-                    parsed_items, chunk_text, drop_counter
+                    parsed_items, chunk_segments, drop_counter
                 )
 
         # Resolve due dates on action items and deadlines before dedup
@@ -545,7 +563,10 @@ class LLMExtractor(TakeawayExtractor):
         self.last_run_stats = {
             "model": model,
             "chunk_count": len(chunks),
+            "raw_items": raw_item_count,
+            "items_kept_before_dedup": drop_counter["kept"],
             "items_dropped_ungrounded": drop_counter["dropped"],
+            "items_dropped_sanity": drop_counter["dropped_sanity"],
             "items_dropped_bad_schema": schema_drop_counter["dropped"],
             "chunk_errors": chunk_errors,
         }

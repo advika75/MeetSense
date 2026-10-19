@@ -279,17 +279,191 @@
       ]
     }
   ],
-  "action_items": [
+  "decisions": [
     {
-      "text": "Group people by their name",
+      "text": "The photo copier and network printer will go next to the mailbox.",
+      "owner": null,
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_00",
+        "timestamp": 1311.44,
+        "quote": "Do we agree that the photo copier and the network printer goes next to the mailbox? Yeah."
+      }
+    },
+    {
+      "text": "Gisella will be placed in the corner room.",
       "owner": null,
       "due_date": null,
       "due_date_text": null,
       "confidence": null,
       "evidence": {
         "speaker": "SPEAKER_01",
-        "timestamp": 1671.0,
-        "quote": "Can we group people by their name?"
+        "timestamp": 1331.12,
+        "quote": "And then we can. I don't know."
+      }
+    }
+  ],
+  "action_items": [
+    {
+      "text": "Andre and the speaker will present to the University administrators on the second",
+      "owner": null,
+      "due_date": null,
+      "due_date_text": "on the second",
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_02",
+        "timestamp": 185.72,
+        "quote": "then Andre and I have to do presentations for the University administrators on the second."
+      }
+    },
+    {
+      "text": "Discuss various concepts without getting into specifics and then come back later with more specific proposals",
+      "owner": null,
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_02",
+        "timestamp": 288.32,
+        "quote": "and then go off and think about it over lunch and then come back later in the day with sort of more specific proposals as to exactly where to put people. Does that work?"
+      }
+    },
+    {
+      "text": "Discuss the option of having a group of the same project or title",
+      "owner": null,
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_01",
+        "timestamp": 510.56,
+        "quote": "And then I think the main discussion we should have is if we want to make group of amongst the same project or amongst the same title. Yeah. Yeah."
+      }
+    },
+    {
+      "text": "Consider the option of mixing everyone up to have a more diverse group environment",
+      "owner": null,
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_01",
+        "timestamp": 536.8,
+        "quote": "That's more conceptual question than a practical question. Well, the third option is just completely mix everyone up. Which some people say is better sort of for group environment so that you're not stuck only with the people who are working on your project. Yeah. Right. So if you share an office with someone who's on a completely different project. Yeah. You find out about that project but you also sort of interact with other"
+      }
+    },
+    {
+      "text": "Discuss the possibility of having a reading room and its use for meetings",
+      "owner": null,
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_03",
+        "timestamp": 559.84,
+        "quote": "people on a more regular basis. Yeah. But still I find it's quite easy if you are with people who work in the same project in the same way because you have the meetings or people come and ask you discuss things. Maybe I don't know if it's for other people who's not working in the same project. Yeah. But we will have this reading room. Yeah. That's true. Yeah. That's true. Will it be dedicated for reading and for studying or can we have meetings that can reserve it for meetings? I think it's not a question of reserving it because there's other rooms at the university that you can reserve for a meeting. Yeah. But if it's empty then sure you can use it for meeting. There's nothing wrong with that. But I think if someone's already reading in there it's not fair. Yeah. To go and kick them out just because you want to have a meeting. Because well the problem is you have to go across the building and it adds some overhead every time you want to have some short meeting and discuss some issues. Maybe we shouldn't call it. But if you're having a short meeting you don't really make an appointment for it. You just kind of go to someone's office and go down for a coffee or whatever. Because there's still the cafeterias that you can use for informal. Yeah. The other thing we should take into account is if you receive student or not because Marien and I interact a lot with students and we have reception hours and stuff like that. So it means you get time where a lot of people come along and talk and so it's different. And the other Marien does too. Yeah. So maybe it's very nice to have to share on a face with somebody like us. I think a lot of social life and well but then you either share offices with each other. Yeah. Which doesn't really solve the problem because chances are you're not going to have office hours at the exact same time. So you're still going to have like unless you get individual offices. I don't know if there's an easy way to find a solution for that. Because even if each of you share with a professor then it's the same thing for the professor. But it is something to keep in mind. Unless you end up sharing an office with someone where your schedule is completely don't overlap and then you do schedule office hours when the other person isn't there. Some people come in around alive and some people come in around eight. Yeah. But that's something we can't reasonably assume like that. No."
+      }
+    },
+    {
+      "text": "Consider the impact of having students and the need for reception hours",
+      "owner": null,
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_02",
+        "timestamp": 719.52,
+        "quote": "Make plans with that because. No, but you sort of see people's patterns. I mean yeah. Even if it's not always like that. I mean if it's like that you know 80% of the time then but you're right we can't make assumptions too much. So people would like to see the office organized by by rank like professors and students and I don't know. I think well it's up to us how we do it. I can see benefits of both. Yeah. One point I can say by experience it's really hard to share an office with three people because it makes much more noise that only being two in an office. Yeah plus the computers. Plus the computers. So we all know what it's like to have five computers in your office. Yeah. So we might be it might be a good idea to first exclude one of the three person room to be the reading room and not to be necessary a room with three people. A working room. Yeah but if there are people coming in I mean we have these people working for two months who come in the summertime or something. I think we should reserve a little bit space for them to. So yeah that's a good point because if we take the three person room out as a reading room it's quite good. Then everyone has an office right because it's maximum 18. So take away three spaces and you're down to your 15 and you're right if we do have a stagia or whoever comes in then we have nowhere well we can put them in the reading room but that kind of defeats the purpose. So the other solution is to say okay we use this three person room but only with two person each"
+      }
+    },
+    {
+      "text": "Gisella will be assigned to a one-person room if possible.",
+      "owner": null,
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_02",
+        "timestamp": 1339.12,
+        "quote": "But at the beginning we said that we were going to give her one of the one person rooms."
+      }
+    }
+  ],
+  "deadlines": [
+    {
+      "text": "Second",
+      "owner": null,
+      "due_date": null,
+      "due_date_text": "on the second",
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_02",
+        "timestamp": 185.72,
+        "quote": "then Andre and I have to do presentations for the University administrators on the second."
+      }
+    }
+  ],
+  "open_questions": [
+    {
+      "text": "Do we know if there will be a lot of people coming across the whole in terms of security stuff?",
+      "owner": null,
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_01",
+        "timestamp": 214.32,
+        "quote": "Do we know if there will be a lot of people coming across the whole in terms of security"
+      }
+    },
+    {
+      "text": "Do we need a room like a reading room?",
+      "owner": null,
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_01",
+        "timestamp": 316.16,
+        "quote": "Yeah. And do we need a room like a reading room?"
+      }
+    },
+    {
+      "text": "What is the exact purpose of the reading room and how should it be used?",
+      "owner": null,
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_00",
+        "timestamp": 579.36,
+        "quote": "project. Yeah. But we will have this reading room. Yeah. That's true. Yeah. That's true. Will it be dedicated for reading and for studying or can we have meetings that can reserve it for meetings? I think it's not a question of reserving it because there's other rooms at the university that you can reserve for a meeting. Yeah. But if it's empty then sure you can use it for meeting. There's nothing wrong with that. But I think if someone's already reading in there it's not fair. Yeah. To go and kick them out just because you want to have a meeting. Because well the problem is you have to go across the building and it adds some overhead every time you want to have some short meeting and discuss some issues. Maybe we shouldn't call it. But if you're having a short meeting you don't really make an appointment for it. You just kind of go to someone's office and go down for a coffee or whatever. Because there's still the cafeterias that you can use for informal. Yeah. The other thing we should take into account is if you receive student or not because Marien and I interact a lot with students and we have reception hours and stuff like that. So it means you get time where a lot of people come along and talk and so it's different. And the other Marien does too. Yeah. So maybe it's very nice to have to share on a face with somebody like us. I think a lot of social life and well but then you either share offices with each other. Yeah. Which doesn't really solve the problem because chances are you're not going to have office hours at the exact same time. So you're still going to have like unless you get individual offices. I don't know if there's an easy way to find a solution for that. Because even if each of you share with a professor then it's the same thing for the professor. But it is something to keep in mind. Unless you end up sharing an office with someone where your schedule is completely don't overlap and then you do schedule office hours when the other person isn't there. Some people come in around alive and some people come in around eight. Yeah. But that's something we can't reasonably assume like that. No. Make plans with that because. No, but you sort of see people's patterns. I mean yeah. Even if it's not always like that. I mean if it's like that you know 80% of the time then but you're right we can't make assumptions too much. So people would like to see the office organized by by rank like professors and students and I don't know. I think well it's up to us how we do it. I can see benefits of both. Yeah. One point I can say by experience it's really hard to share an office with three people because it makes much more noise that only being two in an office. Yeah plus the computers. Plus the computers. So we all know what it's like to have five computers in your office. Yeah. So we might be it might be a good idea to first exclude one of the three person room to be the reading room and not to be necessary a room with three people. A working room. Yeah but if there are people coming in I mean we have these people working for two months who come in the summertime or something. I think we should reserve a little bit space for them to. So yeah that's a good point because if we take the three person room out as a reading room it's quite good. Then everyone has an office right because it's maximum 18. So take away three spaces and you're down to your 15 and you're right if we do have a stagia or whoever comes in then we have nowhere well we can put them in the reading room but that kind of defeats the purpose. So the other solution is to say okay we use this three person room but only with two person each"
+      }
+    },
+    {
+      "text": "Does Gisella have any complaints about being in the office with others?",
+      "owner": null,
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_00",
+        "timestamp": 1361.2,
+        "quote": "has anybody heard of any complaints that she's loud or."
+      }
+    },
+    {
+      "text": "Is there room in the cupboard for more staff besides Gisella?",
+      "owner": null,
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_01",
+        "timestamp": 1404.72,
+        "quote": "So like the ball and there is no room in the cupboard for any people except Gisella because she got lots of paper, like knives and knives and stuff like that."
       }
     }
   ],
@@ -3141,8 +3315,13 @@
   "extractor_stats": {
     "model": "qwen2.5:3b",
     "chunk_count": 4,
-    "items_dropped_ungrounded": 32,
+    "raw_items": 20,
+    "items_kept_before_dedup": 15,
+    "items_dropped_ungrounded": 0,
+    "items_dropped_sanity": 5,
     "items_dropped_bad_schema": 0,
-    "chunk_errors": []
+    "chunk_errors": [
+      "HTTPConnectionPool(host='localhost', port=11434): Read timed out. (read timeout=180)"
+    ]
   }
 }
