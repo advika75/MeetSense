@@ -26,8 +26,9 @@ import queue
 import threading
 import time
 import numpy as np
+import soundfile as sf
 
-from live_capture import MicrophoneCapture, SimulatedFileCapture, SAMPLE_RATE
+from live_capture import MicrophoneCapture, SimulatedFileCapture, SAMPLE_RATE, OVERLAP_SECONDS
 from live_pipeline import LiveMeetingSession
 
 
@@ -64,6 +65,8 @@ class LiveSessionController:
         self.processed_audio_seconds = 0.0
         self.dropped_chunk_count = 0
         self.merged_chunk_count = 0
+        self._recorded_audio_parts = []
+        self.session_audio_path = os.path.join(DEFAULT_OUTPUT_DIR, "live_session_audio.wav")
         self.last_error = None
         self.last_chunk_log = None
 
@@ -82,6 +85,12 @@ class LiveSessionController:
             self.captured_audio_seconds = max(
                 self.captured_audio_seconds, chunk_end_time
             )
+
+            if chunk_index == 0:
+                self._recorded_audio_parts = [np.asarray(chunk_audio, dtype=np.float32).copy()]
+            else:
+                overlap_samples = int(round(OVERLAP_SECONDS * SAMPLE_RATE))
+                self._recorded_audio_parts.append(np.asarray(chunk_audio[overlap_samples:], dtype=np.float32).copy())
 
         try:
             self._chunk_queue.put_nowait((chunk_audio, chunk_index, chunk_start_time))
@@ -255,6 +264,10 @@ class LiveSessionController:
         self._capture = None
         self._worker_thread = None
 
+        if self._recorded_audio_parts:
+            os.makedirs(os.path.dirname(self.session_audio_path), exist_ok=True)
+            sf.write(self.session_audio_path, np.concatenate(self._recorded_audio_parts), SAMPLE_RATE)
+
         self.running = False
         self.stopping = False
 
@@ -277,6 +290,7 @@ class LiveSessionController:
             self.processed_audio_seconds = 0.0
             self.dropped_chunk_count = 0
             self.merged_chunk_count = 0
+            self._recorded_audio_parts = []
             self.last_error = None
             self.last_chunk_log = None
 

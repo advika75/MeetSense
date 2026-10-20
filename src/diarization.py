@@ -41,6 +41,7 @@ if (
 
 import json
 import torch
+import numpy as np
 
 from dotenv import load_dotenv
 from pyannote.audio import Pipeline
@@ -135,6 +136,52 @@ def diarize_audio(pipeline, audio_source):
         )
 
     return segments
+
+
+def embed_speech_segments(pipeline, audio, segments, sample_rate):
+    """Embed a batch of local ``(start, end)`` speech intervals using
+    the embedding model already loaded inside the pyannote pipeline.
+
+    ``audio`` is mono float32 audio. Segments are padded to a common
+    length for a single model call and accompanied by frame masks so
+    padding does not contribute to the embedding.
+    """
+    import torch
+
+    embedding = getattr(pipeline, "_embedding", None)
+    if embedding is None:
+        raise RuntimeError("Cached pyannote pipeline has no loaded speaker embedding model")
+    target_rate = int(getattr(embedding, "sample_rate", sample_rate))
+    waveforms = []
+    lengths = []
+    for start, end in segments:
+        crop = np.asarray(audio[int(start * sample_rate):int(end * sample_rate)], dtype=np.float32)
+        if target_rate != sample_rate:
+            crop_tensor = torch.from_numpy(crop)[None, None]
+            crop = torch.nn.functional.interpolate(
+                crop_tensor, size=round(len(crop) * target_rate / sample_rate),
+                mode="linear", align_corners=False,
+            )[0, 0].numpy()
+        waveforms.append(torch.from_numpy(crop))
+        lengths.append(len(crop))
+
+    if not waveforms:
+        return np.zeros((0, 0), dtype=np.float32)
+    max_length = max(lengths)
+    batch = torch.zeros((len(waveforms), 1, max_length), dtype=torch.float32)
+    for index, waveform in enumerate(waveforms):
+        batch[index, 0, :len(waveform)] = waveform
+    model = getattr(embedding, "model_", None)
+    if model is not None and hasattr(model, "num_frames"):
+        frame_count = model.num_frames(max_length)
+        masks = torch.zeros((len(waveforms), frame_count), dtype=torch.float32)
+        for index, length in enumerate(lengths):
+            masks[index, :model.num_frames(length)] = 1.0
+        vectors = np.asarray(embedding(batch, masks=masks), dtype=np.float32)
+    else:
+        vectors = np.asarray(embedding(batch), dtype=np.float32)
+    norms = np.linalg.norm(vectors, axis=1, keepdims=True)
+    return vectors / np.maximum(norms, 1e-12)
 
 
 # --------------------------------------------------

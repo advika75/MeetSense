@@ -5,6 +5,7 @@ import subprocess
 import textwrap
 import sys
 import time
+import threading
 from pathlib import Path
 
 import streamlit as st
@@ -28,6 +29,28 @@ if str(_SRC_DIR) not in sys.path:
 # import cost (minutes, under memory pressure on this 8GB machine)
 # before rendering a single pixel. Imported lazily instead, inside the
 # Live Meeting page body, only once the user clicks Start.
+
+
+def _refine_live_report_speakers(report_id, audio_path, state):
+    """Run the opt-in offline pyannote pass without blocking Streamlit."""
+    try:
+        from diarization import load_diarization_pipeline, diarize_audio
+        from merge_transcript import align_segments
+        from meeting_report import load_report, save_report, compute_speaking_time
+        import gc
+
+        pipeline = load_diarization_pipeline()
+        diarized = diarize_audio(pipeline, audio_path)
+        report = load_report(report_id)
+        report.transcript = align_segments(report.transcript, diarized)
+        report.speakers = compute_speaking_time(report.transcript)
+        report.duration_sec = max((row["end"] for row in report.transcript), default=0.0)
+        save_report(report)
+        pipeline = None
+        gc.collect()
+        state.update({"running": False, "done": True, "error": None})
+    except Exception as error:
+        state.update({"running": False, "done": False, "error": str(error)})
 
 
 # ============================================================
@@ -2774,6 +2797,41 @@ elif active_page == "Meeting Report":
         )
 
     else:
+
+        if meeting_report.source == "live":
+            audio_path = Path("outputs/live/live_session_audio.wav")
+            refine_key = f"offline_refine_{report_id}"
+            if st.button(
+                "Refine speakers (offline, slower)",
+                disabled=not audio_path.exists(),
+                key=f"refine_speakers_{report_id}",
+            ):
+                status = {"running": True, "done": False, "error": None, "rerun_requested": False}
+                st.session_state[refine_key] = status
+                threading.Thread(
+                    target=_refine_live_report_speakers,
+                    args=(report_id, str(audio_path), status),
+                    daemon=True,
+                ).start()
+            if not audio_path.exists():
+                st.caption("Saved live audio is unavailable for offline refinement.")
+
+            @st.fragment(run_every="2s")
+            def show_speaker_refinement_status():
+                status = st.session_state.get(refine_key)
+                if not status:
+                    return
+                if status.get("running"):
+                    st.info("Offline speaker refinement is running in the background.")
+                elif status.get("error"):
+                    st.error(f"Offline speaker refinement failed: {status['error']}")
+                elif status.get("done"):
+                    st.success("Speaker labels were refined and the report was updated.")
+                    if not status.get("rerun_requested"):
+                        status["rerun_requested"] = True
+                        st.rerun()
+
+            show_speaker_refinement_status()
 
         st.markdown(
             f"**Date:** {meeting_report.date} &nbsp;&nbsp; "

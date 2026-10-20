@@ -56,7 +56,7 @@ from vad import load_silero_vad, detect_speech
 
 from transcription import load_whisper_model
 
-from diarization import load_diarization_pipeline, diarize_audio
+from diarization import load_diarization_pipeline, diarize_audio, embed_speech_segments
 
 from merge_transcript import align_segments
 
@@ -142,6 +142,8 @@ class LiveMeetingSession:
         output_dir=DEFAULT_OUTPUT_DIR,
         load_models=True,
         diarization_device=None,
+        live_full_diarization=False,
+        online_similarity_threshold=0.35,
     ):
 
         self._lock = threading.RLock()
@@ -167,6 +169,12 @@ class LiveMeetingSession:
         self.diarize_every_n_chunks = diarize_every_n_chunks
 
         self.recompute_every_n_chunks = recompute_every_n_chunks
+        self.live_full_diarization = bool(live_full_diarization) or os.getenv(
+            "LIVE_FULL_DIARIZATION", "0"
+        ).strip().lower() in {"1", "true", "yes", "on"}
+        self.online_similarity_threshold = float(os.getenv(
+            "LIVE_SPEAKER_SIMILARITY_THRESHOLD", str(online_similarity_threshold)
+        ))
 
         self._vad_model = None
         self._whisper_model = None
@@ -201,6 +209,10 @@ class LiveMeetingSession:
 
         self.aligned_transcript = []
         self._processed_cursor = 0
+        self.online_speaker_centroids = {}
+        self.online_speaker_updates = {}
+        self._last_online_speaker = None
+        self.embedding_clustering_ms = []
         self._diarization_thread = None
         self._pending_diarization = None
         self._diarization_running = False
@@ -431,82 +443,99 @@ class LiveMeetingSession:
 
         timings["asr_ms"] = (time.perf_counter() - t_stage) * 1000
 
-        # -------------------- 3. Async diarization scheduling --------------------
+        # -------------------- 3. Online embeddings / optional full diarization --------------------
 
         t_stage = time.perf_counter()
 
         ran_diarization = False
 
-        if chunk_index == 0:
+        if self.live_full_diarization and chunk_index == 0:
 
             new_audio_for_buffer = chunk_audio
             new_audio_global_start = chunk_start_time
 
-        else:
+        elif self.live_full_diarization:
 
             boundary_sample = int(round(OVERLAP_SECONDS * SAMPLE_RATE))
 
             new_audio_for_buffer = chunk_audio[boundary_sample:]
             new_audio_global_start = chunk_start_time + OVERLAP_SECONDS
 
-        with self._lock:
+        else:
+            new_audio_for_buffer = np.zeros(0, dtype=np.float32)
+            new_audio_global_start = chunk_start_time
 
-            if self._diarization_buffer.size == 0:
+        if self.live_full_diarization:
+            with self._lock:
 
-                self._diarization_buffer = new_audio_for_buffer.copy()
-                self._diarization_buffer_start_time = (
-                    new_audio_global_start
+                if self._diarization_buffer.size == 0:
+
+                    self._diarization_buffer = new_audio_for_buffer.copy()
+                    self._diarization_buffer_start_time = (
+                        new_audio_global_start
+                    )
+
+                else:
+
+                    self._diarization_buffer = np.concatenate(
+                        [self._diarization_buffer, new_audio_for_buffer]
+                    )
+
+                max_samples = int(
+                    round(
+                        self.diarization_buffer_cap_seconds * SAMPLE_RATE
+                    )
                 )
 
-            else:
+                if len(self._diarization_buffer) > max_samples:
 
-                self._diarization_buffer = np.concatenate(
-                    [self._diarization_buffer, new_audio_for_buffer]
-                )
+                    trimmed = (
+                        len(self._diarization_buffer) - max_samples
+                    )
 
-            max_samples = int(
-                round(
-                    self.diarization_buffer_cap_seconds * SAMPLE_RATE
-                )
-            )
+                    self._diarization_buffer = self._diarization_buffer[
+                        trimmed:
+                    ]
 
-            if len(self._diarization_buffer) > max_samples:
-
-                trimmed = (
-                    len(self._diarization_buffer) - max_samples
-                )
-
-                self._diarization_buffer = self._diarization_buffer[
-                    trimmed:
-                ]
-
-                self._diarization_buffer_start_time += (
-                    trimmed / SAMPLE_RATE
-                )
+                    self._diarization_buffer_start_time += (
+                        trimmed / SAMPLE_RATE
+                    )
 
             # Snapshot the buffer under the lock so the slow
             # diarization call below (which can run for a very long
             # time, unlocked) runs against a stable copy rather than
             # one reset_state() could mutate concurrently.
-            diarization_buffer_copy = self._diarization_buffer.copy()
-            diarization_buffer_start_time = (
-                self._diarization_buffer_start_time
+                diarization_buffer_copy = self._diarization_buffer.copy()
+                diarization_buffer_start_time = (
+                    self._diarization_buffer_start_time
+                )
+
+            buffer_seconds = len(diarization_buffer_copy) / SAMPLE_RATE
+
+            should_diarize_this_chunk = (
+                chunk_index == 0
+                or chunk_index % self.diarize_every_n_chunks == 0
             )
 
-        buffer_seconds = len(diarization_buffer_copy) / SAMPLE_RATE
-
-        should_diarize_this_chunk = (
-            chunk_index == 0
-            or chunk_index % self.diarize_every_n_chunks == 0
-        )
-
-        if (
-            has_speech
-            and should_diarize_this_chunk
-            and buffer_seconds >= MIN_BUFFER_SECONDS_FOR_DIARIZATION
-        ):
-            self._request_diarization(diarization_buffer_copy, diarization_buffer_start_time)
-            ran_diarization = True
+            if (
+                has_speech
+                and should_diarize_this_chunk
+                and buffer_seconds >= MIN_BUFFER_SECONDS_FOR_DIARIZATION
+            ):
+                self._request_diarization(
+                    diarization_buffer_copy, diarization_buffer_start_time
+                )
+                ran_diarization = True
+        else:
+            t_embed = time.perf_counter()
+            online_segments = self._online_speaker_segments(
+                chunk_audio, speech_timestamps, chunk_index, chunk_start_time
+            )
+            timings["embedding_clustering_ms"] = (time.perf_counter() - t_embed) * 1000
+            self.embedding_clustering_ms.append(timings["embedding_clustering_ms"])
+            with self._lock:
+                self.diarization_segments.extend(online_segments)
+            buffer_seconds = 0.0
 
         timings["diarization_ms"] = (
             time.perf_counter() - t_stage
@@ -856,6 +885,67 @@ class LiveMeetingSession:
     # HELPERS
     # ------------------------------------------------------------
 
+    def _online_speaker_segments(self, chunk_audio, speech_timestamps, chunk_index, chunk_start_time):
+        candidates = []
+        for item in speech_timestamps:
+            start_sample = int(item["start"])
+            end_sample = int(item["end"])
+            if chunk_index > 0:
+                start_sample = max(start_sample, int(OVERLAP_SECONDS * SAMPLE_RATE))
+            if end_sample <= start_sample:
+                continue
+            start = start_sample / SAMPLE_RATE
+            end = end_sample / SAMPLE_RATE
+            candidates.append({"start": start, "end": end, "speaker": None})
+
+        long_indices = [i for i, row in enumerate(candidates) if row["end"] - row["start"] >= 1.0]
+        vectors = embed_speech_segments(
+            self._diarization_pipeline,
+            chunk_audio,
+            [(candidates[i]["start"], candidates[i]["end"]) for i in long_indices],
+            SAMPLE_RATE,
+        ) if long_indices else np.zeros((0, 0), dtype=np.float32)
+
+        for row_index, vector in zip(long_indices, vectors):
+            if self.online_speaker_centroids:
+                names = list(self.online_speaker_centroids)
+                similarities = [float(np.dot(vector, self.online_speaker_centroids[name])) for name in names]
+                nearest_index = int(np.argmax(similarities))
+                if similarities[nearest_index] >= self.online_similarity_threshold or len(names) >= 8:
+                    speaker = names[nearest_index]
+                else:
+                    speaker = f"Speaker {len(names) + 1}"
+            else:
+                speaker = "Speaker 1"
+            if speaker not in self.online_speaker_centroids:
+                self.online_speaker_centroids[speaker] = vector.copy()
+                self.online_speaker_updates[speaker] = 1
+            else:
+                centroid = 0.9 * self.online_speaker_centroids[speaker] + 0.1 * vector
+                self.online_speaker_centroids[speaker] = centroid / max(float(np.linalg.norm(centroid)), 1e-12)
+                self.online_speaker_updates[speaker] += 1
+            candidates[row_index]["speaker"] = speaker
+
+        # Short VAD regions inherit the nearest long region in this
+        # window; if none exists, they inherit the last online speaker.
+        long_rows = [row for row in candidates if row["speaker"]]
+        for row in candidates:
+            if row["speaker"] is not None:
+                continue
+            if long_rows:
+                midpoint = (row["start"] + row["end"]) / 2
+                row["speaker"] = min(long_rows, key=lambda other: abs((other["start"] + other["end"]) / 2 - midpoint))["speaker"]
+            else:
+                row["speaker"] = self._last_online_speaker or "Speaker ?"
+        if candidates:
+            self._last_online_speaker = candidates[-1]["speaker"]
+        return [
+            {"start": round(chunk_start_time + row["start"], 3),
+             "end": round(chunk_start_time + row["end"], 3),
+             "speaker": row["speaker"]}
+            for row in candidates
+        ]
+
     def _provisional_speaker(self, segment):
         """Use the nearest known diarized turn as a provisional proxy."""
         with self._lock:
@@ -971,6 +1061,9 @@ class LiveMeetingSession:
                 "diarization_last_error": self._diarization_last_error,
                 "stop_diarization_timed_out": self.stop_diarization_timed_out,
                 "diarization_refinement_seconds": list(self._diarization_refinement_seconds),
+                "online_speaker_count": len(self.online_speaker_centroids),
+                "online_similarity_threshold": self.online_similarity_threshold,
+                "embedding_clustering_ms": list(self.embedding_clustering_ms),
             }
 
 
