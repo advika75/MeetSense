@@ -22,7 +22,7 @@ from live_capture import CHUNK_SECONDS, STEP_SECONDS
 AUDIO_PATH = "data/audio/meeting.wav"
 MAX_AUDIO_SECONDS = 600.0
 OUTPUT_DIR = "outputs/live"
-REPORT_ID = "live_latency_baseline_20261019"
+REPORT_ID = "live_latency_after_20261020"
 
 
 def rss_peak_mb():
@@ -45,6 +45,7 @@ def summarize():
     print("Simulated capture running, capped at 600 seconds.", flush=True)
     capture.join()
 
+    stop_started = time.perf_counter()
     # Match the UI Stop action: stop capture, wait for the in-flight
     # pipeline chunk, then unload live models in build_report's hook.
     print("Audio cap reached; invoking controller.stop().", flush=True)
@@ -54,7 +55,7 @@ def summarize():
     print(
         f"Captured={controller.captured_audio_seconds:.1f}s; "
         f"processed={controller.processed_audio_seconds:.1f}s; "
-        f"chunks={session.chunk_count}; dropped={controller.dropped_chunk_count}",
+        f"chunks={session.chunk_count}; dropped={controller.dropped_chunk_count}; merged={controller.merged_chunk_count}",
         flush=True,
     )
 
@@ -68,7 +69,7 @@ def summarize():
         source="live",
         meeting_date="2026-10-19",
         extractor_name="llm",
-        pre_extract_hook=session.unload_models,
+        pre_extract_hook=(None if session.stop_diarization_timed_out else session.unload_models),
     )
     report_build_seconds = time.perf_counter() - report_start
 
@@ -108,18 +109,23 @@ def summarize():
     )
     trailing_audio = audio_seconds - full_windows * STEP_SECONDS
     expected_windows = full_windows + (1 if trailing_audio > 1e-6 else 0)
-    not_processed = max(0, expected_windows - len(entries))
+    # Entries may represent merged audio containing multiple source
+    # windows. The controller's merged count is the number of extra
+    # source windows absorbed, so batches + merged windows recover the
+    # total processed-window count.
+    processed_windows = min(expected_windows, len(entries) + controller.merged_chunk_count)
+    not_processed = max(0, expected_windows - processed_windows - controller.dropped_chunk_count)
 
     lines = [
-        "# Live latency baseline",
+        "# Live latency after",
         "",
         f"- Audio: `{AUDIO_PATH}`; simulated cap: {MAX_AUDIO_SECONDS:.0f}s.",
         "- Live UI chunk settings: 20s chunks, 3s overlap, 17s step; "
-        "default three-chunk processing queue.",
-        f"- Processed chunks: {len(entries)}; captured audio: "
+        "three-item queue with backlog merging; asynchronous diarization; 90s buffer cap.",
+        f"- Processed batches: {len(entries)} ({processed_windows} source windows); captured audio: "
         f"{controller.captured_audio_seconds:.1f}s; processed endpoint: "
         f"{controller.processed_audio_seconds:.1f}s; dropped chunks: "
-        f"{controller.dropped_chunk_count}.",
+        f"{controller.dropped_chunk_count}; merged windows: {controller.merged_chunk_count}.",
         f"- Expected capture windows: {expected_windows}; not processed: "
         f"{not_processed} (queue overflow: {controller.dropped_chunk_count}; "
         f"queued when Stop exited: {queued_at_stop}).",
@@ -156,8 +162,11 @@ def summarize():
         f"- Chunks with RTF < 1.0: {under_one}/{len(entries)} "
         f"({fraction:.1%}).",
         f"- Maximum end-to-end lag (chunk end to result): {max_lag:.2f}s.",
-        f"- Stop-to-report build time, including live-model unload: "
-        f"{report_build_seconds:.2f}s.",
+        f"- Stop-to-report time: {time.perf_counter() - stop_started:.2f}s; "
+        f"diarization stop timeout: {'yes' if session.stop_diarization_timed_out else 'no'}; "
+        f"provisional labels in report: {'yes' if session.stop_diarization_timed_out else 'no'}.",
+        f"- Mean time until speaker labels are refined: "
+        f"{np.mean(session._diarization_refinement_seconds):.2f}s (since diarization request)." if session._diarization_refinement_seconds else "- Mean time until speaker labels are refined: unavailable.",
         f"- Peak process RSS: {peak_rss:.1f} MB.",
         f"- `report.json` validation: {'passed' if report_validated else 'FAILED'} "
         f"(`outputs/reports/{REPORT_ID}/report.json`).",
@@ -166,8 +175,32 @@ def summarize():
         f"({under_one}/{len(entries)} chunks).",
     ])
 
+    before = load_report("live_latency_baseline_20261019")
+    before_transcript = before.transcript
+    after_transcript = list(session.aligned_transcript)
+    def label_key(row):
+        return (round(float(row.get("start", 0)), 1), str(row.get("text", "")).strip())
+    old_labels = {label_key(row): row.get("speaker") for row in before_transcript}
+    comparable = [row for row in after_transcript if label_key(row) in old_labels]
+    same = sum(old_labels[label_key(row)] == row.get("speaker") for row in comparable)
+    label_pct = 100 * same / len(comparable) if comparable else 0.0
+    lines.extend([
+        "",
+        "| Metric | Before | After |",
+        "|---|---:|---:|",
+        f"| Windows processed / dropped / merged / queued | 17 / 16 / 0 / 3 | {processed_windows} / {controller.dropped_chunk_count} / {controller.merged_chunk_count} / {queued_at_stop} |",
+        f"| RTF mean / median / p90 | 2.104 / 0.627 / 5.994 | {np.mean([e.get('real_time_factor',0) for e in entries]):.3f} / {np.median([e.get('real_time_factor',0) for e in entries]):.3f} / {np.percentile([e.get('real_time_factor',0) for e in entries],90):.3f} |",
+        f"| Max end-to-end transcript lag | 287.50s | {max_lag:.2f}s |",
+        f"| Mean time until speaker labels refined | unavailable | {np.mean(session._diarization_refinement_seconds):.2f}s |" if session._diarization_refinement_seconds else "| Mean time until speaker labels refined | unavailable | unavailable |",
+        f"| Stop-to-report time | 81.04s | {time.perf_counter() - stop_started:.2f}s |",
+        f"| Peak RSS | 942.9 MB | {peak_rss:.1f} MB |",
+        f"",
+        f"- Final speaker-label agreement with baseline: {same}/{len(comparable)} comparable segments ({label_pct:.1f}% same speaker).",
+        f"- Real-time claim: {'yes' if controller.dropped_chunk_count == 0 and max_lag < 17 else 'no'} (zero drops and max transcript lag {max_lag:.2f}s).",
+    ])
+
     os.makedirs(OUTPUT_DIR, exist_ok=True)
-    with open(os.path.join(OUTPUT_DIR, "baseline_report.md"), "w", encoding="utf-8") as file:
+    with open(os.path.join(OUTPUT_DIR, "after_report.md"), "w", encoding="utf-8") as file:
         file.write("\n".join(lines) + "\n")
 
     print(f"REPORT_BUILD_SECONDS={report_build_seconds:.2f}", flush=True)
@@ -175,7 +208,7 @@ def summarize():
     print(f"REPORT_VALIDATED={report_validated}", flush=True)
     print(f"LOG_CHUNKS={len(entries)}", flush=True)
     print(f"REPORT_ID={report.meeting_id}", flush=True)
-    print(f"BASELINE=outputs/live/baseline_report.md", flush=True)
+    print(f"AFTER=outputs/live/after_report.md", flush=True)
 
 
 if __name__ == "__main__":

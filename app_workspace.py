@@ -2311,6 +2311,9 @@ elif active_page == "Live Meeting":
                                 <span class="transcript-time">
                                     {format_time(segment["start"])}
                                 </span>
+                                <span class="transcript-time">
+                                    {"speakers refined" if segment.get("speakers_refined") else "provisional speaker"}
+                                </span>
                             </div>
                             <div class="transcript-text">
                                 {segment["text"]}

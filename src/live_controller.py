@@ -25,6 +25,7 @@ import os
 import queue
 import threading
 import time
+import numpy as np
 
 from live_capture import MicrophoneCapture, SimulatedFileCapture, SAMPLE_RATE
 from live_pipeline import LiveMeetingSession
@@ -62,6 +63,7 @@ class LiveSessionController:
         self.captured_audio_seconds = 0.0
         self.processed_audio_seconds = 0.0
         self.dropped_chunk_count = 0
+        self.merged_chunk_count = 0
         self.last_error = None
         self.last_chunk_log = None
 
@@ -82,24 +84,28 @@ class LiveSessionController:
             )
 
         try:
-
-            self._chunk_queue.put_nowait(
-                (chunk_audio, chunk_index, chunk_start_time)
-            )
-
+            self._chunk_queue.put_nowait((chunk_audio, chunk_index, chunk_start_time))
         except queue.Full:
-
-            # Bounded-queue policy: drop the newest completed chunk
-            # rather than block capture or evict an already-queued
-            # (older) chunk. This keeps processing order simple (no
-            # reordering) and keeps memory bounded to at most
-            # chunk_queue_maxsize chunks + one in flight, no matter
-            # how long a diarization spike runs. The cost -- some
-            # audio's transcript is silently skipped during a bad
-            # backlog -- is surfaced via dropped_chunk_count and the
-            # lag_seconds figure in get_status(), not hidden.
+            # Fold the entire queued backlog and this window into one
+            # continuous clip, removing duplicated overlap samples.
+            queued = []
+            while True:
+                try: queued.append(self._chunk_queue.get_nowait())
+                except queue.Empty: break
+            queued.append((chunk_audio, chunk_index, chunk_start_time))
+            queued.sort(key=lambda item: item[2])
+            first_audio, first_index, first_start = queued[0]
+            pieces = [first_audio]
+            last_end = first_start + len(first_audio) / SAMPLE_RATE
+            for audio, _, start in queued[1:]:
+                offset = max(0, int(round((last_end - start) * SAMPLE_RATE)))
+                if offset < len(audio): pieces.append(audio[offset:])
+                last_end = max(last_end, start + len(audio) / SAMPLE_RATE)
+            merged = np.concatenate(pieces)
+            self._chunk_queue.put_nowait((merged, first_index, first_start))
             with self._status_lock:
-                self.dropped_chunk_count += 1
+                self.merged_chunk_count += len(queued) - 1
+            print(f"[live_controller] merged {len(queued)} queued windows into one ({len(merged)/SAMPLE_RATE:.1f}s)", flush=True)
 
     # ------------------------------------------------------------
     # PROCESSING WORKER -- the only thread that calls into the heavy
@@ -108,7 +114,7 @@ class LiveSessionController:
 
     def _processing_loop(self):
 
-        while not self._stop_event.is_set():
+        while not self._stop_event.is_set() or not self._chunk_queue.empty():
 
             try:
                 chunk_audio, chunk_index, chunk_start_time = (
@@ -237,7 +243,14 @@ class LiveSessionController:
         self._stop_event.set()
 
         if self._worker_thread is not None:
-            self._worker_thread.join()  # may block -- see docstring
+            self._worker_thread.join()
+
+        # Stop waits for the one in-flight diarization and its coalesced
+        # latest request, but report construction remains bounded.
+        diar_thread = self.session._diarization_thread
+        if diar_thread is not None:
+            diar_thread.join(timeout=120.0)
+        self.session.stop_diarization_timed_out = bool(diar_thread and diar_thread.is_alive())
 
         self._capture = None
         self._worker_thread = None
@@ -263,6 +276,7 @@ class LiveSessionController:
             self.captured_audio_seconds = 0.0
             self.processed_audio_seconds = 0.0
             self.dropped_chunk_count = 0
+            self.merged_chunk_count = 0
             self.last_error = None
             self.last_chunk_log = None
 

@@ -120,7 +120,7 @@ WHISPER_MODEL_NAME = "base"
 # individual diarization calls take minutes. 60s is a hardware-driven
 # compromise, not a value chosen for accuracy reasons; DIARIZE_EVERY_
 # N_CHUNKS further amortizes the cost by not re-running it every chunk.
-DIARIZATION_BUFFER_CAP_SECONDS = 60.0
+DIARIZATION_BUFFER_CAP_SECONDS = float(os.getenv("DIARIZATION_BUFFER_CAP_SECONDS", "90"))
 
 DIARIZE_EVERY_N_CHUNKS = 2
 
@@ -201,6 +201,13 @@ class LiveMeetingSession:
 
         self.aligned_transcript = []
         self._processed_cursor = 0
+        self._diarization_thread = None
+        self._pending_diarization = None
+        self._diarization_running = False
+        self._diarization_last_error = None
+        self._diarization_started_at = None
+        self._diarization_refinement_seconds = []
+        self.stop_diarization_timed_out = False
 
         self.nlp_processed_segments = []
         self.named_entities = []
@@ -424,7 +431,7 @@ class LiveMeetingSession:
 
         timings["asr_ms"] = (time.perf_counter() - t_stage) * 1000
 
-        # -------------------- 3. Diarization --------------------
+        # -------------------- 3. Async diarization scheduling --------------------
 
         t_stage = time.perf_counter()
 
@@ -498,38 +505,8 @@ class LiveMeetingSession:
             and should_diarize_this_chunk
             and buffer_seconds >= MIN_BUFFER_SECONDS_FOR_DIARIZATION
         ):
-
-            temp_path = self._write_temp_wav(diarization_buffer_copy)
-
-            try:
-
-                local_segments = diarize_audio(
-                    self._diarization_pipeline, temp_path
-                )
-
-                new_diarization_segments = [
-                    {
-                        "start": segment["start"]
-                        + diarization_buffer_start_time,
-                        "end": segment["end"]
-                        + diarization_buffer_start_time,
-                        "speaker": segment["speaker"],
-                    }
-                    for segment in local_segments
-                ]
-
-                with self._lock:
-                    self.diarization_segments = new_diarization_segments
-
-                ran_diarization = True
-
-            except Exception as error:
-                timings["diarization_error"] = str(error)
-
-            finally:
-
-                if os.path.exists(temp_path):
-                    os.remove(temp_path)
+            self._request_diarization(diarization_buffer_copy, diarization_buffer_start_time)
+            ran_diarization = True
 
         timings["diarization_ms"] = (
             time.perf_counter() - t_stage
@@ -558,12 +535,24 @@ class LiveMeetingSession:
                 {
                     "start": round(segment["start"], 3),
                     "end": round(segment["end"], 3),
-                    "speaker": "UNKNOWN",
+                    "speaker": self._provisional_speaker(segment),
                     "text": segment["text"],
                     "speaker_overlap": 0.0,
+                    "speakers_refined": False,
                 }
                 for segment in asr_segments_for_alignment
             ]
+
+        # Label uncovered rows provisionally from the nearest known
+        # diarized turn; background completion flips the row marker.
+        for row in new_aligned_transcript:
+            mid = (row["start"] + row["end"]) / 2
+            covered = any(s["start"] <= mid <= s["end"] for s in diarization_segments_for_alignment)
+            if not covered:
+                row["speaker"] = self._provisional_speaker(row)
+                row["speakers_refined"] = False
+            else:
+                row["speakers_refined"] = True
 
         with self._lock:
 
@@ -867,6 +856,60 @@ class LiveMeetingSession:
     # HELPERS
     # ------------------------------------------------------------
 
+    def _provisional_speaker(self, segment):
+        """Use the nearest known diarized turn as a provisional proxy."""
+        with self._lock:
+            if not self.diarization_segments:
+                return "Speaker ?"
+            midpoint = (segment["start"] + segment["end"]) / 2
+            nearest = min(self.diarization_segments, key=lambda row: abs((row["start"] + row["end"]) / 2 - midpoint))
+            return nearest["speaker"] if abs((nearest["start"] + nearest["end"]) / 2 - midpoint) <= 30 else "Speaker ?"
+
+    def _request_diarization(self, audio, start_time):
+        request = (audio.copy(), start_time, time.time())
+        with self._lock:
+            if self._diarization_running:
+                self._pending_diarization = request
+                return
+            self._diarization_running = True
+            self._diarization_started_at = request[2]
+            self._diarization_thread = threading.Thread(target=self._diarization_worker, args=(request,), daemon=True)
+            self._diarization_thread.start()
+
+    def _diarization_worker(self, request):
+        while request is not None:
+            audio, start_time, requested_at = request
+            temp_path = self._write_temp_wav(audio)
+            try:
+                local = diarize_audio(self._diarization_pipeline, temp_path)
+                refined = [{"start": s["start"] + start_time, "end": s["end"] + start_time, "speaker": s["speaker"]} for s in local]
+                with self._lock:
+                    self.diarization_segments = refined
+                    covered_end = start_time + len(audio) / SAMPLE_RATE
+                    covered = [s for s in self.asr_segments if start_time <= (s["start"] + s["end"]) / 2 <= covered_end]
+                    aligned = align_segments(covered, refined)
+                    by_key = {(s["start"], s["end"], s["text"]): s for s in aligned}
+                    for row in self.aligned_transcript:
+                        key = (row["start"], row["end"], row["text"])
+                        if key in by_key:
+                            row["speaker"] = by_key[key]["speaker"]
+                            row["speaker_overlap"] = by_key[key]["speaker_overlap"]
+                            row["speakers_refined"] = True
+                    self._diarization_refinement_seconds.append(max(0.0, time.time() - requested_at))
+                    self._diarization_last_error = None
+            except Exception as error:
+                with self._lock:
+                    self._diarization_last_error = str(error)
+            finally:
+                if os.path.exists(temp_path): os.remove(temp_path)
+            with self._lock:
+                request = self._pending_diarization
+                self._pending_diarization = None
+                if request is None:
+                    self._diarization_running = False
+                    self._diarization_thread = None
+
+
     def _write_temp_wav(self, audio):
 
         fd, path = tempfile.mkstemp(
@@ -924,6 +967,10 @@ class LiveMeetingSession:
                     if self.latency_log
                     else None
                 ),
+                "diarization_running": self._diarization_running,
+                "diarization_last_error": self._diarization_last_error,
+                "stop_diarization_timed_out": self.stop_diarization_timed_out,
+                "diarization_refinement_seconds": list(self._diarization_refinement_seconds),
             }
 
 
