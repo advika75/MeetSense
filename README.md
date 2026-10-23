@@ -31,6 +31,9 @@ all served through an interactive Streamlit interface.
 18. [Running Experiments](#running-experiments)
 19. [Evaluation Metrics](#evaluation-metrics)
 20. [Actual Results](#actual-results)
+    - [LLM Takeaway Extraction](#llm-takeaway-extraction)
+    - [Live Mode](#live-mode)
+    - [How to Run (LLM extraction and the app)](#how-to-run-llm-extraction-and-the-app)
 21. [Model Comparison](#model-comparison)
 22. [Ablation Study](#ablation-study)
 23. [Error Analysis](#error-analysis)
@@ -459,6 +462,99 @@ Note that `reference_summary.txt` (used for ROUGE) is an extractive
 excerpt of the meeting's opening, not a human-written abstractive
 summary — ROUGE here measures overlap with the source text, not
 summary quality in the fullest sense.
+
+> **Scope of all results in this README**: everything comes from **one
+> meeting recording**. Live mode was tested by **file replay**
+> (`data/audio/meeting.wav`, first 600 s, fed in as simulated capture
+> windows), **not with a real microphone**. The newer LLM-extraction and
+> live-mode results are summarised in the two sections below; their source
+> files are linked from [`docs/RESULTS.md`](docs/RESULTS.md).
+
+## LLM Takeaway Extraction
+
+Decisions, action items and deadlines can be extracted by a local LLM
+instead of the rule-based patterns (`src/llm_extractor.py`):
+
+- **Model**: Qwen2.5-3B (`qwen2.5:3b`) served locally by Ollama
+  (fallback `qwen2.5:1.5b`), released from memory after each call.
+- **Line-ID grounding**: the transcript is sent as numbered lines and each
+  extracted item must cite the line IDs it came from; quotes are
+  fuzzy-checked against those lines.
+- **Dedupe**: overlapping chunks (≈9 min, 30 s overlap) are merged and
+  duplicate items removed.
+- **Optional verification pass** (`LLM_VERIFY=1`): a second LLM call checks
+  each item against its evidence.
+
+Evaluation (`scripts/eval_takeaways.py`) uses hand labels in
+`data/labels/meeting1.json`; an item matches on a ±30 s timestamp window OR
+fuzzy text similarity ≥ 80. Full output, including false positives and
+misses: [`outputs/eval/takeaways_eval.md`](outputs/eval/takeaways_eval.md).
+
+| Category | rule_based P | R | F1 | llm P | R | F1 | llm_verify P | R | F1 |
+|---|---|---|---|---|---|---|---|---|---|
+| Decisions | 0.0 | 0.0 | 0.0 | 0.375 | 0.5 | 0.429 | 0.429 | 0.5 | 0.462 |
+| Action items | 0.086 | 1.0 | 0.158 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
+| Deadlines (strict) | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
+| Deadlines (lenient) | 0.0 | 0.0 | 0.0 | 1.0 | 0.5 | 0.667 | 1.0 | 0.5 | 0.667 |
+
+**Action items are a weakness.** The LLM extractor scored 0.0 on action
+items (with and without verification). The rule-based extractor reaches
+recall 1.0 only because it flags many sentences (precision 0.086). Decisions
+and lenient deadlines improve with the LLM; strict deadlines are 0.0 for
+every method.
+
+## Live Mode
+
+The Live Meeting tab processes audio in 20 s chunks (3 s overlap, 17 s step)
+through VAD → Whisper → diarization → alignment/NLP, and builds a report on
+Stop. Three configurations were measured on the same 600 s replay
+(`outputs/live/baseline_report.md`, `after_report.md`, `online_report.md`):
+
+1. **Baseline** – PyAnnote diarization run inline per chunk.
+2. **Async PyAnnote** – diarization in the background, backlog merging.
+3. **Online embeddings** – per-window speaker embeddings (PyAnnote's cached
+   embedding model) with incremental clustering; full live re-diarization
+   disabled. Cosine threshold 0.350 tuned on the first 180 s; centroids
+   L2-normalised, EMA 0.9, max 8 speakers.
+
+| Metric | Baseline | Async-PyAnnote | Online-Embedding |
+|---|---:|---:|---:|
+| Windows processed / dropped / merged / queued | 17 / 16 / 0 / 3 | 36 / 0 / 21 / 0 | 36 / 0 / 0 / 0 |
+| RTF mean / median / p90 | 2.104 / 0.627 / 5.994 | 3.020 / 0.887 / 8.199 | 0.172 / 0.149 / 0.237 |
+| Maximum transcript lag | 287.50s | 543.10s | 9.09s |
+| Stop-to-report time | 81.04s | 581.00s | 73.44s |
+| Peak RSS | 942.9 MB | 945.7 MB | 1494.6 MB |
+| Agreement vs offline after optimal ID mapping | 3/5 (60.0%) | 20/20 (100.0%) | 80/115 (69.6%) |
+| Speakers found / offline speakers | 2 / 4 | 4 / 4 | 5 / 4 |
+| Offline-reference DER (proxy) | 97.8% proxy DER | 88.2% proxy DER | 51.3% proxy DER |
+
+- Only the online-embedding configuration meets the real-time criterion
+  (zero drops, lag below 30 s). Baseline and async-PyAnnote do not.
+- Online speaker labels agree with the offline output on 69.6% of segments
+  and split the meeting into 5 speakers where offline finds 4.
+- **The DER in this table is a proxy**: it is computed against the offline
+  PyAnnote output, not against ground truth. Do not compare it with the
+  2.22% DER above, which uses a manual reference.
+
+## How to Run (LLM extraction and the app)
+
+```bash
+cd ~/Developer/NLP
+source .venv/bin/activate
+
+# LLM extraction needs Ollama running with the model pulled
+ollama pull qwen2.5:3b
+ollama serve            # skip if the Ollama app is already running
+
+# Launch the app (uses .venv only; opens app_workspace.py directly)
+./run_app.sh
+# or, with the landing page:
+python -m streamlit run app.py
+
+# Optional: verification pass, and the takeaway evaluation
+LLM_VERIFY=1 ./run_app.sh
+python scripts/eval_takeaways.py
+```
 
 ## Model Comparison
 
