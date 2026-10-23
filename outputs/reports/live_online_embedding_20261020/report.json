@@ -1,0 +1,1314 @@
+{
+  "meeting_id": "live_online_embedding_20261020",
+  "source": "live",
+  "date": "2026-10-20",
+  "duration_sec": 598.0,
+  "speakers": [
+    {
+      "name": "Speaker 1",
+      "speaking_time_sec": 268.78,
+      "share_pct": 60.2
+    },
+    {
+      "name": "Speaker 2",
+      "speaking_time_sec": 115.18,
+      "share_pct": 25.8
+    },
+    {
+      "name": "Speaker 3",
+      "speaking_time_sec": 39.32,
+      "share_pct": 8.8
+    },
+    {
+      "name": "Speaker 4",
+      "speaking_time_sec": 13.2,
+      "share_pct": 3.0
+    },
+    {
+      "name": "Speaker 5",
+      "speaking_time_sec": 10.0,
+      "share_pct": 2.2
+    }
+  ],
+  "summary": "The meeting discussed the relocation of a group to a new building across the street. Speaker 1 outlined plans for office assignments, equipment distribution, and room configurations. The group addressed concerns about office layout, including window placement, room sizes, and shared resources like printers. They also discussed the allocation of spaces for individuals and groups, including PhD students, project students, and a specific individual (Gisela). The meeting concluded with decisions on room configurations and resource distribution, with plans for further discussions and presentations.",
+  "chunk_summaries": [
+    "isco is too small for our group, speaker 1 says. it's going to be the building across the street and we're moving to a new building.",
+    "the administration wants to know speaker 1: who's going to be in what office in the new building Speaker 1: and where we're going to put things Speaker 1. the catch is that they have the final approval Speaker 1; of where we put people.",
+    "speaker 1: And since we don't really have any other time, we have to make these decisions today. speaker 2: What we're getting is 9...",
+    "all rooms have windows locally, so there's no fights about who gets a window and who doesn't.",
+    "speaker 2: You actually get windows on two walls and two one person rooms. the courtyard, because we're on the sixth floor, you can't actually go out to it.",
+    "you can see the bathrooms, the elevators are Speaker 1: sort of further down the hall. the purple bar at the bottom sort of on the right Speaker 2: is the mailboxes.",
+    "the photocopier, which Speaker 1: is really big, a fax machine which is not so big, and the printer which is relatively Speaker 2: big.",
+    "speaker 2: No cupboards like we have in the current offices. speaker 1: And each person gets their own chair, their own corner desk.",
+    "speaker 1: So we don't get the bookcases like we have now, but just one shelf that's attached to Speaker 2: the wall.",
+    "speaker 1: whether we want to do it by rank or by project Speaker 1: or I don't know, put all the PhD students together, all the project students together.",
+    "speaker 1: There's another group who's going to be working on the same plan later this week. Speaker 1: And then I have to do presentations for the university.",
+    "speaker 1: I have to come up with a plan, possibly if we have time of presentation, a quick presentation Speaker 1: with arguments for why we think our plan works best.",
+    "speaker 3: hold in terms of security stuff if we can... mate.",
+    "speaker 1: as long as the things are physically attached to the wall so they can't be removed, then it should be okay to leave them in the hall.",
+    "speaker 2: we only get one printer for 15 people? speaker 1: Well we get one kind of networked printer.",
+    "speaker 2: I can't remember who else gets their own printer. speaker 1: In terms of equipment, it's sort of the same thing as we have now.",
+    "speaker 1: and then go off and think about it over lunch and then come back later.",
+    "speaker 2: I'm assuming you figured out the little half circular quarter circles or doors.",
+    "speaker 1: There's just the one room that actually has two doors going into it. speaker 2: That's a good idea.",
+    "speaker 1: maximum 18 people in those rooms and there's only 15 of us. speaker 2: two of us are only here half the time.",
+    "speaker 1: Geneva. keep that in mind.",
+    "speaker 3: So we can deal with administration and decide something for administration and then.",
+    "speaker 2: I mean, Jizela's work is quite noisy.",
+    "Speaker 3: calling stuff like that. Speaker 2: Shia and her face with Gisela unless you are 50%. Speaker 1: is working, which is another condition.",
+    "Speaker 3: Gisela is having one of the one person rooms.",
+    "speaker 1: put her in a two-person room with someone, the equipment or maybe not the photocopier but the printer.",
+    "speaker 2: Yeah always equipment but not with a hundred percent staff and staff worker.",
+    "the rooms aren't tiny if you look at these facts, so probably she should get the facts Speaker 2: right?",
+    "speaker 3: group of amongst the same project. speaker 5: Yeah, the professor asked us to do.",
+    "speaker 3: That's more conceptual question than a practical question. third option is just completely mix everyone up.",
+    "Speaker 1: you're not stuck only with the people who are working on your project. you interact with other people on a more regular basis.",
+    "speaker 5: we will have the meeting or people come and ask you discuss things. if it's for other people who are not working in the same project, he says.",
+    "speaker 4: will it be dedicated for reading and for studying? Speaker 4: can we have meetings that can reserve it for meetings?"
+  ],
+  "topics": [
+    {
+      "topic_id": 1,
+      "top_words": [
+        {
+          "word": "big",
+          "weight": 5.19732659496913
+        },
+        {
+          "word": "see",
+          "weight": 4.199901882801816
+        },
+        {
+          "word": "like",
+          "weight": 3.2141166181309453
+        },
+        {
+          "word": "thing",
+          "weight": 3.2135850309261165
+        },
+        {
+          "word": "group",
+          "weight": 3.1968213651711612
+        },
+        {
+          "word": "really",
+          "weight": 3.1962154263339513
+        },
+        {
+          "word": "office",
+          "weight": 3.196082767996848
+        },
+        {
+          "word": "go",
+          "weight": 2.3934419892292635
+        },
+        {
+          "word": "come",
+          "weight": 2.2047301415629392
+        },
+        {
+          "word": "plan",
+          "weight": 2.2045112015226267
+        }
+      ]
+    },
+    {
+      "topic_id": 2,
+      "top_words": [
+        {
+          "word": "one",
+          "weight": 8.819795197223906
+        },
+        {
+          "word": "sort",
+          "weight": 7.225965806343047
+        },
+        {
+          "word": "work",
+          "weight": 6.2087149671432815
+        },
+        {
+          "word": "people",
+          "weight": 6.206965965250637
+        },
+        {
+          "word": "put",
+          "weight": 5.207600119431467
+        },
+        {
+          "word": "printer",
+          "weight": 5.199299529551516
+        },
+        {
+          "word": "maybe",
+          "weight": 5.198278433200766
+        },
+        {
+          "word": "know",
+          "weight": 4.88495867678426
+        },
+        {
+          "word": "project",
+          "weight": 4.221843841717433
+        },
+        {
+          "word": "like",
+          "weight": 4.208309207482869
+        }
+      ]
+    },
+    {
+      "topic_id": 3,
+      "top_words": [
+        {
+          "word": "room",
+          "weight": 16.19693073871834
+        },
+        {
+          "word": "two",
+          "weight": 7.196614539941575
+        },
+        {
+          "word": "get",
+          "weight": 6.198381984211589
+        },
+        {
+          "word": "people",
+          "weight": 4.2033989569414185
+        },
+        {
+          "word": "three",
+          "weight": 4.198250708990199
+        },
+        {
+          "word": "person",
+          "weight": 4.197951841583724
+        },
+        {
+          "word": "window",
+          "weight": 3.202431138271628
+        },
+        {
+          "word": "presentation",
+          "weight": 3.1999480839026875
+        },
+        {
+          "word": "wall",
+          "weight": 3.199913274105253
+        },
+        {
+          "word": "reading",
+          "weight": 3.199908556549212
+        }
+      ]
+    },
+    {
+      "topic_id": 4,
+      "top_words": [
+        {
+          "word": "yeah",
+          "weight": 15.196659548833209
+        },
+        {
+          "word": "go",
+          "weight": 7.005806156624799
+        },
+        {
+          "word": "building",
+          "weight": 6.198880855769697
+        },
+        {
+          "word": "want",
+          "weight": 4.014600052652982
+        },
+        {
+          "word": "know",
+          "weight": 3.2089327706616366
+        },
+        {
+          "word": "actually",
+          "weight": 2.9337921847616646
+        },
+        {
+          "word": "move",
+          "weight": 2.2043314657367103
+        },
+        {
+          "word": "think",
+          "weight": 2.2011964285491405
+        },
+        {
+          "word": "look",
+          "weight": 2.200664427756465
+        },
+        {
+          "word": "problem",
+          "weight": 2.1999147797184846
+        }
+      ]
+    },
+    {
+      "topic_id": 5,
+      "top_words": [
+        {
+          "word": "question",
+          "weight": 5.199972683055775
+        },
+        {
+          "word": "think",
+          "weight": 3.2139914092799806
+        },
+        {
+          "word": "meeting",
+          "weight": 3.2039952005492154
+        },
+        {
+          "word": "reserve",
+          "weight": 3.1999686423407048
+        },
+        {
+          "word": "mean",
+          "weight": 2.206497174161985
+        },
+        {
+          "word": "administration",
+          "weight": 2.2036878347409994
+        },
+        {
+          "word": "deal",
+          "weight": 2.199940044218117
+        },
+        {
+          "word": "half",
+          "weight": 2.1989988872658994
+        },
+        {
+          "word": "oh",
+          "weight": 2.1975288320451187
+        },
+        {
+          "word": "time",
+          "weight": 2.0435194746468097
+        }
+      ]
+    }
+  ],
+  "decisions": [
+    {
+      "text": "The group agrees to come up with a plan for organizing people in the new building.",
+      "owner": null,
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "Speaker 1",
+        "timestamp": 136.12,
+        "quote": "A small filing cabinet with three drawers, and by small I mean they're about... And one sort of hanging shelf. So we don't get the bookcases like we have now, but just one shelf that's attached to the wall. And the people that we have to place, you can see the list there along with their position and the problem. And I guess the question, the first question is how we want to organize people, whether we want to do it by rank or by project or I don't know, put all the PhD students together, all the of thing. So the idea is that we come up with a plan. There's another group who's going to be working on the same plan later this week. And then Andre and I have to do presentations for the University So I have to come up with a plan, possibly if we have time of presentation, a quick presentation with arguments for why we think our plan works best. Okay. So. hold in terms of security stuff if we can... I mean, mate. Yeah, I think the security is sort of the same as it is in the current building. So as long as the things are physically attached to the wall so they can't be removed, then it should be okay to leave them in the hall. sensitive documents or whatever. So we only get one printer for 15 people? Well we get one sort of networked printer and then I think some of us... Nothing Susan has a personal printer, just Ella has one maybe. I can't remember who else. But no one else gets their own printer. In terms of equipment, it's sort of the same thing as we have now. So what I'd propose is that we sort of discuss various concepts without getting them to specifics and then go off and think about it over lunch and then come back later. sort of more specific proposals. That's exactly where to put people. Does that work? Oh and on the map the little half circular quarter circles or doors. Which I'm assuming you figured out, but just And there's just the one room that actually has two doors going into it. The three person room on the right. And do we need a room like a reading room?"
+      }
+    }
+  ],
+  "deadlines": [
+    {
+      "text": "By November 2nd",
+      "owner": null,
+      "due_date": "2026-11-02",
+      "due_date_text": "by November 2nd",
+      "confidence": null,
+      "evidence": {
+        "speaker": "Speaker 1",
+        "timestamp": 39.12,
+        "quote": "And they want to know where we're going to do all of this by November 2nd."
+      }
+    },
+    {
+      "text": "Next Tuesday",
+      "owner": null,
+      "due_date": null,
+      "due_date_text": "next Tuesday",
+      "confidence": null,
+      "evidence": {
+        "speaker": "Speaker 1",
+        "timestamp": 43.08,
+        "quote": "So that means basically next Tuesday."
+      }
+    }
+  ],
+  "open_questions": [
+    {
+      "text": "Maybe, I don't know, if it's for other people who are not working in the same project.",
+      "owner": null,
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "Speaker 2",
+        "timestamp": 573.0,
+        "quote": "Maybe, I don't know, if it's for other people who are not working in the same project."
+      }
+    },
+    {
+      "text": "Will it be dedicated for reading and for studying?",
+      "owner": null,
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "Speaker 4",
+        "timestamp": 584.0,
+        "quote": "Will it be dedicated for reading and for studying?"
+      }
+    },
+    {
+      "text": "Or can we have meetings that can reserve it for meetings?",
+      "owner": null,
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "Speaker 4",
+        "timestamp": 586.0,
+        "quote": "Or can we have meetings that can reserve it for meetings?"
+      }
+    }
+  ],
+  "transcript": [
+    {
+      "start": 0.0,
+      "end": 12.24,
+      "speaker": "Speaker 1",
+      "text": "Okay, so as you guys know, isco is too small.",
+      "speaker_overlap": 3.092,
+      "speakers_refined": false
+    },
+    {
+      "start": 12.24,
+      "end": 14.48,
+      "speaker": "Speaker 1",
+      "text": "Well, the building is too small for our group.",
+      "speaker_overlap": 2.24,
+      "speakers_refined": true
+    },
+    {
+      "start": 14.48,
+      "end": 17.08,
+      "speaker": "Speaker 1",
+      "text": "So we're moving to a new building.",
+      "speaker_overlap": 2.6,
+      "speakers_refined": true
+    },
+    {
+      "start": 17.08,
+      "end": 20.0,
+      "speaker": "Speaker 1",
+      "text": "It's going to be the building across the street and we're actually moving.",
+      "speaker_overlap": 2.92,
+      "speakers_refined": true
+    },
+    {
+      "start": 21.72,
+      "end": 25.12,
+      "speaker": "Speaker 1",
+      "text": "But the problem is that the administration wants to know",
+      "speaker_overlap": 2.076,
+      "speakers_refined": true
+    },
+    {
+      "start": 25.12,
+      "end": 27.92,
+      "speaker": "Speaker 1",
+      "text": "who's going to be in what office in the new building",
+      "speaker_overlap": 2.8,
+      "speakers_refined": true
+    },
+    {
+      "start": 27.92,
+      "end": 29.96,
+      "speaker": "Speaker 1",
+      "text": "and where we're going to put things",
+      "speaker_overlap": 2.04,
+      "speakers_refined": true
+    },
+    {
+      "start": 29.96,
+      "end": 33.88,
+      "speaker": "Speaker 1",
+      "text": "like the printer, the fax machine, all the big equipment.",
+      "speaker_overlap": 3.92,
+      "speakers_refined": true
+    },
+    {
+      "start": 33.88,
+      "end": 36.12,
+      "speaker": "Speaker 1",
+      "text": "And the catch is that they have the final approval",
+      "speaker_overlap": 2.24,
+      "speakers_refined": true
+    },
+    {
+      "start": 36.12,
+      "end": 37.84,
+      "speaker": "Speaker 1",
+      "text": "of where we put people.",
+      "speaker_overlap": 0.88,
+      "speakers_refined": true
+    },
+    {
+      "start": 39.12,
+      "end": 43.08,
+      "speaker": "Speaker 1",
+      "text": "And they want to know where we're going to do all of this by November 2nd.",
+      "speaker_overlap": 3.236,
+      "speakers_refined": true
+    },
+    {
+      "start": 43.08,
+      "end": 47.84,
+      "speaker": "Speaker 1",
+      "text": "So that means basically next Tuesday.",
+      "speaker_overlap": 2.572,
+      "speakers_refined": true
+    },
+    {
+      "start": 47.84,
+      "end": 52.52,
+      "speaker": "Speaker 1",
+      "text": "And since we don't really have any other time, we have to make these decisions today.",
+      "speaker_overlap": 3.604,
+      "speakers_refined": true
+    },
+    {
+      "start": 52.52,
+      "end": 54.52,
+      "speaker": "Speaker 2",
+      "text": "What we're getting is 9...",
+      "speaker_overlap": 1.48,
+      "speakers_refined": true
+    },
+    {
+      "start": 58.0,
+      "end": 63.0,
+      "speaker": "Speaker 1",
+      "text": "And all the rooms have windows locally, so there's no fights about who gets a window and who doesn't.",
+      "speaker_overlap": 4.068,
+      "speakers_refined": true
+    },
+    {
+      "start": 63.0,
+      "end": 68.0,
+      "speaker": "Speaker 1",
+      "text": "There's two views, either of the old town or the mountains, and the rooms are various sizes.",
+      "speaker_overlap": 5.0,
+      "speakers_refined": true
+    },
+    {
+      "start": 68.0,
+      "end": 72.0,
+      "speaker": "Speaker 1",
+      "text": "There's two three people rooms, five, two, three.",
+      "speaker_overlap": 3.0,
+      "speakers_refined": true
+    },
+    {
+      "start": 73.0,
+      "end": 78.0,
+      "speaker": "Speaker 2",
+      "text": "You actually get windows on two walls and two one person rooms.",
+      "speaker_overlap": 2.044,
+      "speakers_refined": false
+    },
+    {
+      "start": 78.0,
+      "end": 81.0,
+      "speaker": "Speaker 1",
+      "text": "That's pretty much what the building looks like.",
+      "speaker_overlap": 2.476,
+      "speakers_refined": true
+    },
+    {
+      "start": 81.0,
+      "end": 84.0,
+      "speaker": "Speaker 1",
+      "text": "And then you have the number of people per room.",
+      "speaker_overlap": 3.0,
+      "speakers_refined": true
+    },
+    {
+      "start": 84.0,
+      "end": 88.0,
+      "speaker": "Speaker 1",
+      "text": "The courtyard, because we're on the sixth floor, you can't actually go out to it.",
+      "speaker_overlap": 4.0,
+      "speakers_refined": true
+    },
+    {
+      "start": 88.68,
+      "end": 94.32,
+      "speaker": "Speaker 1",
+      "text": "the windows look out onto open space. You can see the bathrooms, the elevators are",
+      "speaker_overlap": 3.052,
+      "speakers_refined": true
+    },
+    {
+      "start": 94.32,
+      "end": 100.08,
+      "speaker": "Speaker 1",
+      "text": "sort of further down the hall. The purple bar at the bottom sort of on the right",
+      "speaker_overlap": 5.76,
+      "speakers_refined": true
+    },
+    {
+      "start": 100.08,
+      "end": 105.08,
+      "speaker": "Speaker 2",
+      "text": "is the mailboxes. All of the windows open, you can",
+      "speaker_overlap": 1.98,
+      "speakers_refined": false
+    },
+    {
+      "start": 107.64,
+      "end": 110.84,
+      "speaker": "Speaker 1",
+      "text": "building.",
+      "speaker_overlap": 0.7,
+      "speakers_refined": false
+    },
+    {
+      "start": 110.84,
+      "end": 114.68,
+      "speaker": "Speaker 1",
+      "text": "And the equipment that we have to put somewhere are like I said, the photocopier, which",
+      "speaker_overlap": 3.84,
+      "speakers_refined": true
+    },
+    {
+      "start": 114.68,
+      "end": 121.28,
+      "speaker": "Speaker 1",
+      "text": "is really big, a fax machine which is not so big, and the printer which is relatively",
+      "speaker_overlap": 5.0,
+      "speakers_refined": true
+    },
+    {
+      "start": 121.28,
+      "end": 121.68,
+      "speaker": "Speaker 2",
+      "text": "big.",
+      "speaker_overlap": 0.4,
+      "speakers_refined": true
+    },
+    {
+      "start": 122.24,
+      "end": 126.12,
+      "speaker": "Speaker 1",
+      "text": "Each office has a white board, a bulletin board, and a coat rack.",
+      "speaker_overlap": 3.644,
+      "speakers_refined": true
+    },
+    {
+      "start": 126.12,
+      "end": 129.84,
+      "speaker": "Speaker 2",
+      "text": "No cupboards like we have in the current offices.",
+      "speaker_overlap": 3.028,
+      "speakers_refined": true
+    },
+    {
+      "start": 129.84,
+      "end": 133.36,
+      "speaker": "Speaker 1",
+      "text": "And each person gets their own chair, their own corner desk,",
+      "speaker_overlap": 3.52,
+      "speakers_refined": true
+    },
+    {
+      "start": 133.36,
+      "end": 136.12,
+      "speaker": "Speaker 1",
+      "text": "so like the ones that we have now.",
+      "speaker_overlap": 2.092,
+      "speakers_refined": true
+    },
+    {
+      "start": 136.12,
+      "end": 137.96,
+      "speaker": "Speaker 1",
+      "text": "A small filing cabinet with three drawers,",
+      "speaker_overlap": 1.84,
+      "speakers_refined": true
+    },
+    {
+      "start": 137.96,
+      "end": 139.96,
+      "speaker": "Speaker 1",
+      "text": "and by small I mean they're about...",
+      "speaker_overlap": 1.04,
+      "speakers_refined": true
+    },
+    {
+      "start": 140.88,
+      "end": 142.88,
+      "speaker": "Speaker 1",
+      "text": "And one sort of hanging shelf.",
+      "speaker_overlap": 2.0,
+      "speakers_refined": true
+    },
+    {
+      "start": 142.88,
+      "end": 146.56,
+      "speaker": "Speaker 1",
+      "text": "So we don't get the bookcases like we have now, but just one shelf that's attached to",
+      "speaker_overlap": 3.68,
+      "speakers_refined": true
+    },
+    {
+      "start": 146.56,
+      "end": 148.88,
+      "speaker": "Speaker 2",
+      "text": "the wall.",
+      "speaker_overlap": 0.532,
+      "speakers_refined": false
+    },
+    {
+      "start": 148.88,
+      "end": 155.58,
+      "speaker": "Speaker 2",
+      "text": "And the people that we have to place, you can see the list there along with their position",
+      "speaker_overlap": 3.368,
+      "speakers_refined": true
+    },
+    {
+      "start": 155.58,
+      "end": 156.08,
+      "speaker": "Speaker 2",
+      "text": "and the problem.",
+      "speaker_overlap": 0.42,
+      "speakers_refined": true
+    },
+    {
+      "start": 157.0,
+      "end": 163.0,
+      "speaker": "Speaker 1",
+      "text": "And I guess the question, the first question is how we want to organize people,",
+      "speaker_overlap": 2.856,
+      "speakers_refined": true
+    },
+    {
+      "start": 163.0,
+      "end": 168.0,
+      "speaker": "Speaker 1",
+      "text": "whether we want to do it by rank or by project",
+      "speaker_overlap": 2.556,
+      "speakers_refined": true
+    },
+    {
+      "start": 168.0,
+      "end": 173.0,
+      "speaker": "Speaker 1",
+      "text": "or I don't know, put all the PhD students together, all the",
+      "speaker_overlap": 2.308,
+      "speakers_refined": false
+    },
+    {
+      "start": 175.16,
+      "end": 177.16,
+      "speaker": "Speaker 2",
+      "text": "of thing.",
+      "speaker_overlap": 0.604,
+      "speakers_refined": false
+    },
+    {
+      "start": 177.16,
+      "end": 180.88,
+      "speaker": "Speaker 1",
+      "text": "So the idea is that we come up with a plan.",
+      "speaker_overlap": 3.72,
+      "speakers_refined": true
+    },
+    {
+      "start": 180.88,
+      "end": 185.68,
+      "speaker": "Speaker 1",
+      "text": "There's another group who's going to be working on the same plan later this week.",
+      "speaker_overlap": 2.824,
+      "speakers_refined": true
+    },
+    {
+      "start": 185.68,
+      "end": 190.02,
+      "speaker": "Speaker 1",
+      "text": "And then Andre and I have to do presentations for the University",
+      "speaker_overlap": 3.14,
+      "speakers_refined": true
+    },
+    {
+      "start": 193.76,
+      "end": 198.92,
+      "speaker": "Speaker 1",
+      "text": "So I have to come up with a plan, possibly if we have time of presentation, a quick presentation",
+      "speaker_overlap": 3.996,
+      "speakers_refined": true
+    },
+    {
+      "start": 198.92,
+      "end": 204.08,
+      "speaker": "Speaker 1",
+      "text": "with arguments for why we think our plan works best.",
+      "speaker_overlap": 2.804,
+      "speakers_refined": true
+    },
+    {
+      "start": 204.08,
+      "end": 206.28,
+      "speaker": "Speaker 2",
+      "text": "Okay.",
+      "speaker_overlap": 0.62,
+      "speakers_refined": false
+    },
+    {
+      "start": 206.28,
+      "end": 207.28,
+      "speaker": "Speaker 2",
+      "text": "So.",
+      "speaker_overlap": 0.72,
+      "speakers_refined": true
+    },
+    {
+      "start": 219.36,
+      "end": 224.0,
+      "speaker": "Speaker 3",
+      "text": "hold in terms of security stuff if we can... I mean, mate.",
+      "speaker_overlap": 3.524,
+      "speakers_refined": true
+    },
+    {
+      "start": 226.76,
+      "end": 232.68,
+      "speaker": "Speaker 1",
+      "text": "Yeah, I think the security is sort of the same as it is in the current building.",
+      "speaker_overlap": 3.46,
+      "speakers_refined": true
+    },
+    {
+      "start": 232.68,
+      "end": 237.0,
+      "speaker": "Speaker 1",
+      "text": "So as long as the things are physically attached to the wall so they can't be removed,",
+      "speaker_overlap": 4.32,
+      "speakers_refined": true
+    },
+    {
+      "start": 237.0,
+      "end": 238.84,
+      "speaker": "Speaker 1",
+      "text": "then it should be okay to leave them in the hall.",
+      "speaker_overlap": 1.84,
+      "speakers_refined": true
+    },
+    {
+      "start": 244.96,
+      "end": 252.64,
+      "speaker": "Speaker 2",
+      "text": "sensitive documents or whatever. So we only get one printer for 15 people?",
+      "speaker_overlap": 2.74,
+      "speakers_refined": false
+    },
+    {
+      "start": 252.64,
+      "end": 259.72,
+      "speaker": "Speaker 1",
+      "text": "Well we get one sort of networked printer and then I think some of us...",
+      "speaker_overlap": 3.252,
+      "speakers_refined": true
+    },
+    {
+      "start": 259.0,
+      "end": 264.0,
+      "speaker": "Speaker 2",
+      "text": "Nothing Susan has a personal printer, just Ella has one maybe.",
+      "speaker_overlap": 2.792,
+      "speakers_refined": true
+    },
+    {
+      "start": 264.0,
+      "end": 266.0,
+      "speaker": "Speaker 2",
+      "text": "I can't remember who else.",
+      "speaker_overlap": 0.924,
+      "speakers_refined": false
+    },
+    {
+      "start": 266.0,
+      "end": 269.0,
+      "speaker": "Speaker 1",
+      "text": "But no one else gets their own printer.",
+      "speaker_overlap": 3.0,
+      "speakers_refined": true
+    },
+    {
+      "start": 269.0,
+      "end": 273.0,
+      "speaker": "Speaker 1",
+      "text": "In terms of equipment, it's sort of the same thing as we have now.",
+      "speaker_overlap": 2.74,
+      "speakers_refined": true
+    },
+    {
+      "start": 283.0,
+      "end": 288.76,
+      "speaker": "Speaker 1",
+      "text": "So what I'd propose is that we sort of discuss various concepts without getting them to specifics",
+      "speaker_overlap": 5.76,
+      "speakers_refined": true
+    },
+    {
+      "start": 288.76,
+      "end": 291.96,
+      "speaker": "Speaker 1",
+      "text": "and then go off and think about it over lunch and then come back later.",
+      "speaker_overlap": 3.2,
+      "speakers_refined": true
+    },
+    {
+      "start": 293.26,
+      "end": 300.36,
+      "speaker": "Speaker 2",
+      "text": "sort of more specific proposals. That's exactly where to put people. Does that work?",
+      "speaker_overlap": 2.688,
+      "speakers_refined": true
+    },
+    {
+      "start": 300.36,
+      "end": 306.16,
+      "speaker": "Speaker 2",
+      "text": "Oh and on the map the little half circular quarter circles or doors.",
+      "speaker_overlap": 2.76,
+      "speakers_refined": true
+    },
+    {
+      "start": 306.16,
+      "end": 308.96,
+      "speaker": "Speaker 1",
+      "text": "Which I'm assuming you figured out, but just",
+      "speaker_overlap": 2.8,
+      "speakers_refined": true
+    },
+    {
+      "start": 310.0,
+      "end": 314.0,
+      "speaker": "Speaker 1",
+      "text": "And there's just the one room that actually has two doors going into it.",
+      "speaker_overlap": 4.0,
+      "speakers_refined": true
+    },
+    {
+      "start": 314.0,
+      "end": 317.0,
+      "speaker": "Speaker 1",
+      "text": "The three person room on the right.",
+      "speaker_overlap": 2.724,
+      "speakers_refined": true
+    },
+    {
+      "start": 317.0,
+      "end": 320.0,
+      "speaker": "Speaker 1",
+      "text": "And do we need a room like a reading room?",
+      "speaker_overlap": 3.0,
+      "speakers_refined": true
+    },
+    {
+      "start": 320.0,
+      "end": 324.0,
+      "speaker": "Speaker 1",
+      "text": "Yes, a lot of people were saying that they wanted to have a reading room.",
+      "speaker_overlap": 4.0,
+      "speakers_refined": true
+    },
+    {
+      "start": 324.0,
+      "end": 326.0,
+      "speaker": "Speaker 2",
+      "text": "That's a good idea.",
+      "speaker_overlap": 1.22,
+      "speakers_refined": true
+    },
+    {
+      "start": 330.68,
+      "end": 336.2,
+      "speaker": "Speaker 1",
+      "text": "maximum 18 people in those rooms and there's only 15 of us. And I don't know if you noticed, but",
+      "speaker_overlap": 5.52,
+      "speakers_refined": true
+    },
+    {
+      "start": 336.2,
+      "end": 342.84,
+      "speaker": "Speaker 2",
+      "text": "two of us are only here half the time. So Martin, David, our",
+      "speaker_overlap": 2.664,
+      "speakers_refined": true
+    },
+    {
+      "start": 344.76,
+      "end": 353.8,
+      "speaker": "Speaker 1",
+      "text": "Geneva. So sort of keep that in mind, I guess, when you're doing the actual",
+      "speaker_overlap": 3.112,
+      "speakers_refined": true
+    },
+    {
+      "start": 353.8,
+      "end": 356.12,
+      "speaker": "Speaker 2",
+      "text": "planning.",
+      "speaker_overlap": 0.636,
+      "speakers_refined": false
+    },
+    {
+      "start": 367.64,
+      "end": 368.64,
+      "speaker": "Speaker 2",
+      "text": "Yeah.",
+      "speaker_overlap": 0.444,
+      "speakers_refined": false
+    },
+    {
+      "start": 368.64,
+      "end": 371.36,
+      "speaker": "Speaker 2",
+      "text": "It's completely different work.",
+      "speaker_overlap": 1.788,
+      "speakers_refined": true
+    },
+    {
+      "start": 371.36,
+      "end": 376.2,
+      "speaker": "Speaker 3",
+      "text": "So we can deal with administration and decide something for administration and then.",
+      "speaker_overlap": 3.844,
+      "speakers_refined": true
+    },
+    {
+      "start": 378.0,
+      "end": 383.0,
+      "speaker": "Speaker 2",
+      "text": "Yeah, but Jizela is really the only administrative.",
+      "speaker_overlap": 2.344,
+      "speakers_refined": true
+    },
+    {
+      "start": 383.0,
+      "end": 386.0,
+      "speaker": "Speaker 3",
+      "text": "But at least deal with that particular situation.",
+      "speaker_overlap": 3.0,
+      "speakers_refined": true
+    },
+    {
+      "start": 386.0,
+      "end": 387.0,
+      "speaker": "Speaker 3",
+      "text": "Yeah.",
+      "speaker_overlap": 1.0,
+      "speakers_refined": true
+    },
+    {
+      "start": 387.0,
+      "end": 389.0,
+      "speaker": "Speaker 3",
+      "text": "And then see with the other.",
+      "speaker_overlap": 0.796,
+      "speakers_refined": false
+    },
+    {
+      "start": 389.0,
+      "end": 391.0,
+      "speaker": "Speaker 3",
+      "text": "Because I was thinking, Jizela is quite,",
+      "speaker_overlap": 2.0,
+      "speakers_refined": true
+    },
+    {
+      "start": 391.0,
+      "end": 394.0,
+      "speaker": "Speaker 2",
+      "text": "I mean, Jizela's work is quite noisy.",
+      "speaker_overlap": 2.212,
+      "speakers_refined": true
+    },
+    {
+      "start": 396.64,
+      "end": 397.64,
+      "speaker": "Speaker 3",
+      "text": "calling stuff like that.",
+      "speaker_overlap": 1.0,
+      "speakers_refined": true
+    },
+    {
+      "start": 397.64,
+      "end": 399.12,
+      "speaker": "Speaker 3",
+      "text": "And she's always moving around.",
+      "speaker_overlap": 1.48,
+      "speakers_refined": true
+    },
+    {
+      "start": 399.12,
+      "end": 404.88,
+      "speaker": "Speaker 2",
+      "text": "Yeah, so you want Shia and her face with Gisela, unless you are 50%, and not the 50% Gisela",
+      "speaker_overlap": 3.388,
+      "speakers_refined": true
+    },
+    {
+      "start": 404.88,
+      "end": 408.0,
+      "speaker": "Speaker 1",
+      "text": "is working, which is another condition.",
+      "speaker_overlap": 1.932,
+      "speakers_refined": true
+    },
+    {
+      "start": 408.0,
+      "end": 411.0,
+      "speaker": "Speaker 1",
+      "text": "Which I don't know if we can assume that there isn't going to be any...",
+      "speaker_overlap": 3.0,
+      "speakers_refined": true
+    },
+    {
+      "start": 421.0,
+      "end": 428.0,
+      "speaker": "Speaker 3",
+      "text": "So I don't know, maybe we can decide that Gisela is having one of the one person room.",
+      "speaker_overlap": 3.716,
+      "speakers_refined": true
+    },
+    {
+      "start": 431.96,
+      "end": 437.88,
+      "speaker": "Speaker 1",
+      "text": "Either that or maybe put her in a two-person room with someone, the equipment or",
+      "speaker_overlap": 3.412,
+      "speakers_refined": true
+    },
+    {
+      "start": 439.08,
+      "end": 445.96,
+      "speaker": "Speaker 1",
+      "text": "like the photocopier or maybe not the photocopier but the printer.",
+      "speaker_overlap": 4.072,
+      "speakers_refined": true
+    },
+    {
+      "start": 449.6,
+      "end": 456.8,
+      "speaker": "Speaker 2",
+      "text": "Yeah always equipment but not with a hundred percent staff and staff worker.",
+      "speaker_overlap": 3.88,
+      "speakers_refined": true
+    },
+    {
+      "start": 456.8,
+      "end": 462.0,
+      "speaker": "Speaker 4",
+      "text": "Okay so it's a one-person room but we don't know how big they are.",
+      "speaker_overlap": 5.06,
+      "speakers_refined": true
+    },
+    {
+      "start": 465.72,
+      "end": 476.04,
+      "speaker": "Speaker 2",
+      "text": "typing. Yeah, the rooms aren't tiny if you look at these facts. Yeah, so probably she should get the facts",
+      "speaker_overlap": 2.216,
+      "speakers_refined": true
+    },
+    {
+      "start": 476.04,
+      "end": 478.84,
+      "speaker": "Speaker 2",
+      "text": "right? Yeah, yeah.",
+      "speaker_overlap": 0.996,
+      "speakers_refined": false
+    },
+    {
+      "start": 518.64,
+      "end": 525.0,
+      "speaker": "Speaker 3",
+      "text": "group of amongst the same project or amongst the same title.",
+      "speaker_overlap": 3.016,
+      "speakers_refined": true
+    },
+    {
+      "start": 525.0,
+      "end": 528.0,
+      "speaker": "Speaker 5",
+      "text": "Yeah, the professor asked us to do.",
+      "speaker_overlap": 2.996,
+      "speakers_refined": true
+    },
+    {
+      "start": 528.0,
+      "end": 530.0,
+      "speaker": "Speaker 5",
+      "text": "Oh yeah, couple of...",
+      "speaker_overlap": 0.948,
+      "speakers_refined": false
+    },
+    {
+      "start": 532.0,
+      "end": 533.0,
+      "speaker": "Speaker 3",
+      "text": "Or yeah.",
+      "speaker_overlap": 0.828,
+      "speakers_refined": true
+    },
+    {
+      "start": 537.0,
+      "end": 542.0,
+      "speaker": "Speaker 3",
+      "text": "That's more conceptual question than a practical question.",
+      "speaker_overlap": 2.356,
+      "speakers_refined": false
+    },
+    {
+      "start": 543.0,
+      "end": 547.0,
+      "speaker": "Speaker 1",
+      "text": "Well, the third option is just completely mix everyone up, which...",
+      "speaker_overlap": 2.724,
+      "speakers_refined": true
+    },
+    {
+      "start": 549.8,
+      "end": 553.0,
+      "speaker": "Speaker 1",
+      "text": "you're not stuck only with the people who are working on your project.",
+      "speaker_overlap": 3.2,
+      "speakers_refined": true
+    },
+    {
+      "start": 553.0,
+      "end": 557.36,
+      "speaker": "Speaker 1",
+      "text": "So if you share an office with someone who's on a completely different project, you find",
+      "speaker_overlap": 4.36,
+      "speakers_refined": true
+    },
+    {
+      "start": 557.36,
+      "end": 561.76,
+      "speaker": "Speaker 1",
+      "text": "out about that project, but you also interact with other people on a more regular basis.",
+      "speaker_overlap": 4.4,
+      "speakers_refined": true
+    },
+    {
+      "start": 561.76,
+      "end": 563.76,
+      "speaker": "Speaker 1",
+      "text": "Let's see life.",
+      "speaker_overlap": 0.404,
+      "speakers_refined": false
+    },
+    {
+      "start": 568.0,
+      "end": 573.0,
+      "speaker": "Speaker 5",
+      "text": "in the same way, because you have the meetings or people come and ask you discuss things.",
+      "speaker_overlap": 5.0,
+      "speakers_refined": true
+    },
+    {
+      "start": 573.0,
+      "end": 580.0,
+      "speaker": "Speaker 2",
+      "text": "Maybe, I don't know, if it's for other people who are not working in the same project.",
+      "speaker_overlap": 2.652,
+      "speakers_refined": false
+    },
+    {
+      "start": 580.0,
+      "end": 581.0,
+      "speaker": "Speaker 2",
+      "text": "Yeah, but we will have the...",
+      "speaker_overlap": 1.0,
+      "speakers_refined": true
+    },
+    {
+      "start": 582.0,
+      "end": 584.0,
+      "speaker": "Speaker 4",
+      "text": "Yeah, that's true.",
+      "speaker_overlap": 2.0,
+      "speakers_refined": true
+    },
+    {
+      "start": 584.0,
+      "end": 586.0,
+      "speaker": "Speaker 4",
+      "text": "Will it be dedicated for reading and for studying?",
+      "speaker_overlap": 2.0,
+      "speakers_refined": true
+    },
+    {
+      "start": 586.0,
+      "end": 590.0,
+      "speaker": "Speaker 4",
+      "text": "Or can we have meetings that can reserve it for meetings?",
+      "speaker_overlap": 4.0,
+      "speakers_refined": true
+    },
+    {
+      "start": 590.0,
+      "end": 592.0,
+      "speaker": "Speaker 1",
+      "text": "I think it's not a question of reserving it,",
+      "speaker_overlap": 1.492,
+      "speakers_refined": true
+    },
+    {
+      "start": 592.0,
+      "end": 594.0,
+      "speaker": "Speaker 1",
+      "text": "because there's other rooms at the university",
+      "speaker_overlap": 2.0,
+      "speakers_refined": true
+    },
+    {
+      "start": 594.0,
+      "end": 596.0,
+      "speaker": "Speaker 1",
+      "text": "that you can reserve for a meeting.",
+      "speaker_overlap": 2.0,
+      "speakers_refined": true
+    },
+    {
+      "start": 596.0,
+      "end": 598.0,
+      "speaker": "Speaker 1",
+      "text": "But if it's empty, then sure you can...",
+      "speaker_overlap": 2.0,
+      "speakers_refined": true
+    }
+  ],
+  "extractor_used": "llm",
+  "extractor_stats": {
+    "model": "qwen2.5:3b",
+    "chunk_count": 2,
+    "verify_enabled": false,
+    "raw_items": 15,
+    "items_kept_before_dedup": 15,
+    "items_dropped_ungrounded": 0,
+    "items_dropped_sanity": 0,
+    "items_dropped_bad_schema": 0,
+    "chunk_errors": [],
+    "failed_chunks": [],
+    "raw_cache_hits": 0,
+    "verification_total": 0,
+    "verification_kept": 0,
+    "verification_reclassified": 0,
+    "verification_dropped": 0
+  }
+}

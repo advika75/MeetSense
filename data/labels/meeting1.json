@@ -1,0 +1,20 @@
+{
+  "meeting_id": "meeting_001",
+  "decisions": [
+    {"time_sec": 593, "text": "The reading room can also be used for meetings if it is empty (not reserved, no one reading)"},
+    {"time_sec": 874, "text": "The reading room will be a two-person room"},
+    {"time_sec": 1029, "text": "The middle two-person room is chosen as the reading room"},
+    {"time_sec": 1311, "text": "The photocopier and the network printer will go next to the mailbox"},
+    {"time_sec": 1432, "text": "Gisella is placed in the corner (southwest) office"},
+    {"time_sec": 1652, "text": "Jazeela is removed from the placement list because she already has a room"}
+  ],
+  "action_items": [
+    {"time_sec": 185, "owner": "Andre and the speaker (SPEAKER_02)", "text": "Present the plan to the University administrators", "due": "November 2nd"},
+    {"time_sec": 193, "owner": "SPEAKER_02", "text": "Come up with a placement plan, with a quick presentation arguing why it works best", "due": "November 2nd"},
+    {"time_sec": 288, "owner": "the group", "text": "Think over the concepts during lunch and come back later in the day with specific proposals for where to put people", "due": "later the same day"}
+  ],
+  "deadlines": [
+    {"time_sec": 39, "text": "Administration wants the office and equipment placement by November 2nd (next Tuesday)"},
+    {"time_sec": 18, "text": "The group moves to the new building in three weeks"}
+  ]
+}

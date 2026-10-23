@@ -13,3 +13,18 @@ __pycache__/
 # Editor / tool-local (not project content)
 .vscode/
 .claude/
+
+# Archived clutter
+_trash/
+
+# Live session artifacts (large / per-session)
+outputs/live/*.wav
+outputs/live/live_meeting_state.json
+outputs/temp_audio/
+
+# Model caches
+.cache/
+huggingface/
+*.ckpt
+*.pt
+*.safetensors
