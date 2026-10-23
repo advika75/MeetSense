@@ -528,3 +528,10 @@ except Exception as _llm_extractor_import_error:
     _llm_extractor_import_error_message = str(_llm_extractor_import_error)
 else:
     _llm_extractor_import_error_message = None
+
+try:
+    import hybrid_extractor  # noqa: F401
+except Exception as _hybrid_extractor_import_error:
+    _hybrid_extractor_import_error_message = str(_hybrid_extractor_import_error)
+else:
+    _hybrid_extractor_import_error_message = None

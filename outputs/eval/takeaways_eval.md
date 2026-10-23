@@ -3,12 +3,12 @@
 Labels: `data/labels/meeting1.json`
 Matching: timestamp window +/-30s OR fuzzy text similarity >= 80
 
-| Category | rule_based Precision | rule_based Recall | rule_based F1 | llm Precision | llm Recall | llm F1 | llm_verify Precision | llm_verify Recall | llm_verify F1 |
-|---|---|---|---|---|---|---|---|---|---|
-| Decisions | 0.0 | 0.0 | 0.0 | 0.375 | 0.5 | 0.429 | 0.429 | 0.5 | 0.462 |
-| Action items | 0.086 | 1.0 | 0.158 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
-| Deadlines (strict) | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
-| Deadlines (lenient) | 0.0 | 0.0 | 0.0 | 1.0 | 0.5 | 0.667 | 1.0 | 0.5 | 0.667 |
+| Category | rule_based Precision | rule_based Recall | rule_based F1 | llm Precision | llm Recall | llm F1 | llm_verify Precision | llm_verify Recall | llm_verify F1 | hybrid Precision | hybrid Recall | hybrid F1 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| Decisions | 0.0 | 0.0 | 0.0 | 0.375 | 0.5 | 0.429 | 0.429 | 0.5 | 0.462 | 0.6 | 0.5 | 0.545 |
+| Action items | 0.086 | 1.0 | 0.158 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
+| Deadlines (strict) | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 1.0 | 0.5 | 0.667 |
+| Deadlines (lenient) | 0.0 | 0.0 | 0.0 | 1.0 | 0.5 | 0.667 | 1.0 | 0.5 | 0.667 | 1.0 | 0.5 | 0.667 |
 
 ## rule_based
 
@@ -116,3 +116,37 @@ Matching: timestamp window +/-30s OR fuzzy text similarity >= 80
   - 18.0s — The group moves to the new building in three weeks
 - **Deadlines (lenient)**
   - 18.0s — The group moves to the new building in three weeks
+
+## hybrid
+
+### False positives
+- **Decisions**
+  - 39.6s — Make decisions by November 2nd
+  - 1141.6s — Decide on the administration stuff
+- **Action items**
+  - 1747.2s — Take a break
+
+### Missed items
+- **Decisions**
+  - 593.0s — The reading room can also be used for meetings if it is empty (not reserved, no one reading)
+  - 1311.0s — The photocopier and the network printer will go next to the mailbox
+  - 1652.0s — Jazeela is removed from the placement list because she already has a room
+- **Action items**
+  - 185.0s — Present the plan to the University administrators
+  - 193.0s — Come up with a placement plan, with a quick presentation arguing why it works best
+  - 288.0s — Think over the concepts during lunch and come back later in the day with specific proposals for where to put people
+- **Deadlines (strict)**
+  - 18.0s — The group moves to the new building in three weeks
+- **Deadlines (lenient)**
+  - 18.0s — The group moves to the new building in three weeks
+
+## Runtime and peak RAM (qwen2.5:3b, Ollama, seed 42, temperature 0)
+
+| Extractor | Runtime | Peak Ollama RSS |
+|---|---|---|
+| rule_based | 0.0s | n/a |
+| llm | 228.5s | 2174 MB |
+| llm_verify | 263.8s | 2195 MB |
+| hybrid (run 1 / run 2) | 254.9s / 270.7s | ~2.05 GB (run 2; run 1's sampler read 478 MB) |
+
+Hybrid run 1 and run 2 produced identical decisions, action items, deadlines and open questions.

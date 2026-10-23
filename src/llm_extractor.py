@@ -49,6 +49,8 @@ OLLAMA_FALLBACK_MODEL = os.environ.get(
 # Release the model from Ollama's memory right after use -- this is
 # an 8GB machine and the model shouldn't sit resident between calls.
 OLLAMA_KEEP_ALIVE = os.environ.get("OLLAMA_KEEP_ALIVE", "0")
+# Fixed seed + temperature 0 on every call so reruns are reproducible.
+OLLAMA_SEED = int(os.environ.get("OLLAMA_SEED", "42"))
 VERIFY_ENABLED = os.environ.get("LLM_VERIFY", "0").strip().lower() in {
     "1", "true", "yes", "on"
 }
@@ -141,11 +143,11 @@ def check_ollama_available(model=None):
 
 def call_ollama(
     prompt, model, keep_alive=OLLAMA_KEEP_ALIVE,
-    num_predict=MAX_OUTPUT_TOKENS,
+    num_predict=MAX_OUTPUT_TOKENS, num_ctx_floor=4096,
 ):
 
     estimated_prompt_tokens = (len(prompt) + 3) // 4
-    num_ctx = max(4096, estimated_prompt_tokens + num_predict + 256)
+    num_ctx = max(num_ctx_floor, estimated_prompt_tokens + num_predict + 256)
 
     payload = {
         "model": model,
@@ -154,6 +156,7 @@ def call_ollama(
         "stream": False,
         "options": {
             "temperature": 0,
+            "seed": OLLAMA_SEED,
             "num_ctx": num_ctx,
             "num_predict": num_predict,
         },
@@ -751,7 +754,7 @@ def generate_overall_summary(chunk_summaries, model):
             "model": model,
             "prompt": prompt,
             "stream": False,
-            "options": {"temperature": 0},
+            "options": {"temperature": 0, "seed": OLLAMA_SEED},
             "keep_alive": OLLAMA_KEEP_ALIVE,
         }
 

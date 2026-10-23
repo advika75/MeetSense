@@ -1,0 +1,3509 @@
+{
+  "meeting_id": "meeting_001_hybrid_run2",
+  "source": "recorded",
+  "date": "2026-10-19",
+  "duration_sec": 1774.8,
+  "speakers": [
+    {
+      "name": "SPEAKER_02",
+      "speaking_time_sec": 746.96,
+      "share_pct": 52.6
+    },
+    {
+      "name": "SPEAKER_01",
+      "speaking_time_sec": 465.68,
+      "share_pct": 32.8
+    },
+    {
+      "name": "SPEAKER_00",
+      "speaking_time_sec": 135.84,
+      "share_pct": 9.6
+    },
+    {
+      "name": "SPEAKER_03",
+      "speaking_time_sec": 68.72,
+      "share_pct": 4.8
+    },
+    {
+      "name": "UNKNOWN",
+      "speaking_time_sec": 3.44,
+      "share_pct": 0.2
+    }
+  ],
+  "summary": "the administration wants to know who's going to be in what office in the new building. there's no fights about who gets a window and who doesn't. the idea is that we come up with a plan that will be rolled out later this week.",
+  "chunk_summaries": [
+    "we're moving to a new building across the street SPEAKER_02. the administration wants to know who's going to be in what office in the new building. there's no fights about who gets a window and who doesn't.",
+    "the first question is how we want to organize people, whether SPEAKER_02: place, you can see the list there along with their position and the project that they work on. the idea is that we come up with a plan that will be rolled out later this week.",
+    "SPEAKER_02: I have to come up with a plan, possibly if we have time or presentation. a quick presentation with arguments for why we think our plan works best. the security is sort of the same as it is in the current building.",
+    "a lot of people were saying that they wanted to have a reading room. SPEAKER_02: So we should leave a space for that.",
+    "SPEAKER_02: Maybe we can decide that Gisela is having one of the one person room with the equipment or like we said the photocopier. if we can assume that there isn't going to be any overlap between them, we should have a discussion.",
+    "if you share an office with someone who's on a completely SPEAKER_02: different project, you find out about that project. but you also sort of interact with other people who are working on the same project in the same way. I think it's not a question of reserving it because there's other rooms that you can reserve for a meeting.",
+    "SPEAKER_02: take into account if you receive student or not because we have reception hours and stuff like that. it means you get time where a lot of students come along and talk and so it's different. chances are you're not going to have office hours at the exact same time.",
+    "people would like to see the office organized by by rank like professors and students and SPEAKER_00: well it's up to us how we do it. I think we can see benefits of both.",
+    "avoiding having three person full time SPEAKER_02: time and leave a spare space for the training center could be a good idea. avoiding a three person room in the same room could be an alternative.",
+    "you can look outside of the window if you have a quick meeting. we have some shelves like cabinet type shelves for the reading room SPEAKER_02: but it's not really intended to be a library.",
+    "SPEAKER_02: I guess this is. that and this becomes the reading room right? if Gisella works 50% and they work 50%, it's a good idea.",
+    "SPEAKER_01: I think the main reason to put to choose Gisella's place is the proximity of the mailbox. if you put the photography near the mailbox and it seems to be the only place where there is room.",
+    "SPEAKER_01: Yeah. UNKNOWN: Okay. maybe we should write this down. SPEAKR_00: I mean she's not sharing an office right now. if you put it into Gisella's office it's going to be.",
+    "SPEAKER_01: I think it's just a question of work conditions. if you're a stagier, you can put up with it for the whole year.",
+    "sPEAKER_01: Okay. assuming that's what you meant, right?..",
+    "the three-piece room in the opposite of the north east is the most sunny one. SPEAKER_01: It's the oven.",
+    "sPEAKER_01: And then this is the reading room. SPEAKEr_02: For 14 people. i'm going to take Jazeela off of the list as well.",
+    "SPEAKER_01: Yeah, that's going to be boring. if we just sit here and discuss, we're going to start arguing and get cranky.",
+    "SPEAKER_01: Save your file."
+  ],
+  "topics": [
+    {
+      "topic_id": 1,
+      "top_words": [
+        {
+          "word": "one",
+          "weight": 10.78943090547165
+        },
+        {
+          "word": "sort",
+          "weight": 10.006527585589858
+        },
+        {
+          "word": "yeah",
+          "weight": 9.227066021918402
+        },
+        {
+          "word": "make",
+          "weight": 9.19529000606508
+        },
+        {
+          "word": "quite",
+          "weight": 7.962252686630916
+        },
+        {
+          "word": "ca",
+          "weight": 6.094091121727492
+        },
+        {
+          "word": "east",
+          "weight": 5.198397870183338
+        },
+        {
+          "word": "see",
+          "weight": 5.101272700301234
+        },
+        {
+          "word": "people",
+          "weight": 4.325112404197095
+        },
+        {
+          "word": "thing",
+          "weight": 4.218191736453829
+        }
+      ]
+    },
+    {
+      "topic_id": 2,
+      "top_words": [
+        {
+          "word": "room",
+          "weight": 46.425872857780575
+        },
+        {
+          "word": "people",
+          "weight": 35.30622515736044
+        },
+        {
+          "word": "well",
+          "weight": 17.000922927179626
+        },
+        {
+          "word": "two",
+          "weight": 14.94483629475558
+        },
+        {
+          "word": "three",
+          "weight": 13.810598559348211
+        },
+        {
+          "word": "yeah",
+          "weight": 13.457997422208122
+        },
+        {
+          "word": "person",
+          "weight": 12.503254055978864
+        },
+        {
+          "word": "one",
+          "weight": 11.74611894088934
+        },
+        {
+          "word": "office",
+          "weight": 11.514473608477802
+        },
+        {
+          "word": "come",
+          "weight": 10.202892005200425
+        }
+      ]
+    },
+    {
+      "topic_id": 3,
+      "top_words": [
+        {
+          "word": "yeah",
+          "weight": 100.91125972614752
+        },
+        {
+          "word": "like",
+          "weight": 12.533036243051939
+        },
+        {
+          "word": "put",
+          "weight": 10.627808396214968
+        },
+        {
+          "word": "go",
+          "weight": 8.343629516718472
+        },
+        {
+          "word": "project",
+          "weight": 8.196272356765283
+        },
+        {
+          "word": "mean",
+          "weight": 8.028748438440239
+        },
+        {
+          "word": "know",
+          "weight": 7.57987024288469
+        },
+        {
+          "word": "really",
+          "weight": 7.3321275740880445
+        },
+        {
+          "word": "time",
+          "weight": 7.200869646016914
+        },
+        {
+          "word": "stuff",
+          "weight": 7.198519950974097
+        }
+      ]
+    },
+    {
+      "topic_id": 4,
+      "top_words": [
+        {
+          "word": "okay",
+          "weight": 29.196064494960186
+        },
+        {
+          "word": "work",
+          "weight": 11.302940460775913
+        },
+        {
+          "word": "go",
+          "weight": 10.985044434179928
+        },
+        {
+          "word": "good",
+          "weight": 9.92846533462945
+        },
+        {
+          "word": "office",
+          "weight": 9.515114427331834
+        },
+        {
+          "word": "think",
+          "weight": 9.21570755444555
+        },
+        {
+          "word": "question",
+          "weight": 7.216699983904603
+        },
+        {
+          "word": "place",
+          "weight": 7.1973501530823984
+        },
+        {
+          "word": "idea",
+          "weight": 6.985916133982674
+        },
+        {
+          "word": "even",
+          "weight": 5.209974233716722
+        }
+      ]
+    },
+    {
+      "topic_id": 5,
+      "top_words": [
+        {
+          "word": "one",
+          "weight": 16.059665090408764
+        },
+        {
+          "word": "know",
+          "weight": 15.132899675980012
+        },
+        {
+          "word": "get",
+          "weight": 14.948341667911132
+        },
+        {
+          "word": "room",
+          "weight": 11.970647186239729
+        },
+        {
+          "word": "like",
+          "weight": 10.762319912713215
+        },
+        {
+          "word": "two",
+          "weight": 10.454537184019271
+        },
+        {
+          "word": "printer",
+          "weight": 9.94850155756403
+        },
+        {
+          "word": "office",
+          "weight": 9.431349448542624
+        },
+        {
+          "word": "think",
+          "weight": 9.207089524038693
+        },
+        {
+          "word": "person",
+          "weight": 8.893944276646614
+        }
+      ]
+    }
+  ],
+  "decisions": [
+    {
+      "text": "Make decisions by November 2nd",
+      "owner": null,
+      "due_date": "2026-11-02",
+      "due_date_text": "by November 2nd",
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_02",
+        "timestamp": 39.56,
+        "quote": "to know where we're going to do all of this by November 2nd. So that means basically"
+      }
+    },
+    {
+      "text": "Decide on a two person room configuration for the reading room",
+      "owner": "SPEAKER_01",
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_01",
+        "timestamp": 874.08,
+        "quote": "So for the reading room we will have a two person room. Yeah I think so. Everybody agrees on that? One person will be too small anyways. How about this room? The one on the bottom? Yeah the bottom in the middle. Yeah it's a room. Use the mountains. Yeah it has three windows so I think it's two. Two? Well which there's three two person rooms. The the middle one. That has two windows. Yeah"
+      }
+    },
+    {
+      "text": "Decide on the two person rooms layout",
+      "owner": "SPEAKER_01",
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_01",
+        "timestamp": 1019.44,
+        "quote": "So are we all agree about these two person rooms which one? I don't know or not corner."
+      }
+    },
+    {
+      "text": "Decide on the administration stuff",
+      "owner": "SPEAKER_01",
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_01",
+        "timestamp": 1141.6,
+        "quote": "Yeah. We decided also the administration stuff and. Sure."
+      }
+    },
+    {
+      "text": "Ensure trainees are in the same room",
+      "owner": "SPEAKER_03",
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_03",
+        "timestamp": 1429.2,
+        "quote": "No, they need to go in the same room. Yeah. Okay. So Gisella at the southwest office."
+      }
+    }
+  ],
+  "action_items": [
+    {
+      "text": "Take a break",
+      "owner": "SPEAKER_01",
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_01",
+        "timestamp": 1747.2,
+        "quote": "So let's have a break."
+      }
+    }
+  ],
+  "deadlines": [
+    {
+      "text": "Make decisions by November 2nd",
+      "owner": null,
+      "due_date": "2026-11-02",
+      "due_date_text": "by November 2nd",
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_02",
+        "timestamp": 39.56,
+        "quote": "to know where we're going to do all of this by November 2nd. So that means basically"
+      }
+    }
+  ],
+  "open_questions": [
+    {
+      "text": "Provide information about office assignments and equipment by November 2nd",
+      "owner": null,
+      "due_date": "2026-11-02",
+      "due_date_text": "by November 2nd",
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_02",
+        "timestamp": 14.0,
+        "quote": "group. So we're moving to a new building. It's going to be the building across the street and we're actually moving in three weeks. But the problem is that the administration wants to know who's going to be in what office in the new building and where we're going to put things like the printer, the fax machine, all the big equipment. And the catch is that they have the final approval of where we put people and equipment. And they want to know where we're going to do all of this by November 2nd. So that means basically next Tuesday. And since we don't really have any other time, we have to make these decisions today. What we're getting is nine rooms for a maximum of 18 people, which is okay because there's only 15 of us. And all the rooms have windows locally. So there's no fights about who gets a window and who doesn't. There's two views either of the old town or the"
+      }
+    },
+    {
+      "text": "Discuss organizing people and deadlines",
+      "owner": "SPEAKER_02",
+      "due_date": "2026-10-19",
+      "due_date_text": "this week",
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_02",
+        "timestamp": 156.68,
+        "quote": "on. And I guess the question, the first question is how we want to organize people, whether we want to do it by rank or by project or I don't know, put all the PhD students together, all the professors together, that sort of thing. So the idea is that we come up with a plan. There's another group who's going to be working on the same plan later this week. And then Andre and I have to do presentations for the University administrators on the second. So I have to come up with a plan, possibly if we have time or presentation, a quick presentation with arguments for why we think our plan works best. Okay. So anyone have any ideas or I guess."
+      }
+    },
+    {
+      "text": "Discuss the security aspect of the presentation",
+      "owner": "SPEAKER_01",
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_01",
+        "timestamp": 214.32,
+        "quote": "Do we know if there will be a lot of people coming across the whole in terms of security stuff, if we can, I mean, my idea is to put the photography on the facts in the whole. Yeah. I think it's the security is sort of the same as it is in the current building. So as long as the things are physically attached to the wall so they can't be removed,"
+      }
+    },
+    {
+      "text": "Discuss the need for a reading room",
+      "owner": null,
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_01",
+        "timestamp": 316.16,
+        "quote": "Yeah. And do we need a room like a reading room? Yes. Yeah. A lot of people were saying that they wanted to have a reading room. So we should leave a space for that. And we can't because like I said, maximum 18 people in those rooms and there's only 15 of us. And I don't know if you noticed, but two of us are only here half the time. So Martin, David, are half the time at the EPF all and half the time in Geneva."
+      }
+    },
+    {
+      "text": "Discuss how to split the work between administration and researcher",
+      "owner": "SPEAKER_01",
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_01",
+        "timestamp": 368.16,
+        "quote": "Yeah. It's completely different work. So we can deal with administration and decide something for administration and then for the other. Yeah. But just I was really the only administration. But at least deal with that particular situation. Yeah. And then see with the other. Because I was thinking, Gisela is quite, I mean, Gisela's work"
+      }
+    },
+    {
+      "text": "Discuss Gisela's room arrangement",
+      "owner": "SPEAKER_01",
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_01",
+        "timestamp": 421.36,
+        "quote": "So I don't know. Maybe we can decide that Gisela is having one of the one person room. Yeah. I would suggest that too. Yeah. Maybe it can be. Yeah. Either that or maybe put her in a two-person room with the equipment or like we said the photocopier or maybe not the photocopier but the printer. Yeah. But at least the thing we know that Gisela is going to be alone. Yeah. Yeah."
+      }
+    },
+    {
+      "text": "Ensure the facts are included in the document",
+      "owner": "SPEAKER_00",
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_00",
+        "timestamp": 473.92,
+        "quote": "So probably she should get the facts, right? Yeah. Yeah. That makes sense."
+      }
+    },
+    {
+      "text": "Discuss the project or title group",
+      "owner": null,
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_01",
+        "timestamp": 510.56,
+        "quote": "And then I think the main discussion we should have is if we want to make group of amongst the same project or amongst the same title. Yeah. Yeah. Your professor asked this to? Yeah. Oh. Yeah. A couple of professors and assistants. Yeah. Yeah."
+      }
+    },
+    {
+      "text": "Discuss the use of the reading room for meetings or reading",
+      "owner": null,
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_00",
+        "timestamp": 579.36,
+        "quote": "project. Yeah. But we will have this reading room. Yeah. That's true. Yeah. That's true. Will it be dedicated for reading and for studying or can we have meetings that can reserve it for meetings? I think it's not a question of reserving it because there's other rooms at the university that you can reserve for a meeting. Yeah. But if it's empty then sure you can use it for meeting. There's nothing wrong with that. But I think if someone's already reading in there it's"
+      }
+    },
+    {
+      "text": "Discuss the fairness of using someone's reserved meeting space",
+      "owner": null,
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_00",
+        "timestamp": 606.08,
+        "quote": "well the problem is you have to go across the building and it adds some overhead every time you want to have some short meeting and discuss some issues. Maybe we shouldn't call it. But if you're having a short meeting you don't really make an appointment for it. You just kind of go to someone's office and go down for a coffee or whatever."
+      }
+    },
+    {
+      "text": "Discuss the challenges of sharing offices with students",
+      "owner": null,
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_02",
+        "timestamp": 631.12,
+        "quote": "Because there's still the cafeterias that you can use for informal. Yeah. The other thing we should take into account is if you receive student or not because Marien and I interact a lot with students and we have reception hours and stuff like that. So it means you get time where a lot of people come along and talk and so it's different. And the other Marien does too. Yeah. So maybe it's very nice to have to share on a face with somebody like us. I think a lot of social life and"
+      }
+    },
+    {
+      "text": "Discuss the challenges of sharing offices",
+      "owner": "SPEAKER_02",
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_02",
+        "timestamp": 669.44,
+        "quote": "because chances are you're not going to have office hours at the exact same time. So you're still going to have like unless you get individual offices. I don't know if there's an easy way to find a solution for that. Because even if each of you share with a professor then it's the same thing for the professor. But it is something to keep in mind. Unless you end up sharing an office with someone"
+      }
+    },
+    {
+      "text": "Reserve space for stagia or visitors",
+      "owner": "SPEAKER_03",
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_03",
+        "timestamp": 808.08,
+        "quote": "or something. I think we should reserve a little bit space for them to. So yeah that's a good"
+      }
+    },
+    {
+      "text": "Discuss and decide on the reading room configuration",
+      "owner": null,
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_00",
+        "timestamp": 880.16,
+        "quote": "One person will be too small anyways. How about this room? The one on the bottom? Yeah the bottom in the middle. Yeah it's a room. Use the mountains. Yeah it has three windows so I think it's two. Two? Well which there's three two person rooms. The the middle one. That has two windows. Yeah it's which is fine and still a big room. Big black stripe is the windows. Oh that's"
+      }
+    },
+    {
+      "text": "Consider assigning Gisella to the office",
+      "owner": "SPEAKER_00",
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_00",
+        "timestamp": 1152.0,
+        "quote": "I was thinking of maybe we should assign Gisella into this three person office because we will probably place the printer next to the mailboxes and we could have Gisella and the two 50% people sharing the three person. That's really noisy to be in the same office. Well the administration. But if Gisella works 50% and they work 50%."
+      }
+    },
+    {
+      "text": "Discuss the printer location and noise issue",
+      "owner": "SPEAKER_01",
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_01",
+        "timestamp": 1214.4,
+        "quote": "that she needs to be near the mailbox and the printer and."
+      }
+    },
+    {
+      "text": "Consider choosing a two-person room instead of a three-person room",
+      "owner": "SPEAKER_01",
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_01",
+        "timestamp": 1255.52,
+        "quote": "It should be a two people room and not three people room."
+      }
+    },
+    {
+      "text": "Confirm agreement on the layout of the photo copier and network printer",
+      "owner": "SPEAKER_00",
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_00",
+        "timestamp": 1311.44,
+        "quote": "Do we agree that the photo copier and the network printer goes next to the mailbox?"
+      }
+    },
+    {
+      "text": "Discuss room allocation for Gisella",
+      "owner": null,
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_01",
+        "timestamp": 1331.12,
+        "quote": "And then we can. For the moment put Gisella in this corner room if you agree. I don't know. Yeah. But at the beginning we said that we were going to give her one of the one person rooms."
+      }
+    },
+    {
+      "text": "Discuss grouping people by name",
+      "owner": "SPEAKER_01",
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_02",
+        "timestamp": 1660.32,
+        "quote": "I'll put her in gray, I guess. Can we group people by their name? I'm not sure. I still do my ring."
+      }
+    },
+    {
+      "text": "Discuss the idea of keeping the same arrangement for the new building",
+      "owner": "SPEAKER_01",
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_00",
+        "timestamp": 1685.12,
+        "quote": "arrangement just on the new building. Yeah, that's going to be boring. That's boring. That can be a good idea. But do we can we get?"
+      }
+    },
+    {
+      "text": "Consider taking a break",
+      "owner": null,
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_02",
+        "timestamp": 1728.32,
+        "quote": "Well, why don't we take a break and go off and think about it. Yeah."
+      }
+    },
+    {
+      "text": "Discuss and agree to take a break",
+      "owner": null,
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "SPEAKER_02",
+        "timestamp": 1741.04,
+        "quote": "yeah, it's going to take a long time. We're going to start arguing and get cranky and So let's have a break. Save your file."
+      }
+    }
+  ],
+  "transcript": [
+    {
+      "start": 0.0,
+      "end": 14.0,
+      "speaker": "SPEAKER_02",
+      "text": "Okay. So as you guys know, ISCO is too small. Well, the building is too small for our",
+      "speaker_overlap": 6.19
+    },
+    {
+      "start": 14.0,
+      "end": 18.8,
+      "speaker": "SPEAKER_02",
+      "text": "group. So we're moving to a new building. It's going to be the building across the street",
+      "speaker_overlap": 4.8
+    },
+    {
+      "start": 18.8,
+      "end": 24.8,
+      "speaker": "SPEAKER_02",
+      "text": "and we're actually moving in three weeks. But the problem is that the administration wants",
+      "speaker_overlap": 6.0
+    },
+    {
+      "start": 24.8,
+      "end": 29.48,
+      "speaker": "SPEAKER_02",
+      "text": "to know who's going to be in what office in the new building and where we're going to",
+      "speaker_overlap": 4.68
+    },
+    {
+      "start": 29.48,
+      "end": 34.6,
+      "speaker": "SPEAKER_02",
+      "text": "put things like the printer, the fax machine, all the big equipment. And the catch is",
+      "speaker_overlap": 5.12
+    },
+    {
+      "start": 34.6,
+      "end": 39.56,
+      "speaker": "SPEAKER_02",
+      "text": "that they have the final approval of where we put people and equipment. And they want",
+      "speaker_overlap": 3.703
+    },
+    {
+      "start": 39.56,
+      "end": 45.96,
+      "speaker": "SPEAKER_02",
+      "text": "to know where we're going to do all of this by November 2nd. So that means basically",
+      "speaker_overlap": 6.4
+    },
+    {
+      "start": 45.96,
+      "end": 50.68,
+      "speaker": "SPEAKER_02",
+      "text": "next Tuesday. And since we don't really have any other time, we have to make these decisions",
+      "speaker_overlap": 4.72
+    },
+    {
+      "start": 50.68,
+      "end": 57.2,
+      "speaker": "SPEAKER_02",
+      "text": "today. What we're getting is nine rooms for a maximum of 18 people, which is okay because",
+      "speaker_overlap": 6.52
+    },
+    {
+      "start": 57.2,
+      "end": 61.56,
+      "speaker": "SPEAKER_02",
+      "text": "there's only 15 of us. And all the rooms have windows locally. So there's no fights",
+      "speaker_overlap": 4.36
+    },
+    {
+      "start": 61.56,
+      "end": 66.32,
+      "speaker": "SPEAKER_02",
+      "text": "about who gets a window and who doesn't. There's two views either of the old town or the",
+      "speaker_overlap": 4.76
+    },
+    {
+      "start": 66.32,
+      "end": 70.92,
+      "speaker": "SPEAKER_02",
+      "text": "mountains. And the rooms are various sizes. There's two, three people rooms, five, two",
+      "speaker_overlap": 4.6
+    },
+    {
+      "start": 70.92,
+      "end": 74.12,
+      "speaker": "SPEAKER_02",
+      "text": "person rooms, which are on the corners of the building. So you actually get windows on",
+      "speaker_overlap": 3.2
+    },
+    {
+      "start": 74.12,
+      "end": 81.56,
+      "speaker": "SPEAKER_02",
+      "text": "two walls. And two, one person rooms. That's pretty much what the building looks like.",
+      "speaker_overlap": 5.558
+    },
+    {
+      "start": 81.56,
+      "end": 86.08,
+      "speaker": "SPEAKER_02",
+      "text": "And then you have the number of people per room. The courtyard, because we're on the sixth",
+      "speaker_overlap": 4.52
+    },
+    {
+      "start": 86.08,
+      "end": 89.96,
+      "speaker": "SPEAKER_02",
+      "text": "floor, you can actually go out to it. But just means that the windows look out onto open",
+      "speaker_overlap": 3.88
+    },
+    {
+      "start": 89.96,
+      "end": 97.72,
+      "speaker": "SPEAKER_02",
+      "text": "space. You can see the bathrooms, the elevators are sort of further down the hall. The purple",
+      "speaker_overlap": 7.76
+    },
+    {
+      "start": 97.72,
+      "end": 104.88,
+      "speaker": "SPEAKER_02",
+      "text": "bar at the bottom, sort of on the right, is the mailboxes. All of the windows open, you",
+      "speaker_overlap": 4.354
+    },
+    {
+      "start": 104.88,
+      "end": 111.36,
+      "speaker": "SPEAKER_02",
+      "text": "can get out onto the terrace just like we can in our normal building. And the equipment",
+      "speaker_overlap": 3.269
+    },
+    {
+      "start": 111.36,
+      "end": 116.24,
+      "speaker": "SPEAKER_02",
+      "text": "that we have to put somewhere are like I said, the photocopier, which is really big, the",
+      "speaker_overlap": 4.88
+    },
+    {
+      "start": 116.24,
+      "end": 122.84,
+      "speaker": "SPEAKER_02",
+      "text": "fax machine, which is not so big, and the printer, which is relatively big. Each office",
+      "speaker_overlap": 6.6
+    },
+    {
+      "start": 122.84,
+      "end": 128.04,
+      "speaker": "SPEAKER_02",
+      "text": "has a white board, a bulletin board, and a coat rack. No cupboards like we have in the",
+      "speaker_overlap": 5.2
+    },
+    {
+      "start": 128.04,
+      "end": 133.6,
+      "speaker": "SPEAKER_02",
+      "text": "current offices. And each person gets their own chair, their own corner desk, so like",
+      "speaker_overlap": 5.56
+    },
+    {
+      "start": 133.6,
+      "end": 138.76,
+      "speaker": "SPEAKER_02",
+      "text": "the ones that we have now. A small filing cabinet with three drawers, and by small I mean",
+      "speaker_overlap": 5.16
+    },
+    {
+      "start": 138.84,
+      "end": 144.0,
+      "speaker": "SPEAKER_02",
+      "text": "there about that tall. And one sort of hanging shelf. So we don't get the bookcases like",
+      "speaker_overlap": 5.16
+    },
+    {
+      "start": 144.0,
+      "end": 150.0,
+      "speaker": "SPEAKER_02",
+      "text": "we have now, but just one shelf that's attached to the wall. And the people that we have to",
+      "speaker_overlap": 2.978
+    },
+    {
+      "start": 150.0,
+      "end": 156.68,
+      "speaker": "SPEAKER_02",
+      "text": "place, you can see the list there along with their position and the project that they work",
+      "speaker_overlap": 6.68
+    },
+    {
+      "start": 156.68,
+      "end": 163.48,
+      "speaker": "SPEAKER_02",
+      "text": "on. And I guess the question, the first question is how we want to organize people, whether",
+      "speaker_overlap": 6.8
+    },
+    {
+      "start": 163.48,
+      "end": 172.84,
+      "speaker": "SPEAKER_02",
+      "text": "we want to do it by rank or by project or I don't know, put all the PhD students together,",
+      "speaker_overlap": 5.368
+    },
+    {
+      "start": 172.84,
+      "end": 180.84,
+      "speaker": "SPEAKER_02",
+      "text": "all the professors together, that sort of thing. So the idea is that we come up with a plan.",
+      "speaker_overlap": 3.875
+    },
+    {
+      "start": 180.84,
+      "end": 185.72,
+      "speaker": "SPEAKER_02",
+      "text": "There's another group who's going to be working on the same plan later this week. And",
+      "speaker_overlap": 4.88
+    },
+    {
+      "start": 185.72,
+      "end": 192.72,
+      "speaker": "SPEAKER_02",
+      "text": "then Andre and I have to do presentations for the University administrators on the second.",
+      "speaker_overlap": 7.0
+    },
+    {
+      "start": 193.56,
+      "end": 197.64,
+      "speaker": "SPEAKER_02",
+      "text": "So I have to come up with a plan, possibly if we have time or presentation,",
+      "speaker_overlap": 4.08
+    },
+    {
+      "start": 197.64,
+      "end": 201.52,
+      "speaker": "SPEAKER_02",
+      "text": "a quick presentation with arguments for why we think our plan works best.",
+      "speaker_overlap": 3.88
+    },
+    {
+      "start": 203.04,
+      "end": 213.32,
+      "speaker": "SPEAKER_02",
+      "text": "Okay. So anyone have any ideas or I guess.",
+      "speaker_overlap": 5.282
+    },
+    {
+      "start": 214.32,
+      "end": 222.08,
+      "speaker": "SPEAKER_01",
+      "text": "Do we know if there will be a lot of people coming across the whole in terms of security",
+      "speaker_overlap": 7.76
+    },
+    {
+      "start": 222.08,
+      "end": 226.64,
+      "speaker": "SPEAKER_01",
+      "text": "stuff, if we can, I mean, my idea is to put the photography on the facts in the whole.",
+      "speaker_overlap": 4.56
+    },
+    {
+      "start": 226.64,
+      "end": 232.64,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah. I think it's the security is sort of the same as it is in the current building.",
+      "speaker_overlap": 5.86
+    },
+    {
+      "start": 232.64,
+      "end": 236.48,
+      "speaker": "SPEAKER_02",
+      "text": "So as long as the things are physically attached to the wall so they can't be removed,",
+      "speaker_overlap": 3.84
+    },
+    {
+      "start": 236.48,
+      "end": 238.64,
+      "speaker": "SPEAKER_02",
+      "text": "then it should be okay to leave them in the hall.",
+      "speaker_overlap": 2.16
+    },
+    {
+      "start": 243.12,
+      "end": 247.12,
+      "speaker": "SPEAKER_02",
+      "text": "I just a question or whether you're printing the sensitive documents or whatever.",
+      "speaker_overlap": 3.836
+    },
+    {
+      "start": 247.12,
+      "end": 251.6,
+      "speaker": "SPEAKER_00",
+      "text": "Yeah. So we only get one printer for 15 people?",
+      "speaker_overlap": 2.258
+    },
+    {
+      "start": 253.36,
+      "end": 259.52,
+      "speaker": "SPEAKER_02",
+      "text": "Well, we get one sort of network printer and then I think some of us have personal printers.",
+      "speaker_overlap": 6.16
+    },
+    {
+      "start": 260.48,
+      "end": 264.56,
+      "speaker": "SPEAKER_02",
+      "text": "Nothing Susan has a personal printer, Jisela has one maybe.",
+      "speaker_overlap": 4.08
+    },
+    {
+      "start": 265.76,
+      "end": 270.16,
+      "speaker": "SPEAKER_02",
+      "text": "I can't remember who else. Yeah, but no one else gets their own printer.",
+      "speaker_overlap": 4.365
+    },
+    {
+      "start": 270.16,
+      "end": 272.96,
+      "speaker": "SPEAKER_02",
+      "text": "In terms of equipment, it's sort of the same thing as we have now.",
+      "speaker_overlap": 2.8
+    },
+    {
+      "start": 277.84,
+      "end": 288.32,
+      "speaker": "SPEAKER_02",
+      "text": "So what I'd propose is that we sort of discuss various concepts without getting into specifics",
+      "speaker_overlap": 5.43
+    },
+    {
+      "start": 288.32,
+      "end": 293.68,
+      "speaker": "SPEAKER_02",
+      "text": "and then go off and think about it over lunch and then come back later in the day with sort of more",
+      "speaker_overlap": 5.36
+    },
+    {
+      "start": 293.68,
+      "end": 300.32,
+      "speaker": "SPEAKER_02",
+      "text": "specific proposals as to exactly where to put people. Does that work?",
+      "speaker_overlap": 3.891
+    },
+    {
+      "start": 301.2,
+      "end": 306.08,
+      "speaker": "SPEAKER_02",
+      "text": "Oh and on the map the little half circular quarter circles or doors.",
+      "speaker_overlap": 4.88
+    },
+    {
+      "start": 307.04,
+      "end": 309.28,
+      "speaker": "SPEAKER_02",
+      "text": "Which I'm assuming you figured out, but just in case.",
+      "speaker_overlap": 2.24
+    },
+    {
+      "start": 310.08,
+      "end": 313.04,
+      "speaker": "SPEAKER_02",
+      "text": "And there's just the one room that actually has two doors going into it.",
+      "speaker_overlap": 2.96
+    },
+    {
+      "start": 313.76,
+      "end": 316.16,
+      "speaker": "SPEAKER_02",
+      "text": "The three person room on the right.",
+      "speaker_overlap": 2.4
+    },
+    {
+      "start": 316.16,
+      "end": 319.6,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah. And do we need a room like a reading room?",
+      "speaker_overlap": 3.44
+    },
+    {
+      "start": 319.6,
+      "end": 324.0,
+      "speaker": "SPEAKER_02",
+      "text": "Yes. Yeah. A lot of people were saying that they wanted to have a reading room.",
+      "speaker_overlap": 4.272
+    },
+    {
+      "start": 325.6,
+      "end": 328.16,
+      "speaker": "SPEAKER_02",
+      "text": "So we should leave a space for that.",
+      "speaker_overlap": 2.56
+    },
+    {
+      "start": 329.12,
+      "end": 333.52,
+      "speaker": "SPEAKER_02",
+      "text": "And we can't because like I said, maximum 18 people in those rooms and there's only 15 of us.",
+      "speaker_overlap": 4.4
+    },
+    {
+      "start": 334.24,
+      "end": 339.76,
+      "speaker": "SPEAKER_02",
+      "text": "And I don't know if you noticed, but two of us are only here half the time.",
+      "speaker_overlap": 5.52
+    },
+    {
+      "start": 340.48,
+      "end": 345.04,
+      "speaker": "SPEAKER_02",
+      "text": "So Martin, David, are half the time at the EPF all and half the time in Geneva.",
+      "speaker_overlap": 4.56
+    },
+    {
+      "start": 345.92,
+      "end": 354.16,
+      "speaker": "SPEAKER_02",
+      "text": "So sort of keep that in mind, I guess when you're doing the actual planning.",
+      "speaker_overlap": 5.458
+    },
+    {
+      "start": 354.8,
+      "end": 367.36,
+      "speaker": "SPEAKER_01",
+      "text": "The first split we can do is between administration and researcher.",
+      "speaker_overlap": 4.365
+    },
+    {
+      "start": 368.16,
+      "end": 374.8,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah. It's completely different work. So we can deal with administration and decide something",
+      "speaker_overlap": 6.64
+    },
+    {
+      "start": 374.8,
+      "end": 381.68,
+      "speaker": "SPEAKER_02",
+      "text": "for administration and then for the other. Yeah. But just I was really the only",
+      "speaker_overlap": 3.362
+    },
+    {
+      "start": 382.48,
+      "end": 386.48,
+      "speaker": "SPEAKER_01",
+      "text": "administration. But at least deal with that particular situation.",
+      "speaker_overlap": 3.943
+    },
+    {
+      "start": 386.48,
+      "end": 392.96,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah. And then see with the other. Because I was thinking, Gisela is quite, I mean, Gisela's work",
+      "speaker_overlap": 6.48
+    },
+    {
+      "start": 392.96,
+      "end": 397.6,
+      "speaker": "SPEAKER_01",
+      "text": "is quite noisy because it's secretory. So yeah, a lot of fun, cool and stuff like that.",
+      "speaker_overlap": 4.64
+    },
+    {
+      "start": 397.6,
+      "end": 401.52,
+      "speaker": "SPEAKER_01",
+      "text": "And she's always moving around. Yeah. So you want share and office with Gisela.",
+      "speaker_overlap": 3.92
+    },
+    {
+      "start": 401.52,
+      "end": 407.76,
+      "speaker": "SPEAKER_01",
+      "text": "Unless you are 50% and not the 50% Gisela is working. Yeah. Which is another condition.",
+      "speaker_overlap": 6.127
+    },
+    {
+      "start": 407.76,
+      "end": 412.08,
+      "speaker": "SPEAKER_02",
+      "text": "Which I don't know if we can assume that there isn't going to be any overlap between them.",
+      "speaker_overlap": 4.214
+    },
+    {
+      "start": 421.36,
+      "end": 427.12,
+      "speaker": "SPEAKER_01",
+      "text": "So I don't know. Maybe we can decide that Gisela is having one of the one person room.",
+      "speaker_overlap": 5.636
+    },
+    {
+      "start": 427.12,
+      "end": 434.72,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah. I would suggest that too. Yeah. Maybe it can be. Yeah. Either that or maybe put her in a two-person",
+      "speaker_overlap": 2.976
+    },
+    {
+      "start": 434.72,
+      "end": 442.88,
+      "speaker": "SPEAKER_02",
+      "text": "room with the equipment or like we said the photocopier or maybe not the photocopier but the printer.",
+      "speaker_overlap": 8.16
+    },
+    {
+      "start": 446.08,
+      "end": 450.4,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah. But at least the thing we know that Gisela is going to be alone. Yeah. Yeah.",
+      "speaker_overlap": 3.038
+    },
+    {
+      "start": 450.4,
+      "end": 455.68,
+      "speaker": "SPEAKER_02",
+      "text": "Always equipment. But not with a 100% staff worker.",
+      "speaker_overlap": 3.18
+    },
+    {
+      "start": 456.88,
+      "end": 463.12,
+      "speaker": "SPEAKER_00",
+      "text": "Okay. So it's a one person room but we don't know how big they are. It's hard to tell. I mean,",
+      "speaker_overlap": 6.114
+    },
+    {
+      "start": 463.12,
+      "end": 472.64,
+      "speaker": "SPEAKER_02",
+      "text": "Gisela has this funny typing. Yeah. The rooms aren't tiny if you look at these. Yeah.",
+      "speaker_overlap": 4.176
+    },
+    {
+      "start": 473.92,
+      "end": 479.92,
+      "speaker": "SPEAKER_00",
+      "text": "So probably she should get the facts, right? Yeah. Yeah. That makes sense.",
+      "speaker_overlap": 2.475
+    },
+    {
+      "start": 479.92,
+      "end": 482.24,
+      "speaker": "SPEAKER_03",
+      "text": "To put the facts in there.",
+      "speaker_overlap": 1.555
+    },
+    {
+      "start": 510.56,
+      "end": 519.2,
+      "speaker": "SPEAKER_01",
+      "text": "And then I think the main discussion we should have is if we want to make group of",
+      "speaker_overlap": 3.392
+    },
+    {
+      "start": 520.16,
+      "end": 525.6,
+      "speaker": "SPEAKER_01",
+      "text": "amongst the same project or amongst the same title. Yeah. Yeah.",
+      "speaker_overlap": 3.89
+    },
+    {
+      "start": 525.6,
+      "end": 532.4,
+      "speaker": "SPEAKER_01",
+      "text": "Your professor asked this to? Yeah. Oh. Yeah. A couple of professors and assistants. Yeah.",
+      "speaker_overlap": 5.839
+    },
+    {
+      "start": 532.56,
+      "end": 534.08,
+      "speaker": "SPEAKER_03",
+      "text": "Yeah.",
+      "speaker_overlap": 0.08
+    },
+    {
+      "start": 536.8,
+      "end": 541.12,
+      "speaker": "SPEAKER_01",
+      "text": "That's more conceptual question than a practical question.",
+      "speaker_overlap": 4.278
+    },
+    {
+      "start": 542.72,
+      "end": 548.32,
+      "speaker": "SPEAKER_02",
+      "text": "Well, the third option is just completely mix everyone up. Which some people say is better",
+      "speaker_overlap": 5.522
+    },
+    {
+      "start": 548.32,
+      "end": 551.84,
+      "speaker": "SPEAKER_02",
+      "text": "sort of for group environment so that you're not stuck only with the people who are working on",
+      "speaker_overlap": 3.52
+    },
+    {
+      "start": 551.84,
+      "end": 555.6,
+      "speaker": "SPEAKER_02",
+      "text": "your project. Yeah. Right. So if you share an office with someone who's on a completely",
+      "speaker_overlap": 3.76
+    },
+    {
+      "start": 555.6,
+      "end": 559.84,
+      "speaker": "SPEAKER_02",
+      "text": "different project. Yeah. You find out about that project but you also sort of interact with other",
+      "speaker_overlap": 4.24
+    },
+    {
+      "start": 559.84,
+      "end": 567.28,
+      "speaker": "SPEAKER_03",
+      "text": "people on a more regular basis. Yeah. But still I find it's quite easy if you are with people",
+      "speaker_overlap": 3.877
+    },
+    {
+      "start": 567.28,
+      "end": 572.08,
+      "speaker": "SPEAKER_03",
+      "text": "who work in the same project in the same way because you have the meetings or people come and ask",
+      "speaker_overlap": 4.8
+    },
+    {
+      "start": 572.08,
+      "end": 579.36,
+      "speaker": "SPEAKER_03",
+      "text": "you discuss things. Maybe I don't know if it's for other people who's not working in the same",
+      "speaker_overlap": 3.675
+    },
+    {
+      "start": 579.36,
+      "end": 584.16,
+      "speaker": "SPEAKER_00",
+      "text": "project. Yeah. But we will have this reading room. Yeah. That's true. Yeah. That's true.",
+      "speaker_overlap": 2.903
+    },
+    {
+      "start": 584.16,
+      "end": 588.72,
+      "speaker": "SPEAKER_00",
+      "text": "Will it be dedicated for reading and for studying or can we have meetings that can reserve it for",
+      "speaker_overlap": 4.56
+    },
+    {
+      "start": 588.72,
+      "end": 593.76,
+      "speaker": "SPEAKER_02",
+      "text": "meetings? I think it's not a question of reserving it because there's other rooms at the",
+      "speaker_overlap": 3.222
+    },
+    {
+      "start": 593.76,
+      "end": 598.32,
+      "speaker": "SPEAKER_02",
+      "text": "university that you can reserve for a meeting. Yeah. But if it's empty then sure you can use it for",
+      "speaker_overlap": 4.56
+    },
+    {
+      "start": 598.32,
+      "end": 601.92,
+      "speaker": "SPEAKER_02",
+      "text": "meeting. There's nothing wrong with that. But I think if someone's already reading in there it's",
+      "speaker_overlap": 3.6
+    },
+    {
+      "start": 601.92,
+      "end": 605.6,
+      "speaker": "SPEAKER_02",
+      "text": "not fair. Yeah. To go and kick them out just because you want to have a meeting. Because",
+      "speaker_overlap": 3.68
+    },
+    {
+      "start": 606.08,
+      "end": 611.36,
+      "speaker": "SPEAKER_00",
+      "text": "well the problem is you have to go across the building and it adds some overhead every time you",
+      "speaker_overlap": 5.213
+    },
+    {
+      "start": 611.36,
+      "end": 618.88,
+      "speaker": "SPEAKER_00",
+      "text": "want to have some short meeting and discuss some issues. Maybe we shouldn't call it.",
+      "speaker_overlap": 7.52
+    },
+    {
+      "start": 618.88,
+      "end": 624.64,
+      "speaker": "SPEAKER_02",
+      "text": "But if you're having a short meeting you don't really make an appointment for it. You just kind of",
+      "speaker_overlap": 2.345
+    },
+    {
+      "start": 625.52,
+      "end": 628.56,
+      "speaker": "SPEAKER_02",
+      "text": "go to someone's office and go down for a coffee or whatever.",
+      "speaker_overlap": 3.04
+    },
+    {
+      "start": 631.12,
+      "end": 636.88,
+      "speaker": "SPEAKER_02",
+      "text": "Because there's still the cafeterias that you can use for informal. Yeah. The other thing we should",
+      "speaker_overlap": 3.493
+    },
+    {
+      "start": 636.88,
+      "end": 646.0,
+      "speaker": "SPEAKER_01",
+      "text": "take into account is if you receive student or not because Marien and I interact a lot with",
+      "speaker_overlap": 5.11
+    },
+    {
+      "start": 646.0,
+      "end": 651.84,
+      "speaker": "SPEAKER_01",
+      "text": "students and we have reception hours and stuff like that. So it means you get time where a lot of",
+      "speaker_overlap": 5.84
+    },
+    {
+      "start": 651.84,
+      "end": 656.96,
+      "speaker": "SPEAKER_01",
+      "text": "people come along and talk and so it's different. And the other Marien does too. Yeah. So maybe it's",
+      "speaker_overlap": 5.12
+    },
+    {
+      "start": 656.96,
+      "end": 663.6,
+      "speaker": "SPEAKER_01",
+      "text": "very nice to have to share on a face with somebody like us. I think a lot of social life and",
+      "speaker_overlap": 6.64
+    },
+    {
+      "start": 664.16,
+      "end": 669.44,
+      "speaker": "SPEAKER_02",
+      "text": "well but then you either share offices with each other. Yeah. Which doesn't really solve the problem",
+      "speaker_overlap": 5.108
+    },
+    {
+      "start": 669.44,
+      "end": 672.8,
+      "speaker": "SPEAKER_02",
+      "text": "because chances are you're not going to have office hours at the exact same time.",
+      "speaker_overlap": 3.36
+    },
+    {
+      "start": 673.84,
+      "end": 682.64,
+      "speaker": "SPEAKER_02",
+      "text": "So you're still going to have like unless you get individual offices. I don't know if there's",
+      "speaker_overlap": 4.538
+    },
+    {
+      "start": 682.64,
+      "end": 685.68,
+      "speaker": "SPEAKER_02",
+      "text": "an easy way to find a solution for that.",
+      "speaker_overlap": 3.04
+    },
+    {
+      "start": 685.76,
+      "end": 694.64,
+      "speaker": "SPEAKER_02",
+      "text": "Because even if each of you share with a professor then it's the same thing for the professor.",
+      "speaker_overlap": 4.455
+    },
+    {
+      "start": 698.72,
+      "end": 704.24,
+      "speaker": "SPEAKER_02",
+      "text": "But it is something to keep in mind. Unless you end up sharing an office with someone",
+      "speaker_overlap": 1.569
+    },
+    {
+      "start": 704.88,
+      "end": 709.04,
+      "speaker": "SPEAKER_02",
+      "text": "where your schedule is completely don't overlap and then you do schedule office hours when",
+      "speaker_overlap": 4.16
+    },
+    {
+      "start": 709.04,
+      "end": 713.6,
+      "speaker": "SPEAKER_02",
+      "text": "the other person isn't there. Some people come in around alive and some people come in around",
+      "speaker_overlap": 4.56
+    },
+    {
+      "start": 713.6,
+      "end": 718.88,
+      "speaker": "SPEAKER_01",
+      "text": "eight. Yeah. But that's something we can't reasonably assume like that. No.",
+      "speaker_overlap": 4.682
+    },
+    {
+      "start": 719.52,
+      "end": 723.76,
+      "speaker": "SPEAKER_02",
+      "text": "Make plans with that because. No, but you sort of see people's patterns. I mean",
+      "speaker_overlap": 2.12
+    },
+    {
+      "start": 724.4,
+      "end": 729.68,
+      "speaker": "SPEAKER_02",
+      "text": "yeah. Even if it's not always like that. I mean if it's like that you know 80% of the time",
+      "speaker_overlap": 4.294
+    },
+    {
+      "start": 730.72,
+      "end": 730.96,
+      "speaker": "SPEAKER_02",
+      "text": "then",
+      "speaker_overlap": 0.24
+    },
+    {
+      "start": 733.6,
+      "end": 736.4,
+      "speaker": "SPEAKER_02",
+      "text": "but you're right we can't make assumptions too much.",
+      "speaker_overlap": 2.695
+    },
+    {
+      "start": 744.4,
+      "end": 752.16,
+      "speaker": "SPEAKER_00",
+      "text": "So people would like to see the office organized by by rank like professors and students and",
+      "speaker_overlap": 7.655
+    },
+    {
+      "start": 752.88,
+      "end": 755.52,
+      "speaker": "SPEAKER_00",
+      "text": "I don't know. I think",
+      "speaker_overlap": 0.687
+    },
+    {
+      "start": 757.6,
+      "end": 763.92,
+      "speaker": "SPEAKER_02",
+      "text": "well it's up to us how we do it. I can see benefits of both. Yeah.",
+      "speaker_overlap": 6.151
+    },
+    {
+      "start": 766.56,
+      "end": 772.16,
+      "speaker": "SPEAKER_01",
+      "text": "One point I can say by experience it's really hard to share an office with three people",
+      "speaker_overlap": 5.582
+    },
+    {
+      "start": 772.24,
+      "end": 778.88,
+      "speaker": "SPEAKER_01",
+      "text": "because it makes much more noise that only being two in an office. Yeah plus the computers.",
+      "speaker_overlap": 4.817
+    },
+    {
+      "start": 778.88,
+      "end": 783.6,
+      "speaker": "SPEAKER_02",
+      "text": "Plus the computers. So we all know what it's like to have five computers in your office. Yeah.",
+      "speaker_overlap": 2.616
+    },
+    {
+      "start": 785.04,
+      "end": 792.72,
+      "speaker": "SPEAKER_01",
+      "text": "So we might be it might be a good idea to first exclude one of the three person room to be the",
+      "speaker_overlap": 7.68
+    },
+    {
+      "start": 792.72,
+      "end": 800.8,
+      "speaker": "SPEAKER_01",
+      "text": "reading room and not to be necessary a room with three people. A working room. Yeah but if there",
+      "speaker_overlap": 7.523
+    },
+    {
+      "start": 800.8,
+      "end": 808.08,
+      "speaker": "SPEAKER_03",
+      "text": "are people coming in I mean we have these people working for two months who come in the summertime",
+      "speaker_overlap": 7.28
+    },
+    {
+      "start": 808.08,
+      "end": 816.08,
+      "speaker": "SPEAKER_03",
+      "text": "or something. I think we should reserve a little bit space for them to. So yeah that's a good",
+      "speaker_overlap": 7.047
+    },
+    {
+      "start": 816.08,
+      "end": 821.2,
+      "speaker": "SPEAKER_02",
+      "text": "point because if we take the three person room out as a reading room it's quite good. Then",
+      "speaker_overlap": 3.789
+    },
+    {
+      "start": 822.0,
+      "end": 828.72,
+      "speaker": "SPEAKER_02",
+      "text": "everyone has an office right because it's maximum 18. So take away three spaces and you're down",
+      "speaker_overlap": 3.37
+    },
+    {
+      "start": 828.72,
+      "end": 833.92,
+      "speaker": "SPEAKER_02",
+      "text": "to your 15 and you're right if we do have a stagia or whoever comes in then we have nowhere",
+      "speaker_overlap": 5.2
+    },
+    {
+      "start": 834.72,
+      "end": 837.44,
+      "speaker": "SPEAKER_02",
+      "text": "well we can put them in the reading room but that kind of defeats the purpose.",
+      "speaker_overlap": 2.72
+    },
+    {
+      "start": 839.44,
+      "end": 844.64,
+      "speaker": "SPEAKER_01",
+      "text": "So the other solution is to say okay we use this three person room but only with two person each",
+      "speaker_overlap": 5.061
+    },
+    {
+      "start": 844.64,
+      "end": 858.48,
+      "speaker": "SPEAKER_01",
+      "text": "time and leave a spare space for the training center. But avoiding having three person full time",
+      "speaker_overlap": 6.077
+    },
+    {
+      "start": 858.56,
+      "end": 866.24,
+      "speaker": "SPEAKER_02",
+      "text": "in the same room could be a good idea. Or again find people who don't work in the same hours. Yeah",
+      "speaker_overlap": 4.487
+    },
+    {
+      "start": 867.12,
+      "end": 869.28,
+      "speaker": "SPEAKER_02",
+      "text": "I doesn't completely solve the problem but",
+      "speaker_overlap": 2.16
+    },
+    {
+      "start": 874.08,
+      "end": 880.16,
+      "speaker": "SPEAKER_01",
+      "text": "So for the reading room we will have a two person room. Yeah I think so. Everybody agrees on that?",
+      "speaker_overlap": 6.004
+    },
+    {
+      "start": 880.16,
+      "end": 886.16,
+      "speaker": "SPEAKER_00",
+      "text": "One person will be too small anyways. How about this room? The one on the bottom? Yeah the bottom",
+      "speaker_overlap": 3.128
+    },
+    {
+      "start": 886.16,
+      "end": 890.88,
+      "speaker": "SPEAKER_00",
+      "text": "in the middle. Yeah it's a room. Use the mountains. Yeah it has three windows so I think it's",
+      "speaker_overlap": 4.72
+    },
+    {
+      "start": 890.88,
+      "end": 899.04,
+      "speaker": "SPEAKER_02",
+      "text": "two. Two? Well which there's three two person rooms. The the middle one. That has two windows. Yeah",
+      "speaker_overlap": 2.936
+    },
+    {
+      "start": 899.76,
+      "end": 905.6,
+      "speaker": "SPEAKER_01",
+      "text": "it's which is fine and still a big room. Big black stripe is the windows. Oh that's",
+      "speaker_overlap": 3.398
+    },
+    {
+      "start": 905.6,
+      "end": 911.52,
+      "speaker": "SPEAKER_01",
+      "text": "the same one between the big. Oh okay. Yeah sorry I should have explained that. But",
+      "speaker_overlap": 5.92
+    },
+    {
+      "start": 911.6,
+      "end": 916.8,
+      "speaker": "SPEAKER_01",
+      "text": "what about the the other one which has only one windows but in the courtyard it may be more quiet.",
+      "speaker_overlap": 5.2
+    },
+    {
+      "start": 917.92,
+      "end": 926.16,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah but then you don't get a lot of light for reading. We have electricity so I hope. Really?",
+      "speaker_overlap": 3.488
+    },
+    {
+      "start": 928.4,
+      "end": 932.4,
+      "speaker": "SPEAKER_01",
+      "text": "It's a question I mean it's quite noisy outside with the streets and",
+      "speaker_overlap": 3.94
+    },
+    {
+      "start": 934.56,
+      "end": 939.84,
+      "speaker": "SPEAKER_03",
+      "text": "that's on the sixth floor I don't know. Yeah we are on the sixth floor. I know I like the idea of",
+      "speaker_overlap": 2.075
+    },
+    {
+      "start": 939.84,
+      "end": 948.08,
+      "speaker": "SPEAKER_01",
+      "text": "looking out over yeah me too. It's a relaxing room. Well that's the whole point right it's just",
+      "speaker_overlap": 4.573
+    },
+    {
+      "start": 948.08,
+      "end": 952.64,
+      "speaker": "SPEAKER_02",
+      "text": "somewhere to get out of your office and go and do something else for a while whether you're reading or",
+      "speaker_overlap": 4.56
+    },
+    {
+      "start": 952.64,
+      "end": 958.48,
+      "speaker": "SPEAKER_00",
+      "text": "just kind of staring off into space. Yeah you can look outside of the window if you have a quick meeting.",
+      "speaker_overlap": 3.088
+    },
+    {
+      "start": 959.68,
+      "end": 965.36,
+      "speaker": "SPEAKER_01",
+      "text": "So what about one of the rooms in the corner? So you have three windows it's even better. Yeah we",
+      "speaker_overlap": 4.977
+    },
+    {
+      "start": 965.36,
+      "end": 974.08,
+      "speaker": "SPEAKER_01",
+      "text": "could do that. But you have less wall to put shelves and stuff like that. If you intend the reading",
+      "speaker_overlap": 2.464
+    },
+    {
+      "start": 974.08,
+      "end": 983.76,
+      "speaker": "SPEAKER_02",
+      "text": "room being more a library or. We have some shelves like cabinet type shelves for the reading room",
+      "speaker_overlap": 4.456
+    },
+    {
+      "start": 983.76,
+      "end": 989.2,
+      "speaker": "SPEAKER_02",
+      "text": "but it's not really intended to be a library. I mean we have yeah and a tea library.",
+      "speaker_overlap": 3.138
+    },
+    {
+      "start": 989.28,
+      "end": 998.56,
+      "speaker": "SPEAKER_02",
+      "text": "But the other idea is to take because right now we all have bookshelves so one idea might be to take",
+      "speaker_overlap": 5.351
+    },
+    {
+      "start": 998.56,
+      "end": 1003.92,
+      "speaker": "SPEAKER_02",
+      "text": "sort of the books that aren't frequently used by people but them all into that room. Yeah.",
+      "speaker_overlap": 5.36
+    },
+    {
+      "start": 1003.92,
+      "end": 1008.56,
+      "speaker": "SPEAKER_02",
+      "text": "So it becomes sort of. Kind of yeah. It's full library. Mini library but not like a library system",
+      "speaker_overlap": 2.138
+    },
+    {
+      "start": 1008.56,
+      "end": 1012.0,
+      "speaker": "SPEAKER_02",
+      "text": "library just. No no no. Go and borrow your colleagues books.",
+      "speaker_overlap": 3.44
+    },
+    {
+      "start": 1019.44,
+      "end": 1028.32,
+      "speaker": "SPEAKER_01",
+      "text": "So are we all agree about these two person rooms which one? I don't know or not corner.",
+      "speaker_overlap": 3.881
+    },
+    {
+      "start": 1029.28,
+      "end": 1035.68,
+      "speaker": "SPEAKER_02",
+      "text": "I think the middle one. The middle one. Yeah. It's also sort of central to the layout so everyone",
+      "speaker_overlap": 6.291
+    },
+    {
+      "start": 1035.68,
+      "end": 1041.28,
+      "speaker": "SPEAKER_02",
+      "text": "sort of has more or less the same distance to it's not that it makes that much of a difference but",
+      "speaker_overlap": 2.332
+    },
+    {
+      "start": 1041.52,
+      "end": 1049.68,
+      "speaker": "SPEAKER_01",
+      "text": "why not? So we can exclude this one to make an office. Yeah.",
+      "speaker_overlap": 2.413
+    },
+    {
+      "start": 1051.6,
+      "end": 1057.2,
+      "speaker": "SPEAKER_01",
+      "text": "Actually what I can do is. Oh maybe right on the board I don't know.",
+      "speaker_overlap": 1.705
+    },
+    {
+      "start": 1058.16,
+      "end": 1063.12,
+      "speaker": "SPEAKER_02",
+      "text": "Actually it's a good idea. Just put it up. So we have the map and.",
+      "speaker_overlap": 2.65
+    },
+    {
+      "start": 1063.12,
+      "end": 1078.96,
+      "speaker": "SPEAKER_02",
+      "text": "So this really isn't too scale but oh well.",
+      "speaker_overlap": 2.658
+    },
+    {
+      "start": 1087.28,
+      "end": 1088.56,
+      "speaker": "SPEAKER_02",
+      "text": "That's really not to scale.",
+      "speaker_overlap": 1.104
+    },
+    {
+      "start": 1088.56,
+      "end": 1096.88,
+      "speaker": "SPEAKER_02",
+      "text": "That's alright. Good enough. So we've got an office there.",
+      "speaker_overlap": 2.228
+    },
+    {
+      "start": 1104.64,
+      "end": 1114.32,
+      "speaker": "SPEAKER_01",
+      "text": "There's two and one. Yeah. Oh. So.",
+      "speaker_overlap": 2.16
+    },
+    {
+      "start": 1114.64,
+      "end": 1122.0,
+      "speaker": "SPEAKER_02",
+      "text": "I guess this is. That and this becomes the reading room right? Okay.",
+      "speaker_overlap": 2.262
+    },
+    {
+      "start": 1134.64,
+      "end": 1140.8,
+      "speaker": "SPEAKER_01",
+      "text": "Is that a mountain? Yes. Okay. And the. And the.",
+      "speaker_overlap": 2.025
+    },
+    {
+      "start": 1141.6,
+      "end": 1146.24,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah. We decided also the administration stuff and. Sure.",
+      "speaker_overlap": 3.544
+    },
+    {
+      "start": 1147.76,
+      "end": 1152.0,
+      "speaker": "SPEAKER_01",
+      "text": "So we exclude the the thing we are quite sure and then we discuss there.",
+      "speaker_overlap": 4.233
+    },
+    {
+      "start": 1152.0,
+      "end": 1159.28,
+      "speaker": "SPEAKER_00",
+      "text": "I was thinking of maybe we should assign Gisella into this three person office because we will",
+      "speaker_overlap": 7.176
+    },
+    {
+      "start": 1159.28,
+      "end": 1165.92,
+      "speaker": "SPEAKER_00",
+      "text": "probably place the printer next to the mailboxes and we could have Gisella and the two 50% people",
+      "speaker_overlap": 6.64
+    },
+    {
+      "start": 1165.92,
+      "end": 1171.68,
+      "speaker": "SPEAKER_01",
+      "text": "sharing the three person. That's really noisy to be in the same office.",
+      "speaker_overlap": 2.718
+    },
+    {
+      "start": 1171.68,
+      "end": 1175.84,
+      "speaker": "SPEAKER_01",
+      "text": "Well the administration. But if Gisella works 50% and they work 50%.",
+      "speaker_overlap": 3.222
+    },
+    {
+      "start": 1175.84,
+      "end": 1179.52,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah. That just imply you expect people to come when Gisella is not working.",
+      "speaker_overlap": 3.68
+    },
+    {
+      "start": 1179.52,
+      "end": 1182.08,
+      "speaker": "SPEAKER_01",
+      "text": "That's sure. And that's not really fair if you. Yeah.",
+      "speaker_overlap": 2.56
+    },
+    {
+      "start": 1182.56,
+      "end": 1188.96,
+      "speaker": "SPEAKER_01",
+      "text": "Well I mean we can put Gisella into two people room which is near the mailbox.",
+      "speaker_overlap": 3.429
+    },
+    {
+      "start": 1188.96,
+      "end": 1202.96,
+      "speaker": "SPEAKER_00",
+      "text": "Yeah. We could. I don't know. We could. I mean I don't know how noisy she is.",
+      "speaker_overlap": 1.8
+    },
+    {
+      "start": 1202.96,
+      "end": 1207.76,
+      "speaker": "SPEAKER_00",
+      "text": "It's just a question you always have the phone ringing even if they have even when she's not working.",
+      "speaker_overlap": 4.072
+    },
+    {
+      "start": 1207.76,
+      "end": 1214.4,
+      "speaker": "SPEAKER_02",
+      "text": "Does she not have her own printer? Yes. Yes. It does. Yeah but that's a good point from Niko's to say",
+      "speaker_overlap": 3.66
+    },
+    {
+      "start": 1214.4,
+      "end": 1218.48,
+      "speaker": "SPEAKER_01",
+      "text": "that she needs to be near the mailbox and the printer and.",
+      "speaker_overlap": 4.08
+    },
+    {
+      "start": 1219.44,
+      "end": 1221.44,
+      "speaker": "SPEAKER_01",
+      "text": "Well if you put her in the photography and stuff.",
+      "speaker_overlap": 2.0
+    },
+    {
+      "start": 1221.44,
+      "end": 1225.84,
+      "speaker": "SPEAKER_02",
+      "text": "In this room here it's relatively close.",
+      "speaker_overlap": 4.273
+    },
+    {
+      "start": 1225.84,
+      "end": 1230.16,
+      "speaker": "SPEAKER_01",
+      "text": "Except the door is not really convenient for her. Convenient.",
+      "speaker_overlap": 4.32
+    },
+    {
+      "start": 1230.8,
+      "end": 1231.12,
+      "speaker": "SPEAKER_02",
+      "text": "Sure.",
+      "speaker_overlap": 0.21
+    },
+    {
+      "start": 1231.12,
+      "end": 1231.68,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah.",
+      "speaker_overlap": 0.162
+    },
+    {
+      "start": 1235.04,
+      "end": 1236.64,
+      "speaker": "SPEAKER_01",
+      "text": "But I think if the main.",
+      "speaker_overlap": 1.494
+    },
+    {
+      "start": 1239.04,
+      "end": 1239.92,
+      "speaker": "SPEAKER_01",
+      "text": "How can I put that?",
+      "speaker_overlap": 0.88
+    },
+    {
+      "start": 1248.32,
+      "end": 1254.72,
+      "speaker": "SPEAKER_01",
+      "text": "If the main reason to put to choose Gisella's place is the proximity of the mailbox.",
+      "speaker_overlap": 6.361
+    },
+    {
+      "start": 1255.52,
+      "end": 1258.72,
+      "speaker": "SPEAKER_01",
+      "text": "It should be a two people room and not three people room.",
+      "speaker_overlap": 3.2
+    },
+    {
+      "start": 1259.68,
+      "end": 1263.04,
+      "speaker": "SPEAKER_01",
+      "text": "Okay. It's fine with me.",
+      "speaker_overlap": 2.025
+    },
+    {
+      "start": 1263.04,
+      "end": 1264.8,
+      "speaker": "SPEAKER_01",
+      "text": "Otherwise we have one people room.",
+      "speaker_overlap": 1.76
+    },
+    {
+      "start": 1264.8,
+      "end": 1270.88,
+      "speaker": "SPEAKER_02",
+      "text": "I don't know how much the proximity to the mailbox matters because usually when she's here and she picks up the mail",
+      "speaker_overlap": 4.853
+    },
+    {
+      "start": 1270.88,
+      "end": 1272.48,
+      "speaker": "SPEAKER_02",
+      "text": "she actually brings it to your office.",
+      "speaker_overlap": 1.6
+    },
+    {
+      "start": 1272.48,
+      "end": 1273.2,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah. It's not that.",
+      "speaker_overlap": 0.72
+    },
+    {
+      "start": 1273.2,
+      "end": 1276.16,
+      "speaker": "SPEAKER_02",
+      "text": "It's more the administrative administration that uses our mailboxes.",
+      "speaker_overlap": 2.96
+    },
+    {
+      "start": 1276.16,
+      "end": 1277.52,
+      "speaker": "SPEAKER_01",
+      "text": "This is the place of the photography.",
+      "speaker_overlap": 1.36
+    },
+    {
+      "start": 1277.52,
+      "end": 1278.0,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah.",
+      "speaker_overlap": 0.48
+    },
+    {
+      "start": 1278.0,
+      "end": 1280.4,
+      "speaker": "SPEAKER_03",
+      "text": "And the place where we all pass kind of.",
+      "speaker_overlap": 2.257
+    },
+    {
+      "start": 1280.4,
+      "end": 1281.36,
+      "speaker": "SPEAKER_03",
+      "text": "Yeah.",
+      "speaker_overlap": 0.258
+    },
+    {
+      "start": 1282.88,
+      "end": 1283.52,
+      "speaker": "SPEAKER_03",
+      "text": "That's true.",
+      "speaker_overlap": 0.517
+    },
+    {
+      "start": 1283.6,
+      "end": 1284.32,
+      "speaker": "SPEAKER_03",
+      "text": "But.",
+      "speaker_overlap": 0.078
+    },
+    {
+      "start": 1288.32,
+      "end": 1294.24,
+      "speaker": "SPEAKER_01",
+      "text": "Because if we put the photography near the mailbox and it seems to be the only place where there is room.",
+      "speaker_overlap": 5.82
+    },
+    {
+      "start": 1294.24,
+      "end": 1294.56,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah.",
+      "speaker_overlap": 0.32
+    },
+    {
+      "start": 1295.6,
+      "end": 1295.76,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah.",
+      "speaker_overlap": 0.16
+    },
+    {
+      "start": 1295.76,
+      "end": 1299.12,
+      "speaker": "SPEAKER_02",
+      "text": "Unless you put it into an office which is just annoying I think.",
+      "speaker_overlap": 3.36
+    },
+    {
+      "start": 1299.12,
+      "end": 1299.6,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah.",
+      "speaker_overlap": 0.48
+    },
+    {
+      "start": 1299.6,
+      "end": 1302.0,
+      "speaker": "SPEAKER_02",
+      "text": "Even if you put it into Gisella's office it's going to be.",
+      "speaker_overlap": 2.4
+    },
+    {
+      "start": 1302.0,
+      "end": 1302.64,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah.",
+      "speaker_overlap": 0.64
+    },
+    {
+      "start": 1302.64,
+      "end": 1303.52,
+      "speaker": "SPEAKER_01",
+      "text": "And it's too big and.",
+      "speaker_overlap": 0.88
+    },
+    {
+      "start": 1304.24,
+      "end": 1304.4,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah.",
+      "speaker_overlap": 0.134
+    },
+    {
+      "start": 1305.12,
+      "end": 1305.92,
+      "speaker": "UNKNOWN",
+      "text": "Yeah.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 1310.16,
+      "end": 1311.44,
+      "speaker": "SPEAKER_00",
+      "text": "Okay. Maybe we should write this down.",
+      "speaker_overlap": 1.268
+    },
+    {
+      "start": 1311.44,
+      "end": 1316.32,
+      "speaker": "SPEAKER_00",
+      "text": "Do we agree that the photo copier and the network printer goes next to the mailbox?",
+      "speaker_overlap": 4.88
+    },
+    {
+      "start": 1316.32,
+      "end": 1316.56,
+      "speaker": "SPEAKER_00",
+      "text": "Yeah.",
+      "speaker_overlap": 0.24
+    },
+    {
+      "start": 1316.56,
+      "end": 1317.28,
+      "speaker": "SPEAKER_00",
+      "text": "Yeah. That's good.",
+      "speaker_overlap": 0.72
+    },
+    {
+      "start": 1317.28,
+      "end": 1317.44,
+      "speaker": "SPEAKER_00",
+      "text": "Okay.",
+      "speaker_overlap": 0.16
+    },
+    {
+      "start": 1317.6,
+      "end": 1319.6,
+      "speaker": "SPEAKER_02",
+      "text": "Okay.",
+      "speaker_overlap": 0.892
+    },
+    {
+      "start": 1331.12,
+      "end": 1332.16,
+      "speaker": "SPEAKER_01",
+      "text": "And then we can.",
+      "speaker_overlap": 0.978
+    },
+    {
+      "start": 1333.04,
+      "end": 1336.4,
+      "speaker": "SPEAKER_01",
+      "text": "For the moment put Gisella in this corner room if you agree.",
+      "speaker_overlap": 3.36
+    },
+    {
+      "start": 1337.04,
+      "end": 1337.52,
+      "speaker": "SPEAKER_01",
+      "text": "I don't know.",
+      "speaker_overlap": 0.48
+    },
+    {
+      "start": 1338.32,
+      "end": 1338.56,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah.",
+      "speaker_overlap": 0.19
+    },
+    {
+      "start": 1339.12,
+      "end": 1343.52,
+      "speaker": "SPEAKER_02",
+      "text": "But at the beginning we said that we were going to give her one of the one person rooms.",
+      "speaker_overlap": 3.764
+    },
+    {
+      "start": 1343.52,
+      "end": 1343.76,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah.",
+      "speaker_overlap": 0.192
+    },
+    {
+      "start": 1344.4,
+      "end": 1344.56,
+      "speaker": "UNKNOWN",
+      "text": "Yeah.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 1345.36,
+      "end": 1348.32,
+      "speaker": "SPEAKER_01",
+      "text": "But there were this option of putting the line near the photography.",
+      "speaker_overlap": 2.812
+    },
+    {
+      "start": 1350.16,
+      "end": 1350.4,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah.",
+      "speaker_overlap": 0.167
+    },
+    {
+      "start": 1357.6,
+      "end": 1359.52,
+      "speaker": "SPEAKER_00",
+      "text": "I mean she's sharing an office right now and",
+      "speaker_overlap": 1.794
+    },
+    {
+      "start": 1361.2,
+      "end": 1364.08,
+      "speaker": "SPEAKER_00",
+      "text": "has anybody heard of any complaints that she's loud or.",
+      "speaker_overlap": 2.88
+    },
+    {
+      "start": 1365.2,
+      "end": 1368.4,
+      "speaker": "SPEAKER_01",
+      "text": "I mean she's not sharing an office.",
+      "speaker_overlap": 2.574
+    },
+    {
+      "start": 1368.4,
+      "end": 1370.24,
+      "speaker": "SPEAKER_01",
+      "text": "I mean we put some.",
+      "speaker_overlap": 1.84
+    },
+    {
+      "start": 1370.8,
+      "end": 1371.84,
+      "speaker": "SPEAKER_01",
+      "text": "Stagiers in there.",
+      "speaker_overlap": 1.04
+    },
+    {
+      "start": 1372.64,
+      "end": 1375.52,
+      "speaker": "SPEAKER_01",
+      "text": "In Gisella's office because there is a spare room.",
+      "speaker_overlap": 2.88
+    },
+    {
+      "start": 1375.52,
+      "end": 1377.28,
+      "speaker": "SPEAKER_01",
+      "text": "And they're not really in a position to complain.",
+      "speaker_overlap": 1.76
+    },
+    {
+      "start": 1377.28,
+      "end": 1377.68,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah.",
+      "speaker_overlap": 0.4
+    },
+    {
+      "start": 1378.4,
+      "end": 1379.04,
+      "speaker": "SPEAKER_01",
+      "text": "That's quite a.",
+      "speaker_overlap": 0.64
+    },
+    {
+      "start": 1380.56,
+      "end": 1386.96,
+      "speaker": "SPEAKER_01",
+      "text": "I mean that's quite important to keep a spare room in Gisella's office if we need more staff.",
+      "speaker_overlap": 6.4
+    },
+    {
+      "start": 1386.96,
+      "end": 1387.12,
+      "speaker": "SPEAKER_01",
+      "text": "But.",
+      "speaker_overlap": 0.16
+    },
+    {
+      "start": 1389.6,
+      "end": 1391.52,
+      "speaker": "SPEAKER_01",
+      "text": "I wouldn't work in Gisella's office.",
+      "speaker_overlap": 1.833
+    },
+    {
+      "start": 1394.72,
+      "end": 1394.96,
+      "speaker": "SPEAKER_01",
+      "text": "Okay.",
+      "speaker_overlap": 0.126
+    },
+    {
+      "start": 1395.68,
+      "end": 1397.44,
+      "speaker": "SPEAKER_02",
+      "text": "I think it's just a question of work conditions.",
+      "speaker_overlap": 1.695
+    },
+    {
+      "start": 1397.44,
+      "end": 1401.92,
+      "speaker": "SPEAKER_02",
+      "text": "Like if you're a stagier and you're only coming in for two months then you can put up with it.",
+      "speaker_overlap": 4.48
+    },
+    {
+      "start": 1401.92,
+      "end": 1404.08,
+      "speaker": "SPEAKER_02",
+      "text": "But if you're there, you know, for example,",
+      "speaker_overlap": 1.824
+    },
+    {
+      "start": 1404.08,
+      "end": 1404.72,
+      "speaker": "SPEAKER_02",
+      "text": "for the whole year.",
+      "speaker_overlap": 0.64
+    },
+    {
+      "start": 1404.72,
+      "end": 1410.0,
+      "speaker": "SPEAKER_01",
+      "text": "So like the ball and there is no room in the cupboard for any people except Gisella",
+      "speaker_overlap": 4.855
+    },
+    {
+      "start": 1410.0,
+      "end": 1413.84,
+      "speaker": "SPEAKER_01",
+      "text": "because she got lots of paper, like knives and knives and stuff like that.",
+      "speaker_overlap": 1.878
+    },
+    {
+      "start": 1413.84,
+      "end": 1415.44,
+      "speaker": "SPEAKER_00",
+      "text": "So it's really she needs.",
+      "speaker_overlap": 1.6
+    },
+    {
+      "start": 1416.08,
+      "end": 1417.44,
+      "speaker": "SPEAKER_00",
+      "text": "She needs space space.",
+      "speaker_overlap": 1.36
+    },
+    {
+      "start": 1417.44,
+      "end": 1417.92,
+      "speaker": "SPEAKER_00",
+      "text": "Yeah.",
+      "speaker_overlap": 0.48
+    },
+    {
+      "start": 1418.88,
+      "end": 1421.12,
+      "speaker": "SPEAKER_03",
+      "text": "But we can reserve.",
+      "speaker_overlap": 2.24
+    },
+    {
+      "start": 1421.12,
+      "end": 1426.8,
+      "speaker": "SPEAKER_03",
+      "text": "So if you reserve two people room we can put the trainees.",
+      "speaker_overlap": 5.68
+    },
+    {
+      "start": 1428.24,
+      "end": 1428.72,
+      "speaker": "SPEAKER_00",
+      "text": "Yeah.",
+      "speaker_overlap": 0.48
+    },
+    {
+      "start": 1428.72,
+      "end": 1429.2,
+      "speaker": "SPEAKER_03",
+      "text": "And they're there.",
+      "speaker_overlap": 0.48
+    },
+    {
+      "start": 1429.2,
+      "end": 1430.88,
+      "speaker": "SPEAKER_03",
+      "text": "No, they need to go in the same room.",
+      "speaker_overlap": 1.68
+    },
+    {
+      "start": 1431.52,
+      "end": 1431.92,
+      "speaker": "SPEAKER_03",
+      "text": "Yeah.",
+      "speaker_overlap": 0.287
+    },
+    {
+      "start": 1431.92,
+      "end": 1432.24,
+      "speaker": "SPEAKER_00",
+      "text": "Okay.",
+      "speaker_overlap": 0.247
+    },
+    {
+      "start": 1432.24,
+      "end": 1434.48,
+      "speaker": "SPEAKER_00",
+      "text": "So Gisella at the southwest office.",
+      "speaker_overlap": 2.24
+    },
+    {
+      "start": 1434.48,
+      "end": 1434.72,
+      "speaker": "SPEAKER_00",
+      "text": "Yeah.",
+      "speaker_overlap": 0.24
+    },
+    {
+      "start": 1435.36,
+      "end": 1435.52,
+      "speaker": "SPEAKER_03",
+      "text": "Yeah.",
+      "speaker_overlap": 0.102
+    },
+    {
+      "start": 1435.52,
+      "end": 1436.16,
+      "speaker": "SPEAKER_03",
+      "text": "The corner.",
+      "speaker_overlap": 0.64
+    },
+    {
+      "start": 1442.64,
+      "end": 1443.92,
+      "speaker": "SPEAKER_01",
+      "text": "Are you sure it's southwest?",
+      "speaker_overlap": 1.161
+    },
+    {
+      "start": 1444.56,
+      "end": 1446.08,
+      "speaker": "SPEAKER_01",
+      "text": "I don't know if this if this map is.",
+      "speaker_overlap": 1.52
+    },
+    {
+      "start": 1446.08,
+      "end": 1449.36,
+      "speaker": "SPEAKER_02",
+      "text": "So well, southwest if that's north.",
+      "speaker_overlap": 3.021
+    },
+    {
+      "start": 1449.36,
+      "end": 1449.84,
+      "speaker": "SPEAKER_01",
+      "text": "Okay.",
+      "speaker_overlap": 0.432
+    },
+    {
+      "start": 1449.84,
+      "end": 1450.64,
+      "speaker": "SPEAKER_01",
+      "text": "The map is.",
+      "speaker_overlap": 0.8
+    },
+    {
+      "start": 1450.64,
+      "end": 1451.6,
+      "speaker": "SPEAKER_01",
+      "text": "Southwest for us.",
+      "speaker_overlap": 0.96
+    },
+    {
+      "start": 1451.6,
+      "end": 1451.68,
+      "speaker": "SPEAKER_01",
+      "text": "No, again.",
+      "speaker_overlap": 0.08
+    },
+    {
+      "start": 1452.48,
+      "end": 1452.96,
+      "speaker": "SPEAKER_01",
+      "text": "Okay.",
+      "speaker_overlap": 0.48
+    },
+    {
+      "start": 1452.96,
+      "end": 1453.68,
+      "speaker": "SPEAKER_02",
+      "text": "No.",
+      "speaker_overlap": 0.72
+    },
+    {
+      "start": 1453.68,
+      "end": 1455.76,
+      "speaker": "SPEAKER_02",
+      "text": "Well, I'm assuming that's what you meant, right?",
+      "speaker_overlap": 2.08
+    },
+    {
+      "start": 1455.76,
+      "end": 1456.16,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah.",
+      "speaker_overlap": 0.4
+    },
+    {
+      "start": 1456.64,
+      "end": 1457.68,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah, that one.",
+      "speaker_overlap": 1.04
+    },
+    {
+      "start": 1457.68,
+      "end": 1457.92,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah.",
+      "speaker_overlap": 0.24
+    },
+    {
+      "start": 1457.92,
+      "end": 1458.4,
+      "speaker": "SPEAKER_02",
+      "text": "I don't know.",
+      "speaker_overlap": 0.48
+    },
+    {
+      "start": 1458.4,
+      "end": 1459.28,
+      "speaker": "SPEAKER_02",
+      "text": "That's how feast anyways.",
+      "speaker_overlap": 0.88
+    },
+    {
+      "start": 1460.24,
+      "end": 1460.96,
+      "speaker": "SPEAKER_02",
+      "text": "So that's yeah.",
+      "speaker_overlap": 0.72
+    },
+    {
+      "start": 1460.96,
+      "end": 1461.36,
+      "speaker": "SPEAKER_02",
+      "text": "All right.",
+      "speaker_overlap": 0.4
+    },
+    {
+      "start": 1461.36,
+      "end": 1462.56,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah, that's how feast.",
+      "speaker_overlap": 0.738
+    },
+    {
+      "start": 1462.56,
+      "end": 1463.44,
+      "speaker": "SPEAKER_01",
+      "text": "Anyways, yeah.",
+      "speaker_overlap": 0.768
+    },
+    {
+      "start": 1463.44,
+      "end": 1464.72,
+      "speaker": "SPEAKER_02",
+      "text": "This office, right?",
+      "speaker_overlap": 1.137
+    },
+    {
+      "start": 1464.72,
+      "end": 1465.68,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah, this office.",
+      "speaker_overlap": 0.595
+    },
+    {
+      "start": 1466.56,
+      "end": 1470.08,
+      "speaker": "SPEAKER_01",
+      "text": "You know, because with mountain mountains and the old town it's not no sorry.",
+      "speaker_overlap": 3.52
+    },
+    {
+      "start": 1470.08,
+      "end": 1474.88,
+      "speaker": "SPEAKER_02",
+      "text": "No, I'm very bad at orienting where it's north in Geneva.",
+      "speaker_overlap": 4.362
+    },
+    {
+      "start": 1474.88,
+      "end": 1476.24,
+      "speaker": "SPEAKER_02",
+      "text": "I always get it wrong.",
+      "speaker_overlap": 1.36
+    },
+    {
+      "start": 1476.24,
+      "end": 1480.0,
+      "speaker": "SPEAKER_02",
+      "text": "But I just assumed that because was talking about orientation here.",
+      "speaker_overlap": 2.733
+    },
+    {
+      "start": 1480.0,
+      "end": 1482.72,
+      "speaker": "SPEAKER_01",
+      "text": "Because sunrise and sunshine is quite,",
+      "speaker_overlap": 2.72
+    },
+    {
+      "start": 1482.72,
+      "end": 1484.64,
+      "speaker": "SPEAKER_01",
+      "text": "sunshine sunrise and sunset is quite also.",
+      "speaker_overlap": 1.92
+    },
+    {
+      "start": 1484.64,
+      "end": 1485.44,
+      "speaker": "SPEAKER_01",
+      "text": "Oh, that's true.",
+      "speaker_overlap": 0.8
+    },
+    {
+      "start": 1485.44,
+      "end": 1485.92,
+      "speaker": "SPEAKER_01",
+      "text": "A good.",
+      "speaker_overlap": 0.48
+    },
+    {
+      "start": 1489.44,
+      "end": 1495.28,
+      "speaker": "SPEAKER_02",
+      "text": "So wait, we face the old town now and we're facing",
+      "speaker_overlap": 5.84
+    },
+    {
+      "start": 1496.32,
+      "end": 1500.72,
+      "speaker": "SPEAKER_01",
+      "text": "no east or east sunrise.",
+      "speaker_overlap": 2.312
+    },
+    {
+      "start": 1500.72,
+      "end": 1501.12,
+      "speaker": "SPEAKER_02",
+      "text": "Okay.",
+      "speaker_overlap": 0.395
+    },
+    {
+      "start": 1502.48,
+      "end": 1507.28,
+      "speaker": "SPEAKER_02",
+      "text": "So this is east.",
+      "speaker_overlap": 1.172
+    },
+    {
+      "start": 1507.28,
+      "end": 1508.48,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah, it's not east.",
+      "speaker_overlap": 1.2
+    },
+    {
+      "start": 1510.64,
+      "end": 1512.88,
+      "speaker": "SPEAKER_01",
+      "text": "We have seen in the morning only.",
+      "speaker_overlap": 2.24
+    },
+    {
+      "start": 1514.96,
+      "end": 1515.28,
+      "speaker": "SPEAKER_03",
+      "text": "Yeah.",
+      "speaker_overlap": 0.296
+    },
+    {
+      "start": 1516.72,
+      "end": 1517.84,
+      "speaker": "SPEAKER_03",
+      "text": "When do we have suns?",
+      "speaker_overlap": 1.12
+    },
+    {
+      "start": 1517.84,
+      "end": 1523.68,
+      "speaker": "SPEAKER_01",
+      "text": "So it does mean that the three-piece room which is in the opposite of the north east",
+      "speaker_overlap": 5.84
+    },
+    {
+      "start": 1524.4,
+      "end": 1525.84,
+      "speaker": "SPEAKER_01",
+      "text": "is the most sunny one.",
+      "speaker_overlap": 1.333
+    },
+    {
+      "start": 1525.84,
+      "end": 1526.24,
+      "speaker": "SPEAKER_02",
+      "text": "This one.",
+      "speaker_overlap": 0.338
+    },
+    {
+      "start": 1528.64,
+      "end": 1529.36,
+      "speaker": "SPEAKER_02",
+      "text": "Let's say that.",
+      "speaker_overlap": 0.72
+    },
+    {
+      "start": 1530.48,
+      "end": 1532.16,
+      "speaker": "SPEAKER_01",
+      "text": "It's the one you have.",
+      "speaker_overlap": 1.68
+    },
+    {
+      "start": 1532.16,
+      "end": 1533.44,
+      "speaker": "SPEAKER_01",
+      "text": "No, you both.",
+      "speaker_overlap": 1.28
+    },
+    {
+      "start": 1534.56,
+      "end": 1535.2,
+      "speaker": "SPEAKER_01",
+      "text": "It's the oven.",
+      "speaker_overlap": 0.64
+    },
+    {
+      "start": 1536.72,
+      "end": 1538.4,
+      "speaker": "SPEAKER_03",
+      "text": "Well, there's a lot of sunsets.",
+      "speaker_overlap": 1.63
+    },
+    {
+      "start": 1538.4,
+      "end": 1540.64,
+      "speaker": "SPEAKER_01",
+      "text": "You get the sunset and no.",
+      "speaker_overlap": 1.627
+    },
+    {
+      "start": 1542.4,
+      "end": 1544.16,
+      "speaker": "SPEAKER_01",
+      "text": "And it's really warm and it's yeah,",
+      "speaker_overlap": 1.653
+    },
+    {
+      "start": 1544.16,
+      "end": 1544.72,
+      "speaker": "SPEAKER_01",
+      "text": "it's really warm.",
+      "speaker_overlap": 0.56
+    },
+    {
+      "start": 1544.72,
+      "end": 1546.16,
+      "speaker": "SPEAKER_00",
+      "text": "You get lots of suns during summer.",
+      "speaker_overlap": 1.44
+    },
+    {
+      "start": 1546.16,
+      "end": 1546.96,
+      "speaker": "SPEAKER_00",
+      "text": "Yeah.",
+      "speaker_overlap": 0.8
+    },
+    {
+      "start": 1546.96,
+      "end": 1547.44,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah.",
+      "speaker_overlap": 0.48
+    },
+    {
+      "start": 1547.44,
+      "end": 1551.68,
+      "speaker": "SPEAKER_01",
+      "text": "By the way, is it a six-floor building or is it more?",
+      "speaker_overlap": 4.095
+    },
+    {
+      "start": 1551.68,
+      "end": 1553.04,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah, we're the top floor.",
+      "speaker_overlap": 1.064
+    },
+    {
+      "start": 1553.04,
+      "end": 1553.84,
+      "speaker": "SPEAKER_01",
+      "text": "Okay.",
+      "speaker_overlap": 0.752
+    },
+    {
+      "start": 1553.84,
+      "end": 1555.12,
+      "speaker": "SPEAKER_01",
+      "text": "So it's warm.",
+      "speaker_overlap": 0.834
+    },
+    {
+      "start": 1555.12,
+      "end": 1555.52,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah.",
+      "speaker_overlap": 0.203
+    },
+    {
+      "start": 1556.56,
+      "end": 1559.84,
+      "speaker": "SPEAKER_02",
+      "text": "The building design is pretty much the same as the one we have now.",
+      "speaker_overlap": 3.259
+    },
+    {
+      "start": 1559.84,
+      "end": 1564.32,
+      "speaker": "SPEAKER_02",
+      "text": "We're just getting more space this way because we couldn't move in the other building",
+      "speaker_overlap": 4.48
+    },
+    {
+      "start": 1564.32,
+      "end": 1566.0,
+      "speaker": "SPEAKER_02",
+      "text": "because it was occupied by the other departments.",
+      "speaker_overlap": 1.68
+    },
+    {
+      "start": 1566.24,
+      "end": 1567.28,
+      "speaker": "UNKNOWN",
+      "text": "Okay.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 1573.28,
+      "end": 1574.4,
+      "speaker": "SPEAKER_03",
+      "text": "Okay, good.",
+      "speaker_overlap": 1.113
+    },
+    {
+      "start": 1574.4,
+      "end": 1574.72,
+      "speaker": "SPEAKER_03",
+      "text": "So.",
+      "speaker_overlap": 0.32
+    },
+    {
+      "start": 1579.68,
+      "end": 1581.76,
+      "speaker": "SPEAKER_01",
+      "text": "So how many rooms?",
+      "speaker_overlap": 2.043
+    },
+    {
+      "start": 1583.52,
+      "end": 1585.84,
+      "speaker": "SPEAKER_01",
+      "text": "And how many places do we have?",
+      "speaker_overlap": 2.225
+    },
+    {
+      "start": 1585.84,
+      "end": 1590.08,
+      "speaker": "SPEAKER_03",
+      "text": "So we have reserved out to change it on here as well.",
+      "speaker_overlap": 3.442
+    },
+    {
+      "start": 1593.44,
+      "end": 1595.36,
+      "speaker": "SPEAKER_02",
+      "text": "So that's Jazeela?",
+      "speaker_overlap": 1.873
+    },
+    {
+      "start": 1595.36,
+      "end": 1598.48,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah, plus one sprayer.",
+      "speaker_overlap": 3.087
+    },
+    {
+      "start": 1598.48,
+      "end": 1602.56,
+      "speaker": "SPEAKER_01",
+      "text": "A place but really the last place to be used.",
+      "speaker_overlap": 4.08
+    },
+    {
+      "start": 1603.28,
+      "end": 1604.32,
+      "speaker": "SPEAKER_02",
+      "text": "Plus facts.",
+      "speaker_overlap": 1.029
+    },
+    {
+      "start": 1605.2,
+      "end": 1605.44,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah.",
+      "speaker_overlap": 0.24
+    },
+    {
+      "start": 1608.72,
+      "end": 1612.8,
+      "speaker": "SPEAKER_02",
+      "text": "And then this is the reading room.",
+      "speaker_overlap": 3.864
+    },
+    {
+      "start": 1612.8,
+      "end": 1613.12,
+      "speaker": "SPEAKER_01",
+      "text": "Okay.",
+      "speaker_overlap": 0.244
+    },
+    {
+      "start": 1618.8,
+      "end": 1623.04,
+      "speaker": "SPEAKER_02",
+      "text": "Um, so that leaves us with what?",
+      "speaker_overlap": 1.355
+    },
+    {
+      "start": 1623.04,
+      "end": 1624.4,
+      "speaker": "SPEAKER_01",
+      "text": "We get two, three, four.",
+      "speaker_overlap": 1.36
+    },
+    {
+      "start": 1625.84,
+      "end": 1630.72,
+      "speaker": "SPEAKER_02",
+      "text": "Fourteen places, which is 14 people.",
+      "speaker_overlap": 2.684
+    },
+    {
+      "start": 1632.32,
+      "end": 1633.12,
+      "speaker": "SPEAKER_00",
+      "text": "For 14 people.",
+      "speaker_overlap": 0.669
+    },
+    {
+      "start": 1633.12,
+      "end": 1633.28,
+      "speaker": "SPEAKER_00",
+      "text": "Yeah.",
+      "speaker_overlap": 0.16
+    },
+    {
+      "start": 1633.28,
+      "end": 1634.24,
+      "speaker": "SPEAKER_00",
+      "text": "For 15 people.",
+      "speaker_overlap": 0.96
+    },
+    {
+      "start": 1634.24,
+      "end": 1636.4,
+      "speaker": "SPEAKER_02",
+      "text": "No, for 14 because Jazeela's already.",
+      "speaker_overlap": 2.16
+    },
+    {
+      "start": 1636.4,
+      "end": 1636.72,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah.",
+      "speaker_overlap": 0.32
+    },
+    {
+      "start": 1636.72,
+      "end": 1637.28,
+      "speaker": "SPEAKER_02",
+      "text": "Got a room.",
+      "speaker_overlap": 0.56
+    },
+    {
+      "start": 1637.28,
+      "end": 1637.76,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah.",
+      "speaker_overlap": 0.48
+    },
+    {
+      "start": 1637.76,
+      "end": 1638.0,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah.",
+      "speaker_overlap": 0.24
+    },
+    {
+      "start": 1638.0,
+      "end": 1638.24,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah.",
+      "speaker_overlap": 0.24
+    },
+    {
+      "start": 1639.92,
+      "end": 1640.56,
+      "speaker": "SPEAKER_00",
+      "text": "So we are going.",
+      "speaker_overlap": 0.566
+    },
+    {
+      "start": 1640.56,
+      "end": 1640.72,
+      "speaker": "SPEAKER_00",
+      "text": "Okay.",
+      "speaker_overlap": 0.16
+    },
+    {
+      "start": 1644.16,
+      "end": 1644.56,
+      "speaker": "SPEAKER_00",
+      "text": "Bless you.",
+      "speaker_overlap": 0.364
+    },
+    {
+      "start": 1644.56,
+      "end": 1645.12,
+      "speaker": "SPEAKER_02",
+      "text": "Excuse me.",
+      "speaker_overlap": 0.317
+    },
+    {
+      "start": 1645.12,
+      "end": 1645.36,
+      "speaker": "SPEAKER_02",
+      "text": "Yes.",
+      "speaker_overlap": 0.24
+    },
+    {
+      "start": 1648.72,
+      "end": 1649.04,
+      "speaker": "SPEAKER_02",
+      "text": "Okay.",
+      "speaker_overlap": 0.22
+    },
+    {
+      "start": 1651.52,
+      "end": 1652.0,
+      "speaker": "SPEAKER_01",
+      "text": "So.",
+      "speaker_overlap": 0.48
+    },
+    {
+      "start": 1652.0,
+      "end": 1653.76,
+      "speaker": "SPEAKER_02",
+      "text": "So I'm going to take Jazeela off of",
+      "speaker_overlap": 1.76
+    },
+    {
+      "start": 1656.24,
+      "end": 1660.32,
+      "speaker": "SPEAKER_02",
+      "text": "that list as well.",
+      "speaker_overlap": 2.253
+    },
+    {
+      "start": 1660.32,
+      "end": 1662.24,
+      "speaker": "SPEAKER_02",
+      "text": "I'll put her in gray, I guess.",
+      "speaker_overlap": 1.92
+    },
+    {
+      "start": 1668.16,
+      "end": 1670.56,
+      "speaker": "SPEAKER_01",
+      "text": "Can we group people by their name?",
+      "speaker_overlap": 2.267
+    },
+    {
+      "start": 1670.56,
+      "end": 1672.16,
+      "speaker": "SPEAKER_01",
+      "text": "I'm not sure.",
+      "speaker_overlap": 1.6
+    },
+    {
+      "start": 1672.16,
+      "end": 1673.6,
+      "speaker": "SPEAKER_01",
+      "text": "I still do my ring.",
+      "speaker_overlap": 1.44
+    },
+    {
+      "start": 1673.6,
+      "end": 1674.4,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah.",
+      "speaker_overlap": 0.8
+    },
+    {
+      "start": 1674.4,
+      "end": 1676.88,
+      "speaker": "SPEAKER_01",
+      "text": "So it's going to be Marianne's office.",
+      "speaker_overlap": 2.48
+    },
+    {
+      "start": 1676.88,
+      "end": 1677.6,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah.",
+      "speaker_overlap": 0.72
+    },
+    {
+      "start": 1677.6,
+      "end": 1678.56,
+      "speaker": "SPEAKER_00",
+      "text": "That would be fun.",
+      "speaker_overlap": 0.96
+    },
+    {
+      "start": 1678.56,
+      "end": 1681.2,
+      "speaker": "SPEAKER_00",
+      "text": "Is there anybody who's not happy with the current situation?",
+      "speaker_overlap": 2.64
+    },
+    {
+      "start": 1681.2,
+      "end": 1684.4,
+      "speaker": "SPEAKER_00",
+      "text": "So we could try to just keep the same",
+      "speaker_overlap": 3.2
+    },
+    {
+      "start": 1685.12,
+      "end": 1686.88,
+      "speaker": "SPEAKER_00",
+      "text": "arrangement just on the new building.",
+      "speaker_overlap": 1.76
+    },
+    {
+      "start": 1686.88,
+      "end": 1688.96,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah, that's going to be boring.",
+      "speaker_overlap": 2.02
+    },
+    {
+      "start": 1688.96,
+      "end": 1689.76,
+      "speaker": "SPEAKER_01",
+      "text": "That's boring.",
+      "speaker_overlap": 0.8
+    },
+    {
+      "start": 1689.76,
+      "end": 1690.8,
+      "speaker": "SPEAKER_01",
+      "text": "That can be a good idea.",
+      "speaker_overlap": 1.04
+    },
+    {
+      "start": 1690.8,
+      "end": 1692.96,
+      "speaker": "SPEAKER_01",
+      "text": "But do we can we get?",
+      "speaker_overlap": 2.16
+    },
+    {
+      "start": 1694.0,
+      "end": 1696.72,
+      "speaker": "SPEAKER_01",
+      "text": "Because there is no we can't because",
+      "speaker_overlap": 2.72
+    },
+    {
+      "start": 1697.36,
+      "end": 1698.56,
+      "speaker": "SPEAKER_01",
+      "text": "no, it we can't.",
+      "speaker_overlap": 1.2
+    },
+    {
+      "start": 1698.56,
+      "end": 1700.72,
+      "speaker": "SPEAKER_02",
+      "text": "We have one extra one person office and",
+      "speaker_overlap": 2.16
+    },
+    {
+      "start": 1701.44,
+      "end": 1703.2,
+      "speaker": "SPEAKER_01",
+      "text": "and two three person offices.",
+      "speaker_overlap": 1.603
+    },
+    {
+      "start": 1704.16,
+      "end": 1705.52,
+      "speaker": "SPEAKER_02",
+      "text": "Plus we have the two people who",
+      "speaker_overlap": 1.36
+    },
+    {
+      "start": 1706.48,
+      "end": 1707.36,
+      "speaker": "SPEAKER_02",
+      "text": "aren't there now.",
+      "speaker_overlap": 0.88
+    },
+    {
+      "start": 1708.16,
+      "end": 1708.88,
+      "speaker": "SPEAKER_01",
+      "text": "Yeah.",
+      "speaker_overlap": 0.304
+    },
+    {
+      "start": 1708.88,
+      "end": 1709.76,
+      "speaker": "SPEAKER_01",
+      "text": "No, I have to put some more.",
+      "speaker_overlap": 0.88
+    },
+    {
+      "start": 1710.72,
+      "end": 1713.92,
+      "speaker": "SPEAKER_02",
+      "text": "You can keep some of the people",
+      "speaker_overlap": 1.026
+    },
+    {
+      "start": 1713.92,
+      "end": 1716.16,
+      "speaker": "SPEAKER_02",
+      "text": "together that are together now.",
+      "speaker_overlap": 2.24
+    },
+    {
+      "start": 1716.16,
+      "end": 1716.56,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah.",
+      "speaker_overlap": 0.4
+    },
+    {
+      "start": 1716.56,
+      "end": 1719.28,
+      "speaker": "SPEAKER_02",
+      "text": "But not everyone definitely.",
+      "speaker_overlap": 1.104
+    },
+    {
+      "start": 1720.88,
+      "end": 1721.36,
+      "speaker": "SPEAKER_00",
+      "text": "Okay.",
+      "speaker_overlap": 0.4
+    },
+    {
+      "start": 1724.0,
+      "end": 1726.4,
+      "speaker": "SPEAKER_00",
+      "text": "So let's start then top to bottom.",
+      "speaker_overlap": 2.385
+    },
+    {
+      "start": 1726.4,
+      "end": 1726.72,
+      "speaker": "SPEAKER_00",
+      "text": "Maggie.",
+      "speaker_overlap": 0.32
+    },
+    {
+      "start": 1728.32,
+      "end": 1731.6,
+      "speaker": "SPEAKER_02",
+      "text": "Well, why don't we take a break and go off and think about it.",
+      "speaker_overlap": 3.198
+    },
+    {
+      "start": 1731.6,
+      "end": 1732.56,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah.",
+      "speaker_overlap": 0.96
+    },
+    {
+      "start": 1732.56,
+      "end": 1735.92,
+      "speaker": "SPEAKER_02",
+      "text": "And then I think we can get some more concrete ideas.",
+      "speaker_overlap": 3.36
+    },
+    {
+      "start": 1735.92,
+      "end": 1736.56,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah.",
+      "speaker_overlap": 0.64
+    },
+    {
+      "start": 1736.56,
+      "end": 1737.36,
+      "speaker": "SPEAKER_02",
+      "text": "Okay.",
+      "speaker_overlap": 0.8
+    },
+    {
+      "start": 1737.36,
+      "end": 1738.72,
+      "speaker": "SPEAKER_02",
+      "text": "We can come back and finish it.",
+      "speaker_overlap": 1.36
+    },
+    {
+      "start": 1738.72,
+      "end": 1741.04,
+      "speaker": "SPEAKER_02",
+      "text": "Because if we just sit here and discuss,",
+      "speaker_overlap": 2.32
+    },
+    {
+      "start": 1741.04,
+      "end": 1742.64,
+      "speaker": "SPEAKER_02",
+      "text": "yeah, it's going to take a long time.",
+      "speaker_overlap": 1.6
+    },
+    {
+      "start": 1742.64,
+      "end": 1744.72,
+      "speaker": "SPEAKER_02",
+      "text": "We're going to start arguing and get cranky and",
+      "speaker_overlap": 2.08
+    },
+    {
+      "start": 1745.68,
+      "end": 1746.0,
+      "speaker": "SPEAKER_00",
+      "text": "okay.",
+      "speaker_overlap": 0.219
+    },
+    {
+      "start": 1747.2,
+      "end": 1748.56,
+      "speaker": "SPEAKER_01",
+      "text": "So let's have a break.",
+      "speaker_overlap": 1.308
+    },
+    {
+      "start": 1748.56,
+      "end": 1749.68,
+      "speaker": "SPEAKER_01",
+      "text": "Save your file.",
+      "speaker_overlap": 0.936
+    },
+    {
+      "start": 1749.68,
+      "end": 1749.92,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah.",
+      "speaker_overlap": 0.154
+    },
+    {
+      "start": 1754.24,
+      "end": 1755.52,
+      "speaker": "SPEAKER_01",
+      "text": "You have an XP?",
+      "speaker_overlap": 0.878
+    },
+    {
+      "start": 1755.52,
+      "end": 1755.68,
+      "speaker": "SPEAKER_02",
+      "text": "Yeah.",
+      "speaker_overlap": 0.109
+    },
+    {
+      "start": 1757.52,
+      "end": 1758.16,
+      "speaker": "SPEAKER_01",
+      "text": "That's nice.",
+      "speaker_overlap": 0.53
+    },
+    {
+      "start": 1761.12,
+      "end": 1761.36,
+      "speaker": "SPEAKER_02",
+      "text": "Okay.",
+      "speaker_overlap": 0.17
+    },
+    {
+      "start": 1763.76,
+      "end": 1764.8,
+      "speaker": "SPEAKER_00",
+      "text": "So how long is going to be?",
+      "speaker_overlap": 0.994
+    },
+    {
+      "start": 1768.88,
+      "end": 1769.36,
+      "speaker": "UNKNOWN",
+      "text": "Okay.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 1773.84,
+      "end": 1774.16,
+      "speaker": "UNKNOWN",
+      "text": "Yeah.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 1774.16,
+      "end": 1774.32,
+      "speaker": "UNKNOWN",
+      "text": "Yeah.",
+      "speaker_overlap": 0.0
+    },
+    {
+      "start": 1774.32,
+      "end": 1774.8,
+      "speaker": "UNKNOWN",
+      "text": "Mm hm.",
+      "speaker_overlap": 0.0
+    }
+  ],
+  "extractor_used": "hybrid",
+  "extractor_stats": {
+    "model": "qwen2.5:3b",
+    "lines": 406,
+    "candidates": 55,
+    "classification_failures": 0,
+    "classified_counts": {
+      "action_item": 1,
+      "decision": 7,
+      "discussion": 42,
+      "none": 5,
+      "dropped_ungrounded": 9
+    },
+    "merged_items": 29
+  }
+}
