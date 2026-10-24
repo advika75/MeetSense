@@ -150,3 +150,15 @@ Matching: timestamp window +/-30s OR fuzzy text similarity >= 80
 | hybrid (run 1 / run 2) | 254.9s / 270.7s | ~2.05 GB (run 2; run 1's sampler read 478 MB) |
 
 Hybrid run 1 and run 2 produced identical decisions, action items, deadlines and open questions.
+
+
+## Capacity test: hybrid with qwen2.5:7b (single run, same prompts/cues/seed)
+
+| Category | hybrid 3B P / R / F1 | hybrid 7B P / R / F1 |
+|---|---|---|
+| Decisions | 0.6 / 0.5 / 0.545 | 0.25 / 0.167 / 0.2 |
+| Action items | 0.0 / 0.0 / 0.0 | 0.5 / 0.667 / 0.571 |
+| Deadlines (strict) | 1.0 / 0.5 / 0.667 | 0.667 / 1.0 / 0.8 |
+| Deadlines (lenient) | 1.0 / 0.5 / 0.667 | 0.667 / 1.0 / 0.8 |
+
+Runtime 885.6s (3B: 255-271s; exceeded the 10-minute limit), peak Ollama RSS 4380 MB (3B: ~2.05 GB) on an 8 GB machine. 7B was not rerun for reproducibility. One meeting only.
