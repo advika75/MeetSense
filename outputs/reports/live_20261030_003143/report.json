@@ -1,0 +1,168 @@
+{
+  "meeting_id": "live_20261030_003143",
+  "title": "trial",
+  "source": "live",
+  "date": "2026-10-30",
+  "duration_sec": 41.2,
+  "speakers": [
+    {
+      "name": "Speaker 1",
+      "speaking_time_sec": 26.2,
+      "share_pct": 73.5
+    },
+    {
+      "name": "Speaker 3",
+      "speaking_time_sec": 9.44,
+      "share_pct": 26.5
+    }
+  ],
+  "summary": "speaker 1: Hello everyone, I am Advika Misram, a 4th year BTEC CEE student. speaker 3: Now, I'm Mahi and we are doing the Coursera project report.",
+  "chunk_summaries": [
+    "speaker 1: Hello everyone, I am Advika Misram, a 4th year BTEC CEE student. Speaker 1: And right now I am studying deep learning.",
+    "Speaker 1: Submission of deep learning project. Speaker 3: Now, Hi, I'm Mahi and we are doing the Coursera project report.",
+    "speaker 3: Thank you."
+  ],
+  "topics": [
+    {
+      "topic_id": 1,
+      "top_words": [
+        {
+          "word": "deep",
+          "weight": 2.2956162902917945
+        },
+        {
+          "word": "learning",
+          "weight": 2.2956162902906945
+        },
+        {
+          "word": "project",
+          "weight": 0.3731181390121872
+        }
+      ]
+    },
+    {
+      "topic_id": 2,
+      "top_words": [
+        {
+          "word": "project",
+          "weight": 2.2808866636405525
+        },
+        {
+          "word": "learning",
+          "weight": 0.3602976753900743
+        },
+        {
+          "word": "deep",
+          "weight": 0.3602976753890089
+        }
+      ]
+    },
+    {
+      "topic_id": 3,
+      "top_words": [
+        {
+          "word": "project",
+          "weight": 0.3459951973472585
+        },
+        {
+          "word": "learning",
+          "weight": 0.34408603431922924
+        },
+        {
+          "word": "deep",
+          "weight": 0.3440860343191949
+        }
+      ]
+    }
+  ],
+  "action_items": [
+    {
+      "text": "So we all have to submit this assignment.",
+      "owner": null,
+      "due_date": null,
+      "due_date_text": null,
+      "confidence": null,
+      "evidence": {
+        "speaker": "Speaker 1",
+        "timestamp": 17.0,
+        "quote": "So we all have to submit this assignment."
+      }
+    }
+  ],
+  "transcript": [
+    {
+      "start": 0.0,
+      "end": 6.0,
+      "speaker": "Speaker 1",
+      "text": "Hello everyone, I am Advika Misram, a 4th year BTEC CEE student.",
+      "speaker_overlap": 4.212,
+      "speakers_refined": true
+    },
+    {
+      "start": 6.0,
+      "end": 10.0,
+      "speaker": "Speaker 1",
+      "text": "And right now I am studying deep learning.",
+      "speaker_overlap": 3.252,
+      "speakers_refined": true
+    },
+    {
+      "start": 10.0,
+      "end": 13.0,
+      "speaker": "Speaker 1",
+      "text": "It is a very interesting subject.",
+      "speaker_overlap": 1.996,
+      "speakers_refined": true
+    },
+    {
+      "start": 13.0,
+      "end": 17.0,
+      "speaker": "Speaker 1",
+      "text": "And I have won some mission tomorrow at 2 o'clock.",
+      "speaker_overlap": 3.244,
+      "speakers_refined": true
+    },
+    {
+      "start": 17.0,
+      "end": 20.0,
+      "speaker": "Speaker 1",
+      "text": "So we all have to submit this assignment.",
+      "speaker_overlap": 3.0,
+      "speakers_refined": true
+    },
+    {
+      "start": 21.6,
+      "end": 25.4,
+      "speaker": "Speaker 1",
+      "text": "2 p.m. sharp at Tuesday.",
+      "speaker_overlap": 3.188,
+      "speakers_refined": true
+    },
+    {
+      "start": 25.4,
+      "end": 27.8,
+      "speaker": "Speaker 1",
+      "text": "Submission of deep learning project.",
+      "speaker_overlap": 2.132,
+      "speakers_refined": true
+    },
+    {
+      "start": 27.8,
+      "end": 36.6,
+      "speaker": "Speaker 3",
+      "text": "Now, Hi, I'm Mahi and we are doing the Coursera project report.",
+      "speaker_overlap": 5.684,
+      "speakers_refined": true
+    },
+    {
+      "start": 40.56,
+      "end": 41.2,
+      "speaker": "Speaker 3",
+      "text": "Thank you.",
+      "speaker_overlap": 0.64,
+      "speakers_refined": true
+    }
+  ],
+  "extractor_used": "rule_based",
+  "extractor_stats": {}
+}

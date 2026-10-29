@@ -39,6 +39,23 @@ esac
 # verified MPS-complete first.
 export PYTORCH_ENABLE_MPS_FALLBACK=1
 
+# src/diarization.py needs Homebrew ffmpeg on DYLD_LIBRARY_PATH for
+# pyannote's torchcodec-based audio loader, and sets it itself via
+# os.execve() (re-exec is the only way to make a dlopen()-time env var
+# change take effect) if _MEETSENSE_DYLD_FIXED isn't already "1". That
+# self-correcting re-exec is harmless for one-shot batch scripts, but
+# fatal here: diarization.py is imported lazily, the first time a Live
+# Meeting session is started, and os.execve() replaces this *entire
+# running Streamlit server process* in place -- killing every open
+# browser WebSocket mid-session (the "Connection error" users see).
+# Setting both env vars before Streamlit ever starts satisfies that
+# guard up front, so the re-exec never fires once the server is live.
+FFMPEG_LIB="/opt/homebrew/opt/ffmpeg/lib"
+if [ -d "$FFMPEG_LIB" ]; then
+    export DYLD_LIBRARY_PATH="$FFMPEG_LIB${DYLD_LIBRARY_PATH:+:$DYLD_LIBRARY_PATH}"
+    export _MEETSENSE_DYLD_FIXED=1
+fi
+
 echo "============================================================"
 echo "MeetSense -- launching with:"
 echo "  $VENV_PYTHON"

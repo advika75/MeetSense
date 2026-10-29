@@ -63,6 +63,7 @@ class Speaker(BaseModel):
 class MeetingReport(BaseModel):
 
     meeting_id: str
+    title: str | None = None
     source: str  # "live" | "recorded"
     date: str
     duration_sec: float
@@ -249,6 +250,7 @@ def build_report(
     summary_path="outputs/summaries/meeting_summary.json",
     topics_path="outputs/nlp/topic_modeling.json",
     pre_extract_hook=None,
+    title=None,
 ):
     """Builds a MeetingReport either from explicitly-passed data (the
     live path, source="live") or from the existing batch output
@@ -264,10 +266,22 @@ def build_report(
     before extraction -- e.g. to unload heavy models (Whisper/
     pyannote) before an LLM extractor call on a memory-constrained
     machine. Only called for extractors other than "rule_based",
-    since rule-based needs no such unload."""
+    since rule-based needs no such unload.
+
+    title, if given, becomes the report's user-facing display name.
+    If omitted, a title set on an EXISTING report with this
+    meeting_id is preserved across a rebuild (rebuilding re-runs
+    extraction but shouldn't silently erase a name the user already
+    set)."""
 
     if meeting_date is None:
         meeting_date = datetime.now().strftime("%Y-%m-%d")
+
+    if title is None:
+        try:
+            title = load_report(meeting_id).title
+        except FileNotFoundError:
+            title = None
 
     if transcript_segments is None:
 
@@ -347,6 +361,7 @@ def build_report(
 
     report = MeetingReport(
         meeting_id=meeting_id,
+        title=title,
         source=source,
         date=meeting_date,
         duration_sec=round(duration_sec, 2),
@@ -442,7 +457,7 @@ def apply_speaker_renaming(report, renaming):
 def render_markdown(report):
 
     lines = [
-        f"# Meeting Report: {report.meeting_id}",
+        f"# Meeting Report: {report.title or report.meeting_id}",
         "",
         f"**Date:** {report.date}  ",
         f"**Duration:** {report.duration_sec:.0f}s  ",

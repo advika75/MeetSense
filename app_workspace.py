@@ -70,54 +70,54 @@ if "dark_mode" not in st.session_state:
 
 THEMES = {
     "light": {
-        "bg": "#F4F6FA",
-        "bg_secondary": "#EDEFF6",
+        "bg": "#F7F7F4",
+        "bg_secondary": "#EFEEEA",
         "sidebar": "#FFFFFF",
         "card": "#FFFFFF",
-        "text": "#172033",
-        "text_secondary": "#4B5468",
-        "muted": "#6B7086",
-        "border": "#E1E6EF",
-        "accent": "#5B45E0",
-        "accent_hover": "#4A36C9",
-        "accent_soft": "#EEEAFE",
-        "accent_solid": "#5B45E0",
-        "accent_solid_hover": "#4A36C9",
-        "success": "#0F7A5C",
-        "success_bg": "#E6F7F1",
-        "warning": "#92600A",
-        "warning_bg": "#FFF4E0",
-        "danger": "#B3261E",
-        "danger_bg": "#FDECEA",
+        "text": "#1C1E22",
+        "text_secondary": "#454850",
+        "muted": "#6B6E76",
+        "border": "#DCDDD9",
+        "accent": "#1F6F5C",
+        "accent_hover": "#175A4A",
+        "accent_soft": "#E3EEEA",
+        "accent_solid": "#1F6F5C",
+        "accent_solid_hover": "#175A4A",
+        "success": "#1E7D46",
+        "success_bg": "#E7F4EA",
+        "warning": "#8A5A00",
+        "warning_bg": "#FDF1DD",
+        "danger": "#B23B2E",
+        "danger_bg": "#FBE9E6",
         "input": "#FFFFFF",
-        "sidebar_hover": "#F4F1FF",
-        "code_bg": "#F3F4F7",
-        "shadow": "0 3px 15px rgba(25,25,60,0.06)",
+        "sidebar_hover": "#F0F3F1",
+        "code_bg": "#F1F1EE",
+        "shadow": "0 1px 2px rgba(20,20,20,0.06)",
     },
     "dark": {
-        "bg": "#0F1117",
-        "bg_secondary": "#171A23",
-        "sidebar": "#12141C",
-        "card": "#171A23",
-        "text": "#F3F4F8",
-        "text_secondary": "#C3C8D6",
-        "muted": "#9AA0B4",
-        "border": "#2C3140",
-        "accent": "#9F8FFF",
-        "accent_hover": "#B3A6FF",
-        "accent_soft": "#241F45",
-        "accent_solid": "#5B45E0",
-        "accent_solid_hover": "#4A36C9",
-        "success": "#4FD1A1",
-        "success_bg": "#123328",
-        "warning": "#F6C453",
-        "warning_bg": "#3A2E12",
-        "danger": "#F47777",
-        "danger_bg": "#3A1919",
-        "input": "#1B1F29",
-        "sidebar_hover": "#1D2740",
-        "code_bg": "#0F1726",
-        "shadow": "0 8px 28px rgba(0,0,0,0.35)",
+        "bg": "#15171A",
+        "bg_secondary": "#1B1D21",
+        "sidebar": "#121315",
+        "card": "#1B1D21",
+        "text": "#EAEBEC",
+        "text_secondary": "#C2C4C8",
+        "muted": "#8C8F95",
+        "border": "#2B2D31",
+        "accent": "#4FA68C",
+        "accent_hover": "#63BBA0",
+        "accent_soft": "#1C2B27",
+        "accent_solid": "#2F8A71",
+        "accent_solid_hover": "#3A9C80",
+        "success": "#4FBE85",
+        "success_bg": "#15271C",
+        "warning": "#E0B256",
+        "warning_bg": "#2E2410",
+        "danger": "#E2776A",
+        "danger_bg": "#311A16",
+        "input": "#1D1F23",
+        "sidebar_hover": "#1D2521",
+        "code_bg": "#101214",
+        "shadow": "0 2px 10px rgba(0,0,0,0.3)",
     },
 }
 
@@ -130,7 +130,7 @@ theme = THEMES["dark" if st.session_state.dark_mode else "light"]
 
 st.set_page_config(
     page_title="MeetSense — Meeting Intelligence",
-    page_icon="🎙️",
+    page_icon="M",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -362,13 +362,12 @@ section[data-testid="stSidebar"] [data-testid="stCaptionContainer"] * {
     width: 40px;
     height: 40px;
     border-radius: 12px;
-    background: linear-gradient(135deg, #5b4bff, #7c3aed);
+    background: var(--accent-solid);
     color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 21px;
-    box-shadow: 0 5px 15px rgba(91,75,255,0.25);
     flex-shrink: 0;
 }
 
@@ -870,6 +869,28 @@ def format_time(seconds):
     return f"{minutes:02d}:{secs:02d}"
 
 
+def format_summary_sentences(summary_text):
+    """Split an extractive/abstractive summary into sentences and
+    capitalize each one -- the underlying pipeline outputs a single
+    lowercase run-on string, which reads poorly as one unbroken block."""
+
+    if not summary_text:
+        return []
+
+    import re as _re
+
+    raw_sentences = _re.split(r"(?<=[.!?])\s+", summary_text.strip())
+
+    sentences = []
+
+    for sentence in raw_sentences:
+        sentence = sentence.strip()
+        if sentence:
+            sentences.append(sentence[0].upper() + sentence[1:])
+
+    return sentences
+
+
 def safe_float(value, default=0.0):
     try:
         return float(value)
@@ -961,6 +982,94 @@ def get_duration(transcript):
     return max(ends) if ends else 0
 
 
+def _report_sort_key(report_id):
+    """Sorts report_ids newest-first. IDs are "<source>_<YYYYMMDD_HHMMSS>"
+    (see build_report's callers) -- stripping the source prefix leaves a
+    string that already sorts correctly by recency."""
+
+    for prefix in ("live_", "recorded_"):
+        if report_id.startswith(prefix):
+            return report_id[len(prefix):]
+
+    return report_id
+
+
+def _go_to_page(page_name, group="page"):
+    """Programmatic nav -- e.g. Home's CTAs and a report's 'Open'
+    button. Streamlit forbids writing to a widget's own session_state
+    key once that widget has been instantiated in the current run (the
+    sidebar radios render before this is ever called), so this stashes
+    the target in a separate pending key that gets applied just before
+    the sidebar radios are (re-)created on the rerun this triggers."""
+
+    if group == "analytics":
+        st.session_state["_pending_nav_analytics"] = page_name
+    else:
+        st.session_state["_pending_nav_page"] = page_name
+
+    st.session_state["_pending_nav_group"] = group
+    st.rerun()
+
+
+def list_recent_meetings():
+    """Every report, newest first, skipping any that fail to load
+    (e.g. an older/malformed report shouldn't take down Home)."""
+
+    from meeting_report import list_report_ids, load_report
+
+    reports = []
+
+    for report_id in list_report_ids():
+
+        try:
+            reports.append(load_report(report_id))
+        except Exception:
+            continue
+
+    reports.sort(
+        key=lambda r: _report_sort_key(r.meeting_id), reverse=True
+    )
+
+    return reports
+
+
+def _report_mtime(report_id):
+    path = OUTPUT_DIR / "reports" / report_id / "report.json"
+    return path.stat().st_mtime if path.exists() else 0
+
+
+@st.cache_data(show_spinner="Computing keywords & topics...")
+def compute_report_keywords_topics(report_id, _mtime):
+    """Per-report TF-IDF keywords + LDA topics, computed on-demand from
+    that report's own transcript (not the single global outputs/nlp/*
+    files) -- so switching between meetings in history shows each
+    meeting's own keywords/topics. Cached per (report_id, file mtime),
+    so this only re-runs when the report actually changes (e.g. a
+    speaker rename), not on every rerun/widget click."""
+
+    from meeting_report import load_report
+    from nlp_preprocessing import build_processed_segments
+    from tfidf_keywords import (
+        build_documents as build_tfidf_documents,
+        compute_tfidf_keywords,
+    )
+    from topic_modeling import (
+        build_documents as build_topic_documents,
+        compute_topics,
+    )
+
+    report = load_report(report_id)
+    processed = build_processed_segments(report.transcript)
+
+    tfidf_docs, tfidf_meta = build_tfidf_documents(processed)
+    topic_docs, topic_meta = build_topic_documents(processed)
+
+    return (
+        compute_tfidf_keywords(tfidf_docs, tfidf_meta),
+        compute_topics(topic_docs, topic_meta),
+    )
+
+
 # ============================================================
 # PIPELINE
 # ============================================================
@@ -1027,7 +1136,7 @@ def run_pipeline(progress_placeholder, log_placeholder):
             if result.returncode != 0:
 
                 logs.append(
-                    f"❌ {name} failed with exit code "
+                    f"ERROR: {name} failed with exit code "
                     f"{result.returncode}"
                 )
 
@@ -1040,12 +1149,12 @@ def run_pipeline(progress_placeholder, log_placeholder):
 
                 return False, "\n".join(logs)
 
-            logs.append(f"✓ {name} completed")
+            logs.append(f"OK: {name} completed")
             log_placeholder.code("\n".join(logs))
 
         except Exception as e:
 
-            logs.append(f"❌ Error: {e}")
+            logs.append(f"ERROR: {e}")
 
             log_placeholder.code("\n".join(logs))
 
@@ -1056,7 +1165,7 @@ def run_pipeline(progress_placeholder, log_placeholder):
         text="Analysis completed successfully"
     )
 
-    logs.append("✓ Complete meeting analysis finished.")
+    logs.append("Complete meeting analysis finished.")
 
     log_placeholder.code("\n".join(logs))
 
@@ -1065,6 +1174,16 @@ def run_pipeline(progress_placeholder, log_placeholder):
 
 
 
+
+# Apply any pending programmatic nav (from _go_to_page) before the
+# sidebar radios below are instantiated -- once instantiated, their
+# session_state keys become read-only for the rest of this run.
+if "_pending_nav_page" in st.session_state:
+    st.session_state["nav_page"] = st.session_state.pop("_pending_nav_page")
+if "_pending_nav_analytics" in st.session_state:
+    st.session_state["nav_analytics"] = st.session_state.pop("_pending_nav_analytics")
+if "_pending_nav_group" in st.session_state:
+    st.session_state["active_nav_group"] = st.session_state.pop("_pending_nav_group")
 
 # ============================================================
 # SIDEBAR
@@ -1082,11 +1201,11 @@ with st.sidebar:
         unsafe_allow_html=True,
     )
 
-    # Three nav groups share ONE active page below (see
+    # Two nav groups share ONE active page below (see
     # "active_page" right before the page-routing chain). Each
     # group's on_change marks itself as the active group, so
-    # switching between GENERAL / INTELLIGENCE / ANALYTICS behaves
-    # like a single combined nav instead of three independent ones.
+    # switching between GENERAL / RESEARCH behaves like a single
+    # combined nav instead of two independent ones.
     def _set_active_nav_group(group_name):
         st.session_state.active_nav_group = group_name
 
@@ -1098,9 +1217,8 @@ with st.sidebar:
     page = st.radio(
         "",
         [
-            "Dashboard",
-            "Meeting",
-            "My Meetings",
+            "Home",
+            "Meeting Results",
             "Live Meeting",
         ],
         label_visibility="collapsed",
@@ -1109,35 +1227,17 @@ with st.sidebar:
         args=("page",),
     )
 
-    st.markdown("### INTELLIGENCE")
-
-    intelligence_page = st.radio(
-        "",
-        [
-            "Transcript",
-            "AI Summary",
-            "Action Items",
-            "Decisions",
-            "Meeting Report",
-        ],
-        label_visibility="collapsed",
-        key="nav_intelligence",
-        on_change=_set_active_nav_group,
-        args=("intelligence",),
-    )
-
-    st.markdown("### ANALYTICS")
+    st.markdown("### RESEARCH")
+    st.caption("Model evaluation & benchmarking -- not tied to a specific meeting.")
 
     analytics_page = st.radio(
         "",
         [
-            "Keywords & Topics",
-            "Speaker Analysis",
             "Evaluation",
             "Model Comparison",
             "Ablation Study",
             "Error Analysis",
-            "Speakers",
+            "Speaker Analysis",
         ],
         label_visibility="collapsed",
         key="nav_analytics",
@@ -1148,22 +1248,6 @@ with st.sidebar:
     st.markdown("---")
 
     st.caption("Speaker-Aware Meeting Intelligence")
-
-    st.markdown(
-        """
-        <div style="
-            background:var(--accent-soft);
-            padding:13px;
-            border-radius:12px;
-            font-size:11px;
-            color:var(--accent);
-        ">
-        <b>MeetSense AI</b><br>
-        Whisper + PyAnnote + NLP + Transformers
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
 
 
 # ============================================================
@@ -1176,7 +1260,7 @@ _, theme_toggle_col = st.columns([8, 2])
 
 with theme_toggle_col:
     st.toggle(
-        "🌙 Dark mode",
+        "Dark mode",
         key="dark_mode",
         help="Switch between light and dark appearance.",
     )
@@ -1204,7 +1288,11 @@ st.markdown(
 # UPLOAD / NEW MEETING
 # ============================================================
 
-with st.expander("＋  New Meeting / Analyze Audio", expanded=False):
+_force_expand_upload = st.session_state.pop("_expand_upload", False)
+
+with st.expander(
+    "＋  New Meeting / Analyze Audio", expanded=_force_expand_upload
+):
 
     st.markdown(
         "### Upload a meeting recording"
@@ -1228,7 +1316,7 @@ with st.expander("＋  New Meeting / Analyze Audio", expanded=False):
         )
 
         if st.button(
-            "🚀 Analyze Meeting",
+            "Analyze Meeting",
             type="primary",
             use_container_width=True,
         ):
@@ -1262,7 +1350,25 @@ with st.expander("＋  New Meeting / Analyze Audio", expanded=False):
                         "Meeting analysis completed successfully."
                     )
 
-                    st.rerun()
+                    try:
+                        from meeting_report import build_report
+
+                        meeting_id = (
+                            "recorded_" + time.strftime("%Y%m%d_%H%M%S")
+                        )
+                        build_report(
+                            meeting_id,
+                            source="recorded",
+                            extractor_name="rule_based",
+                        )
+                        st.session_state["selected_report_id"] = meeting_id
+                    except Exception as report_error:
+                        st.warning(
+                            f"Analysis succeeded but the meeting report "
+                            f"could not be built: {report_error}"
+                        )
+
+                    _go_to_page("Meeting Results")
 
                 else:
 
@@ -1285,13 +1391,11 @@ with st.expander("＋  New Meeting / Analyze Audio", expanded=False):
 # ============================================================
 # LOAD DATA
 # ============================================================
-
-transcript = get_transcript()
-summary_text = get_summary_text()
-
-tfidf_data = load_json(TFIDF) or {}
-topic_data = load_json(TOPICS) or {}
-action_data = load_json(ACTION_ITEMS) or {}
+# Only the static Research-section data is loaded globally -- every
+# meeting-specific page (Home, Meeting Results, Live Meeting) loads
+# its own report_id-scoped data instead of a single hardcoded "current
+# meeting" (see list_recent_meetings/load_report/compute_report_
+# keywords_topics above).
 
 wer_data = load_json(WER) or {}
 der_data = load_json(DER) or {}
@@ -1303,471 +1407,132 @@ model_comparison_data = load_json(MODEL_COMPARISON) or {}
 ablation_data = load_json(ABLATION_RESULTS) or {}
 error_analysis_data = load_json(ERROR_ANALYSIS) or {}
 speaker_analysis_data = load_json(SPEAKER_ANALYSIS) or {}
-evidence_linked_data = load_json(EVIDENCE_LINKED_ITEMS) or {}
-
-speaker_stats = get_speaker_statistics(transcript)
-
-duration = get_duration(transcript)
-
-speaker_count = len(speaker_stats)
-
-segment_count = len(transcript)
 
 
 # ============================================================
 # ACTIVE PAGE
 # ============================================================
-# page / intelligence_page / analytics_page are three separate
-# st.radio() widgets that all exist in the sidebar simultaneously.
-# active_nav_group (set via each radio's on_change) records which
-# group the user actually interacted with, so exactly one page
-# renders below instead of only ever the GENERAL group's selection.
+# page / analytics_page are two separate st.radio() widgets that
+# both exist in the sidebar simultaneously. active_nav_group (set via
+# each radio's on_change) records which group the user actually
+# interacted with, so exactly one page renders below instead of only
+# ever the GENERAL group's selection.
 
 _active_group = st.session_state.get("active_nav_group", "page")
 
-if _active_group == "intelligence":
-    active_page = intelligence_page
-elif _active_group == "analytics":
+if _active_group == "analytics":
     active_page = analytics_page
 else:
     active_page = page
 
 
 # ============================================================
-# DASHBOARD
+# HOME
 # ============================================================
 
-if active_page == "Dashboard":
+if active_page == "Home":
 
     st.markdown(
-        '<div class="page-title">Meeting Dashboard</div>',
+        '<div class="page-title">MeetSense</div>',
         unsafe_allow_html=True,
     )
 
     st.markdown(
-        '<div class="page-subtitle">Your intelligent meeting assistant — transcription, speakers, summaries and insights.</div>',
+        '<div class="page-subtitle">Upload a recording or start a live '
+        "meeting — then open any past meeting's results below.</div>",
         unsafe_allow_html=True,
     )
 
-    # Meeting header
-    st.markdown(
-        """
-        <div class="meeting-header">
-            <div class="meeting-name">
-                Meeting Analysis
-            </div>
-            <div class="meeting-meta">
-                🎙️ Speaker-Aware Meeting • AI Analysis
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+    cta_col1, cta_col2 = st.columns(2)
 
-    # Stats
-    c1, c2, c3, c4 = st.columns(4)
-
-    with c1:
-        st.markdown(
-            f"""
-            <div class="stat-card">
-                <div class="stat-icon">⏱️</div>
-                <div class="stat-number">
-                    {format_time(duration)}
-                </div>
-                <div class="stat-label">
-                    Meeting Duration
-                </div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-
-    with c2:
-        st.markdown(
-            f"""
-            <div class="stat-card">
-                <div class="stat-icon">👥</div>
-                <div class="stat-number">
-                    {speaker_count}
-                </div>
-                <div class="stat-label">
-                    Speakers
-                </div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-
-    with c3:
-        st.markdown(
-            f"""
-            <div class="stat-card">
-                <div class="stat-icon">📝</div>
-                <div class="stat-number">
-                    {segment_count}
-                </div>
-                <div class="stat-label">
-                    Transcript Segments
-                </div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-
-    with c4:
-
-        action_items = []
-
-        if isinstance(action_data, dict):
-
-            action_items = (
-                action_data.get("action_items")
-                or action_data.get("actions")
-                or []
-            )
-
-        elif isinstance(action_data, list):
-
-            action_items = action_data
-
-        st.markdown(
-            f"""
-            <div class="stat-card">
-                <div class="stat-icon">✅</div>
-                <div class="stat-number">
-                    {len(action_items)}
-                </div>
-                <div class="stat-label">
-                    Action Items
-                </div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-
-    st.markdown("")
-
-    # Main dashboard columns
-    left, right = st.columns([1.45, 1])
-
-    with left:
-
-        # Audio
+    with cta_col1:
         st.markdown(
             """
             <div class="card">
-                <div class="card-title">
-                    🎧 Meeting Recording
-                </div>
+                <div class="card-title">Upload a Recording</div>
+                <p style="font-size:13px;color:var(--text-secondary);">
+                    Analyze an existing audio file — transcript, speaker
+                    diarization, summary, decisions and action items.
+                </p>
             </div>
             """,
             unsafe_allow_html=True,
         )
+        if st.button(
+            "Upload a Recording", use_container_width=True, type="primary"
+        ):
+            st.session_state["_expand_upload"] = True
+            st.rerun()
 
-        audio_path = AUDIO_DIR / "meeting.wav"
-
-        if audio_path.exists():
-            st.audio(
-                str(audio_path),
-                format="audio/wav",
-            )
-        else:
-            st.info(
-                "Upload a meeting recording to begin."
-            )
-
-        # Transcript preview
-        st.markdown(
-            '<div class="section-heading">📝 Meeting Transcription</div>',
-            unsafe_allow_html=True,
-        )
-
-        for item in transcript[:8]:
-
-            speaker = get_speaker_name(item)
-            text = get_segment_text(item)
-
-            start = format_time(
-                item.get("start", 0)
-            )
-
-            st.markdown(
-                f"""
-                <div class="transcript-item">
-                    <div class="transcript-header">
-                        <span class="transcript-speaker">
-                            {speaker}
-                        </span>
-                        <span class="transcript-time">
-                            {start}
-                        </span>
-                    </div>
-                    <div class="transcript-text">
-                        {text}
-                    </div>
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
-
-        if len(transcript) > 8:
-            st.caption(
-                f"Showing 8 of {len(transcript)} segments. Open Transcript for the complete meeting."
-            )
-
-    with right:
-
+    with cta_col2:
         st.markdown(
             """
-            <div class="section-heading">
-                ✨ AI Meeting Summary
+            <div class="card">
+                <div class="card-title">Start Live Meeting</div>
+                <p style="font-size:13px;color:var(--text-secondary);">
+                    Capture and transcribe a meeting as it happens, with
+                    live speaker tracking and a rolling summary.
+                </p>
             </div>
             """,
             unsafe_allow_html=True,
         )
+        if st.button(
+            "Start Live Meeting", use_container_width=True, type="primary"
+        ):
+            _go_to_page("Live Meeting")
 
-        st.markdown(
-            f"""
-            <div class="summary-box">
-                {summary_text}
-            </div>
-            """,
-            unsafe_allow_html=True,
+    st.markdown(
+        '<div class="section-heading">Recent Meetings</div>',
+        unsafe_allow_html=True,
+    )
+
+    recent_meetings = list_recent_meetings()
+
+    if not recent_meetings:
+
+        st.info(
+            "No meetings yet — upload a recording or start a live "
+            "meeting above to get started."
         )
 
-        st.markdown(
-            """
-            <div class="section-heading">
-                👥 Speakers
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
+    else:
 
-        if speaker_stats:
+        for report in recent_meetings:
 
-            for speaker, speaker_duration in speaker_stats.items():
+            source_badge = (
+                "Live" if report.source == "live" else "Recorded"
+            )
 
-                percentage = (
-                    speaker_duration / duration * 100
-                    if duration
-                    else 0
-                )
+            row_left, row_right = st.columns([5, 1])
 
+            with row_left:
                 st.markdown(
                     f"""
-                    <div class="speaker-row">
-                        <div style="display:flex;justify-content:space-between;">
-                            <span class="speaker-name">
-                                {speaker}
-                            </span>
-                            <span class="speaker-time">
-                                {format_time(speaker_duration)}
-                            </span>
-                        </div>
-                        <div style="
-                            margin-top:8px;
-                            height:5px;
-                            background:var(--border);
-                            border-radius:10px;
-                        ">
-                            <div style="
-                                width:{min(percentage,100):.1f}%;
-                                height:5px;
-                                background:var(--accent);
-                                border-radius:10px;
-                            "></div>
+                    <div class="card">
+                        <div class="card-title">{report.title or report.meeting_id}</div>
+                        <div class="card-subtitle">
+                            {report.date}
+                            &nbsp; • &nbsp;
+                            {format_time(report.duration_sec)}
+                            &nbsp; • &nbsp;
+                            {len(report.speakers)} speakers
+                            &nbsp; • &nbsp;
+                            {source_badge}
                         </div>
                     </div>
                     """,
                     unsafe_allow_html=True,
                 )
 
-        # Top keywords
-        st.markdown(
-            """
-            <div class="section-heading">
-                🔑 Key Topics & Keywords
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-
-        keywords = []
-
-        if isinstance(tfidf_data, dict):
-
-            keywords = (
-                tfidf_data.get("keywords")
-                or tfidf_data.get("top_keywords")
-                or tfidf_data.get("terms")
-                or []
-            )
-
-        if isinstance(keywords, list):
-
-            for item in keywords[:15]:
-
-                if isinstance(item, dict):
-
-                    word = (
-                        item.get("term")
-                        or item.get("keyword")
-                        or item.get("word")
-                        or ""
-                    )
-
-                else:
-
-                    word = str(item)
-
-                if word:
-
-                    st.markdown(
-                        f'<span class="tag">{word}</span>',
-                        unsafe_allow_html=True,
-                    )
-
-
-# ============================================================
-# MEETING PAGE
-# ============================================================
-
-elif active_page == "Meeting":
-
-    st.markdown(
-        '<div class="page-title">Meeting Details</div>',
-        unsafe_allow_html=True,
-    )
-
-    st.markdown(
-        '<div class="page-subtitle">Review your recording, speakers, transcript and AI-generated insights.</div>',
-        unsafe_allow_html=True,
-    )
-
-    st.markdown(
-        f"""
-        <div class="meeting-header">
-            <div style="display:flex;justify-content:space-between;">
-                <div>
-                    <div class="meeting-name">
-                        Meeting Recording
-                    </div>
-                    <div class="meeting-meta">
-                        🎙️ {speaker_count} speakers
-                        &nbsp; • &nbsp;
-                        ⏱️ {format_time(duration)}
-                        &nbsp; • &nbsp;
-                        📝 {segment_count} segments
-                    </div>
-                </div>
-                <div>
-                    <span class="status-pill">
-                        ANALYZED
-                    </span>
-                </div>
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-    if (AUDIO_DIR / "meeting.wav").exists():
-
-        st.markdown(
-            '<div class="card-title">▶ Meeting Recording</div>',
-            unsafe_allow_html=True,
-        )
-
-        st.audio(
-            str(AUDIO_DIR / "meeting.wav"),
-            format="audio/wav",
-        )
-
-    st.markdown(
-        '<div class="section-heading">Meeting Overview</div>',
-        unsafe_allow_html=True,
-    )
-
-    col1, col2 = st.columns(2)
-
-    with col1:
-
-        st.markdown(
-            f"""
-            <div class="card">
-                <div class="card-title">✨ Overview</div>
-                <p style="font-size:14px;line-height:1.7;color:var(--text-secondary);">
-                    {summary_text}
-                </p>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-
-    with col2:
-
-        st.markdown(
-            """
-            <div class="card">
-                <div class="card-title">🎯 AI Insights</div>
-                <p style="font-size:14px;line-height:1.7;color:var(--text-secondary);">
-                    The meeting has been processed using neural speech
-                    recognition, speaker diarization and NLP analysis.
-                    Explore the sections below for detailed insights.
-                </p>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-
-
-# ============================================================
-# MY MEETINGS
-# ============================================================
-
-elif active_page == "My Meetings":
-
-    st.markdown(
-        '<div class="page-title">My Meetings</div>',
-        unsafe_allow_html=True,
-    )
-
-    st.markdown(
-        '<div class="page-subtitle">Your analyzed meeting recordings.</div>',
-        unsafe_allow_html=True,
-    )
-
-    st.markdown(
-        f"""
-        <div class="card">
-            <div style="display:flex;justify-content:space-between;">
-                <div>
-                    <div class="card-title">
-                        🎙️ Meeting Recording
-                    </div>
-                    <div class="card-subtitle">
-                        {format_time(duration)}
-                        &nbsp; • &nbsp;
-                        {speaker_count} speakers
-                        &nbsp; • &nbsp;
-                        {segment_count} transcript segments
-                    </div>
-                </div>
-                <span class="status-pill">
-                    ANALYZED
-                </span>
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-    st.info(
-        "The current version stores one analyzed meeting locally. "
-        "A multi-meeting database can be added after the core application is complete."
-    )
+            with row_right:
+                if st.button(
+                    "Open",
+                    key=f"open_report_{report.meeting_id}",
+                    use_container_width=True,
+                ):
+                    st.session_state["selected_report_id"] = report.meeting_id
+                    _go_to_page("Meeting Results")
 
 
 # ============================================================
@@ -1791,7 +1556,7 @@ elif active_page == "Live Meeting":
         """
         <div class="card">
             <div class="card-title">
-                🔴 Live Meeting Mode
+                Live Meeting Mode
             </div>
             <p style="font-size:14px;line-height:1.7;color:var(--text-secondary);">
                 Audio is captured in rolling 20s windows (3s overlap) and run
@@ -1848,7 +1613,7 @@ elif active_page == "Live Meeting":
     # never waits on model loading -- only clicking Start does.
     # --------------------------------------------------------
 
-    source_col, device_col = st.columns([1, 2])
+    source_col, device_col, speaker_count_col = st.columns([1, 2, 1])
 
     with source_col:
 
@@ -1865,7 +1630,27 @@ elif active_page == "Live Meeting":
             ),
         )
 
+    with speaker_count_col:
+
+        expected_speaker_count_input = st.number_input(
+            "Speakers (if known)",
+            min_value=0,
+            max_value=20,
+            value=0,
+            step=1,
+            disabled=status["running"],
+            help=(
+                "If you know how many people are speaking, set it "
+                "here. Live speaker tracking otherwise invents a new "
+                "speaker label whenever a voice doesn't clearly match "
+                "an existing one, which fragments one real person "
+                "into several labels over a long session. 0 means "
+                "unknown -- falls back to the default cap of 8."
+            ),
+        )
+
     simulated_file_path = None
+    mic_device_index = None
 
     with device_col:
 
@@ -1899,11 +1684,19 @@ elif active_page == "Live Meeting":
                 mic_devices = []
 
             if mic_devices:
-                st.caption(
-                    "Input devices detected: "
-                    + ", ".join(d["name"] for d in mic_devices)
+                selected_device = st.selectbox(
+                    "Input device",
+                    mic_devices,
+                    format_func=lambda d: d["name"],
+                    disabled=status["running"],
+                    help=(
+                        "Which microphone to capture from. Defaults "
+                        "to the system's own default input device."
+                    ),
                 )
+                mic_device_index = selected_device["index"]
             else:
+                mic_device_index = None
                 st.warning(
                     "No microphone input device was detected. "
                     "Use Simulated mode instead."
@@ -1939,12 +1732,19 @@ elif active_page == "Live Meeting":
                             "live_controller_load_error", None
                         )
 
+                _expected_speakers = expected_speaker_count_input or None
+
                 if source_mode == "Microphone":
-                    controller.start(mode="microphone")
+                    controller.start(
+                        mode="microphone",
+                        device=mic_device_index,
+                        expected_speaker_count=_expected_speakers,
+                    )
                 else:
                     controller.start(
                         mode="simulated",
                         simulated_file_path=simulated_file_path,
+                        expected_speaker_count=_expected_speakers,
                     )
 
                 st.rerun()
@@ -2049,7 +1849,7 @@ elif active_page == "Live Meeting":
     with save_col:
 
         if st.button(
-            "💾 Save session",
+            "Save session",
             disabled=(
                 controller is None
                 or status["running"]
@@ -2072,11 +1872,48 @@ elif active_page == "Live Meeting":
 
     if st.session_state.get("live_report_id"):
 
+        _just_finished_id = st.session_state["live_report_id"]
+
         st.success(
-            f"Meeting Report ready: "
-            f"{st.session_state['live_report_id']} "
-            f"(see the Meeting Report page)."
+            f"Meeting Report ready: {_just_finished_id} "
+            f"(see it on Home or Meeting Results)."
         )
+
+        from meeting_report import load_report, save_report
+
+        try:
+            _just_finished_report = load_report(_just_finished_id)
+        except FileNotFoundError:
+            _just_finished_report = None
+
+        if _just_finished_report is not None:
+
+            rename_col, rename_save_col = st.columns([4, 1])
+
+            with rename_col:
+                _live_new_title = st.text_input(
+                    "Name this meeting",
+                    value=_just_finished_report.title or "",
+                    placeholder="Untitled meeting -- name it here",
+                    key=f"live_title_input_{_just_finished_id}",
+                )
+
+            with rename_save_col:
+                st.markdown("<div style='height:28px'></div>", unsafe_allow_html=True)
+                if st.button(
+                    "Save name",
+                    key=f"live_save_title_{_just_finished_id}",
+                    use_container_width=True,
+                ):
+                    _just_finished_report.title = (
+                        _live_new_title.strip() or None
+                    )
+                    save_report(_just_finished_report)
+                    st.success(
+                        f"Saved as \"{_just_finished_report.title}\"."
+                        if _just_finished_report.title
+                        else "Meeting name cleared."
+                    )
 
     if st.session_state.get("live_report_error"):
 
@@ -2100,6 +1937,39 @@ elif active_page == "Live Meeting":
         def render_live_status():
 
             live_status = controller.get_status()
+
+            # ---- recording indicator ----
+            # Always shown while running, regardless of lag state --
+            # the lag warning/pill further down is about processing
+            # speed, not about whether capture itself is active.
+
+            if live_status["running"]:
+
+                st.markdown(
+                    """
+                    <div style="
+                        display:flex;align-items:center;gap:10px;
+                        margin-bottom:12px;
+                    ">
+                        <span style="
+                            width:12px;height:12px;border-radius:50%;
+                            background:#e03131;display:inline-block;
+                            animation: meetsense-rec-pulse 1.5s infinite;
+                        "></span>
+                        <span style="font-weight:700;color:#e03131;">
+                            Recording
+                        </span>
+                    </div>
+                    <style>
+                    @keyframes meetsense-rec-pulse {
+                        0% { opacity: 1; }
+                        50% { opacity: 0.35; }
+                        100% { opacity: 1; }
+                    }
+                    </style>
+                    """,
+                    unsafe_allow_html=True,
+                )
 
             # ---- status strip ----
 
@@ -2133,7 +2003,7 @@ elif active_page == "Live Meeting":
             if live_status["lag_seconds"] > 5:
 
                 st.warning(
-                    f"⚠️ LAGGING: processing is behind capture by "
+                    f"LAGGING: processing is behind capture by "
                     f"{live_status['lag_seconds']:.1f}s. This is "
                     f"measured, not estimated."
                 )
@@ -2165,190 +2035,208 @@ elif active_page == "Live Meeting":
                         }
                     )
 
-            # ---- rolling summary ----
+            # ---- tabbed meeting content (matches Meeting Results) ----
 
-            st.markdown(
-                '<div class="section-heading">📝 Rolling Meeting Summary</div>',
-                unsafe_allow_html=True,
+            live_tab_transcript, live_tab_decisions, live_tab_keywords, live_tab_summary = (
+                st.tabs(
+                    [
+                        "Transcript",
+                        "Decisions & Action Items",
+                        "Keywords & Topics",
+                        "Summary",
+                    ]
+                )
             )
 
-            if live_status["whole_summary"]:
+            with live_tab_transcript:
 
                 st.markdown(
-                    f"""
-                    <div class="summary-box">
-                        {live_status["whole_summary"]}
-                    </div>
-                    <div class="card-subtitle">
-                        As of chunk {live_status["chunk_count"]} /
-                        {format_time(live_status["processed_audio_seconds"])}
-                    </div>
-                    """,
+                    '<div class="section-heading">Live Transcript '
+                    "(newest first)</div>",
                     unsafe_allow_html=True,
                 )
 
-            else:
+                live_transcript = live_status["transcript"]
 
-                st.caption(
-                    "Whole-meeting summary regenerates every "
-                    f"{controller.session.recompute_every_n_chunks} chunks "
-                    "-- none yet."
-                )
+                if live_transcript:
 
-            if live_status["chunk_summaries"]:
-
-                with st.expander(
-                    f"Chunk summaries so far "
-                    f"({len(live_status['chunk_summaries'])})"
-                ):
-
-                    for index, chunk_summary in enumerate(
-                        live_status["chunk_summaries"], start=1
-                    ):
-                        st.markdown(f"**Chunk {index}:** {chunk_summary}")
-
-            # ---- decisions / action items ----
-
-            items_col, decisions_col = st.columns(2)
-
-            with items_col:
-
-                st.markdown(
-                    '<div class="section-heading">✅ Action Items</div>',
-                    unsafe_allow_html=True,
-                )
-
-                if live_status["action_items"]:
-
-                    for item in reversed(live_status["action_items"]):
-
-                        deadline_html = (
-                            f'<div class="card-subtitle">Deadline: {item["deadline"]}</div>'
-                            if item.get("deadline")
-                            else ""
-                        )
+                    for segment in reversed(live_transcript[-50:]):
 
                         st.markdown(
                             f"""
-                            <div class="action-item">
-                                <div class="action-title">□ {item['action']}</div>
-                                <div class="card-subtitle">{item['speaker']}</div>
-                                {deadline_html}
+                            <div class="transcript-item">
+                                <div class="transcript-header">
+                                    <span class="transcript-speaker">
+                                         {segment["speaker"]}
+                                    </span>
+                                    <span class="transcript-time">
+                                        {format_time(segment["start"])}
+                                    </span>
+                                    <span class="transcript-time">
+                                        {"speakers refined" if segment.get("speakers_refined") else "provisional speaker"}
+                                    </span>
+                                </div>
+                                <div class="transcript-text">
+                                    {segment["text"]}
+                                </div>
                             </div>
                             """,
                             unsafe_allow_html=True,
                         )
 
                 else:
-                    st.caption("None detected yet.")
 
-            with decisions_col:
+                    st.caption("No speech processed yet.")
+
+            with live_tab_decisions:
+
+                items_col, decisions_col = st.columns(2)
+
+                with items_col:
+
+                    st.markdown(
+                        '<div class="section-heading">Action Items</div>',
+                        unsafe_allow_html=True,
+                    )
+
+                    if live_status["action_items"]:
+
+                        for item in reversed(live_status["action_items"]):
+
+                            deadline_html = (
+                                f'<div class="card-subtitle">Deadline: {item["deadline"]}</div>'
+                                if item.get("deadline")
+                                else ""
+                            )
+
+                            st.markdown(
+                                f"""
+                                <div class="action-item">
+                                    <div class="action-title">□ {item['action']}</div>
+                                    <div class="card-subtitle">{item['speaker']}</div>
+                                    {deadline_html}
+                                </div>
+                                """,
+                                unsafe_allow_html=True,
+                            )
+
+                    else:
+                        st.caption("None detected yet.")
+
+                with decisions_col:
+
+                    st.markdown(
+                        '<div class="section-heading">Decisions</div>',
+                        unsafe_allow_html=True,
+                    )
+
+                    if live_status["decisions"]:
+
+                        for item in reversed(live_status["decisions"]):
+
+                            st.markdown(
+                                f"""
+                                <div class="action-item">
+                                    <div class="action-title">{item['decision']}</div>
+                                    <div class="card-subtitle">{item['speaker']}</div>
+                                </div>
+                                """,
+                                unsafe_allow_html=True,
+                            )
+
+                    else:
+                        st.caption("None detected yet.")
+
+            with live_tab_keywords:
 
                 st.markdown(
-                    '<div class="section-heading">📌 Decisions</div>',
+                    '<div class="section-heading">Top Keywords & Topics</div>',
                     unsafe_allow_html=True,
                 )
 
-                if live_status["decisions"]:
+                keywords = live_status["keywords"].get("top_keywords", [])
+                topics = live_status["topics"].get("topics", [])
 
-                    for item in reversed(live_status["decisions"]):
+                if keywords or topics:
 
-                        st.markdown(
-                            f"""
-                            <div class="action-item">
-                                <div class="action-title">{item['decision']}</div>
-                                <div class="card-subtitle">{item['speaker']}</div>
-                            </div>
-                            """,
-                            unsafe_allow_html=True,
-                        )
+                    keyword_col, topic_col = st.columns(2)
+
+                    with keyword_col:
+
+                        if keywords:
+                            st.markdown(
+                                ", ".join(
+                                    k["term"] for k in keywords[:15]
+                                )
+                            )
+                        else:
+                            st.caption("No keywords yet.")
+
+                    with topic_col:
+
+                        if topics:
+                            for topic in topics:
+                                words = ", ".join(
+                                    w["word"] for w in topic["top_words"][:6]
+                                )
+                                st.markdown(f"**Topic {topic['topic_id']}:** {words}")
+                        else:
+                            st.caption("No topics yet.")
 
                 else:
-                    st.caption("None detected yet.")
 
-            # ---- keywords / topics ----
+                    st.caption(
+                        "Keywords/topics refit every "
+                        f"{controller.session.recompute_every_n_chunks} chunks "
+                        "over the growing transcript -- none yet."
+                    )
 
-            st.markdown(
-                '<div class="section-heading">🔑 Top Keywords & Topics</div>',
-                unsafe_allow_html=True,
-            )
+            with live_tab_summary:
 
-            keywords = live_status["keywords"].get("top_keywords", [])
-            topics = live_status["topics"].get("topics", [])
-
-            if keywords or topics:
-
-                keyword_col, topic_col = st.columns(2)
-
-                with keyword_col:
-
-                    if keywords:
-                        st.markdown(
-                            ", ".join(
-                                k["term"] for k in keywords[:15]
-                            )
-                        )
-                    else:
-                        st.caption("No keywords yet.")
-
-                with topic_col:
-
-                    if topics:
-                        for topic in topics:
-                            words = ", ".join(
-                                w["word"] for w in topic["top_words"][:6]
-                            )
-                            st.markdown(f"**Topic {topic['topic_id']}:** {words}")
-                    else:
-                        st.caption("No topics yet.")
-
-            else:
-
-                st.caption(
-                    "Keywords/topics refit every "
-                    f"{controller.session.recompute_every_n_chunks} chunks "
-                    "over the growing transcript -- none yet."
+                st.markdown(
+                    '<div class="section-heading">Rolling Meeting Summary</div>',
+                    unsafe_allow_html=True,
                 )
 
-            # ---- growing transcript, newest first ----
+                if live_status["whole_summary"]:
 
-            st.markdown(
-                '<div class="section-heading">🗣️ Live Transcript '
-                "(newest first)</div>",
-                unsafe_allow_html=True,
-            )
-
-            transcript = live_status["transcript"]
-
-            if transcript:
-
-                for segment in reversed(transcript[-50:]):
+                    live_summary_html = "".join(
+                        f"<p style='margin:0 0 10px 0;'>{sentence}</p>"
+                        for sentence in format_summary_sentences(
+                            live_status["whole_summary"]
+                        )
+                    )
 
                     st.markdown(
                         f"""
-                        <div class="transcript-item">
-                            <div class="transcript-header">
-                                <span class="transcript-speaker">
-                                    🎙️ {segment["speaker"]}
-                                </span>
-                                <span class="transcript-time">
-                                    {format_time(segment["start"])}
-                                </span>
-                                <span class="transcript-time">
-                                    {"speakers refined" if segment.get("speakers_refined") else "provisional speaker"}
-                                </span>
-                            </div>
-                            <div class="transcript-text">
-                                {segment["text"]}
-                            </div>
+                        <div class="summary-box">{live_summary_html}</div>
+                        <div class="card-subtitle">
+                            As of chunk {live_status["chunk_count"]} /
+                            {format_time(live_status["processed_audio_seconds"])}
                         </div>
                         """,
                         unsafe_allow_html=True,
                     )
 
-            else:
+                else:
 
-                st.caption("No speech processed yet.")
+                    st.caption(
+                        "Whole-meeting summary regenerates every "
+                        f"{controller.session.recompute_every_n_chunks} chunks "
+                        "-- none yet."
+                    )
+
+                if live_status["chunk_summaries"]:
+
+                    with st.expander(
+                        f"Chunk summaries so far "
+                        f"({len(live_status['chunk_summaries'])})"
+                    ):
+
+                        for index, chunk_summary in enumerate(
+                            live_status["chunk_summaries"], start=1
+                        ):
+                            st.markdown(f"**Chunk {index}:** {chunk_summary}")
 
         render_live_status()
 
@@ -2357,352 +2245,17 @@ elif active_page == "Live Meeting":
 # TRANSCRIPT PAGE
 # ============================================================
 
-elif active_page == "Transcript":
+elif active_page == "Meeting Results":
 
     st.markdown(
-        '<div class="page-title">Meeting Transcript</div>',
+        '<div class="page-title">Meeting Results</div>',
         unsafe_allow_html=True,
     )
 
     st.markdown(
-        '<div class="page-subtitle">Timestamped transcription with speaker attribution.</div>',
-        unsafe_allow_html=True,
-    )
-
-    search = st.text_input(
-        "🔎 Search transcript",
-        placeholder="Search words, sentences or speakers...",
-    )
-
-    filtered = transcript
-
-    if search:
-
-        query = search.lower()
-
-        filtered = [
-            item
-            for item in transcript
-            if query in get_segment_text(item).lower()
-            or query in get_speaker_name(item).lower()
-        ]
-
-    st.caption(
-        f"{len(filtered)} transcript segments"
-    )
-
-    # Built as one combined HTML string and rendered with a single
-    # st.markdown() call -- up to ~400 segments, so one call instead
-    # of one per segment avoids per-element Streamlit overhead on
-    # every rerun (including every theme toggle).
-    segment_blocks = []
-
-    for item in filtered:
-
-        speaker = get_speaker_name(item)
-        text = get_segment_text(item)
-
-        segment_blocks.append(
-            f"""
-            <div class="transcript-item">
-                <div class="transcript-header">
-                    <span class="transcript-speaker">
-                        {speaker}
-                    </span>
-                    <span class="transcript-time">
-                        {format_time(item.get("start",0))}
-                        —
-                        {format_time(item.get("end",0))}
-                    </span>
-                </div>
-
-                <div class="transcript-text">
-                    {text}
-                </div>
-            </div>
-            """
-        )
-
-    if segment_blocks:
-
-        st.markdown(
-            "".join(segment_blocks),
-            unsafe_allow_html=True,
-        )
-
-
-# ============================================================
-# SUMMARY PAGE
-# ============================================================
-
-elif active_page == "AI Summary":
-
-    st.markdown(
-        '<div class="page-title">AI Meeting Summary</div>',
-        unsafe_allow_html=True,
-    )
-
-    st.markdown(
-        '<div class="page-subtitle">Transformer-generated summary of the meeting.</div>',
-        unsafe_allow_html=True,
-    )
-
-    st.markdown(
-        f"""
-        <div class="summary-box">
-            {summary_text}
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-    st.markdown(
-        '<div class="section-heading">🎯 Key Meeting Information</div>',
-        unsafe_allow_html=True,
-    )
-
-    c1, c2, c3 = st.columns(3)
-
-    with c1:
-        st.metric(
-            "Duration",
-            format_time(duration),
-        )
-
-    with c2:
-        st.metric(
-            "Speakers",
-            speaker_count,
-        )
-
-    with c3:
-        st.metric(
-            "Segments",
-            segment_count,
-        )
-
-
-# ============================================================
-# ACTION ITEMS
-# ============================================================
-
-elif active_page == "Action Items":
-
-    st.markdown(
-        '<div class="page-title">Action Items</div>',
-        unsafe_allow_html=True,
-    )
-
-    st.markdown(
-        '<div class="page-subtitle">Tasks and follow-up actions extracted from the meeting.</div>',
-        unsafe_allow_html=True,
-    )
-
-    evidence_action_items = evidence_linked_data.get("action_items", [])
-
-    if evidence_action_items:
-
-        # Evidence-linked rendering: every item traces back to its
-        # source transcript segment (see src/evidence_linking.py).
-        for item in evidence_action_items:
-
-            deadline_html = (
-                f'<div class="card-subtitle" style="margin-top:4px;">Deadline: {item["deadline"]}</div>'
-                if item.get("deadline") else ""
-            )
-
-            st.markdown(
-                f"""
-                <div class="action-item">
-                    <div class="action-title">
-                        □ &nbsp; {item['text']}
-                    </div>
-                    <div class="card-subtitle" style="margin-top:6px;">
-                        Speaker: {item['speaker_display_name']} &nbsp;·&nbsp;
-                        Timestamp: {item['timestamp_formatted']}
-                    </div>
-                    {deadline_html}
-                    <div style="font-size:12px;color:var(--text-muted);margin-top:8px;">
-                        <b>Evidence:</b> "{item['evidence_text']}"
-                    </div>
-                    <div style="font-size:11px;color:var(--text-muted);margin-top:6px;">
-                        Detection method: {item['detection_method_label']}
-                    </div>
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
-
-    else:
-
-        # Fallback: evidence_linked_items.json hasn't been generated
-        # yet (run src/evidence_linking.py). Original rendering,
-        # unchanged, so this page keeps working either way.
-        actions = []
-
-        if isinstance(action_data, dict):
-
-            actions = (
-                action_data.get("action_items")
-                or action_data.get("actions")
-                or []
-            )
-
-        elif isinstance(action_data, list):
-
-            actions = action_data
-
-        if not actions:
-
-            st.info(
-                "No action items were found."
-            )
-
-        else:
-
-            for index, action in enumerate(actions):
-
-                if isinstance(action, dict):
-
-                    text = (
-                        action.get("action")
-                        or action.get("text")
-                        or action.get("item")
-                        or str(action)
-                    )
-
-                    speaker = (
-                        action.get("speaker")
-                        or action.get("owner")
-                        or ""
-                    )
-
-                else:
-
-                    text = str(action)
-                    speaker = ""
-
-                st.markdown(
-                    f"""
-                    <div class="action-item">
-                        <div class="action-title">
-                            □ &nbsp; {text}
-                        </div>
-                        {
-                            f'<div class="card-subtitle" style="margin-top:6px;">Speaker: {speaker}</div>'
-                            if speaker else ""
-                        }
-                    </div>
-                    """,
-                    unsafe_allow_html=True,
-                )
-
-
-# ============================================================
-# DECISIONS
-# ============================================================
-
-elif active_page == "Decisions":
-
-    st.markdown(
-        '<div class="page-title">Meeting Decisions</div>',
-        unsafe_allow_html=True,
-    )
-
-    st.markdown(
-        '<div class="page-subtitle">Important decisions identified during the meeting.</div>',
-        unsafe_allow_html=True,
-    )
-
-    evidence_decisions = evidence_linked_data.get("decisions", [])
-
-    if evidence_decisions:
-
-        # Evidence-linked rendering: every decision traces back to
-        # its source transcript segment (see src/evidence_linking.py).
-        for item in evidence_decisions:
-
-            st.markdown(
-                f"""
-                <div class="decision">
-                    💡 <b>Decision</b><br>
-                    {item['text']}
-                    <div class="card-subtitle" style="margin-top:6px;">
-                        Speaker: {item['speaker_display_name']} &nbsp;·&nbsp;
-                        Timestamp: {item['timestamp_formatted']}
-                    </div>
-                    <div style="font-size:12px;color:var(--text-muted);margin-top:8px;">
-                        <b>Evidence:</b> "{item['evidence_text']}"
-                    </div>
-                    <div style="font-size:11px;color:var(--text-muted);margin-top:6px;">
-                        Detection method: {item['detection_method_label']}
-                    </div>
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
-
-    else:
-
-        # Fallback: evidence_linked_items.json hasn't been generated
-        # yet (run src/evidence_linking.py). Original rendering,
-        # unchanged, so this page keeps working either way.
-        decisions = []
-
-        if isinstance(action_data, dict):
-
-            decisions = (
-                action_data.get("decisions")
-                or action_data.get("decision_items")
-                or []
-            )
-
-        if not decisions:
-
-            st.info(
-                "No decisions were extracted."
-            )
-
-        else:
-
-            for decision in decisions:
-
-                if isinstance(decision, dict):
-
-                    text = (
-                        decision.get("decision")
-                        or decision.get("text")
-                        or str(decision)
-                    )
-
-                else:
-
-                    text = str(decision)
-
-                st.markdown(
-                    f"""
-                    <div class="decision">
-                        💡 <b>Decision</b><br>
-                        {text}
-                    </div>
-                    """,
-                    unsafe_allow_html=True,
-                )
-
-
-# ============================================================
-# MEETING REPORT
-# ============================================================
-
-elif active_page == "Meeting Report":
-
-    st.markdown(
-        '<div class="page-title">Meeting Report</div>',
-        unsafe_allow_html=True,
-    )
-    st.markdown(
-        '<div class="page-subtitle">Speakers, takeaways, and '
-        "evidence-linked action items.</div>",
+        '<div class="page-subtitle">Transcript, speakers, summary, '
+        "decisions, action items, keywords and the full report -- "
+        "for one meeting at a time.</div>",
         unsafe_allow_html=True,
     )
 
@@ -2717,426 +2270,757 @@ elif active_page == "Meeting Report":
         available_extractors,
     )
 
-    default_report_id = "meeting_001"
+    existing_report_ids = sorted(
+        list_report_ids(), key=_report_sort_key, reverse=True
+    )
 
-    existing_report_ids = list_report_ids()
+    if not existing_report_ids:
 
-    report_options = existing_report_ids or [default_report_id]
-
-    build_col, extractor_col = st.columns([2, 1])
-
-    with build_col:
-        report_id = st.selectbox("Report", report_options, index=0)
-
-    with extractor_col:
-        # key="extractor_choice" persists this selection in
-        # session_state so the Live Meeting Stop handler (a
-        # different page) can reuse the same preference for
-        # finalizing a live report with "the selected extractor".
-        extractor_choice = st.selectbox(
-            "Extractor",
-            available_extractors(),
-            index=0,
-            key="extractor_choice",
+        st.info(
+            "No analyzed meetings yet. Upload a recording or start a "
+            "live meeting from Home."
         )
 
-    if st.button("🔄 Build / rebuild from current batch outputs"):
+    else:
 
-        _live_controller = st.session_state.get("live_controller")
+        preferred_report_id = st.session_state.get("selected_report_id")
 
-        _unload_hook = (
-            _live_controller.session.unload_models
-            if _live_controller is not None
-            else None
+        default_index = (
+            existing_report_ids.index(preferred_report_id)
+            if preferred_report_id in existing_report_ids
+            else 0
         )
+
+        select_col, extractor_col = st.columns([2, 1])
+
+        with select_col:
+            report_id = st.selectbox(
+                "Meeting", existing_report_ids, index=default_index
+            )
+
+        with extractor_col:
+            # key="extractor_choice" persists this selection in
+            # session_state so the Live Meeting Stop handler (a
+            # different page) can reuse the same preference for
+            # finalizing a live report with "the selected extractor".
+            extractor_choice = st.selectbox(
+                "Extractor",
+                available_extractors(),
+                index=0,
+                key="extractor_choice",
+            )
+
+        st.session_state["selected_report_id"] = report_id
 
         try:
+            meeting_report = load_report(report_id)
+        except FileNotFoundError:
+            meeting_report = None
 
-            if extractor_choice == "llm":
-                with st.spinner("Generating takeaways..."):
-                    built_report = build_report(
-                        report_id,
-                        source="recorded",
-                        extractor_name=extractor_choice,
-                        pre_extract_hook=_unload_hook,
-                    )
-            else:
-                built_report = build_report(
-                    report_id,
-                    source="recorded",
-                    extractor_name=extractor_choice,
+        if meeting_report is None:
+
+            st.info("No report found for this meeting.")
+
+        else:
+
+            name_col, name_save_col = st.columns([4, 1])
+
+            with name_col:
+                new_title = st.text_input(
+                    "Meeting name",
+                    value=meeting_report.title or "",
+                    placeholder="Untitled meeting -- name it here",
+                    key=f"title_input_{report_id}",
+                    label_visibility="collapsed",
                 )
 
-            if built_report.extractor_used != extractor_choice:
-                st.warning(
-                    built_report.extractor_stats.get(
-                        "fallback_notice",
-                        f"Fell back to '{built_report.extractor_used}'.",
-                    )
-                )
-            else:
-                st.success(
-                    f"Built report '{report_id}' using '{extractor_choice}'."
-                )
-
-            st.rerun()
-
-        except Exception as error:
-            st.error(f"Could not build report: {error}")
-
-    try:
-        meeting_report = load_report(report_id)
-    except FileNotFoundError:
-        meeting_report = None
-
-    if meeting_report is None:
-
-        st.info(
-            "No report yet for this meeting. Click "
-            "'Build / rebuild' above."
-        )
-
-    else:
-
-        if meeting_report.source == "live":
-            audio_path = Path("outputs/live/live_session_audio.wav")
-            refine_key = f"offline_refine_{report_id}"
-            if st.button(
-                "Refine speakers (offline, slower)",
-                disabled=not audio_path.exists(),
-                key=f"refine_speakers_{report_id}",
-            ):
-                status = {"running": True, "done": False, "error": None, "rerun_requested": False}
-                st.session_state[refine_key] = status
-                threading.Thread(
-                    target=_refine_live_report_speakers,
-                    args=(report_id, str(audio_path), status),
-                    daemon=True,
-                ).start()
-            if not audio_path.exists():
-                st.caption("Saved live audio is unavailable for offline refinement.")
-
-            @st.fragment(run_every="2s")
-            def show_speaker_refinement_status():
-                status = st.session_state.get(refine_key)
-                if not status:
-                    return
-                if status.get("running"):
-                    st.info("Offline speaker refinement is running in the background.")
-                elif status.get("error"):
-                    st.error(f"Offline speaker refinement failed: {status['error']}")
-                elif status.get("done"):
-                    st.success("Speaker labels were refined and the report was updated.")
-                    if not status.get("rerun_requested"):
-                        status["rerun_requested"] = True
-                        st.rerun()
-
-            show_speaker_refinement_status()
-
-        st.markdown(
-            f"**Date:** {meeting_report.date} &nbsp;&nbsp; "
-            f"**Duration:** {format_time(meeting_report.duration_sec)} "
-            f"&nbsp;&nbsp; **Source:** {meeting_report.source}"
-        )
-
-        if meeting_report.summary:
-
-            st.markdown(
-                '<div class="section-heading">📝 Summary</div>',
-                unsafe_allow_html=True,
-            )
-            st.markdown(
-                f'<div class="summary-box">{meeting_report.summary}</div>',
-                unsafe_allow_html=True,
-            )
-
-        if meeting_report.speakers:
-
-            st.markdown(
-                '<div class="section-heading">🗣️ Speakers & '
-                "Speaking Time</div>",
-                unsafe_allow_html=True,
-            )
-
-            import pandas as pd
-
-            chart_df = pd.DataFrame(
-                {
-                    "speaker": [s.name for s in meeting_report.speakers],
-                    "seconds": [
-                        s.speaking_time_sec
-                        for s in meeting_report.speakers
-                    ],
-                }
-            ).set_index("speaker")
-
-            st.bar_chart(chart_df)
-
-            with st.expander("Rename speakers"):
-
-                renaming = {}
-
-                for speaker in meeting_report.speakers:
-
-                    new_name = st.text_input(
-                        f"Rename {speaker.name}",
-                        value=speaker.name,
-                        key=f"rename_{report_id}_{speaker.name}",
-                    )
-
-                    if new_name != speaker.name:
-                        renaming[speaker.name] = new_name
-
-                if renaming and st.button("Apply renaming"):
-
-                    meeting_report = apply_speaker_renaming(
-                        meeting_report, renaming
-                    )
+            with name_save_col:
+                if st.button(
+                    "Save name",
+                    key=f"save_title_{report_id}",
+                    use_container_width=True,
+                ):
+                    meeting_report.title = new_title.strip() or None
                     save_report(meeting_report)
-
                     st.success(
-                        "Renamed. Applied to speakers, transcript, "
-                        "and all evidence."
-                    )
-                    st.rerun()
-
-        for section_name, icon, section in [
-            ("Decisions", "📌", meeting_report.decisions),
-            ("Action Items", "✅", meeting_report.action_items),
-            ("Deadlines", "⏰", meeting_report.deadlines),
-            ("Open Questions", "❓", meeting_report.open_questions),
-        ]:
-
-            if section:
-
-                st.markdown(
-                    f'<div class="section-heading">{icon} '
-                    f"{section_name}</div>",
-                    unsafe_allow_html=True,
-                )
-
-                for item in section:
-
-                    due = (
-                        f" · due {item.due_date}"
-                        if item.due_date
-                        else ""
+                        f'Saved as "{meeting_report.title}".'
+                        if meeting_report.title
+                        else "Meeting name cleared."
                     )
 
-                    st.markdown(f"**{item.text}**{due}")
+            report_transcript = meeting_report.transcript
+            report_duration = meeting_report.duration_sec
+            report_speaker_count = len(meeting_report.speakers)
+            report_segment_count = len(report_transcript)
 
-                    with st.expander(
-                        f"Evidence — {item.evidence.speaker} @ "
-                        f"{format_time(item.evidence.timestamp)}"
-                    ):
-                        st.markdown(f"> {item.evidence.quote}")
-
-        st.markdown(
-            '<div class="section-heading">⬇️ Export</div>',
-            unsafe_allow_html=True,
-        )
-
-        export_col1, export_col2, export_col3 = st.columns(3)
-
-        with export_col1:
-
-            st.download_button(
-                "JSON",
-                data=json.dumps(
-                    meeting_report.to_rendered_dict(),
-                    indent=2,
-                    ensure_ascii=False,
-                ),
-                file_name=f"{report_id}_report.json",
-                mime="application/json",
+            (
+                tab_transcript,
+                tab_speakers,
+                tab_summary,
+                tab_decisions,
+                tab_keywords,
+                tab_report,
+            ) = st.tabs(
+                [
+                    "Transcript",
+                    "Speakers",
+                    "Summary",
+                    "Decisions & Action Items",
+                    "Keywords & Topics",
+                    "Report",
+                ]
             )
 
-        with export_col2:
+            # --------------------------------------------------
+            # TRANSCRIPT TAB
+            # --------------------------------------------------
+            with tab_transcript:
 
-            st.download_button(
-                "Markdown",
-                data=render_markdown(meeting_report),
-                file_name=f"{report_id}_report.md",
-                mime="text/markdown",
-            )
-
-        with export_col3:
-
-            st.download_button(
-                "HTML",
-                data=render_html(meeting_report),
-                file_name=f"{report_id}_report.html",
-                mime="text/html",
-            )
-
-
-# ============================================================
-# KEYWORDS + TOPICS
-# ============================================================
-
-elif active_page == "Keywords & Topics":
-
-    st.markdown(
-        '<div class="page-title">Keywords & Topics</div>',
-        unsafe_allow_html=True,
-    )
-
-    st.markdown(
-        '<div class="page-subtitle">NLP analysis using TF-IDF and LDA topic modeling.</div>',
-        unsafe_allow_html=True,
-    )
-
-    st.markdown(
-        '<div class="section-heading">🔑 TF-IDF Keywords</div>',
-        unsafe_allow_html=True,
-    )
-
-    keywords = []
-
-    if isinstance(tfidf_data, dict):
-
-        keywords = (
-            tfidf_data.get("keywords")
-            or tfidf_data.get("top_keywords")
-            or tfidf_data.get("terms")
-            or []
-        )
-
-    if keywords:
-
-        for item in keywords:
-
-            if isinstance(item, dict):
-
-                word = (
-                    item.get("term")
-                    or item.get("keyword")
-                    or item.get("word")
-                    or ""
+                search = st.text_input(
+                    "Search transcript",
+                    placeholder="Search words, sentences or speakers...",
+                    key=f"transcript_search_{report_id}",
                 )
 
-                score = item.get("score")
+                filtered = report_transcript
 
-                if score is not None:
+                if search:
 
-                    st.markdown(
+                    query = search.lower()
+
+                    filtered = [
+                        item
+                        for item in report_transcript
+                        if query in get_segment_text(item).lower()
+                        or query in get_speaker_name(item).lower()
+                    ]
+
+                st.caption(f"{len(filtered)} transcript segments")
+
+                segment_blocks = []
+
+                for item in filtered:
+
+                    speaker = get_speaker_name(item)
+                    text = get_segment_text(item)
+
+                    segment_blocks.append(
                         f"""
-                        <div class="speaker-row">
-                            <div style="display:flex;justify-content:space-between;">
-                                <span class="speaker-name">
-                                    {word}
+                        <div class="transcript-item">
+                            <div class="transcript-header">
+                                <span class="transcript-speaker">
+                                    {speaker}
                                 </span>
-                                <span class="speaker-time">
-                                    {safe_float(score):.4f}
+                                <span class="transcript-time">
+                                    {format_time(item.get("start",0))}
+                                    —
+                                    {format_time(item.get("end",0))}
                                 </span>
                             </div>
+
+                            <div class="transcript-text">
+                                {text}
+                            </div>
                         </div>
-                        """,
-                        unsafe_allow_html=True,
+                        """
                     )
 
-                elif word:
-
+                if segment_blocks:
                     st.markdown(
-                        f'<span class="tag">{word}</span>',
-                        unsafe_allow_html=True,
+                        "".join(segment_blocks), unsafe_allow_html=True
+                    )
+                else:
+                    st.info("No transcript segments for this meeting.")
+
+            # --------------------------------------------------
+            # SPEAKERS TAB
+            # --------------------------------------------------
+            with tab_speakers:
+
+                if meeting_report.speakers:
+
+                    import pandas as pd
+
+                    chart_df = pd.DataFrame(
+                        {
+                            "speaker": [
+                                s.name for s in meeting_report.speakers
+                            ],
+                            "seconds": [
+                                s.speaking_time_sec
+                                for s in meeting_report.speakers
+                            ],
+                        }
+                    ).set_index("speaker")
+
+                    st.bar_chart(chart_df)
+
+                try:
+                    tfidf_result, topic_result = (
+                        compute_report_keywords_topics(
+                            report_id, _report_mtime(report_id)
+                        )
+                    )
+                except Exception:
+                    tfidf_result, topic_result = {}, {}
+
+                try:
+                    from speaker_analysis import compute_speaker_contributions
+
+                    normalized_action_data = {
+                        "decisions": [
+                            {
+                                "decision": item.text,
+                                "speaker": item.evidence.speaker,
+                                "segment_id": None,
+                            }
+                            for item in meeting_report.decisions
+                        ],
+                        "action_items": [
+                            {
+                                "action": item.text,
+                                "speaker": item.evidence.speaker,
+                                "segment_id": None,
+                            }
+                            for item in meeting_report.action_items
+                        ],
+                    }
+
+                    speaker_contributions, _ = compute_speaker_contributions(
+                        report_transcript,
+                        tfidf_result,
+                        topic_result,
+                        normalized_action_data,
+                    )
+                except Exception:
+                    speaker_contributions = []
+
+                if not speaker_contributions:
+
+                    st.info("No per-speaker breakdown for this meeting.")
+
+                else:
+
+                    st.caption(
+                        "All figures below are objective counts/"
+                        "measurements (speaking time, participation "
+                        "percentage, utterance/question counts, topic "
+                        "and keyword association, decisions/action "
+                        "items). Not a judgment of performance."
                     )
 
-            else:
+                    for speaker in speaker_contributions:
 
-                st.markdown(
-                    f'<span class="tag">{item}</span>',
-                    unsafe_allow_html=True,
-                )
+                        topic_labels = []
 
-    else:
-
-        st.info(
-            "No TF-IDF keyword data available."
-        )
-
-    st.markdown(
-        '<div class="section-heading">🧠 LDA Topics</div>',
-        unsafe_allow_html=True,
-    )
-
-    topics = []
-
-    if isinstance(topic_data, dict):
-
-        topics = (
-            topic_data.get("topics")
-            or topic_data.get("lda_topics")
-            or []
-        )
-
-    elif isinstance(topic_data, list):
-
-        topics = topic_data
-
-    if topics:
-
-        for index, topic in enumerate(topics, start=1):
-
-            if isinstance(topic, dict):
-
-                words = (
-                    topic.get("words")
-                    or topic.get("terms")
-                    or topic.get("top_words")
-                    or []
-                )
-
-                st.markdown(
-                    f"""
-                    <div class="card">
-                        <div class="card-title">
-                            Topic {index}
-                        </div>
-                    """,
-                    unsafe_allow_html=True,
-                )
-
-                if isinstance(words, list):
-
-                    for word in words:
-
-                        if isinstance(word, dict):
-                            word = (
-                                word.get("word")
-                                or word.get("term")
-                                or str(word)
+                        for t in speaker.get("topics", []):
+                            label = (
+                                ", ".join(t["top_words"])
+                                or f"Topic {t['topic_id']}"
                             )
+                            topic_labels.append(label)
+
+                        topics_html = "".join(
+                            f'<span class="tag">{label}</span>'
+                            for label in topic_labels
+                        ) or (
+                            '<span class="card-subtitle">'
+                            "No dominant topics.</span>"
+                        )
+
+                        keywords_html = "".join(
+                            f'<span class="tag">{kw.get("term")}</span>'
+                            for kw in speaker.get("keywords", [])
+                        ) or (
+                            '<span class="card-subtitle">'
+                            "No keywords.</span>"
+                        )
 
                         st.markdown(
-                            f'<span class="tag">{word}</span>',
+                            f"""
+                            <div class="card">
+                                <div style="display:flex;justify-content:space-between;align-items:baseline;">
+                                    <div class="card-title">{speaker['display_name']}</div>
+                                    <div style="font-size:20px;font-weight:800;color:var(--accent);">
+                                        {speaker['participation_percentage']:.1f}%
+                                    </div>
+                                </div>
+                                <div style="
+                                    margin-top:10px;
+                                    height:8px;
+                                    background:var(--border);
+                                    border-radius:10px;
+                                ">
+                                    <div style="
+                                        width:{min(speaker['participation_percentage'], 100):.1f}%;
+                                        height:8px;
+                                        background:var(--accent);
+                                        border-radius:10px;
+                                    "></div>
+                                </div>
+                            </div>
+                            """,
                             unsafe_allow_html=True,
                         )
 
+                        m1, m2, m3, m4, m5 = st.columns(5)
+
+                        with m1:
+                            st.markdown(
+                                f"""<div class="metric">
+                                    <div class="metric-name">Speaking time</div>
+                                    <div class="metric-value">{speaker['speaking_time_formatted']}</div>
+                                </div>""",
+                                unsafe_allow_html=True,
+                            )
+
+                        with m2:
+                            st.markdown(
+                                f"""<div class="metric">
+                                    <div class="metric-name">Utterances</div>
+                                    <div class="metric-value">{speaker['utterance_count']}</div>
+                                </div>""",
+                                unsafe_allow_html=True,
+                            )
+
+                        with m3:
+                            st.markdown(
+                                f"""<div class="metric">
+                                    <div class="metric-name">Questions</div>
+                                    <div class="metric-value">{speaker['question_count']}</div>
+                                </div>""",
+                                unsafe_allow_html=True,
+                            )
+
+                        with m4:
+                            st.markdown(
+                                f"""<div class="metric">
+                                    <div class="metric-name">Decisions</div>
+                                    <div class="metric-value">{speaker['decision_count']}</div>
+                                </div>""",
+                                unsafe_allow_html=True,
+                            )
+
+                        with m5:
+                            st.markdown(
+                                f"""<div class="metric">
+                                    <div class="metric-name">Action items</div>
+                                    <div class="metric-value">{speaker['action_item_count']}</div>
+                                </div>""",
+                                unsafe_allow_html=True,
+                            )
+
+                        st.markdown(
+                            f'<div class="card-subtitle" style="margin-top:10px;">Topics</div>{topics_html}',
+                            unsafe_allow_html=True,
+                        )
+
+                        st.markdown(
+                            f'<div class="card-subtitle" style="margin-top:10px;">Keywords</div>{keywords_html}',
+                            unsafe_allow_html=True,
+                        )
+
+                        contributions = speaker.get(
+                            "notable_contributions", []
+                        )
+
+                        if contributions:
+
+                            st.markdown(
+                                '<div class="card-subtitle" style="margin-top:10px;">'
+                                "Notable contributions (own extracted "
+                                "decisions/action items)</div>",
+                                unsafe_allow_html=True,
+                            )
+
+                            for item in contributions:
+
+                                label = (
+                                    "Decision"
+                                    if item["type"] == "decision"
+                                    else "Action item"
+                                )
+
+                                st.markdown(
+                                    f'<div style="font-size:13px;margin-top:4px;">{label}: {item["text"]}</div>',
+                                    unsafe_allow_html=True,
+                                )
+
+                        st.markdown(
+                            "<div style='height:20px'></div>",
+                            unsafe_allow_html=True,
+                        )
+
+            # --------------------------------------------------
+            # SUMMARY TAB
+            # --------------------------------------------------
+            with tab_summary:
+
+                c1, c2, c3 = st.columns(3)
+
+                with c1:
+                    st.metric("Duration", format_time(report_duration))
+
+                with c2:
+                    st.metric("Speakers", report_speaker_count)
+
+                with c3:
+                    st.metric("Segments", report_segment_count)
+
                 st.markdown(
-                    "</div>",
+                    '<div class="section-heading">Summary</div>',
                     unsafe_allow_html=True,
                 )
 
-            else:
+                summary_sentences = format_summary_sentences(
+                    meeting_report.summary
+                )
+
+                if summary_sentences:
+                    summary_html = "".join(
+                        f"<p style='margin:0 0 10px 0;'>{sentence}</p>"
+                        for sentence in summary_sentences
+                    )
+                else:
+                    summary_html = "No summary available yet."
 
                 st.markdown(
-                    f"""
-                    <div class="card">
-                        <div class="card-title">
-                            Topic {index}
-                        </div>
-                        {topic}
-                    </div>
-                    """,
+                    f'<div class="summary-box">{summary_html}</div>',
                     unsafe_allow_html=True,
                 )
 
-    else:
+            # --------------------------------------------------
+            # DECISIONS & ACTION ITEMS TAB
+            # --------------------------------------------------
+            with tab_decisions:
 
-        st.info(
-            "No topic modeling data available."
-        )
+                any_section = False
+
+                for section_name, section in [
+                    ("Decisions", meeting_report.decisions),
+                    ("Action Items", meeting_report.action_items),
+                    ("Deadlines", meeting_report.deadlines),
+                    ("Open Questions", meeting_report.open_questions),
+                ]:
+
+                    if section:
+
+                        any_section = True
+
+                        st.markdown(
+                            f'<div class="section-heading">{section_name}</div>',
+                            unsafe_allow_html=True,
+                        )
+
+                        for item in section:
+
+                            due = (
+                                f" · due {item.due_date}"
+                                if item.due_date
+                                else ""
+                            )
+
+                            st.markdown(f"**{item.text}**{due}")
+
+                            with st.expander(
+                                f"Evidence — {item.evidence.speaker} @ "
+                                f"{format_time(item.evidence.timestamp)}"
+                            ):
+                                st.markdown(f"> {item.evidence.quote}")
+
+                if not any_section:
+                    st.info(
+                        "No decisions, action items, deadlines or open "
+                        "questions were extracted for this meeting."
+                    )
+
+            # --------------------------------------------------
+            # KEYWORDS & TOPICS TAB
+            # --------------------------------------------------
+            with tab_keywords:
+
+                st.markdown(
+                    '<div class="section-heading">TF-IDF Keywords</div>',
+                    unsafe_allow_html=True,
+                )
+
+                tab_keywords_list = (
+                    tfidf_result.get("top_keywords")
+                    if isinstance(tfidf_result, dict)
+                    else None
+                ) or []
+
+                if tab_keywords_list:
+
+                    for item in tab_keywords_list:
+
+                        word = item.get("term", "")
+                        score = item.get("score")
+
+                        if score is not None:
+
+                            st.markdown(
+                                f"""
+                                <div class="speaker-row">
+                                    <div style="display:flex;justify-content:space-between;">
+                                        <span class="speaker-name">{word}</span>
+                                        <span class="speaker-time">{safe_float(score):.4f}</span>
+                                    </div>
+                                </div>
+                                """,
+                                unsafe_allow_html=True,
+                            )
+
+                        elif word:
+
+                            st.markdown(
+                                f'<span class="tag">{word}</span>',
+                                unsafe_allow_html=True,
+                            )
+
+                else:
+
+                    st.info(
+                        "No TF-IDF keyword data available for this "
+                        "meeting."
+                    )
+
+                st.markdown(
+                    '<div class="section-heading">LDA Topics</div>',
+                    unsafe_allow_html=True,
+                )
+
+                tab_topics_list = (
+                    topic_result.get("topics")
+                    if isinstance(topic_result, dict)
+                    else None
+                ) or []
+
+                if tab_topics_list:
+
+                    for index, topic in enumerate(tab_topics_list, start=1):
+
+                        words = topic.get("top_words", [])
+
+                        st.markdown(
+                            f"""
+                            <div class="card">
+                                <div class="card-title">
+                                    Topic {index}
+                                </div>
+                            """,
+                            unsafe_allow_html=True,
+                        )
+
+                        for word in words:
+
+                            label = (
+                                word.get("word")
+                                if isinstance(word, dict)
+                                else str(word)
+                            )
+
+                            st.markdown(
+                                f'<span class="tag">{label}</span>',
+                                unsafe_allow_html=True,
+                            )
+
+                        st.markdown("</div>", unsafe_allow_html=True)
+
+                else:
+
+                    st.info(
+                        "No topic modeling data available for this "
+                        "meeting."
+                    )
+
+            # --------------------------------------------------
+            # REPORT TAB
+            # --------------------------------------------------
+            with tab_report:
+
+                if st.button(
+                    "Rebuild from current batch outputs",
+                    key=f"rebuild_report_{report_id}",
+                ):
+
+                    _live_controller = st.session_state.get(
+                        "live_controller"
+                    )
+
+                    _unload_hook = (
+                        _live_controller.session.unload_models
+                        if _live_controller is not None
+                        else None
+                    )
+
+                    try:
+
+                        if extractor_choice == "llm":
+                            with st.spinner("Generating takeaways..."):
+                                built_report = build_report(
+                                    report_id,
+                                    source="recorded",
+                                    extractor_name=extractor_choice,
+                                    pre_extract_hook=_unload_hook,
+                                )
+                        else:
+                            built_report = build_report(
+                                report_id,
+                                source="recorded",
+                                extractor_name=extractor_choice,
+                            )
+
+                        if built_report.extractor_used != extractor_choice:
+                            st.warning(
+                                built_report.extractor_stats.get(
+                                    "fallback_notice",
+                                    f"Fell back to '{built_report.extractor_used}'.",
+                                )
+                            )
+                        else:
+                            st.success(
+                                f"Rebuilt '{report_id}' using "
+                                f"'{extractor_choice}'."
+                            )
+
+                        st.rerun()
+
+                    except Exception as error:
+                        st.error(f"Could not rebuild report: {error}")
+
+                if meeting_report.source == "live":
+
+                    audio_path = Path(
+                        "outputs/live/live_session_audio.wav"
+                    )
+                    refine_key = f"offline_refine_{report_id}"
+
+                    if st.button(
+                        "Refine speakers (offline, slower)",
+                        disabled=not audio_path.exists(),
+                        key=f"refine_speakers_{report_id}",
+                    ):
+                        status = {
+                            "running": True,
+                            "done": False,
+                            "error": None,
+                            "rerun_requested": False,
+                        }
+                        st.session_state[refine_key] = status
+                        threading.Thread(
+                            target=_refine_live_report_speakers,
+                            args=(report_id, str(audio_path), status),
+                            daemon=True,
+                        ).start()
+
+                    if not audio_path.exists():
+                        st.caption(
+                            "Saved live audio is unavailable for "
+                            "offline refinement."
+                        )
+
+                    @st.fragment(run_every="2s")
+                    def show_speaker_refinement_status():
+                        status = st.session_state.get(refine_key)
+                        if not status:
+                            return
+                        if status.get("running"):
+                            st.info(
+                                "Offline speaker refinement is running "
+                                "in the background."
+                            )
+                        elif status.get("error"):
+                            st.error(
+                                f"Offline speaker refinement failed: "
+                                f"{status['error']}"
+                            )
+                        elif status.get("done"):
+                            st.success(
+                                "Speaker labels were refined and the "
+                                "report was updated."
+                            )
+                            if not status.get("rerun_requested"):
+                                status["rerun_requested"] = True
+                                st.rerun()
+
+                    show_speaker_refinement_status()
+
+                st.markdown(
+                    f"**Date:** {meeting_report.date} &nbsp;&nbsp; "
+                    f"**Duration:** {format_time(meeting_report.duration_sec)} "
+                    f"&nbsp;&nbsp; **Source:** {meeting_report.source}"
+                )
+
+                if meeting_report.speakers:
+
+                    with st.expander("Rename speakers"):
+
+                        renaming = {}
+
+                        for speaker in meeting_report.speakers:
+
+                            new_name = st.text_input(
+                                f"Rename {speaker.name}",
+                                value=speaker.name,
+                                key=f"rename_{report_id}_{speaker.name}",
+                            )
+
+                            if new_name != speaker.name:
+                                renaming[speaker.name] = new_name
+
+                        if renaming and st.button(
+                            "Apply renaming", key=f"apply_rename_{report_id}"
+                        ):
+
+                            meeting_report = apply_speaker_renaming(
+                                meeting_report, renaming
+                            )
+                            save_report(meeting_report)
+
+                            st.success(
+                                "Renamed. Applied to speakers, "
+                                "transcript, and all evidence."
+                            )
+                            st.rerun()
+
+                st.markdown(
+                    '<div class="section-heading">Export</div>',
+                    unsafe_allow_html=True,
+                )
+
+                export_col1, export_col2, export_col3 = st.columns(3)
+
+                with export_col1:
+                    st.download_button(
+                        "JSON",
+                        data=json.dumps(
+                            meeting_report.to_rendered_dict(),
+                            indent=2,
+                            ensure_ascii=False,
+                        ),
+                        file_name=f"{report_id}_report.json",
+                        mime="application/json",
+                        key=f"export_json_{report_id}",
+                    )
+
+                with export_col2:
+                    st.download_button(
+                        "Markdown",
+                        data=render_markdown(meeting_report),
+                        file_name=f"{report_id}_report.md",
+                        mime="text/markdown",
+                        key=f"export_md_{report_id}",
+                    )
+
+                with export_col3:
+                    st.download_button(
+                        "HTML",
+                        data=render_html(meeting_report),
+                        file_name=f"{report_id}_report.html",
+                        mime="text/html",
+                        key=f"export_html_{report_id}",
+                    )
 
 
 # ============================================================
@@ -3167,7 +3051,7 @@ elif active_page == "Speaker Analysis":
     else:
 
         st.caption(
-            f"⚠️ {speaker_analysis_data.get('objective_measurement_only', '')}"
+            f"{speaker_analysis_data.get('objective_measurement_only', '')}"
         )
 
         for speaker in speaker_analysis_data.get("speakers", []):
@@ -3192,12 +3076,11 @@ elif active_page == "Speaker Analysis":
                 f"""
                 <div class="card">
                     <div style="display:flex;justify-content:space-between;align-items:baseline;">
-                        <div class="card-title">👤 {speaker['display_name']}</div>
+                        <div class="card-title">{speaker['display_name']}</div>
                         <div style="font-size:20px;font-weight:800;color:var(--accent);">
                             {speaker['participation_percentage']:.1f}%
                         </div>
                     </div>
-
                     <div style="
                         margin-top:10px;
                         height:8px;
@@ -3285,7 +3168,7 @@ elif active_page == "Speaker Analysis":
 
                 for item in contributions:
 
-                    label = "💡 Decision" if item["type"] == "decision" else "□ Action item"
+                    label = "Decision" if item["type"] == "decision" else "Action item"
 
                     st.markdown(
                         f'<div style="font-size:13px;margin-top:4px;">{label}: {item["text"]}</div>',
@@ -3321,7 +3204,7 @@ elif active_page == "Evaluation":
     # ---------------- WER ----------------
 
     st.markdown(
-        '<div class="section-heading">🎙️ Speech Recognition</div>',
+        '<div class="section-heading">Speech Recognition</div>',
         unsafe_allow_html=True,
     )
 
@@ -3400,7 +3283,7 @@ elif active_page == "Evaluation":
     # ---------------- ROUGE ----------------
 
     st.markdown(
-        '<div class="section-heading">📝 Summarization</div>',
+        '<div class="section-heading">Summarization</div>',
         unsafe_allow_html=True,
     )
 
@@ -3482,7 +3365,7 @@ elif active_page == "Evaluation":
     # ---------------- ACTION ITEM ----------------
 
     st.markdown(
-        '<div class="section-heading">✅ Action Item Extraction</div>',
+        '<div class="section-heading">Action Item Extraction</div>',
         unsafe_allow_html=True,
     )
 
@@ -3579,10 +3462,10 @@ elif active_page == "Model Comparison":
     else:
 
         for note in model_comparison_data.get("limitations", []):
-            st.caption(f"⚠️ {note}")
+            st.caption(f"{note}")
 
         st.markdown(
-            '<div class="section-heading">🎙️ ASR: Whisper base vs small</div>',
+            '<div class="section-heading">ASR: Whisper base vs small</div>',
             unsafe_allow_html=True,
         )
 
@@ -3634,7 +3517,7 @@ elif active_page == "Model Comparison":
             st.info("No ASR comparison data available.")
 
         st.markdown(
-            '<div class="section-heading">📝 Summarization: T5-small vs TF-IDF extractive</div>',
+            '<div class="section-heading">Summarization: T5-small vs TF-IDF extractive</div>',
             unsafe_allow_html=True,
         )
 
@@ -3682,7 +3565,7 @@ elif active_page == "Model Comparison":
             st.info("No summarization comparison data available.")
 
         st.markdown(
-            '<div class="section-heading">🗣️ Diarization</div>',
+            '<div class="section-heading">Diarization</div>',
             unsafe_allow_html=True,
         )
 
@@ -3724,7 +3607,7 @@ elif active_page == "Ablation Study":
     else:
 
         for note in ablation_data.get("limitations", []):
-            st.caption(f"⚠️ {note}")
+            st.caption(f"{note}")
 
         stage_labels = {
             "whisper_only": "1 · Whisper only",
@@ -3818,13 +3701,13 @@ elif active_page == "Error Analysis":
     else:
 
         for note in error_analysis_data.get("limitations", []):
-            st.caption(f"⚠️ {note}")
+            st.caption(f"{note}")
 
         # ---------------- ASR ----------------
 
         asr_errors = error_analysis_data.get("asr", {})
 
-        with st.expander("🎙️ ASR errors", expanded=True):
+        with st.expander("ASR errors", expanded=True):
 
             word_errors = asr_errors.get("word_level_errors", {})
             wer_info = asr_errors.get("word_error_rate", {})
@@ -3898,7 +3781,7 @@ elif active_page == "Error Analysis":
 
         diarization_errors = error_analysis_data.get("diarization", {})
 
-        with st.expander("🗣️ Diarization errors"):
+        with st.expander("Diarization errors"):
 
             confusion = diarization_errors.get("speaker_confusion", {})
             overlap = diarization_errors.get("overlapping_speech", {})
@@ -3946,7 +3829,7 @@ elif active_page == "Error Analysis":
 
         nlp_errors = error_analysis_data.get("nlp", {})
 
-        with st.expander("🧠 NLP errors"):
+        with st.expander("NLP errors"):
 
             ner = nlp_errors.get("ner_false_positives", {})
             keyword_noise = nlp_errors.get("keyword_noise", {})
@@ -4006,7 +3889,7 @@ elif active_page == "Error Analysis":
 
         action_item_errors = error_analysis_data.get("action_items", {})
 
-        with st.expander("✅ Action item errors"):
+        with st.expander("Action item errors"):
 
             unverified = action_item_errors.get("unverified_extractions", {})
 
@@ -4074,7 +3957,7 @@ elif active_page == "Error Analysis":
 
         summarization_errors = error_analysis_data.get("summarization", {})
 
-        with st.expander("📝 Summarization errors"):
+        with st.expander("Summarization errors"):
 
             length_info = summarization_errors.get("length", {})
             missing_info = summarization_errors.get("missing_info", {})
@@ -4139,154 +4022,3 @@ elif active_page == "Error Analysis":
                     "No unsupported (non-source) proper nouns/numbers "
                     "detected in the summary."
                 )
-
-
-# ============================================================
-# SPEAKERS
-# ============================================================
-
-elif active_page == "Speakers":
-
-    st.markdown(
-        '<div class="page-title">Speakers</div>',
-        unsafe_allow_html=True,
-    )
-
-    st.markdown(
-        '<div class="page-subtitle">Speaker participation derived from diarization.</div>',
-        unsafe_allow_html=True,
-    )
-
-    if not speaker_stats:
-
-        st.info(
-            "No speaker information is available yet."
-        )
-
-    else:
-
-        for index, (speaker, seconds) in enumerate(
-            speaker_stats.items(),
-            start=1,
-        ):
-
-            percentage = (
-                seconds / duration * 100
-                if duration
-                else 0
-            )
-
-            st.markdown(
-                f"""
-                <div class="card">
-                    <div style="display:flex;justify-content:space-between;">
-                        <div>
-                            <div class="card-title">
-                                👤 {speaker}
-                            </div>
-                            <div class="card-subtitle">
-                                Speaker {index}
-                            </div>
-                        </div>
-
-                        <div style="
-                            font-size:20px;
-                            font-weight:800;
-                            color:var(--accent);
-                        ">
-                            {percentage:.1f}%
-                        </div>
-                    </div>
-
-                    <div style="
-                        margin-top:15px;
-                        height:8px;
-                        background:var(--border);
-                        border-radius:10px;
-                    ">
-                        <div style="
-                            width:{min(percentage,100):.1f}%;
-                            height:8px;
-                            background:var(--accent);
-                            border-radius:10px;
-                        "></div>
-                    </div>
-
-                    <div style="
-                        margin-top:8px;
-                        font-size:12px;
-                        color:var(--text-muted);
-                    ">
-                        Speaking time: {format_time(seconds)}
-                    </div>
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
-
-
-# ============================================================
-# DOWNLOAD SECTION
-# ============================================================
-
-st.markdown("---")
-
-# Always-visible section -- not a collapsible st.expander, so the
-# four export actions never require a click to reveal.
-st.markdown(
-    '<div class="section-heading">📥 Export Meeting Results</div>',
-    unsafe_allow_html=True,
-)
-
-download_columns = st.columns(4)
-
-files_for_download = [
-    ("Speaker Transcript", SPEAKER_TRANSCRIPT),
-    ("Summary", SUMMARY),
-    ("NLP Analysis", NLP_PROCESSED),
-    ("Evaluation - WER", WER),
-]
-
-for column, (label, path) in zip(
-    download_columns,
-    files_for_download,
-):
-
-    with column:
-
-        if path.exists():
-
-            with open(
-                path,
-                "rb",
-            ) as f:
-
-                st.download_button(
-                    label,
-                    data=f.read(),
-                    file_name=path.name,
-                    mime="application/json",
-                    use_container_width=True,
-                )
-
-
-# ============================================================
-# FOOTER
-# ============================================================
-
-st.markdown(
-    """
-    <div style="
-        text-align:center;
-        color:var(--text-muted);
-        font-size:11px;
-        margin-top:30px;
-        padding:15px;
-    ">
-        MeetSense • Speaker-Aware Meeting Transcription & Summarization System
-        <br>
-        Whisper • PyAnnote • Silero VAD • NLTK • TF-IDF • LDA • T5
-    </div>
-    """,
-    unsafe_allow_html=True,
-)

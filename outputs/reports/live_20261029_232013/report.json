@@ -1,0 +1,74 @@
+{
+  "meeting_id": "live_20261029_232013",
+  "title": "mental health",
+  "source": "live",
+  "date": "2026-10-29",
+  "duration_sec": 20.68,
+  "speakers": [
+    {
+      "name": "Speaker 1",
+      "speaking_time_sec": 14.38,
+      "share_pct": 69.5
+    },
+    {
+      "name": "Speaker 2",
+      "speaking_time_sec": 6.3,
+      "share_pct": 30.5
+    }
+  ],
+  "chunk_summaries": [
+    "speaker 1: So what is mental health? Speaker 2: what mental health."
+  ],
+  "transcript": [
+    {
+      "start": 0.0,
+      "end": 9.58,
+      "speaker": "Speaker 1",
+      "text": "Hello, today I am going to talk about mental health.",
+      "speaker_overlap": 3.432,
+      "speakers_refined": true
+    },
+    {
+      "start": 9.58,
+      "end": 11.98,
+      "speaker": "Speaker 1",
+      "text": "So what is mental health?",
+      "speaker_overlap": 1.816,
+      "speakers_refined": true
+    },
+    {
+      "start": 11.98,
+      "end": 16.28,
+      "speaker": "Speaker 2",
+      "text": "People take it very lightly or some people take it in a very joking way or feel only",
+      "speaker_overlap": 4.3,
+      "speakers_refined": true
+    },
+    {
+      "start": 16.28,
+      "end": 17.28,
+      "speaker": "Speaker 2",
+      "text": "what mental health.",
+      "speaker_overlap": 1.0,
+      "speakers_refined": true
+    },
+    {
+      "start": 17.28,
+      "end": 19.68,
+      "speaker": "Speaker 1",
+      "text": "But it is not like that.",
+      "speaker_overlap": 2.244,
+      "speakers_refined": true
+    },
+    {
+      "start": 19.68,
+      "end": 20.68,
+      "speaker": "Speaker 2",
+      "text": "Mental health.",
+      "speaker_overlap": 0.68,
+      "speakers_refined": true
+    }
+  ],
+  "extractor_used": "rule_based",
+  "extractor_stats": {}
+}

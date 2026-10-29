@@ -1,0 +1,36 @@
+{
+  "meeting_id": "live_20261029_211901",
+  "source": "live",
+  "date": "2026-10-29",
+  "duration_sec": 12.8,
+  "speakers": [
+    {
+      "name": "Speaker 1",
+      "speaking_time_sec": 12.8,
+      "share_pct": 100.0
+    }
+  ],
+  "chunk_summaries": [
+    "speaker 1: meat sense so basically what is meat sense. this is our deep learning meeting."
+  ],
+  "transcript": [
+    {
+      "start": 0.0,
+      "end": 7.56,
+      "speaker": "Speaker 1",
+      "text": "saying hello so this is our deep learning meeting and today I'm gonna tell you about",
+      "speaker_overlap": 4.94,
+      "speakers_refined": true
+    },
+    {
+      "start": 7.56,
+      "end": 12.8,
+      "speaker": "Speaker 1",
+      "text": "meat sense so basically what is meat sense",
+      "speaker_overlap": 3.644,
+      "speakers_refined": true
+    }
+  ],
+  "extractor_used": "rule_based",
+  "extractor_stats": {}
+}

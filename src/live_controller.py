@@ -162,7 +162,7 @@ class LiveSessionController:
 
     def start(
         self, mode, simulated_file_path=None, device=None,
-        simulated_max_duration_seconds=None,
+        simulated_max_duration_seconds=None, expected_speaker_count=None,
     ):
 
         if self.running:
@@ -171,6 +171,7 @@ class LiveSessionController:
         self._stop_event.clear()
 
         self.mode = mode
+        self.session.expected_speaker_count = expected_speaker_count
 
         with self._status_lock:
             self.last_error = None

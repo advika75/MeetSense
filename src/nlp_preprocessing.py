@@ -217,6 +217,48 @@ def extract_entities(text):
 
 
 # ============================================================
+# REUSABLE: RAW SEGMENTS -> PROCESSED SEGMENTS (NO FILE I/O)
+# ============================================================
+
+def build_processed_segments(transcript_segments):
+    """Same per-segment transform as main()'s loop below, but takes an
+    in-memory segment list and returns the processed list directly --
+    no fixed INPUT_FILE/OUTPUT_FILE involved. Lets any caller (e.g. a
+    per-report Keywords & Topics view) feed build_documents() in
+    tfidf_keywords.py / topic_modeling.py without a batch pipeline run."""
+
+    ensure_nltk_resources()
+
+    processed_segments = []
+
+    for segment in transcript_segments:
+
+        speaker = segment.get("speaker", "UNKNOWN")
+        text = (segment.get("text") or "").strip()
+
+        if not text:
+            continue
+
+        result = process_segment_text(text)
+
+        processed_segments.append(
+            {
+                "start": segment.get("start"),
+                "end": segment.get("end"),
+                "speaker": speaker,
+                "original_text": text,
+                "sentences": result["sentences"],
+                "tokens": result["tokens"],
+                "filtered_tokens": result["filtered_tokens"],
+                "pos_tags": result["pos_tags"],
+                "lemmatized_tokens": result["lemmatized_tokens"],
+            }
+        )
+
+    return processed_segments
+
+
+# ============================================================
 # BATCH CLI ENTRY POINT (unchanged behavior)
 # ============================================================
 

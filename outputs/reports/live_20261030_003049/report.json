@@ -1,0 +1,49 @@
+{
+  "meeting_id": "live_20261030_003049",
+  "source": "live",
+  "date": "2026-10-30",
+  "duration_sec": 19.0,
+  "speakers": [
+    {
+      "name": "Speaker 1",
+      "speaking_time_sec": 17.0,
+      "share_pct": 89.5
+    },
+    {
+      "name": "Speaker 2",
+      "speaking_time_sec": 2.0,
+      "share_pct": 10.5
+    }
+  ],
+  "chunk_summaries": [
+    "speaker 1: Hello everyone, I am Advokha Mishra. I hope this goes very well tomorrow and my teacher gives me good marks."
+  ],
+  "transcript": [
+    {
+      "start": 0.0,
+      "end": 9.0,
+      "speaker": "Speaker 1",
+      "text": "Hello everyone, I am Advokha Mishra, I am a 4 year BTEC student and this is my deep learning project.",
+      "speaker_overlap": 5.868,
+      "speakers_refined": true
+    },
+    {
+      "start": 9.0,
+      "end": 17.0,
+      "speaker": "Speaker 1",
+      "text": "And I hope this goes very well tomorrow and my teacher gives me good marks.",
+      "speaker_overlap": 4.456,
+      "speakers_refined": true
+    },
+    {
+      "start": 17.0,
+      "end": 19.0,
+      "speaker": "Speaker 2",
+      "text": "And that's it. Thank you. Bye bye.",
+      "speaker_overlap": 2.0,
+      "speakers_refined": true
+    }
+  ],
+  "extractor_used": "rule_based",
+  "extractor_stats": {}
+}

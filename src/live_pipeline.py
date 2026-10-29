@@ -90,6 +90,35 @@ from action_item_extraction import (
 from summarization import load_summarizer, create_chunks, summarize_text
 
 
+def apply_auto_gain(audio):
+    """Boost-only gain control for live mic chunks (see
+    LIVE_WHISPER_LANGUAGE comment above for why this exists). Leaves
+    audio untouched if it is already loud enough, or if it is quiet
+    enough to be noise/silence rather than soft speech."""
+
+    if len(audio) == 0:
+        return audio
+
+    rms = float(np.sqrt(np.mean(np.square(audio))))
+
+    if rms < AUTO_GAIN_NOISE_FLOOR_RMS or rms <= 0.0:
+        return audio
+
+    gain = min(AUTO_GAIN_MAX_FACTOR, AUTO_GAIN_TARGET_RMS / rms)
+
+    if gain <= 1.0:
+        return audio
+
+    boosted = audio * gain
+
+    peak = float(np.max(np.abs(boosted)))
+
+    if peak > AUTO_GAIN_MAX_PEAK:
+        boosted = boosted * (AUTO_GAIN_MAX_PEAK / peak)
+
+    return boosted.astype(np.float32)
+
+
 def current_process_rss_mb():
 
     try:
@@ -112,6 +141,26 @@ def current_process_rss_mb():
 # ============================================================
 
 WHISPER_MODEL_NAME = "base"
+
+# Real-microphone testing (see PROJECT_REPORT) found live chunk audio
+# sitting far quieter than the batch pipeline's normalized input
+# (observed RMS ~0.02 vs. batch's peak-normalized-to-1.0 audio), which
+# under-triggers Silero VAD's 0.5 energy-shaped threshold and starves
+# Whisper of signal. Forcing a language also matters here: Whisper's
+# per-chunk auto-detect on 17-20s of quiet audio was observed
+# mis-detecting English speech as Nepali/Hindi/Marathi, producing
+# garbled transcripts -- the batch pipeline avoids this only because
+# it auto-detects once from a much longer, louder recording. Empty
+# string disables the override and restores auto-detect per chunk.
+LIVE_WHISPER_LANGUAGE = os.getenv("LIVE_WHISPER_LANGUAGE", "en").strip() or None
+
+# Auto-gain target/limits for the above: boost-only (never attenuate),
+# capped so a near-silent chunk's noise floor isn't amplified into
+# apparent speech, and capped in peak so boosted audio never clips.
+AUTO_GAIN_TARGET_RMS = 0.08
+AUTO_GAIN_MAX_FACTOR = 12.0
+AUTO_GAIN_NOISE_FLOOR_RMS = 0.0015
+AUTO_GAIN_MAX_PEAK = 0.98
 
 # NOTE: an early measured run (see PROJECT_REPORT / Stage 5 writeup)
 # showed pyannote community-1's diarization cost growing superlinearly
@@ -182,6 +231,20 @@ class LiveMeetingSession:
         self._summarizer_tokenizer = None
         self._summarizer_model = None
         self._summarizer_device = None
+
+        # Set later via LiveSessionController.start(expected_speaker_count=
+        # ...), once the user has supplied it -- not a constructor param
+        # since the controller builds this session before the Start form
+        # is even shown. None falls back to the original unbounded-up-
+        # to-8 behavior. When set, this replaces the hardcoded cap in
+        # _online_speaker_segments(): without a known count, a voice that
+        # doesn't match any existing centroid closely enough always gets
+        # a brand-new "Speaker N" label, which fragments one real person
+        # into several labels over a session (the most common complaint
+        # about live diarization quality). Knowing the true count turns
+        # "not similar enough -> new speaker" into "not similar enough ->
+        # still the closest existing speaker, once we're at full count".
+        self.expected_speaker_count = None
 
         if load_models:
             self.load_models(
@@ -373,6 +436,8 @@ class LiveMeetingSession:
 
         t0 = time.perf_counter()
 
+        chunk_audio = apply_auto_gain(chunk_audio)
+
         # -------------------- 1. VAD --------------------
 
         t_stage = time.perf_counter()
@@ -403,6 +468,7 @@ class LiveMeetingSession:
                     chunk_audio,
                     fp16=False,
                     task="transcribe",
+                    language=LIVE_WHISPER_LANGUAGE,
                     condition_on_previous_text=False,
                     verbose=False,
                 )
@@ -906,12 +972,14 @@ class LiveMeetingSession:
             SAMPLE_RATE,
         ) if long_indices else np.zeros((0, 0), dtype=np.float32)
 
+        max_speakers = self.expected_speaker_count or 8
+
         for row_index, vector in zip(long_indices, vectors):
             if self.online_speaker_centroids:
                 names = list(self.online_speaker_centroids)
                 similarities = [float(np.dot(vector, self.online_speaker_centroids[name])) for name in names]
                 nearest_index = int(np.argmax(similarities))
-                if similarities[nearest_index] >= self.online_similarity_threshold or len(names) >= 8:
+                if similarities[nearest_index] >= self.online_similarity_threshold or len(names) >= max_speakers:
                     speaker = names[nearest_index]
                 else:
                     speaker = f"Speaker {len(names) + 1}"
@@ -1063,6 +1131,7 @@ class LiveMeetingSession:
                 "diarization_refinement_seconds": list(self._diarization_refinement_seconds),
                 "online_speaker_count": len(self.online_speaker_centroids),
                 "online_similarity_threshold": self.online_similarity_threshold,
+                "expected_speaker_count": self.expected_speaker_count,
                 "embedding_clustering_ms": list(self.embedding_clustering_ms),
             }
 

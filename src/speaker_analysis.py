@@ -107,29 +107,12 @@ def format_duration(total_seconds):
     return f"{minutes:02d}:{seconds:02d}"
 
 
-def main():
-
-    print("=" * 60)
-    print("SPEAKER CONTRIBUTION ANALYSIS")
-    print("=" * 60)
-
-    with open(SPEAKER_TRANSCRIPT_FILE, "r", encoding="utf-8") as f:
-        segments = json.load(f)
-
-    tfidf_data = {}
-    if os.path.exists(TFIDF_FILE):
-        with open(TFIDF_FILE, "r", encoding="utf-8") as f:
-            tfidf_data = json.load(f)
-
-    topic_data = {}
-    if os.path.exists(TOPIC_FILE):
-        with open(TOPIC_FILE, "r", encoding="utf-8") as f:
-            topic_data = json.load(f)
-
-    action_data = {}
-    if os.path.exists(ACTION_ITEMS_FILE):
-        with open(ACTION_ITEMS_FILE, "r", encoding="utf-8") as f:
-            action_data = json.load(f)
+def compute_speaker_contributions(segments, tfidf_data, topic_data, action_data):
+    """Pure per-speaker aggregation, reusable for any transcript -- not
+    just the one at SPEAKER_TRANSCRIPT_FILE. `action_data` is shaped like
+    {"action_items": [{"action", "speaker", "segment_id"}, ...],
+     "decisions": [{"decision", "speaker", "segment_id"}, ...]}.
+    Returns (speaker_results, total_speaking_time_seconds)."""
 
     display_names = build_speaker_display_names(segments)
 
@@ -269,6 +252,37 @@ def main():
     # key (not a claim about importance).
     speaker_results.sort(
         key=lambda r: r["speaking_time_seconds"], reverse=True
+    )
+
+    return speaker_results, total_speaking_time
+
+
+def main():
+
+    print("=" * 60)
+    print("SPEAKER CONTRIBUTION ANALYSIS")
+    print("=" * 60)
+
+    with open(SPEAKER_TRANSCRIPT_FILE, "r", encoding="utf-8") as f:
+        segments = json.load(f)
+
+    tfidf_data = {}
+    if os.path.exists(TFIDF_FILE):
+        with open(TFIDF_FILE, "r", encoding="utf-8") as f:
+            tfidf_data = json.load(f)
+
+    topic_data = {}
+    if os.path.exists(TOPIC_FILE):
+        with open(TOPIC_FILE, "r", encoding="utf-8") as f:
+            topic_data = json.load(f)
+
+    action_data = {}
+    if os.path.exists(ACTION_ITEMS_FILE):
+        with open(ACTION_ITEMS_FILE, "r", encoding="utf-8") as f:
+            action_data = json.load(f)
+
+    speaker_results, total_speaking_time = compute_speaker_contributions(
+        segments, tfidf_data, topic_data, action_data
     )
 
     results = {
